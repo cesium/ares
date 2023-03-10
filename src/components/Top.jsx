@@ -15,14 +15,14 @@ const TextVariants = {
 
 const letterHoverVariants = {
     hover: {
-      scale: 1.2,
-      color: "#FF007F",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
+        color: "#FF007F",
+        transition: {
+            duration: 0.3,
+            ease: "easeInOut",
+        },
     },
-  };
+};
+
 export default function Top() {
     const FUTURE_DATE = 21.7 * 24 * 60 * 60 * 1000;
     const NOW_IN_MS = new Date().getTime();
@@ -30,6 +30,8 @@ export default function Top() {
     const dateInFuture = NOW_IN_MS + FUTURE_DATE;
     const texts = ["BugsByte Hackathon"];
     const [currentWord, setCurrentWord] = useState(-1);
+
+
 
     useEffect(() => {
         let i = 0;
@@ -50,56 +52,110 @@ export default function Top() {
     };
 
 
+    const [mousePosition, setMousePosition] = useState({
+        x: 0,
+        y: 0
+    });
+    const [cursorVariant, setCursorVariant] = useState("default");
+
+
+    useEffect(() => {
+        const mouseMove = e => {
+            setMousePosition({
+                x: e.clientX,
+                y: e.clientY
+            })
+        }
+
+        window.addEventListener("mousemove", mouseMove);
+
+        return () => {
+            window.removeEventListener("mousemove", mouseMove);
+        }
+    }, []);
+
+    const variants = {
+        default: {
+            height: 50,
+            width: 50,
+            x: mousePosition.x - 50,
+            y: mousePosition.y - 50,
+            backgroundColor: "green",
+            mixBlendMode: "difference",
+            borderRadius: "50%",
+        },
+        text: {
+            height: 50,
+            width: 50,
+            x: mousePosition.x - 50,
+            y: mousePosition.y - 50,
+            backgroundColor: "green",
+            mixBlendMode: "difference",
+            borderRadius: "50%",
+        }
+    }
+
+    const textEnter = () => setCursorVariant("text");
+    const textLeave = () => setCursorVariant("default");
+
+
 
     return (
         <>
             <motion.div
-                className="bg-black text-white h-screen max-h-screen overflow-hidden"
-                initial="hidden"
-                animate="visible"
-                variants={container}
-                whileHover={{
-                    textShadow: "0px 0px 8px rgb(0,230,0)",
-                }}
-                whileFocus={{ textShadow: "0px 0px 8px rgb(0,230,0)" }}
-
-            >
-                <motion.span
-                    className="h-screen flex flex-col items-center justify-center text-9xl text-secondary"
-                    transition={{ staggerChildren: 2 }}
+                className='cursor'
+                variants={variants}
+                animate={cursorVariant}
+            />
+            <div onMouseEnter={textEnter} onMouseLeave={textLeave}>
+                <motion.div
+                    className="bg-black text-white h-screen max-h-screen overflow-hidden"
+                    initial="hidden"
+                    animate="visible"
+                    variants={container}
                     whileHover={{
-                        path: "M 0 0 Q 25 -10 50 0 T 100 0",
-                        transition: { duration: 0.5 },
-                        letterHoverVariants 
+                        textShadow: "0px 0px 8px rgb(0,230,0)",
                     }}
+                    whileFocus={{ textShadow: "0px 0px 8px rgb(0,230,0)" }}
+
                 >
-                    {texts.map((word, index) => (
-                        index === currentWord
-                            ? (<motion.span>
-                                {word.split("").map((r, id) => (
-                                    <motion.span
-                                        initial="offscreen"
-                                        animate="onscreen"
-                                        exit="exit"
-                                        variants={TextVariants}
-                                        whileHover={letterHoverVariants}
-                                        transition={{
-                                            duration: 2,
-                                            delay: id * 0.25
-                                        }}
-                                        key={index}
-                                        className="font-terminal-uppercase"i
-                                    >
-                                        {r}
-                                    </motion.span>
-                                ))}
-                            </motion.span>
-                            )
-                            : null
-                    ))}
-                    <CountdownTimer targetDate={dateInFuture} />
-                </motion.span>
-            </motion.div>
+                    <motion.span
+                        className="h-screen flex flex-col items-center justify-center text-9xl text-secondary"
+                        transition={{ staggerChildren: 2 }}
+                        whileHover={{
+                            textShadow: "0px 0px 8px rgb(0,230,0)",
+                        }}
+                        whileFocus={{ textShadow: "0px 0px 8px rgb(0,230,0)" }}
+                    >
+                        {texts.map((word, index) => (
+                            index === currentWord
+                                ? (<motion.span>
+                                    {word.split("").map((r, id) => (
+                                        <motion.span
+                                            initial="offscreen"
+                                            animate="onscreen"
+                                            exit="exit"
+                                            variants={TextVariants}
+                                            whileHover={letterHoverVariants}
+                                            transition={{
+                                                duration: 2,
+                                                delay: id * 0.25
+                                            }}
+                                            key={index}
+                                            className="font-terminal-uppercase" 
+                                            
+                                        >
+                                            {r}
+                                        </motion.span>
+                                    ))}
+                                </motion.span>
+                                )
+                                : null
+                        ))}
+                        <CountdownTimer targetDate={dateInFuture} />
+                    </motion.span>
+                </motion.div>
+            </div>
         </>
     )
 }

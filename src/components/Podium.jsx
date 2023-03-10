@@ -1,7 +1,7 @@
-export default function Mid() {
+export default function Podium() {
     return(
     <div className="h-screen flex flex-col items-center justify-center text-8xl text-secondary">
-        <p>Infos</p>
+        <p>Podium</p>
     </div>
     );
 }
