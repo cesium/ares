@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily:{
-        
+        terminal: ["Terminal"],
       },
       colors: {
         primary: '#000000',
