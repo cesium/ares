@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import CountdownTimer from "../components/CountdownTimer";
 import { useEffect, useMemo, useState } from "react";
-import gub from "../../public/gub.png";
 
 const TextVariants = {
   offscreen: {
@@ -26,6 +25,7 @@ const letterHoverVariants = {
 };
 
 export default function Top() {
+  // Event fisrt day date
   const targetDate = new Date("2023-03-31").getTime();
 
   const texts = useMemo(() => ["BugsByte Hackathon"], []);
