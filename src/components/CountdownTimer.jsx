@@ -1,6 +1,6 @@
-import React from 'react';
-import DateTimeDisplay from '../hooks/DateTimeDisplay';
-import { useCountdown } from '../hooks/useCountdown';
+import React from "react";
+import DateTimeDisplay from "../hooks/DateTimeDisplay";
+import { useCountdown } from "../hooks/useCountdown";
 
 const ExpiredNotice = () => {
   return (
@@ -13,7 +13,7 @@ const ExpiredNotice = () => {
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
   return (
-    <div className="p-4 text-6xl text-center text-white font-alarmclock-uppercase">
+    <div className="font-alarmclock-uppercase p-4 text-center text-6xl text-white">
       <a
         target="_blank"
         rel="noopener noreferrer"
