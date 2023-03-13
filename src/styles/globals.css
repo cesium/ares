@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
   font-family: "Terminal";
   src: url("/fonts/TerminalGrotesque/TerminalGrotesque.ttf") format("truetype");
@@ -14,7 +13,8 @@
 }
 @font-face {
   font-family: "Karrik";
-  src: url("/public/fonts/karrik/fonts/Web/TFF/Karrik-Regular.ttf") format("truetype");
+  src: url("/public/fonts/karrik/fonts/Web/TFF/Karrik-Regular.ttf")
+    format("truetype");
 }
 
 .font-terminal-uppercase {

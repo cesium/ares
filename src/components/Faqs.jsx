@@ -3,32 +3,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function Faqs({ faq }) {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    function toggleFaq() {
-        setIsOpen((latest) => !latest);
-    }
+  function toggleFaq() {
+    setIsOpen((latest) => !latest);
+  }
 
-    return (
-        <div
-            onClick={toggleFaq}
-            className="cursor-pointer rounded-lg bg-gray1 border border-gray2 shadow-sm hover:border-purple px-4 py-6 mt-10"
-        >
-            <div>
-                {isOpen ? (
-                    <FontAwesomeIcon
-                        icon={faCaretDown}
-                        className="text-secondary mr-2 w-[16px]"
-                    />
-                ) : (
-                    <FontAwesomeIcon
-                        icon={faCaretRight}
-                        className="text-secondary mr-2 w-[16px]"
-                    />
-                )}
-                <span className="text-white font-semibold">{faq.question}</span>
-            </div>
-            {isOpen && <div className="text-white mt-2 text-2xl">{faq.answer}</div>}
-        </div>
-    );
+  return (
+    <div
+      onClick={toggleFaq}
+      className="bg-gray1 border-gray2 hover:border-purple mt-10 cursor-pointer rounded-lg border px-4 py-6 shadow-sm"
+    >
+      <div>
+        {isOpen ? (
+          <FontAwesomeIcon
+            icon={faCaretDown}
+            className="mr-2 w-[16px] text-secondary"
+          />
+        ) : (
+          <FontAwesomeIcon
+            icon={faCaretRight}
+            className="mr-2 w-[16px] text-secondary"
+          />
+        )}
+        <span className="font-semibold text-white">{faq.question}</span>
+      </div>
+      {isOpen && <div className="mt-2 text-2xl text-white">{faq.answer}</div>}
+    </div>
+  );
 }
