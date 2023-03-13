@@ -29,8 +29,8 @@ export default function Home() {
             {faqs.map((faq, index) => (
               <Faqs key={index} faq={faq} />
             ))}
+            <Footer />
           </div>
-          <Footer />
         </div>
       </main>
     </>
