@@ -1,8 +1,11 @@
 import Head from 'next/head'
-import Top from '@/components/Top'
-import Mid from '@/components/Mid'
-import Footer from '@/components/Footer'
-import Podium from '@/components/Podium'
+import Top from "../components/Top"
+import Mid from '../components/Mid'
+import Footer from '../components/Footer'
+import Podium from '../components/Podium'
+import Faqs from '../components/Faqs'
+import faqs from '../../public/faqs.json'
+
 export default function Home() {
 
   return (
@@ -11,7 +14,7 @@ export default function Home() {
         <title>BugsByte Hackathon</title>
         <meta name="description" content="BugsByte Hackathon" />
       </Head>
-      <main className="bg-black text-white snap-y snap-mandatory h-screen overflow-scroll">
+      <main className="bg-hero text-white snap-y snap-mandatory h-screen overflow-scroll ">
         <div className="snap-center">
           <Top />
         </div>
@@ -21,7 +24,15 @@ export default function Home() {
         <div className="snap-center">
           <Podium />
         </div>
-        <Footer />
+        <div className="snap-center">
+          <div className="h-screen w-screen flex flex-col space-between w-screen justify-center p-8 text-4xl text-white font-terminal-uppercase">
+            <h1 className="text-secondary">FAQs</h1>
+            {faqs.map((faq, index) => (
+              <Faqs key={index} faq={faq} />
+            ))}
+          </div>
+          <Footer />
+        </div>
       </main>
     </>
   )

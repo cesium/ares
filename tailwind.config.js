@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage:{
+        'hero': "url('/background.png')",
+      },
       fontFamily:{
         terminal: ["Terminal"],
       },

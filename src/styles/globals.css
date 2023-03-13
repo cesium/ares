@@ -6,7 +6,7 @@
     font-family: "Inter-Black";
     src: url("/fonts/Inter/Inter-Black.ttf") format("truetype");
   }
-  
+
   @font-face {
     font-family: "Inter-ExtraBold";
     src: url("/fonts/Inter/Inter-ExtraBold.ttf") format("truetype");
@@ -51,6 +51,7 @@
     font-family: "Terminal";
     src: url("/fonts/TerminalGrotesque/TerminalGrotesque.ttf") format("truetype");
   }
+
   
   .font-terminal-uppercase {
     @apply font-terminal;

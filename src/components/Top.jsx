@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import CountdownTimer from '@/components/CountdownTimer';
+import CountdownTimer from '../components/CountdownTimer';
 import { useEffect, useState } from "react";
+
 const TextVariants = {
     offscreen: {
         opacity: 0
@@ -28,7 +29,7 @@ export default function Top() {
     const NOW_IN_MS = new Date().getTime();
 
     const dateInFuture = NOW_IN_MS + FUTURE_DATE;
-    const texts = ["BugsByte Hackathon"];
+    let texts = ["BugsByte Hackathon"];
     const [currentWord, setCurrentWord] = useState(-1);
 
 
@@ -109,7 +110,7 @@ export default function Top() {
             />
             <div onMouseEnter={textEnter} onMouseLeave={textLeave}>
                 <motion.div
-                    className="bg-black text-white h-screen max-h-screen overflow-hidden"
+                    className="bg-hero text-white h-screen max-h-screen overflow-hidden"
                     initial="hidden"
                     animate="visible"
                     variants={container}
@@ -129,7 +130,7 @@ export default function Top() {
                     >
                         {texts.map((word, index) => (
                             index === currentWord
-                                ? (<motion.span>
+                                ? (<motion.span key={index} >
                                     {word.split("").map((r, id) => (
                                         <motion.span
                                             initial="offscreen"
@@ -142,8 +143,8 @@ export default function Top() {
                                                 delay: id * 0.25
                                             }}
                                             key={index}
-                                            className="font-terminal-uppercase" 
-                                            
+                                            className="font-terminal-uppercase"
+
                                         >
                                             {r}
                                         </motion.span>
