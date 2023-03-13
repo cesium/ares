@@ -26,12 +26,9 @@ const letterHoverVariants = {
 };
 
 export default function Top() {
-  const FUTURE_DATE = 21.7 * 24 * 60 * 60 * 1000;
-  const NOW_IN_MS = new Date().getTime();
+  const targetDate = new Date("2023-03-31").getTime();
 
-  const dateInFuture = NOW_IN_MS + FUTURE_DATE;
   const texts = useMemo(() => ["BugsByte Hackathon"], []);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [currentWord, setCurrentWord] = useState(-1);
 
   useEffect(() => {
@@ -145,7 +142,7 @@ export default function Top() {
                 </motion.span>
               ) : null
             )}
-            <CountdownTimer targetDate={dateInFuture} />
+            <CountdownTimer targetDate={targetDate} />
           </motion.span>
         </motion.div>
       </div>
