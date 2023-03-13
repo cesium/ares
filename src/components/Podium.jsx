@@ -47,15 +47,15 @@ export default function Podium() {
           </div>
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10 xl:flex-col">
             <div className="mt-4 flex flex-col items-center">
-              <h2 className="text-white text-center">Vencedores Tema 1</h2>
+              <h2 className="text-center text-white">Vencedores Tema 1</h2>
               <h2 className="text-white">1º Lugar - 300€</h2>
             </div>
             <div className="mt-4 flex flex-col items-center ">
-              <h2 className="text-white text-center">Vencedores Tema 2</h2>
+              <h2 className="text-center text-white">Vencedores Tema 2</h2>
               <h2 className="text-white">1º Lugar - 300€</h2>
             </div>
             <div className="mt-4 flex flex-col items-center">
-              <h2 className="text-white text-center">Vencedores Tema 3</h2>
+              <h2 className="text-center text-white">Vencedores Tema 3</h2>
               <h2 className="text-white">1º Lugar - 300€</h2>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function Podium() {
       <div className="mt-10 flex w-1/3 flex-col items-center xl:mt-0">
         <h1 className="text-4xl text-secondary">Sponsors</h1>
         <div className="flex flex-row items-center xl:flex-col">
-          <div className="flex flex-col items-center mr-2 xl:mb-10 xl:mt-10 xl:flex-row">
+          <div className="mr-2 flex flex-col items-center xl:mb-10 xl:mt-10 xl:flex-row">
             <h2 className="text-center">Sponsor Exclusive</h2>
             <Lottie
               animationData={ampulheta}
@@ -73,7 +73,7 @@ export default function Podium() {
               style={{ width: "50px", height: "50px" }}
             />
           </div>
-          <div className="flex flex-col items-center mr-2 xl:mb-10 xl:mt-10 xl:flex-row">
+          <div className="mr-2 flex flex-col items-center xl:mb-10 xl:mt-10 xl:flex-row">
             <h2 className="text-center">Sponsor Gold</h2>
             <Lottie
               animationData={ampulheta}
@@ -82,7 +82,7 @@ export default function Podium() {
               style={{ width: "50px", height: "50px" }}
             />
           </div>
-          <div className="flex flex-col items-center mr-2 xl:mb-10 xl:mt-10 xl:flex-row">
+          <div className="mr-2 flex flex-col items-center xl:mb-10 xl:mt-10 xl:flex-row">
             <h2 className="text-center">Sponsor Gold</h2>
             <Lottie
               animationData={ampulheta}
