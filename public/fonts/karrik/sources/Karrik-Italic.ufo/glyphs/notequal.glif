@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="notequal" format="2">
+  <advance width="688"/>
+  <unicode hex="2260"/>
+  <outline>
+    <contour>
+      <point x="22" y="0" type="line"/>
+      <point x="126" y="0" type="line"/>
+      <point x="251" y="142" type="line"/>
+      <point x="585" y="142" type="line"/>
+      <point x="619" y="261" type="line"/>
+      <point x="355" y="261" type="line"/>
+      <point x="479" y="402" type="line"/>
+      <point x="659" y="402" type="line"/>
+      <point x="693" y="521" type="line"/>
+      <point x="583" y="521" type="line"/>
+      <point x="723" y="680" type="line"/>
+      <point x="619" y="680" type="line"/>
+      <point x="479" y="521" type="line"/>
+      <point x="145" y="521" type="line"/>
+      <point x="111" y="402" type="line"/>
+      <point x="375" y="402" type="line"/>
+      <point x="251" y="261" type="line"/>
+      <point x="71" y="261" type="line"/>
+      <point x="37" y="142" type="line"/>
+      <point x="147" y="142" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Edotaccent.three" format="2">
+  <advance width="558"/>
+  <outline>
+    <component base="E.three"/>
+    <component base="dotaccent.cap" xOffset="29"/>
+  </outline>
+</glyph>

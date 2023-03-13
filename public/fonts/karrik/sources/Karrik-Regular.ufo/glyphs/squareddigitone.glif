@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="squareddigitone" format="2">
+  <advance width="820"/>
+  <outline>
+    <contour>
+      <point x="70" y="0" type="line"/>
+      <point x="750" y="0" type="line"/>
+      <point x="750" y="680" type="line"/>
+      <point x="70" y="680" type="line"/>
+    </contour>
+    <contour>
+      <point x="160" y="90" type="line"/>
+      <point x="160" y="590" type="line"/>
+      <point x="660" y="590" type="line"/>
+      <point x="660" y="90" type="line"/>
+    </contour>
+    <contour>
+      <point x="280" y="155" type="line"/>
+      <point x="543" y="155" type="line"/>
+      <point x="543" y="227" type="line"/>
+      <point x="457" y="227" type="line"/>
+      <point x="457" y="545" type="line"/>
+      <point x="390" y="545" type="line"/>
+      <point x="382" y="513"/>
+      <point x="371" y="482"/>
+      <point x="278" y="475" type="curve"/>
+      <point x="278" y="415" type="line"/>
+      <point x="372" y="415" type="line"/>
+      <point x="372" y="227" type="line"/>
+      <point x="280" y="227" type="line"/>
+    </contour>
+  </outline>
+</glyph>

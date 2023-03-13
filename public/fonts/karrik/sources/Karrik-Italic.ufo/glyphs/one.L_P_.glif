@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="one.LP" format="2">
+  <advance width="370"/>
+  <outline>
+    <contour>
+      <point x="86" y="0" type="line"/>
+      <point x="206" y="0" type="line"/>
+      <point x="400" y="680" type="line"/>
+      <point x="310" y="680" type="line"/>
+      <point x="283" y="620"/>
+      <point x="240" y="570"/>
+      <point x="90" y="570" type="curve"/>
+      <point x="67" y="490" type="line"/>
+      <point x="226" y="490" type="line"/>
+    </contour>
+  </outline>
+</glyph>

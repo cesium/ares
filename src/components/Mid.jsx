@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function Mid() {
     return (
         <div className="max-w-screen-lg color">
-            <div className="flex space-between text-4xl text-white items-center justify-end h-screen w-screen">
+            <div className="flex space-between text-4xl text-white items-center justify-end h-screen w-screen font-karrik-normal">
                 <div className="mr-auto p-16 w-4/5">
                     <p className="text-4xl text-white">Mais um ano, mais uma Hackathon incrível… <br/>
                         E desta vez, o CeSIUM preparou a melhor que já viste, a BugsByte!

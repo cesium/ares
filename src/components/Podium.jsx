@@ -20,7 +20,7 @@ export default function Podium() {
             </div>
         </div>
         <div className="flex flex-col items-center w-1/3">
-            <h1 className="text-secondary">Prémios</h1>
+            <h1 className="text-secondary">Prémios por Equipa</h1>
             <div className="flex flex-col mb-10 mt-10 items-center">
                 <h2 className="text-white">Vencedores Gerais</h2>
                 <h2 className="text-white">1º Lugar - 600€</h2>

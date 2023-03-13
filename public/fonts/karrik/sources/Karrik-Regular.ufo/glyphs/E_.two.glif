@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="E.two" format="2">
+  <advance width="608"/>
+  <outline>
+    <contour>
+      <point x="86" y="0" type="line"/>
+      <point x="552" y="0" type="line"/>
+      <point x="552" y="113" type="line"/>
+      <point x="205" y="113" type="line"/>
+      <point x="205" y="295" type="line"/>
+      <point x="461" y="295" type="line"/>
+      <point x="461" y="408" type="line"/>
+      <point x="205" y="408" type="line"/>
+      <point x="205" y="567" type="line"/>
+      <point x="552" y="567" type="line"/>
+      <point x="552" y="680" type="line"/>
+      <point x="86" y="680" type="line"/>
+    </contour>
+  </outline>
+</glyph>

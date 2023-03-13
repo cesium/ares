@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Lacute.three" format="2">
+  <advance width="624"/>
+  <outline>
+    <component base="L.three"/>
+    <component base="acute.cap" xOffset="-90"/>
+  </outline>
+</glyph>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="approxequal" format="2">
+  <advance width="688"/>
+  <unicode hex="2248"/>
+  <guideline x="151" y="461" angle="74.0" identifier="cU6UybOriD"/>
+  <outline>
+    <component base="asciitilde" xOffset="29" yOffset="100"/>
+    <component base="asciitilde" xOffset="-27" yOffset="-100"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.guideline.magnetic.cU6UybOriD</key>
+      <real>5.0</real>
+    </dict>
+  </lib>
+</glyph>

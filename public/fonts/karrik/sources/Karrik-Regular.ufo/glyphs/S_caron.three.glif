@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Scaron.three" format="2">
+  <advance width="589"/>
+  <outline>
+    <component base="S.three"/>
+    <component base="caron.cap" xOffset="44"/>
+  </outline>
+</glyph>

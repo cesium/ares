@@ -15,6 +15,8 @@ module.exports = {
       },
       fontFamily:{
         terminal: ["Terminal"],
+        alarm: ["Alarm Clock"],
+        karrik: ["Karrik"],
       },
       colors: {
         primary: '#000000',

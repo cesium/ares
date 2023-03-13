@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="germandbls.cap" format="2">
+  <advance width="1176"/>
+  <guideline x="647" y="201" angle="0" identifier="hypWHH8kcr"/>
+  <outline>
+    <component base="S"/>
+    <component base="S" xOffset="588"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.guideline.magnetic.hypWHH8kcr</key>
+      <real>5.0</real>
+    </dict>
+  </lib>
+</glyph>

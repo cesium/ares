@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="N.two" format="2">
+  <advance width="681"/>
+  <outline>
+    <contour>
+      <point x="86" y="0" type="line"/>
+      <point x="205" y="0" type="line"/>
+      <point x="205" y="512" type="line"/>
+      <point x="527" y="0" type="line"/>
+      <point x="595" y="0" type="line"/>
+      <point x="596" y="103" type="line"/>
+      <point x="595" y="105" type="line"/>
+      <point x="595" y="680" type="line"/>
+      <point x="476" y="680" type="line"/>
+      <point x="476" y="297" type="line"/>
+      <point x="240" y="680" type="line"/>
+      <point x="86" y="680" type="line"/>
+    </contour>
+  </outline>
+</glyph>

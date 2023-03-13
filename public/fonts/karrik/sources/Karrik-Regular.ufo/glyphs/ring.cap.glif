@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="ring.cap" format="2">
+  <advance width="500"/>
+  <anchor x="250.0" y="430.0" name="_top"/>
+  <outline>
+    <contour>
+      <point x="250" y="730" type="curve" smooth="yes"/>
+      <point x="317" y="730"/>
+      <point x="373" y="787"/>
+      <point x="373" y="855" type="curve" smooth="yes"/>
+      <point x="373" y="923"/>
+      <point x="317" y="979"/>
+      <point x="250" y="979" type="curve" smooth="yes"/>
+      <point x="182" y="979"/>
+      <point x="128" y="923"/>
+      <point x="128" y="855" type="curve" smooth="yes"/>
+      <point x="128" y="787"/>
+      <point x="182" y="730"/>
+    </contour>
+    <contour>
+      <point x="247" y="800" type="curve" smooth="yes"/>
+      <point x="218" y="800"/>
+      <point x="193" y="825"/>
+      <point x="193" y="855" type="curve" smooth="yes"/>
+      <point x="193" y="884"/>
+      <point x="218" y="907"/>
+      <point x="247" y="907" type="curve" smooth="yes"/>
+      <point x="277" y="907"/>
+      <point x="301" y="884"/>
+      <point x="301" y="855" type="curve" smooth="yes"/>
+      <point x="301" y="825"/>
+      <point x="277" y="800"/>
+    </contour>
+  </outline>
+</glyph>
