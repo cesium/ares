@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="H.two" format="2">
+  <advance width="676"/>
+  <outline>
+    <contour>
+      <point x="75" y="8" type="line"/>
+      <point x="194" y="5" type="line"/>
+      <point x="203" y="296" type="line"/>
+      <point x="469" y="288" type="line"/>
+      <point x="460" y="-4" type="line"/>
+      <point x="579" y="-8" type="line"/>
+      <point x="601" y="672" type="line"/>
+      <point x="482" y="675" type="line"/>
+      <point x="473" y="406" type="line"/>
+      <point x="207" y="414" type="line"/>
+      <point x="216" y="684" type="line"/>
+      <point x="97" y="688" type="line"/>
+    </contour>
+  </outline>
+</glyph>

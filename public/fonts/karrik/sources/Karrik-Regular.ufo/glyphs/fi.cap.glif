@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="fi.cap" format="2">
+  <advance width="782"/>
+  <outline>
+    <component base="F"/>
+    <component base="I" xOffset="491"/>
+  </outline>
+</glyph>

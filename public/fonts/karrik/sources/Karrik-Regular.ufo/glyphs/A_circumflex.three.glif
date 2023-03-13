@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Acircumflex.three" format="2">
+  <advance width="570"/>
+  <outline>
+    <component base="A.three"/>
+    <component base="circumflex.cap" xOffset="58"/>
+  </outline>
+</glyph>
