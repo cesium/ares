@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react';
-import ampulheta from '/home/mario/Cesium/ares/public/ampulheta.json';
+import ampulheta from "public/ampulheta.json";
 
 export default function Podium() {
     return(
