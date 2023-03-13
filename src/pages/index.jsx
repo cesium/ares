@@ -24,8 +24,8 @@ export default function Home() {
           <Podium />
         </div>
         <div className="snap-center">
-          <div className="space-between font-terminal-uppercase flex h-screen w-screen w-screen flex-col justify-center p-8 text-4xl text-white">
-            <h1 className="text-secondary">FAQs</h1>
+          <div className="space-between font-terminal-uppercase sm:h-screen-sm lg:h-screen-lg xl:h-screen-xl flex h-screen w-screen flex-col justify-center p-8 text-lg text-white lg:text-2xl xl:text-4xl">
+            <h1 className="text-4xl text-secondary">FAQs</h1>
             {faqs.map((faq, index) => (
               <Faqs key={index} faq={faq} />
             ))}

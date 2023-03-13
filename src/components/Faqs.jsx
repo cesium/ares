@@ -12,7 +12,7 @@ export default function Faqs({ faq }) {
   return (
     <div
       onClick={toggleFaq}
-      className="bg-gray1 border-gray2 hover:border-purple mt-10 cursor-pointer rounded-lg border px-4 py-6 shadow-sm"
+      className="mt-10 cursor-pointer rounded-lg border px-4 py-6 shadow-sm hover:border-secondary"
     >
       <div>
         {isOpen ? (
@@ -28,7 +28,11 @@ export default function Faqs({ faq }) {
         )}
         <span className="font-semibold text-white">{faq.question}</span>
       </div>
-      {isOpen && <div className="mt-2 text-2xl text-white">{faq.answer}</div>}
+      {isOpen && (
+        <div className="mt-2 text-base text-white xl:text-2xl">
+          {faq.answer}
+        </div>
+      )}
     </div>
   );
 }
