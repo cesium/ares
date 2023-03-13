@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import CountdownTimer from "../components/CountdownTimer";
 import { useEffect, useMemo, useState } from "react";
+import gub from "../../public/gub.png";
 
 const TextVariants = {
   offscreen: {
@@ -30,7 +31,7 @@ export default function Top() {
 
   const dateInFuture = NOW_IN_MS + FUTURE_DATE;
   const texts = useMemo(() => ["BugsByte Hackathon"], []);
-
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [currentWord, setCurrentWord] = useState(-1);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function Top() {
       width: 50,
       x: mousePosition.x - 50,
       y: mousePosition.y - 50,
-      backgroundColor: "green",
+      background: "green",
       mixBlendMode: "difference",
       borderRadius: "50%",
     },
@@ -87,8 +88,7 @@ export default function Top() {
       width: 50,
       x: mousePosition.x - 50,
       y: mousePosition.y - 50,
-      backgroundColor: "green",
-      mixBlendMode: "difference",
+      background: "green",
       borderRadius: "50%",
     },
   };
