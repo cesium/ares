@@ -8,16 +8,16 @@ export default function Footer() {
         alt="Logo"
         width={60}
         height={20}
-        className="mr-auto justify-start"
+        className="mr-auto h-10 w-10 justify-start text-white hover:text-secondary"
         href="https://cesium.di.uminho.pt"
       />
       <div className="flex flex-row justify-end">
         <Image
           src="/logos/facebook.svg"
           alt="Logo"
-          width={65}
+          width={60}
           height={20}
-          className="mr-4"
+          className="mr-4 h-10 w-10 text-white hover:text-secondary"
           href="https://www.facebook.com/cesiuminho"
         />
         <Image
@@ -25,7 +25,7 @@ export default function Footer() {
           alt="Logo"
           width={65}
           height={20}
-          className="mr-4"
+          className="mr-4 h-10 w-10 text-white hover:text-secondary"
           href="https://www.instagram.com/cesiuminho/"
         />
         <Image
@@ -33,6 +33,7 @@ export default function Footer() {
           alt="Logo"
           width={80}
           height={60}
+          className="mr-4 h-10 w-10 text-white hover:text-secondary"
           href="https://twitter.com/cesiuminho"
         />
       </div>

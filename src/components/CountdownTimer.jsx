@@ -13,7 +13,7 @@ const ExpiredNotice = () => {
 
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
   return (
-    <div className="font-alarmclock-uppercase p-4 text-center text-6xl text-white">
+    <div className="font-alarmclock-uppercase p-4 text-center text-4xl text-white xl:text-7xl">
       <a
         target="_blank"
         rel="noopener noreferrer"

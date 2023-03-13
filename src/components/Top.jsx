@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import CountdownTimer from "../components/CountdownTimer";
 import { useEffect, useMemo, useState } from "react";
+import gub from "../../public/gub.png";
 
 const TextVariants = {
   offscreen: {
@@ -30,7 +31,7 @@ export default function Top() {
 
   const dateInFuture = NOW_IN_MS + FUTURE_DATE;
   const texts = useMemo(() => ["BugsByte Hackathon"], []);
-
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [currentWord, setCurrentWord] = useState(-1);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function Top() {
       width: 50,
       x: mousePosition.x - 50,
       y: mousePosition.y - 50,
-      backgroundColor: "green",
+      background: "green",
       mixBlendMode: "difference",
       borderRadius: "50%",
     },
@@ -87,8 +88,7 @@ export default function Top() {
       width: 50,
       x: mousePosition.x - 50,
       y: mousePosition.y - 50,
-      backgroundColor: "green",
-      mixBlendMode: "difference",
+      background: "green",
       borderRadius: "50%",
     },
   };
@@ -105,7 +105,7 @@ export default function Top() {
       />
       <div onMouseEnter={textEnter} onMouseLeave={textLeave}>
         <motion.div
-          className="h-screen max-h-screen overflow-hidden bg-hero text-white"
+          className="sm:h-screen-sm md:h-screen-md lg:h-screen-lg xl:h-screen-xl h-screen max-h-screen overflow-hidden bg-hero text-white"
           initial="hidden"
           animate="visible"
           variants={container}
@@ -115,7 +115,7 @@ export default function Top() {
           whileFocus={{ textShadow: "0px 0px 8px rgb(0,230,0)" }}
         >
           <motion.span
-            className="flex h-screen flex-col items-center justify-center text-9xl text-secondary"
+            className="flex h-screen flex-col items-center justify-center text-4xl text-secondary xl:text-9xl"
             transition={{ staggerChildren: 2 }}
             whileHover={{
               textShadow: "0px 0px 8px rgb(0,230,0)",
