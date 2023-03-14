@@ -3,7 +3,7 @@ import ampulheta from "public/ampulheta.json";
 
 export default function Podium() {
   return (
-    <div className="space-between font-terminal-uppercase lg:h-screen-lg xl:h-screen-xl flex h-screen w-screen flex-col items-center justify-center text-base text-white lg:flex-row lg:text-2xl xl:flex-row xl:text-4xl">
+    <div className="space-between font-terminal-uppercase lg:h-screen-lg xl:h-screen-xl flex h-screen h-screen w-screen flex-col items-center justify-center text-base text-white lg:flex-row lg:text-2xl xl:flex-row xl:text-4xl">
       <div className="mt-10 flex flex flex-col items-center xl:mt-0 xl:w-1/3">
         <h1 className="text-4xl text-secondary">Temas:</h1>
         <div className="flex flex-row items-center xl:mb-10 xl:mt-10 xl:flex-col">
