@@ -112,7 +112,7 @@ export default function Top() {
           whileFocus={{ textShadow: "0px 0px 8px rgb(0,230,0)" }}
         >
           <motion.span
-            className="flex h-screen flex-col items-center justify-center text-4xl text-secondary xl:text-9xl"
+            className="flex h-screen flex-col items-center justify-center text-3xl text-secondary xl:text-9xl"
             transition={{ staggerChildren: 2 }}
             whileHover={{
               textShadow: "0px 0px 8px rgb(0,230,0)",
