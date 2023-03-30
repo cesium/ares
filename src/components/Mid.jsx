@@ -25,6 +25,13 @@ export default function Mid() {
               Junta-te a nós
             </a>
           </p>
+          <p className="font-terminal-uppercase mt-10 text-white">
+            <a
+                href="https://docs.google.com/document/d/1dU067mzAgKlQgWi8KmCU1NOB_3CXv0BQ/edit?usp=sharing&ouid=110961621646848422841&rtpof=true&sd=true"
+              >
+                Regulamento
+              </a>
+          </p>
         </div>
         <div className="ml-auto hidden xl:block">
           <Image src="/bicho.png" alt="CeSIUM Logo" width={600} height={800} />
