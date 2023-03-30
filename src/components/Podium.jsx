@@ -53,23 +53,24 @@ export default function Podium() {
               <h2 className="text-white">1º Lugar</h2>
               <div className="flex flex-col items-center justify-center">
                 <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5"/>
-              </div> 
+                <Image src={subvisual} alt="subvisual" className="w-4/5" />
+              </div>
             </div>
             <div className="mt-4 flex flex-col items-center ">
               <h2 className="text-center text-white">Vencedores Tema 2</h2>
               <h2 className="text-white">1º Lugar</h2>
               <div className="flex flex-col items-center justify-center">
                 <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5"/>
-              </div>            </div>
+                <Image src={subvisual} alt="subvisual" className="w-4/5" />
+              </div>{" "}
+            </div>
             <div className="mt-4 flex flex-col items-center">
               <h2 className="text-center text-white">Vencedores Tema 3</h2>
               <h2 className="text-white">1º Lugar</h2>
               <div className="flex flex-col items-center justify-center">
                 <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5"/>
-              </div>            
+                <Image src={subvisual} alt="subvisual" className="w-4/5" />
+              </div>
             </div>
           </div>
         </div>
@@ -77,8 +78,10 @@ export default function Podium() {
       <div className="mt-10 flex w-1/3 flex-col items-center xl:mt-0">
         <div className="flex flex-row items-center justify-center xl:flex-col">
           <div className="mr-2 flex flex-col items-center justify-center xl:mb-10 xl:mt-10">
-            <h2 className="text-center w-max text-secondary">Sponsor Exclusive</h2>
-            <Image src={subvisual} alt="subvisual" className="mt-5"/>
+            <h2 className="w-max text-center text-secondary">
+              Sponsor Exclusive
+            </h2>
+            <Image src={subvisual} alt="subvisual" className="mt-5" />
           </div>
         </div>
       </div>

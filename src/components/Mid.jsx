@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import bicho from "/public/bicho.png";
 export default function Mid() {
   return (
     <div className="max-w-screen-lg">
@@ -26,15 +26,13 @@ export default function Mid() {
             </a>
           </p>
           <p className="font-terminal-uppercase mt-10 text-white">
-            <a
-                href="https://docs.google.com/document/d/1dU067mzAgKlQgWi8KmCU1NOB_3CXv0BQ/edit?usp=sharing&ouid=110961621646848422841&rtpof=true&sd=true"
-              >
-                Regulamento
-              </a>
+            <a href="https://docs.google.com/document/d/1dU067mzAgKlQgWi8KmCU1NOB_3CXv0BQ/edit?usp=sharing&ouid=110961621646848422841&rtpof=true&sd=true">
+              Regulamento
+            </a>
           </p>
         </div>
         <div className="ml-auto hidden xl:block">
-          <Image src="/bicho.png" alt="CeSIUM Logo" width={600} height={800} />
+          <Image src={bicho} alt="CeSIUM Logo" width={600} height={800} />
         </div>
       </div>
     </div>
