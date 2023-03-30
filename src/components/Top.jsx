@@ -26,7 +26,7 @@ const letterHoverVariants = {
 
 export default function Top() {
   // Event fisrt day date
-  const targetDate = new Date("2023-03-31").getTime();
+  const targetDate = new Date("2023-03-31").setHours(18);
 
   const texts = useMemo(() => ["BugsByte Hackathon"], []);
   const [currentWord, setCurrentWord] = useState(-1);
