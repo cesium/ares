@@ -75,10 +75,9 @@ export default function Podium() {
         </div>
       </div>
       <div className="mt-10 flex w-1/3 flex-col items-center xl:mt-0">
-        <h1 className="text-4xl text-secondary">Sponsors</h1>
         <div className="flex flex-row items-center justify-center xl:flex-col">
           <div className="mr-2 flex flex-col items-center justify-center xl:mb-10 xl:mt-10">
-            <h2 className="text-center w-max">Sponsor Exclusive</h2>
+            <h2 className="text-center w-max text-secondary">Sponsor Exclusive</h2>
             <Image src={subvisual} alt="subvisual" className="mt-5"/>
           </div>
         </div>
