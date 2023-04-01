@@ -10,31 +10,13 @@ export default function Podium() {
         <h1 className="text-4xl text-secondary">Temas:</h1>
         <div className="flex flex-row items-center xl:mb-10 xl:mt-10 xl:flex-col">
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10">
-            <h2 className="">Tema 1</h2>
-            <Lottie
-              animationData={ampulheta}
-              loop={true}
-              autoplay={true}
-              style={{ width: "50px", height: "50px" }}
-            />
+            <h2 className="">Tema 1 - Web3</h2>
           </div>
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10">
-            <h2 className="">Tema 2</h2>
-            <Lottie
-              animationData={ampulheta}
-              loop={true}
-              autoplay={true}
-              style={{ width: "50px", height: "50px" }}
-            />
+            <h2 className="">Tema 2 - Gaming</h2>
           </div>
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10">
-            <h2 className="">Tema 3</h2>
-            <Lottie
-              animationData={ampulheta}
-              loop={true}
-              autoplay={true}
-              style={{ width: "50px", height: "50px" }}
-            />
+            <h2 className="">Tema 3 - Educação</h2>
           </div>
         </div>
       </div>

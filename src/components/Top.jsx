@@ -142,7 +142,6 @@ export default function Top() {
                 </motion.span>
               ) : null
             )}
-            <CountdownTimer targetDate={targetDate} />
           </motion.span>
         </motion.div>
       </div>
