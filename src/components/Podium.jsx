@@ -25,9 +25,9 @@ export default function Podium() {
         <div className="flex flex-col items-center xl:mb-10">
           <div className="flex flex-col items-center xl:mb-10 xl:mt-10 ">
             <h2 className="text-white">Vencedores Gerais</h2>
-            <h2 className="text-white mt-4">1º Lugar - TINC</h2>
-            <h2 className="text-white mt-4">2º Lugar - QuadraTable</h2>
-            <h2 className="text-white mt-4">3º Lugar - Los Passaritos</h2>
+            <h2 className="mt-4 text-white">1º Lugar - TINC</h2>
+            <h2 className="mt-4 text-white">2º Lugar - QuadraTable</h2>
+            <h2 className="mt-4 text-white">3º Lugar - Los Passaritos</h2>
           </div>
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10 xl:flex-col">
             <div className="mt-4 flex flex-col items-center">
@@ -35,7 +35,9 @@ export default function Podium() {
               <h2 className="text-white">TINC</h2>
             </div>
             <div className="mt-4 flex flex-col items-center ">
-              <h2 className="text-center text-white">Vencedores Tema Educação</h2>
+              <h2 className="text-center text-white">
+                Vencedores Tema Educação
+              </h2>
               <h2 className="text-white">Los Passaritos</h2>
             </div>
             <div className="mt-4 flex flex-col items-center">
