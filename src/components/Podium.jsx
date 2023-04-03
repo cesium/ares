@@ -25,34 +25,24 @@ export default function Podium() {
         <div className="flex flex-col items-center xl:mb-10">
           <div className="flex flex-col items-center xl:mb-10 xl:mt-10 ">
             <h2 className="text-white">Vencedores Gerais</h2>
-            <h2 className="text-white">1º Lugar - 600€</h2>
-            <h2 className="text-white">2º Lugar - 400€</h2>
-            <h2 className="text-white">3º Lugar - 200€</h2>
+            <h2 className="mt-4 text-white">1º Lugar - TINC</h2>
+            <h2 className="mt-4 text-white">2º Lugar - QuadraTable</h2>
+            <h2 className="mt-4 text-white">3º Lugar - Los Passaritos</h2>
           </div>
           <div className="flex flex-row items-center xl:mb-10 xl:mt-10 xl:flex-col">
             <div className="mt-4 flex flex-col items-center">
-              <h2 className="text-center text-white">Vencedores Tema 1</h2>
-              <h2 className="text-white">1º Lugar</h2>
-              <div className="flex flex-col items-center justify-center">
-                <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5" />
-              </div>
+              <h2 className="text-center text-white">Vencedores Tema Web3</h2>
+              <h2 className="text-white">TINC</h2>
             </div>
             <div className="mt-4 flex flex-col items-center ">
-              <h2 className="text-center text-white">Vencedores Tema 2</h2>
-              <h2 className="text-white">1º Lugar</h2>
-              <div className="flex flex-col items-center justify-center">
-                <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5" />
-              </div>{" "}
+              <h2 className="text-center text-white">
+                Vencedores Tema Educação
+              </h2>
+              <h2 className="text-white">Los Passaritos</h2>
             </div>
             <div className="mt-4 flex flex-col items-center">
-              <h2 className="text-center text-white">Vencedores Tema 3</h2>
-              <h2 className="text-white">1º Lugar</h2>
-              <div className="flex flex-col items-center justify-center">
-                <span>Prémio</span>
-                <Image src={subvisual} alt="subvisual" className="w-4/5" />
-              </div>
+              <h2 className="text-center text-white">Vencedores Tema Gaming</h2>
+              <h2 className="text-white">Hack a ton of Nuts</h2>
             </div>
           </div>
         </div>
