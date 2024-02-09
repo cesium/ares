@@ -1,0 +1,98 @@
+---
+import HeroImage from "./hero-image.astro";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import gubImage from "~/assets/Bicho.svg";
+import Starfield from "~/components/starfield.astro";
+---
+
+<section class="relative h-full bg-black overflow-y-hidden select-none">
+  <Starfield />
+  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
+    <HeroImage/>
+  </div>
+  <div class="z-1 absolute top-56 -left-56 sm:left-auto sm:right-10 sm:top-0 sm:justify-center">
+    <Image
+      class="object-cover h-3/4 "
+      src={gubImage}
+      width="500"
+      loading="eager"
+      alt="A floating gub"
+    />
+  </div>
+  <div class="z-0 relative grid h-1/2 top-36 sm:top-auto sm:h-full sm:left-10 xl:left-48 sm:w-1/2">
+    <div class="flex flex-col items-center gap-2 sm:gap-4 sm:justify-center sm:self-auto">
+      <div class="tracking-tighter text-5xl sm:text-7xl text-center">
+        <h2 class="text-left text-4xl tracking-wider">HACKATHON</h2>
+        <h1 class="tracking-wide">BUGSBYTE</h1>
+        <p class="text-left tracking-wide text-3xl">
+          5 - 7 ABRIL
+        </p>
+      </div>
+      <div class="flex flex-row sm:hidden">
+        <Icon name="logo-cesium" class="h-1/2 size-96" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<noscript>
+  <style>
+    #splash-bg-fallback {
+      display: block;
+    }
+  </style>
+</noscript>
+
+<style>
+  @keyframes float {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+      transform: translate3d(0, 30px, 0);
+    }
+  }
+
+  #astronaut {
+    animation: float linear 2.5s infinite alternate;
+  }
+
+  @font-face {
+    font-family: 'Resegrg';
+    src: url('/fonts/Resegrg.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'VT323';
+    src: url('/fonts/VT323-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  h1{
+    font-family: "Resegrg", serif;
+  }
+  h2{
+    font-family: 'VT323', monospace;
+  }
+  p{
+    font-family: 'VT323', monospace;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #astronaut {
+      @apply animate-none;
+    }
+
+    :global(#starfield) {
+      @apply hidden;
+    }
+
+    #splash-bg-fallback {
+      @apply block;
+    }
+  }
+</style>
