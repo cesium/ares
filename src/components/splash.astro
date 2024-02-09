@@ -3,11 +3,9 @@ import HeroImage from "./hero-image.astro";
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import gubImage from "~/assets/Bicho.svg";
-import Starfield from "~/components/starfield.astro";
 ---
 
 <section class="relative h-full bg-black overflow-y-hidden select-none">
-  <Starfield />
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
     <HeroImage/>
   </div>
