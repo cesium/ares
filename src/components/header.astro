@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
+import Image from "astro/components/Image.astro";
 import type { NavItem } from "~/types";
+import cesiumImage from "~/assets/cesium.svg";
 
 const navItems: Array<NavItem> = [
   // { title: "Instagram", url: "https://www.instagram.com/bugs.byte/" },
@@ -14,7 +16,7 @@ const navItems: Array<NavItem> = [
   class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white select-none"
 >
   <a class="h-10 flex items-center hover:!text-default" href="#">
-    <img src="/src/icons/logo-cesium.svg" class="w-40 hidden sm:block" />
+    <Image alt="cesium" src={cesiumImage} class="w-40 hidden sm:block" />
   </a>
   <div>
     <div class="flex items-center gap-6">
