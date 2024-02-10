@@ -1,15 +1,15 @@
 ---
-import { Image } from "astro:assets";
-import moonImage from "~/assets/texture-lab.jpg";
+import { Picture } from "astro:assets";
+import background from "~/assets/texture-lab.jpg";
 
 const widths = [450, 800, 1200];
 const sizes = "100vw";
 ---
 
-<Image
+<Picture
   class="h-full w-full object-cover"
-  src={moonImage}
+  src={background}
   widths={widths}
   sizes={sizes}
-  alt="The ridged surface of the moon"
+  alt=""
 />
