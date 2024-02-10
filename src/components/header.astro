@@ -3,17 +3,18 @@ import { Icon } from "astro-icon/components";
 import type { NavItem } from "~/types";
 
 const navItems: Array<NavItem> = [
-  // { title: "Instagram", url: "https://www.instagram.com/bugs.byte/" },
-  // { title: "Inscrições", url: "#compatibility" },
-  // { title: "Prémios", url: "#showcase" },
+  { title: "Edição anterior", url: "https://2023.bugsbyte.org/" },
 ];
 ---
 
 <header
   id="page-header"
-  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white select-none"
+  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white"
 >
-  <Icon name="logo-cesium" class="hidden sm:block object-fill w-36 h-16" />
+  <a class="flex items-center gap-3 hover:!text-default" href="#">
+    <h1 class="sr-only">CeSIUM</h1>
+    <Icon name="logo-cesium" class="hidden sm:block object-fill w-36 h-16" />
+  </a>
   <div>
     <div class="flex items-center gap-6">
       <nav class="hidden sm:block">
@@ -35,8 +36,7 @@ const navItems: Array<NavItem> = [
         class="btn sm:hidden"
         aria-label="Navigation"
       >
-        <!-- TODO: uncomment this -->
-        <!-- <Icon name="mdi:menu" class="size-8" /> -->
+        <Icon name="mdi:menu" class="size-8" />
       </button>
     </div>
     <div id="menu-modal" class="modal hidden" aria-hidden="true">

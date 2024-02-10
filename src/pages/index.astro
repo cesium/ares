@@ -10,8 +10,7 @@ import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
 const { generator, site } = Astro;
-const description =
-  "The best place to grow ideas from the ground";
+const description = "The best place to grow ideas from the ground";
 ---
 
 <!doctype html>
@@ -29,9 +28,10 @@ const description =
     <meta property="og:title" content="Hackathon BugsByte" />
     <meta property="og:type" content="website" />
     <meta property="og:description" content={description} />
-
   </head>
-  <body class="h-screen overflow-x-hidden bg-black text-default text-base selection:bg-secondary selection:text-white">
+  <body
+    class="h-screen overflow-x-hidden bg-black text-default text-base selection:bg-secondary selection:text-white"
+  >
     <Header />
     <Splash />
     <!-- TODO: add the rest of features -->
