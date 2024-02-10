@@ -10,7 +10,8 @@ import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
 const { generator, site } = Astro;
-const image = new URL("social.jpg", site);
+const description =
+  "The best place to grow ideas from the ground";
 ---
 
 <!doctype html>
@@ -22,12 +23,12 @@ const image = new URL("social.jpg", site);
     <meta name="generator" content={generator} />
 
     <title>Hackathon BugsByte</title>
+    <meta name="description" content={description} />
 
     <!-- social media -->
     <meta property="og:title" content="Hackathon BugsByte" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={site} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:description" content={description} />
 
   </head>
   <body class="h-screen overflow-x-hidden bg-black text-default text-base selection:bg-secondary selection:text-white">
