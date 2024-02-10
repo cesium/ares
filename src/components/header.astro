@@ -13,7 +13,7 @@ const navItems: Array<NavItem> = [
   id="page-header"
   class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white select-none"
 >
-  <Icon name="logo-cesium" class=" object-fill w-36 h-16" />
+  <Icon name="logo-cesium" class="hidden sm:block object-fill w-36 h-16" />
   <div>
     <div class="flex items-center gap-6">
       <nav class="hidden sm:block">
@@ -38,8 +38,6 @@ const navItems: Array<NavItem> = [
         <!-- TODO: uncomment this -->
         <!-- <Icon name="mdi:menu" class="size-8" /> -->
       </button>
-      <!-- TODO: remove this -->
-      <!-- <ThemeSwitcher /> -->
     </div>
     <div id="menu-modal" class="modal hidden" aria-hidden="true">
       <div class="fixed inset-0 bg-black px-8 py-4 text-default">
