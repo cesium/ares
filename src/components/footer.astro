@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 import type { FooterLink } from "~/types";
 import { Image } from "astro:assets";
 
-import background from "/public/background.jpg";
+import background from "/public/footer-background.png";
 
 const links: Array<FooterLink> = [
   {
@@ -20,7 +20,7 @@ const links: Array<FooterLink> = [
 ---
 
 <footer class="relative flex h-48 items-center justify-center">
-  <div class="absolute inset-0 overflow-hidden opacity-40">
+  <div class="absolute inset-0 overflow-hidden opacity-60">
     <Image
       class="h-full w-full object-cover opacity-40"
       src={background}
