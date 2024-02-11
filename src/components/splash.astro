@@ -2,11 +2,12 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import gubImage from "~/assets/Bicho.svg";
+import background from "/public/background.jpg"
 ---
 
 <section class="relative h-full bg-black overflow-y-hidden select-none">
-  <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
-    <img src="/background.jpg" class="h-full w-full object-cover" />
+  <div id="splash-bg-fallback" class="absolute inset-0 opacity-40">
+    <Image class="h-full w-full object-cover" src={background} alt="background"/>
   </div>
   <div
     class="z-1 absolute top-56 -left-56 sm:left-auto sm:right-10 sm:top-0 sm:justify-center"
