@@ -10,16 +10,21 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write **/*.astro .",
-    "clean": "rimraf dist .astro node_modules"
+    "clean": "rimraf dist .astro node_modules",
+    "lint": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\" && eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\""
   },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",
     "@iconify-json/fa-brands": "^1.1.8",
     "@iconify-json/mdi": "^1.1.64",
     "@types/micromodal": "^0.3.5",
+    "@typescript-eslint/parser": "^6.21.0",
     "astro": "^4.1.1",
     "astro-icon": "^1.0.2",
-    "prettier": "^3.1.1",
+    "eslint": "^8.56.0",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-plugin-astro": "^0.31.4",
+    "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.12.3",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "rimraf": "^5.0.5",

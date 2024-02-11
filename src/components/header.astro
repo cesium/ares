@@ -3,19 +3,18 @@ import { Icon } from "astro-icon/components";
 import type { NavItem } from "~/types";
 
 const navItems: Array<NavItem> = [
-  // { title: "Instagram", url: "https://www.instagram.com/bugs.byte/" },
-  // { title: "Inscrições", url: "#compatibility" },
-  // { title: "Prémios", url: "#showcase" },
+  { title: "Previous edition", url: "https://2023.bugsbyte.org/" },
 ];
 ---
 
 <header
   id="page-header"
-  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white select-none"
+  class="absolute bottom-0 z-20 flex w-full items-center justify-between border-b border-transparent px-8 py-4 text-white"
 >
-  <a class="h-10 flex items-center hover:!text-default" href="#">
-    <img src="/src/icons/logo-cesium.svg" class="w-40 hidden sm:block" />
-  </a>
+  <div class="flex items-center gap-3 hover:!text-default">
+    <h1 class="sr-only">CeSIUM</h1>
+    <Icon name="logo-cesium" class="hidden sm:block object-fill w-36 h-16" />
+  </div>
   <div>
     <div class="flex items-center gap-6">
       <nav class="hidden sm:block">
@@ -37,11 +36,8 @@ const navItems: Array<NavItem> = [
         class="btn sm:hidden"
         aria-label="Navigation"
       >
-        <!-- TODO: uncomment this -->
-        <!-- <Icon name="mdi:menu" class="size-8" /> -->
+        <Icon name="mdi:menu" class="size-8" />
       </button>
-      <!-- TODO: remove this -->
-      <!-- <ThemeSwitcher /> -->
     </div>
     <div id="menu-modal" class="modal hidden" aria-hidden="true">
       <div class="fixed inset-0 bg-black px-8 py-4 text-default">
