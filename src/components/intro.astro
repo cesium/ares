@@ -1,30 +1,35 @@
 ---
-import { Icon } from "astro-icon/components";
 import ContentSection from "~/components/content-section.astro";
 ---
 
-<ContentSection title="Just ship less" id="intro">
-  <Icon slot="eyebrow" name="logomark" class="size-32" />
-  <Fragment slot="lead">
-    Astro is a new kind of site builder for the
-    <span class="text-primary">modern</span> web.
-    <span class="text-primary">Lightning-fast</span>
-    performance meets <span class="text-primary">powerful</span> developer experience.
+<ContentSection title="What is it?" id="intro">
+  <Fragment slot="lead" class="tracking-wide">
+    FOR <span class="text-primary">48 HOURS</span>, OVER <span
+      class="text-primary">THREE DAYS</span
+    >, PARTICIPANTS WILL WORK AS TEAMS TO CREATE A <span class="text-primary"
+      >TECH PROJECT</span
+    > CENTRED AROUND AN ENTREPRENEURIAL AND IMPACTFUL SOLUTION THAT TACKLES ONE OF
+    THE PROPOSED CHALLENGES.
   </Fragment>
-  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-    <a
-      href="https://docs.astro.build/"
-      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
-    >
-      <Icon name="mdi:telescope" class="size-8" />
-      <span>Read the docs</span>
-    </a>
-    <a
-      href="https://astro.new/"
-      class="flex items-center justify-center gap-3 border-2 border-current px-6 py-4"
-    >
-      <Icon name="mdi:rocket" class="size-8" />
-      <span>Try it out</span>
-    </a>
+
+  <div
+    class="mt-10 grid max-w-xl grid-cols-1 gap-8 text-xl leading-7 text-justify lg:max-w-6xl lg:grid-cols-2"
+  >
+    <div>
+      <p>
+        THIS COMPETITION NOT ONLY SEEKS TO ENHANCE THE TECHNICAL SKILLS AND
+        EXPERTISE OF ITS PARTICIPANTS, BUT ALSO TO HONE A VARIETY OF SOFT SKILLS
+        AND OTHER ABILITIES THAT ARE CRUCIAL TO THE COMPLETION OF A SUCCESSFUL
+        PROJECT - TEAMWORK, COMMUNICATION, TIME MANAGEMENT, CREATIVITY AND
+        CRITICAL THINKING.
+      </p>
+    </div>
+    <div>
+      <p>
+        AN ENVIRONMENT OF ACTIVE LEARNING, MENTORING AND NETWORKING WILL BE
+        FOSTERED, GIVING ALL PARTICIPANTS THE OPPORTUNITY TO MAKE THE NEXT MOVE
+        IN THEIR PROFESSIONAL AND ACADEMIC CAREERS.
+      </p>
+    </div>
   </div>
 </ContentSection>

@@ -9,3 +9,26 @@ a,
   @apply bg-clip-text text-transparent;
   @apply bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-pink-500;
 }
+
+@font-face {
+  font-family: "Resegrg";
+  src: url("/fonts/Resegrg.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "VT323";
+  src: url("/fonts/VT323-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  font-family: "Resegrg", serif;
+}
+h2 {
+  font-family: "Resegrg", serif;
+}
+p {
+  font-family: "VT323", monospace;
+}
