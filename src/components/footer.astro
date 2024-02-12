@@ -1,37 +1,33 @@
 ---
 import { Icon } from "astro-icon/components";
-import HeroImage from "~/components/hero-image.astro";
 import type { FooterLink } from "~/types";
+import { Image } from "astro:assets";
+
+import background from "/public/footer-background.png";
 
 const links: Array<FooterLink> = [
   {
-    url: "https://astro.build/",
-    description: "Astro's official website",
-    icon: "mdi:home",
+    url: "mailto:geral@bugsbyte.org",
+    description: "BugsByte email",
+    icon: "mdi:email",
   },
   {
-    url: "https://github.com/mhyfritz/astro-landing-page",
-    description: "View source on GitHub",
-    icon: "fa-brands:github-alt",
-  },
-  {
-    url: "https://astro.build/chat",
-    description: "Astro on Discord",
-    icon: "fa-brands:discord",
-  },
-  {
-    url: "https://twitter.com/astrodotbuild",
-    description: "Astro on Twitter",
-    icon: "fa-brands:twitter",
+    url: "https://www.instagram.com/bugs.byte/",
+    description: "BugsByte on Instagram",
+    icon: "fa-brands:instagram",
   },
 ];
 ---
 
-<footer class="relative flex h-64 items-center justify-center">
-  <div class="absolute inset-0 overflow-hidden opacity-40">
-    <HeroImage />
+<footer class="relative flex h-48 items-center justify-center">
+  <div class="absolute inset-0 overflow-hidden opacity-60">
+    <Image
+      class="h-full w-full object-cover opacity-40 hidden sm:block"
+      src={background}
+      alt="background"
+    />
   </div>
-  <ul class="relative grid grid-cols-2 gap-4 sm:grid-cols-4">
+  <ul class="relative grid grid-cols-2 gap-4 sm:grid-cols-2">
     {
       links.map((link) => (
         <li>

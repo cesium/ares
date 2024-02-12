@@ -1,11 +1,8 @@
 ---
 import "@fontsource-variable/inter";
-import Compatibility from "~/components/compatibility.astro";
-import Features from "~/components/features.astro";
 import Footer from "~/components/footer.astro";
 import Header from "~/components/header.astro";
 import Intro from "~/components/intro.astro";
-import Showcase from "~/components/showcase.astro";
 import Splash from "~/components/splash.astro";
 import "~/styles/index.css";
 
@@ -34,13 +31,9 @@ const description = "The best place to grow ideas from the ground";
   >
     <Header />
     <Splash />
-    <!-- TODO: add the rest of features -->
-    <!-- <div class="space-y-24 px-8 py-32"> -->
-    <!--   <Intro /> -->
-    <!--   <Features /> -->
-    <!--   <Compatibility /> -->
-    <!--   <Showcase /> -->
-    <!-- </div> -->
-    <!-- <Footer /> -->
+    <div class="space-y-24 px-8 py-32">
+      <Intro />
+    </div>
+    <Footer />
   </body>
 </html>
