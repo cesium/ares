@@ -1,10 +1,11 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    // Alias `src` to `~`
-    "baseUrl": ".",
+    "baseUrl": "/Users/danielsp_45/cesium/bugsbyte/ares",
     "paths": {
       "~/*": ["src/*"]
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

@@ -1,0 +1,81 @@
+---
+import type { FaqItem } from "~/types";
+
+const faqs: Array<FaqItem> = [
+  {
+    question:
+      "I am a student from another university, can I participate in the event?",
+    answer:
+      "Yes, all higher education students over 18 can participate in the event.",
+  },
+  {
+    question: "Is it free to participate in the BugsByte Hackathon?",
+    answer: "Yes, the event is completely free.",
+  },
+  {
+    question: "Do I need to register to be able to participate in the event?",
+    answer:
+      "Yes, it is necessary to register to be able to participate in the event. Very soon we'll make a link available on our website to do so.",
+  },
+  {
+    question: "Do I need to register as a team?",
+    answer:
+      "No, only individual registration is required. Once registered, you can form a team with other participants at your convenience.",
+  },
+  {
+    question: "How many people can a team contain?",
+    answer: "The sizes of the teams may vary between 2 to 5 elements.",
+  },
+  {
+    question: "Can I leave the space of the event during the weekend?",
+    answer:
+      "Yes, you're completely free to enter and exit the premisses of the event during the weekend.",
+  },
+  {
+    question: "Which technology/tools are we gonna work with?",
+    answer:
+      "You're going to be totally free to choose the stack you'll work on.",
+  },
+  {
+    question: "Where am I going to sleep?",
+    answer:
+      "If you intend to sleep during the event, we will have a dedicated place for you to rest. Only bring what you find essential such as pillows, sleeping bags, blankets, etc.",
+  },
+  {
+    question: "What am I going to eat during the event?",
+    answer: "All food is provided by the BugsByte organization.",
+  },
+];
+---
+
+<div>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <h2 class="text-4xl font-bold leading-10 tracking-wide text-white">
+      Frequently asked questions
+    </h2>
+    <p class="mt-6 max-w-2xl text-justify text-xl leading-7">
+      Have a different question and can’t find the answer you’re looking for?
+      Reach out to our support team by <a
+        href="mailto:geral@bugsbyte.org"
+        class="font-semibold text-indigo-400 hover:text-indigo-300"
+        >sending us an email</a
+      > and we’ll get back to you as soon as we can.
+    </p>
+    <div class="mt-20 mb-10">
+      <dl
+        class="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-3 lg:gap-x-10"
+      >
+        {
+          faqs.map(({ question, answer }) => (
+            <div>
+              <dt class="text-lg font-semibold leading-7 text-white uppercase">
+                {question}
+              </dt>
+              <dd class="mt-2 text-base leading-7 text-gray-300">{answer}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</div>

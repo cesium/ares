@@ -1,0 +1,19 @@
+---
+import "@fontsource-variable/inter";
+import "~/styles/index.css";
+
+import BaseLayout from "~/layouts/BaseLayout.astro";
+
+import Splash from "~/components/Splash.astro";
+import Footer from "~/components/Footer.astro";
+import Header from "~/components/Header.astro";
+---
+
+<BaseLayout>
+  <Header sticky={false} />
+  <Splash />
+  <div class="space-y-24 px-8 py-32">
+    <slot />
+  </div>
+  <Footer />
+</BaseLayout>
