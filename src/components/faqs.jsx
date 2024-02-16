@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react'
-
+import { PlayIcon } from '@heroicons/react/24/solid'
 const faqs = [
   {
     question:
@@ -71,13 +71,9 @@ export default function Faqs() {
                       <Disclosure.Button className="flex w-full items-start justify-start text-left text-white">
                         <div>
                           {open ? (
-                            <svg fill="#66B22E" className="mt-2 mr-3 w-4 h-4 rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                              <path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
-                            </svg>
+                            <PlayIcon fill="#66B22E" className="mt-2 mr-3 w-4 h-4 rotate-90" />
                           ) : (
-                            <svg fill="#66B22E" className="mt-2 mr-3 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                              <path d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clipRule="evenodd" />
-                            </svg>
+                            <PlayIcon fill="#66B22E" className="mt-2 mr-3 w-4 h-4" />
                           )}
                         </div>
                         <span className="text-xl text-white font-semibold leading-7">{faq.question}</span>
