@@ -1,8 +1,39 @@
 ---
+import "@fontsource-variable/inter";
+import Footer from "~/components/Footer.astro";
+import Header from "~/components/header.astro";
 import Intro from "~/components/intro.astro";
-import IndexLayout from "~/layouts/IndexLayout.astro";
+import Splash from "~/components/Splash.astro";
+import "~/styles/index.css";
+
+const { generator, site } = Astro;
+const description = "The best place to grow ideas from the ground";
 ---
 
-<IndexLayout>
-  <Intro />
-</IndexLayout>
+<!doctype html>
+<html lang="en" class="h-full motion-safe:scroll-smooth" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.png" type="image/svg+xml" />
+    <meta name="generator" content={generator} />
+
+    <title>Hackathon BugsByte</title>
+    <meta name="description" content={description} />
+
+    <!-- social media -->
+    <meta property="og:title" content="Hackathon BugsByte" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+  </head>
+  <body
+    class="h-screen overflow-x-hidden bg-black text-default text-base selection:bg-secondary selection:text-white"
+  >
+    <Header />
+    <Splash />
+    <div class="space-y-24 px-8 py-32">
+      <Intro />
+    </div>
+    <Footer />
+  </body>
+</html>
