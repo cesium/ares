@@ -1,50 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { PlayIcon } from '@heroicons/react/24/solid'
-const faqs = [
-  {
-    question:
-      "I'm not a student from Universidade do Minho, can I still participate in the event?",
-    answer:
-      "Yes, all higher education students over 18 can participate in the event.",
-  },
-  {
-    question: "Is it free to participate in the BugsByte Hackathon?",
-    answer: "Yes, the event is completely free.",
-  },
-  {
-    question: "Do I need to register to be able to participate in the event?",
-    answer:
-      "Yes, it is necessary to register to be able to participate in the event. Very soon we'll make a link available on our website to do so.",
-  },
-  {
-    question: "Do I need to register as a team?",
-    answer:
-      "No, only individual registration is required. Once registered, you can form a team with other participants at your convenience.",
-  },
-  {
-    question: "How many people can a team contain?",
-    answer: "The sizes of the teams may vary between 2 to 5 elements.",
-  },
-  {
-    question: "Can I leave the space of the event during the weekend?",
-    answer:
-      "Yes, you're completely free to enter and exit the premisses of the event during the weekend.",
-  },
-  {
-    question: "Which technology/tools are we gonna work with?",
-    answer:
-      "You're going to be totally free to choose the stack you'll work on.",
-  },
-  {
-    question: "Where am I going to sleep?",
-    answer:
-      "If you intend to sleep during the event, we will have a dedicated place for you to rest. Only bring what you find essential such as pillows, sleeping bags, blankets, etc.",
-  },
-  {
-    question: "What am I going to eat during the event?",
-    answer: "All food is provided by the BugsByte organization.",
-  },
-];
+// import { getEntry } from 'astro:content';
+import faqs from "~/data/faqs.json"
 
 export default function Faqs() {
   return (
