@@ -31,8 +31,16 @@
     "tailwindcss-fluid-type": "^2.0.3"
   },
   "dependencies": {
+    "@astrojs/react": "^3.0.10",
     "@fontsource-variable/inter": "^5.0.16",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "heroicons": "^2.1.1",
     "micromodal": "^0.4.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "sharp": "^0.33.1",
     "tailwindcss": "^3.4.1",
     "tiny-invariant": "^1.3.1"
