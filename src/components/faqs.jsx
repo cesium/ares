@@ -1,6 +1,5 @@
 import { Disclosure } from '@headlessui/react'
 import { PlayIcon } from '@heroicons/react/24/solid'
-// import { getEntry } from 'astro:content';
 import faqs from "~/data/faqs.json"
 
 export default function Faqs() {

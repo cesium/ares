@@ -1,31 +1,16 @@
 ---
-import { getCollection } from "astro:content";
 import ContentSection from "~/components/contentSection.astro";
 import ShowcaseCard from "~/components/showcaseCard.astro";
-
-const featuredSites = await getCollection(
-  "showcase",
-  ({ data }) => "featured" in data,
-);
-const orderedSites = featuredSites.sort(
-  (a, b) => a.data.featured! - b.data.featured!,
-);
+import gallery from "~/data/gallery.json"
 ---
 
 <ContentSection title="Showcase" id="showcase">
   <Fragment slot="lead">
-    Astro is <span class="text-primary">versatile</span>.{" "}
-    <span class="text-primary">Explore</span> what's possible and get{" "}
-    <span class="text-primary">inspired</span>.
+    Checkout last year's event:
   </Fragment>
   <div class="max-w-6xl space-y-2">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {orderedSites.map((site) => <ShowcaseCard site={site} />)}
+      {gallery.map((img) => <ShowcaseCard source={img} />)}
     </div>
-    <p class="text-right text-sm">
-      <a class="text-primary" href="https://astro.build/showcase/">
-        ...and more &rarr;
-      </a>
-    </p>
   </div>
 </ContentSection>
