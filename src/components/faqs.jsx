@@ -8,7 +8,7 @@ export default function Faqs() {
       <div className="mx-auto max-w-7xl px-6 pb-24 sm:pb-32 lg:px-8 lg:pb-40">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-2xl font-bold leading-10 tracking-wide text-white">Frequently asked questions</h2>
-          <p className="mt-6 text-justify text-xl leading-7">
+          <p className="mt-6 text-justify text-xl leading-7 uppercase">
             Have a different question and can’t find the answer you’re looking for?
             Reach out to our support team by <a
               href="mailto:geral@bugsbyte.org"
@@ -32,7 +32,7 @@ export default function Faqs() {
                             <PlayIcon fill="#66B22E" className="mt-2 mr-3 w-4 h-4" />
                           )}
                         </div>
-                        <span className="text-xl text-white font-semibold leading-7">{faq.question}</span>
+                        <span className="text-xl text-white font-semibold leading-7 uppercase">{faq.question}</span>
                         <span className="ml-6 flex h-7 items-center">
                         </span>
                       </Disclosure.Button>
