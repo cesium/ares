@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import gubImage from "~/assets/Bicho.svg";
 import background from "/public/background.jpg";
+import SquigglyAnimation from "~/components/squigglyAnimation.astro";
 ---
 
 <section class="relative h-full bg-black overflow-y-hidden select-none">
@@ -32,7 +33,7 @@ import background from "/public/background.jpg";
     >
       <div class="tracking-tighter text-5xl sm:text-7xl text-center">
         <h2 class="text-left text-4xl tracking-wider">HACKATHON</h2>
-        <h1 class="tracking-wide">BUGSBYTE</h1>
+        <h1 class="tracking-wide animate-squiggle">BUGSBYTE</h1>
         <p class="text-left tracking-wide text-3xl">5 - 7 APRIL</p>
       </div>
       <div class="flex flex-row sm:hidden">
@@ -41,6 +42,7 @@ import background from "/public/background.jpg";
     </div>
   </div>
 </section>
+<SquigglyAnimation />
 
 <noscript>
   <style>
