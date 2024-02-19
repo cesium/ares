@@ -1,0 +1,171 @@
+<form
+  id="submitForm"
+  class="w-full h-screen flex flex-col items-center justify-center"
+>
+  <div class="mt-32 mb-32">
+    <h2 class="text-base font-semibold leading-7 text-gray-900">
+      Inscreve a tua equipa
+    </h2>
+    <p>
+      <span class="text-green-500">*</span> Significa que que e um campo obrigatorio
+    </p>
+
+    <h2 class="mt-4 text-base font-semibold leading-7 text-gray-900">
+      Elemento 1 <span class="text-green-500">*</span>
+    </h2>
+    <div class="grid grid-cols-1">
+      <label
+        for="memberName"
+        class="block text-sm font-medium leading-6 text-gray-900">Nome</label
+      >
+      <input
+        required
+        type="text"
+        name="memberName"
+        id="name"
+        autocomplete="memberName"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+      <label
+        for="memberEmail"
+        class="block text-sm font-medium leading-6 text-gray-900">Email</label
+      >
+      <input
+        required
+        type="email"
+        name="memberEmail"
+        id="email"
+        autocomplete="memberEmail"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+    </div>
+
+    <h2 class="mt-4 text-base font-semibold leading-7 text-gray-900">
+      Elemento 2 <span class="text-green-500">*</span>
+    </h2>
+    <div class="grid grid-cols-1">
+      <label
+        for="memberName"
+        class="block text-sm font-medium leading-6 text-gray-900">Nome</label
+      >
+      <input
+        type="text"
+        name="memberName"
+        id="memberName"
+        autocomplete="memberName"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+      <label
+        for="memberEmail"
+        class="block text-sm font-medium leading-6 text-gray-900">Email</label
+      >
+      <input
+        type="email"
+        name="memberEmail"
+        id="memberEmail"
+        autocomplete="memberEmail"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+    </div>
+
+    <h2 class="mt-4 text-base font-semibold leading-7 text-gray-900">
+      Elemento 3
+    </h2>
+    <div class="grid grid-cols-1">
+      <label
+        for="memberName"
+        class="block text-sm font-medium leading-6 text-gray-900">Nome</label
+      >
+      <input
+        type="text"
+        name="memberName"
+        id="memberName"
+        autocomplete="memberName"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+      <label
+        for="memberEmail"
+        class="block text-sm font-medium leading-6 text-gray-900">Email</label
+      >
+      <input
+        type="email"
+        name="memberEmail"
+        id="memberEmail"
+        autocomplete="memberEmail"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+    </div>
+
+    <h2 class="mt-4 text-base font-semibold leading-7 text-gray-900">
+      Elemento 4
+    </h2>
+    <div class="grid grid-cols-1">
+      <label
+        for="memberName"
+        class="block text-sm font-medium leading-6 text-gray-900">Nome</label
+      >
+      <input
+        type="text"
+        name="memberName"
+        id="memberName"
+        autocomplete="memberName"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+      <label
+        for="memberEmail"
+        class="block text-sm font-medium leading-6 text-gray-900">Email</label
+      >
+      <input
+        type="email"
+        name="memberEmail"
+        id="memberEmail"
+        autocomplete="memberEmail"
+        class="block w-96 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+      <!-- <div class="mt-2 flex flex-row space-x-2">
+        <label for="memberCheck" class="block text-sm font-medium leading-6 text-gray-900">Responsavel pela equipa</label>
+        <input type="checkbox" name="memberEmail" id="memberEmail" autocomplete="memberEmail" class="block w-8 border border-gray-300 rounded-md shadow-sm outline-none sm:text-sm">
+      </div>     -->
+    </div>
+
+    <h2 class="mt-4 text-base font-semibold leading-7 text-gray-900">Notas</h2>
+    <div class="grid grid-cols-1">
+      <input
+        type="text"
+        name="memberName"
+        id="memberName"
+        autocomplete="memberName"
+        class="block w-96 h-16 border border-gray-300 rounded-md shadow-sm focus:ring-green-200 focus:border-green-200 sm:text-sm p-1"
+      />
+    </div>
+  </div>
+</form>
+
+<style>
+  #submitForm {
+    background-image: url("");
+    background-size: cover;
+  }
+</style>
+
+<script>
+  import { register } from "../lib/data";
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const submitForm = document.getElementById("submitForm");
+    if (submitForm) {
+      submitForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+
+        if (!name || !email) {
+          return;
+        } else {
+          const value = await register(name, email);
+        }
+      });
+    } else {
+    }
+  });
+</script>

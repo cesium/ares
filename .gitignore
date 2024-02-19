@@ -15,6 +15,7 @@ package-lock.json
 .eslintcache
 .pnpm-store
 .astro
+.next/
 callous-corot/
 
 # ignore top-level vscode settings
