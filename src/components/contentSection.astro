@@ -11,7 +11,7 @@ const { title, id } = Astro.props;
   id={id}
   class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"
 >
-  <div class="flex flex-col items-start gap-4">
+  <div class="w-full max-w-xl lg:max-w-6xl flex flex-col items-start gap-4">
     <slot name="eyebrow" />
     <h2
       class="text-primary text-left text-white font-extrabold text-6xl tracking-wide"
@@ -19,7 +19,7 @@ const { title, id } = Astro.props;
       {title}
     </h2>
   </div>
-  <p class="max-w-xl lg:max-w-6xl text-justify text-2xl uppercase">
+  <p class="w-full max-w-xl lg:max-w-6xl text-justify text-2xl uppercase">
     <slot name="lead" />
   </p>
   <slot />

@@ -1,6 +1,5 @@
 import { Disclosure } from "@headlessui/react";
 import { PlayIcon } from "@heroicons/react/24/solid";
-// import { getEntry } from 'astro:content';
 import faqs from "~/data/faqs.json";
 
 export default function Faqs() {
@@ -11,7 +10,7 @@ export default function Faqs() {
           <h2 className="text-2xl font-bold leading-10 tracking-wide text-white">
             Frequently asked questions
           </h2>
-          <p className="mt-6 text-justify text-xl leading-7">
+          <p className="mt-6 text-justify text-xl leading-7 uppercase">
             Have a different question and can’t find the answer you’re looking
             for? Reach out to our support team by{" "}
             <a
@@ -44,7 +43,7 @@ export default function Faqs() {
                             />
                           )}
                         </div>
-                        <span className="text-xl text-white font-semibold leading-7">
+                        <span className="text-xl text-white font-semibold leading-7 uppercase">
                           {faq.question}
                         </span>
                         <span className="ml-6 flex h-7 items-center"></span>
