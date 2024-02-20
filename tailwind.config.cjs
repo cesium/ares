@@ -32,7 +32,7 @@ module.exports = {
         },
       },
       animation: {
-        squiggle: "squiggle 0.34s ease-in-out infinite",
+        squiggle: "squiggle 0.45s ease-in-out infinite",
       },
     },
   },
