@@ -17,6 +17,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@iconify-json/fa-brands": "^1.1.8",
     "@iconify-json/mdi": "^1.1.64",
+    "@tailwindcss/forms": "^0.5.7",
     "@types/micromodal": "^0.3.5",
     "@typescript-eslint/parser": "^6.21.0",
     "astro": "^4.1.1",
