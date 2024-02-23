@@ -8,4 +8,5 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: "https://astro-moon-landing.netlify.app/",
   integrations: [tailwind(), icon(), react()],
+  output: 'hybrid',
 });

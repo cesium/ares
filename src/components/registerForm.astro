@@ -1,0 +1,33 @@
+---
+import TextInput from "~/components/forms/textInput.astro"
+import NumberInput from "~/components/forms/numberInput.astro"
+import Selector from "~/components/forms/selector.astro"
+import TextBox from "~/components/forms/textBox.astro"
+import FileUpload from "~/components/forms/fileUpload.astro"
+import ToggleButton from "~/components/forms/toggleButton.astro"
+
+import universities from "~/data/institutes.json";
+
+---
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+      <div class="mt-28 mb-10">
+        <h2 class="font-semibold tracking-wide text-3xl leading-7 text-white">Personal Information</h2>
+        <p class="mt-1 max-w-2xl text-xl leading-6 text-white">Use a permanent address where you can receive mail.</p>
+      </div>
+      
+      <form action="/api/register" class="space-y-5" method="post">
+        <TextInput type="text" param="name" title="Full name" placeholder="John Doe" />
+        <TextInput type="email" param="email" title="Your email" placeholder="your-email@bugsbyte.org" />
+        <TextInput type="tel" param="phone-number" title="Phone number" placeholder="927 357 457" />
+        <NumberInput param="age" title="Age" placeholder="18+" />
+        <Selector param="university" title="University" options={universities} />
+        <TextInput type="text" param="course" title="Course" placeholder="Engenharia Informática" />
+        <ToggleButton title="Vegan" />
+        <TextBox  param="notes" title="Notes" placeholder="If you have any notes about food restrictions or anything else let us know" />
+        <FileUpload param="file" title="Upload CV" placeholder="This is a placeholder" />
+
+        <button type="submit" class="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+      </form>
+  </div>
+</div>

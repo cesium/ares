@@ -39,6 +39,7 @@
     "@supabase/supabase-js": "^2.39.6",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
+    "flowbite": "^2.3.0",
     "heroicons": "^2.1.1",
     "micromodal": "^0.4.10",
     "react": "^18.2.0",
