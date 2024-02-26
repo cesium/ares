@@ -1,9 +1,8 @@
 ---
-import RegisterForm from "~/components/registerForm.astro";
+import RegisterForm from "~/components/registerForm.jsx";
 import BaseLayout from "~/layouts/baseLayout.astro";
 ---
 
 <BaseLayout>
-  <RegisterForm />
+  <RegisterForm client:load />
 </BaseLayout>
-

@@ -33,11 +33,12 @@
   },
   "dependencies": {
     "@astrojs/react": "^3.0.10",
+    "@aws-sdk/client-ses": "^3.521.0",
     "@fontsource-variable/inter": "^5.0.16",
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@supabase/supabase-js": "^2.39.6",
-    "@types/react": "^18.2.55",
+    "@types/react": "^18.2.58",
     "@types/react-dom": "^18.2.19",
     "flowbite": "^2.3.0",
     "heroicons": "^2.1.1",
