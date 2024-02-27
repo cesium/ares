@@ -3,6 +3,12 @@ import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_ANON_KEY)
 
+const errors = {
+  email: "",
+  mobile: "",
+  cv: "",
+} 
+
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
   
@@ -17,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // const cv = formData.get("cv");
+  const files: any = formData.getAll("cv");
   const data = {
     "name": formData.get("name")?.toString(), 
     "email": formData.get("email")?.toString(), 
@@ -40,6 +46,23 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(error.message, { status: 500 });
     }
   }
+  
+  const filePath = `cv/${data.email}/${files[0].name}`;
+  const file = files[0]
+  const { data: string, error } = await supabase.storage.from('files').upload(filePath, file);
+
+  if (error) {
+    errors.cv += error.message;
+    const errorCode = parseInt(error.statusCode);
+
+    return new Response(
+      JSON.stringify({
+        message: errors,
+        status: errorCode,
+      }),
+      { status: errorCode }
+    );
+  }
 
   return new Response(
     JSON.stringify({
@@ -50,11 +73,6 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 const validateForms = async (formData: FormData) => {
-  const errors = {
-    email: "",
-    mobile: "",
-    cv: "",
-  } 
   
   let { data: emails, error } = await supabase
   .from('participants')

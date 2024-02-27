@@ -20,6 +20,7 @@ export default function Form() {
       body: formData,
     });
 
+
     const data = await response.json();
     console.log(data)
     if (!response.ok) {
@@ -38,7 +39,7 @@ export default function Form() {
             <p className="mt-1 max-w-2xl text-xl leading-6 text-white">Use a permanent address where you can receive mail.</p>
           </div>
           
-          <form onSubmit={submit} className="space-y-5">
+          <form encType="multipart/form-data" onSubmit={submit} className="space-y-5">
             <TextInput type="text" param="name" title="Full name" placeholder="John Doe" />
 
             <TextInput type="email" param="email" title="Your email" placeholder="your-email@bugsbyte.org" error={responseMessage.email} />
