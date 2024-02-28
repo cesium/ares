@@ -1,13 +1,19 @@
+import ShortUniqueId from 'short-unique-id';
 import type { APIRoute } from "astro";
 import { createClient } from '@supabase/supabase-js'
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_ANON_KEY)
+const senderEmail = import.meta.env.SENDER_EMAIL;
+const client = new SESClient({ region: "eu-west-2" });
 
 const errors = {
   email: "",
   mobile: "",
   cv: "",
-} 
+}
+
+const { randomUUID } = new ShortUniqueId({ length: 6 });
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
@@ -27,6 +33,7 @@ export const POST: APIRoute = async ({ request }) => {
   const data = {
     "name": formData.get("name")?.toString(), 
     "email": formData.get("email")?.toString(), 
+    "confirmation": randomUUID(),
     "university": formData.get("university")?.toString(),
     "course": formData.get("course")?.toString(),
     "notes": formData.get("notes")?.toString(),
@@ -63,6 +70,8 @@ export const POST: APIRoute = async ({ request }) => {
       { status: errorCode }
     );
   }
+
+  sendConfirmationEmail(data.email, data.name, data.confirmation);
 
   return new Response(
     JSON.stringify({
@@ -104,3 +113,42 @@ const validateForms = async (formData: FormData) => {
 
   return {valid, errors}
 };
+
+
+const sendConfirmationEmail = async(email: string, name: string, confirmation: string) => {
+  var input = {
+    Source: senderEmail.toString(),
+    Destination: {
+      ToAddresses: [
+        email.toString(),
+      ],
+    },
+    Message: {
+      Subject: {
+        Charset: "UTF-8",
+        Data: "[BugsByte] Registration confirmation",
+      },
+      Body: {
+        Html: {
+          Data: 
+          `<h1>Hello, ${name} 👋</h1>
+            <div>
+              <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is #${confirmation}</p>
+              <p>If you want to join our discord server, here's the link: http://google.com</p>
+              <p>See you soon,</p>
+              <p>Organization team 🪲</p>
+            </div>`.toString()
+        }
+      },
+    },
+  };
+
+  try {
+    const command = new SendEmailCommand(input);
+    const response = await client.send(command);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
