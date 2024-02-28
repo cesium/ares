@@ -25,3 +25,13 @@ export interface FaqItem {
   question: string;
   answer: string;
 }
+
+export interface DataItem {
+    name: string, 
+    email: string, 
+    confirmation: string,
+    university: string,
+    course: string,
+    notes: string,
+    vegan: boolean
+}

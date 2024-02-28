@@ -2,27 +2,25 @@ import ShortUniqueId from 'short-unique-id';
 import type { APIRoute } from "astro";
 import { createClient } from '@supabase/supabase-js'
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import type { DataItem } from "~/types";
 
 const supabase = createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_ANON_KEY)
-const senderEmail = import.meta.env.SENDER_EMAIL;
 const client = new SESClient({ region: "eu-west-2" });
-
-const errors = {
-  email: "",
-  mobile: "",
-  cv: "",
-}
+const senderEmail = import.meta.env.SENDER_EMAIL;
 
 const { randomUUID } = new ShortUniqueId({ length: 6 });
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
+
+  let errors: String[] = [];
   
-  const {valid, errors} = await validateForms(formData);
+  // forms validation
+  const valid = await validateForms(formData, errors);
   if(!valid) {
     return new Response(
       JSON.stringify({
-        message: errors,
+        message: {errors: errors},
         status: 400,
       }),
       { status: 400 }
@@ -30,18 +28,18 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const files: any = formData.getAll("cv");
-  const data = {
-    "name": formData.get("name")?.toString(), 
-    "email": formData.get("email")?.toString(), 
-    "confirmation": randomUUID(),
-    "university": formData.get("university")?.toString(),
-    "course": formData.get("course")?.toString(),
-    "notes": formData.get("notes")?.toString(),
-    "vegan": formData.get("vegan") == 'on' ? true : false
-  }
+  const data: DataItem = {
+    name: formData.get("name")?.toString() ?? "", 
+    email: formData.get("email")?.toString() ?? "", 
+    confirmation: randomUUID().toUpperCase(),
+    university: formData.get("university")?.toString() ?? "",
+    course: formData.get("course")?.toString() ?? "",
+    notes: formData.get("notes")?.toString() ?? "",
+    vegan: formData.get("vegan") === 'on'
+  };
 
-  const hasErrors = Object.values(errors).some(msg => msg)
-  if (!hasErrors) {
+
+  if (errors.length > 0) {
     const { error } = await supabase
       .from('participants')
       .insert([
@@ -50,7 +48,15 @@ export const POST: APIRoute = async ({ request }) => {
       .select()
 
     if (error) {
-      return new Response(error.message, { status: 500 });
+      errors.push(error.message)
+
+      return new Response(
+        JSON.stringify({
+          message: {errors: errors},
+          status: 500,
+        }),
+        { status: 500 }
+      );
     }
   }
   
@@ -59,12 +65,12 @@ export const POST: APIRoute = async ({ request }) => {
   const { data: string, error } = await supabase.storage.from('files').upload(filePath, file);
 
   if (error) {
-    errors.cv += error.message;
+    errors.push(error.message);
     const errorCode = parseInt(error.statusCode);
 
     return new Response(
       JSON.stringify({
-        message: errors,
+        message: {errors: errors},
         status: errorCode,
       }),
       { status: errorCode }
@@ -81,7 +87,7 @@ export const POST: APIRoute = async ({ request }) => {
   );
 };
 
-const validateForms = async (formData: FormData) => {
+const validateForms = async (formData: FormData, errors: String[]) => {
   
   let { data: emails, error } = await supabase
   .from('participants')
@@ -92,26 +98,26 @@ const validateForms = async (formData: FormData) => {
   let valid = true;
   if (emailList && email && emailList.includes(email)) {
     valid = false;
-    errors.email += "Email already in use"
+    errors.push("Email already in use");
   }
   
   const mobile_re = new RegExp(/(^9[1236][0-9]) ?([0-9]{3}) ?([0-9]{3})$/);
   const mobile: string | undefined = formData.get("mobile")?.toString().trim();
   if (mobile && !mobile_re.test(mobile)) {
     valid = false;
-    errors.mobile += "Invalid portuguese phone number"
+    errors.push("Invalid portuguese phone number");
   }
 
   const cv: any = formData.get("cv");
   if (cv && cv.size > 8000000) {
     valid = false;
-    errors.cv += "File too big"
+    errors.push("File too big");
   } else if (cv && cv.type != 'application/pdf') {
     valid = false;
-    errors.cv += "File must be a pdf"
+    errors.push("File must be a PDF");
   }
 
-  return {valid, errors}
+  return valid
 };
 
 
@@ -131,9 +137,10 @@ const sendConfirmationEmail = async(email: string, name: string, confirmation: s
       Body: {
         Html: {
           Data: 
-          `<h1>Hello, ${name} 👋</h1>
+           `<h1>Hello, ${name} 👋</h1>
             <div>
               <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is #${confirmation}</p>
+              <p>Make sure to keep this email handy, it's your ticket to the event! Plus, stay tuned for more details as we'll be reaching out to you shortly with all the necessary information.</p>
               <p>If you want to join our discord server, here's the link: http://google.com</p>
               <p>See you soon,</p>
               <p>Organization team 🪲</p>
@@ -145,8 +152,8 @@ const sendConfirmationEmail = async(email: string, name: string, confirmation: s
 
   try {
     const command = new SendEmailCommand(input);
-    const response = await client.send(command);
-    return response;
+    await client.send(command);
+    return null;
   } catch (error) {
     return error;
   }
