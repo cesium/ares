@@ -1,0 +1,20 @@
+---
+import ContentSection from "~/components/contentSection.astro";
+import SquigglyAnimation from "./squigglyAnimation.astro";
+---
+
+<div class="w-full mt-40 pb-8 px-4 text-center overflow-hidden">
+  <h2 class="text-9xl animate-squiggle">404</h2>
+  <p class="uppercase mt-2 text-lg">
+    We can't seem to find the page you're looking for
+  </p>
+  <div class="mt-12">
+    <a
+      href="/"
+      class="ring-1 rounded-full text-sm ring-white px-4 py-3 transition-all hover:cursor-pointer hover:ring-secondary"
+    >
+      Return to home page
+    </a>
+  </div>
+</div>
+<SquigglyAnimation />
