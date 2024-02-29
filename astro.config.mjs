@@ -7,7 +7,7 @@ import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://bugsbyte.org/",
+  site: import.meta.env.HOST_URL,
   integrations: [tailwind(), icon(), react()],
   output: "hybrid",
   adapter: netlify(),
