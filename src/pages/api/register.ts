@@ -160,25 +160,3 @@ const sendConfirmationEmail = async(email: string, name: string, confirmation: s
   }
 };
 
-const storeParticipant = async (data: DataItem): Promise<boolean> => {
-  try {
-    return true; // No error occurred
-  } catch (error) {
-    console.error("Error storing participant:", error);
-    return false; // Error occurred
-  }
-};
-
-const storeFile = async (files: any, email: string): Promise<boolean> => {
-  try {
-
-    if (message.error) {
-      return true
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error("Error storing the file:", error)
-    return false;
-  }
-};
