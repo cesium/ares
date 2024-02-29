@@ -7,8 +7,8 @@ import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astro-moon-landing.netlify.app/",
+  site: "https://bugsbyte.org/",
   integrations: [tailwind(), icon(), react()],
-  output: 'hybrid',
-  adapter: netlify()
+  output: "hybrid",
+  adapter: netlify(),
 });

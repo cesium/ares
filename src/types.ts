@@ -27,11 +27,11 @@ export interface FaqItem {
 }
 
 export interface DataItem {
-    name: string, 
-    email: string, 
-    confirmation: string,
-    university: string,
-    course: string,
-    notes: string,
-    vegan: boolean
+  name: string;
+  email: string;
+  confirmation: string;
+  university: string;
+  course: string;
+  notes: string;
+  vegan: boolean;
 }

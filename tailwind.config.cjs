@@ -41,8 +41,7 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-fluid-type"),
-    require('@tailwindcss/forms'),
-    require('flowbite/plugin')
-
+    require("@tailwindcss/forms"),
+    require("flowbite/plugin"),
   ],
 };
