@@ -49,7 +49,6 @@ export const POST: APIRoute = async ({ request }) => {
   if (insertion_msg.error) {
     let msg = "There was an error connecting to the server. Try again later.";
     errors.push(msg);
-    console.error(msg);
 
     return new Response(
       JSON.stringify({
@@ -69,7 +68,6 @@ export const POST: APIRoute = async ({ request }) => {
     let msg =
       "There was an error connecting to the server file storage. Try again later.";
     errors.push(msg);
-    console.error(msg);
 
     // delete previously created participant
     await supabase.from("participants").delete().eq("email", data.email);
