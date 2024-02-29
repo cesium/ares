@@ -104,6 +104,12 @@ const validateForms = async (formData: FormData, errors: String[]) => {
     errors.push("Email already in use");
   }
 
+  const age = Number(formData.get("age"));
+  if (age < 18) {
+    valid = false;
+    errors.push("You need to be at least 18 years old to participate")
+  }
+
   const mobile_re = new RegExp(/(^9[1236][0-9]) ?([0-9]{3}) ?([0-9]{3})$/);
   const mobile: string | undefined = formData.get("mobile")?.toString().trim();
   if (mobile && !mobile_re.test(mobile)) {
