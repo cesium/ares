@@ -8,7 +8,7 @@ const supabase = createClient(
   import.meta.env.SUPABASE_URL,
   import.meta.env.SUPABASE_ANON_KEY,
 );
-const client = new SESClient({ region: "eu-west-2" });
+const client = new SESClient({ region: import.meta.env.SES_REGION });
 const senderEmail = import.meta.env.SENDER_EMAIL;
 const discordInvite = import.meta.env.DISCORD_INVITE;
 
