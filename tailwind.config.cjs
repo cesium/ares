@@ -39,5 +39,9 @@ module.exports = {
   corePlugins: {
     fontSize: false,
   },
-  plugins: [require("tailwindcss-fluid-type")],
+  plugins: [
+    require("tailwindcss-fluid-type"),
+    require("@tailwindcss/forms"),
+    require("flowbite/plugin"),
+  ],
 };
