@@ -1,16 +1,22 @@
 import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import type { DataItem } from "~/types";
+import { SMTPClient } from "emailjs";
 
 const supabase = createClient(
   import.meta.env.SUPABASE_URL,
   import.meta.env.SUPABASE_ANON_KEY,
 );
-const client = new SESClient({ region: import.meta.env.SES_REGION });
 const senderEmail = import.meta.env.SENDER_EMAIL;
 const discordInvite = import.meta.env.DISCORD_INVITE;
+
+const client = new SMTPClient({
+  user: import.meta.env.SMTP_USER,
+  password: import.meta.env.SMTP_PASS,
+  host: import.meta.env.SMTP_HOST,
+  ssl: true,
+});
 
 const { randomUUID } = new ShortUniqueId({ length: 6 });
 
@@ -107,7 +113,7 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   const age = Number(formData.get("age"));
   if (age < 18) {
     valid = false;
-    errors.push("You need to be at least 18 years old to participate")
+    errors.push("You need to be at least 18 years old to participate");
   }
 
   const mobile_re = new RegExp(/(^9[1236][0-9]) ?([0-9]{3}) ?([0-9]{3})$/);
@@ -134,34 +140,31 @@ const sendConfirmationEmail = async (
   name: string,
   confirmation: string,
 ) => {
-  var input = {
-    Source: senderEmail.toString(),
-    Destination: {
-      ToAddresses: [email.toString()],
-    },
-    Message: {
-      Subject: {
-        Charset: "UTF-8",
-        Data: "[BugsByte] Registration confirmation",
+  const message = {
+    text: "",
+    from: senderEmail.toString(),
+    to: email.toString(),
+    subject: "[BugsByte] Registration confirmation",
+    attachment: [
+      {
+        data: `<h1>Hello, ${name} 👋</h1>
+          <div>
+            <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is #${confirmation}</p>
+            <p>Make sure to keep this email handy, it's your ticket to the event! Plus, stay tuned for more details as we'll be reaching out to you shortly with all the necessary information.</p>
+            <p>If you want to join our discord server, here's the link: ${discordInvite}</p>
+            <p>See you soon,</p>
+            <p>Organization team 🪲</p>
+          </div>`.toString(),
+        alternative: true,
       },
-      Body: {
-        Html: {
-          Data: `<h1>Hello, ${name} 👋</h1>
-            <div>
-              <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is #${confirmation}</p>
-              <p>Make sure to keep this email handy, it's your ticket to the event! Plus, stay tuned for more details as we'll be reaching out to you shortly with all the necessary information.</p>
-              <p>If you want to join our discord server, here's the link: ${discordInvite}</p>
-              <p>See you soon,</p>
-              <p>Organization team 🪲</p>
-            </div>`.toString(),
-        },
-      },
-    },
+    ],
   };
 
   try {
-    const command = new SendEmailCommand(input);
-    await client.send(command);
+    client.send(message, function (err, message) {
+      console.log(err || message);
+    });
+
     return null;
   } catch (error) {
     return error;
