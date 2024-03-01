@@ -29,6 +29,8 @@ export interface FaqItem {
 export interface DataItem {
   name: string;
   email: string;
+  mobile: string;
+  age: number;
   confirmation: string;
   university: string;
   course: string;

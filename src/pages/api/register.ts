@@ -43,6 +43,8 @@ export const POST: APIRoute = async ({ request }) => {
   const data: DataItem = {
     name: formData.get("name")?.toString() ?? "",
     email: formData.get("email")?.toString() ?? "",
+    mobile: formData.get("mobile")?.toString() ?? "",
+    age: Number(formData.get("age")),
     confirmation: randomUUID().toUpperCase(),
     university: formData.get("university")?.toString() ?? "",
     course: formData.get("course")?.toString() ?? "",
