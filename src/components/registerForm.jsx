@@ -30,7 +30,7 @@ export default function Form() {
   return (
     <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">
-        <div className="mt-28 mb-10">
+        <div className="mt-10 mb-10">
           <h2 className="font-semibold tracking-wide text-3xl leading-7 text-white">
             Personal Information
           </h2>

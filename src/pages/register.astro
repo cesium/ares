@@ -1,8 +1,10 @@
 ---
 import RegisterForm from "~/components/registerForm.jsx";
 import BaseLayout from "~/layouts/baseLayout.astro";
+import Header from "~/components/header.astro";
 ---
 
 <BaseLayout>
+  <Header sticky={true} />
   <RegisterForm client:load />
 </BaseLayout>
