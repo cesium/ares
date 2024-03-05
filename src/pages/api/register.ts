@@ -69,7 +69,9 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const filePath = `cv/${data.email}/${files[0].name}`;
+  const fileExtension = files[0].name.split(".").pop();
+  const name = data.email.split("@")[0];
+  const filePath = `cv/${data.email}/${name}.${fileExtension}`;
   const file = files[0];
   const file_insertion_msg = await supabase.storage
     .from("files")
@@ -165,7 +167,7 @@ const sendConfirmationEmail = async (
   };
 
   try {
-    client.send(message, function (err, message) {
+    client.send(message, function(err, message) {
       console.log(err || message);
     });
 
