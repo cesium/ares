@@ -5,8 +5,9 @@ import type { NavItem } from "~/types";
 const { sticky } = Astro.props;
 
 const navItems: Array<NavItem> = [
-  { title: "Previous edition", url: "https://2023.bugsbyte.org/" },
+  { title: "Regulation", url: "/docs/regulation.pdf" },
   { title: "FAQs", url: "/faqs" },
+  { title: "Previous edition", url: "https://2023.bugsbyte.org/" },
 ];
 
 const headerClass = sticky
@@ -148,4 +149,3 @@ const headerClass = sticky
     @apply block;
   }
 </style>
-
