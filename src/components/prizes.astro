@@ -1,0 +1,57 @@
+<section
+  id="prizes"
+  class="flex scroll-mt-24 flex-col items-center gap-4 space-y-8"
+>
+  <div class="w-full max-w-xl lg:max-w-6xl flex flex-col items-start gap-4">
+    <h2
+      class="text-primary text-left text-white font-extrabold text-6xl tracking-wide"
+    >
+      Prizes
+    </h2>
+    <p class="text-2xl mt-10 text-justify uppercase">
+      The top 3 teams will receive <span class="text-primary">cash prizes</span
+      >. The prize pool will be distributed as follows:
+    </p>
+  </div>
+  <dl
+    class="grid w-full max-w-xl lg:max-w-6xl grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3"
+  >
+    <div
+      class="w-full flex flex-row items-center justify-around lg:flex-col lg:justify-between gap-y-4"
+    >
+      <dt
+        class="text-6xl text-primary text-left leading-7 uppercase mr-16 sm:mr-0"
+      >
+        1st PLACE
+      </dt>
+      <dd class="text-8xl text-left font-bold tracking-tight text-white">
+        800€
+      </dd>
+    </div>
+    <div
+      class="w-full flex flex-row items-center justify-around lg:flex-col lg:justify-between gap-y-4"
+    >
+      <dt
+        class="text-6xl text-primary text-left leading-7 uppercase mr-16 sm:mr-0"
+      >
+        2nd PLACE
+      </dt>
+      <dd class="text-8xl text-left font-bold tracking-tight text-white">
+        600€
+      </dd>
+    </div>
+    <div
+      class="w-full flex flex-row items-center justify-around lg:flex-col lg:justify-between gap-y-4"
+    >
+      <dt
+        class="text-6xl text-primary text-left leading-7 uppercase mr-16 sm:mr-0"
+      >
+        3rd PLACE
+      </dt>
+      <dd class="text-8xl text-left font-bold tracking-tight text-white">
+        400€
+      </dd>
+    </div>
+  </dl>
+  <slot />
+</section>
