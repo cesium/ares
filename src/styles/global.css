@@ -29,7 +29,9 @@ h1 {
 h2 {
   font-family: "Resegrg", serif;
 }
+
 dt,
+dd,
 p {
   font-family: "VT323", monospace;
 }
