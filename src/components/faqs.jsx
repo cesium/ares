@@ -2,6 +2,12 @@ import { Disclosure } from "@headlessui/react";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import faqs from "~/data/faqs.json";
 
+
+function replaceURLHTML(text) {
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+  return text.replace(exp,"<a href='$1'>$1</a>"); 
+}
+
 export default function Faqs() {
   return (
     <div>
@@ -50,13 +56,14 @@ export default function Faqs() {
                       </Disclosure.Button>
                     </dt>
                     <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                      <p className="font-sans text-base leading-7 text-white ml-7">
-                        {faq.answer}
-                      </p>
+                      <p
+                        className="font-sans text-base leading-7 text-white ml-7"
+                        dangerouslySetInnerHTML={{ __html: replaceURLHTML(faq.answer) }}
+                      />
                     </Disclosure.Panel>
                   </>
                 )}
-              </Disclosure>
+              </Disclosure> 
             ))}
           </dl>
         </div>
