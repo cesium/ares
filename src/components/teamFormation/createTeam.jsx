@@ -8,6 +8,7 @@ export default function CreateTeam() {
 
   async function submit(e) {
     e.preventDefault();
+    closeModal();
     const formData = new FormData(e.target);
     const response = await fetch("/api/teams/create", {
       method: "POST",
@@ -28,12 +29,6 @@ export default function CreateTeam() {
 
   function closeModal() {
     setShowModal(false);
-  }
-
-  function confirmAction(e) {
-    // submit forms and close modal
-    submit(e)
-    closeModal();
   }
 
   return (
@@ -100,16 +95,19 @@ export default function CreateTeam() {
           )}
           <button
             className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-            onClick={openModal}
             type="button"
+            onClick={openModal}
           >
             Create
           </button>
+          {showModal &&
+            <ConfirmationModal
+              placeHolder="Are you sure you want to create this team?"
+              closeModal={closeModal}
+            />
+          }
         </form>
       </div>
-      {showModal &&
-        <ConfirmationModal showModal={showModal} closeModal={closeModal} confirmAction={confirmAction} placeHolder="Are you sure you want to create a new team?" />
-      }
     </div>
   );
 }
