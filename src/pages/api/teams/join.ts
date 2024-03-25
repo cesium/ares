@@ -88,7 +88,6 @@ const validateForms = async (formData: FormData, errors: String[]) => {
     valid = false;
   }
 
-  console.log(team_members)
   if (team_members && team_members.length >= 5) {
     errors.push("The team is already full. Try joining or creating another team.");
     valid = false;

@@ -27,7 +27,6 @@ const sendEmail = async (
     ],
   };
 
-  console.log("Sending email:", message);
   return new Promise((resolve, reject) => {
     client.send(message, function(err, message) {
       if (err) {

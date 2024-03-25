@@ -1,11 +1,14 @@
 import TextInput from "~/components/forms/textInput.jsx";
 import { useState } from "react";
+import ConfirmationModal from "~/components/confirmationModal.jsx";
 
 export default function JoinTeam() {
   const [responseErrors, setResponseErrors] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
+    closeModal();
     const formData = new FormData(e.target);
     const response = await fetch("/api/teams/join", {
       method: "POST",
@@ -18,6 +21,13 @@ export default function JoinTeam() {
     } else {
       window.location.href = "/";
     }
+  }
+  function openModal() {
+    setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
   }
 
   return (
@@ -84,9 +94,19 @@ export default function JoinTeam() {
               </div>
             </div>
           )}
-          <button className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+          <button
+            className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            type="button"
+            onClick={openModal}
+          >
             Join
           </button>
+          {showModal &&
+            <ConfirmationModal
+              placeHolder="Are you sure you want to create this team?"
+              closeModal={closeModal}
+            />
+          }
         </form>
       </div>
     </div>
