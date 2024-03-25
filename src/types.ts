@@ -26,7 +26,7 @@ export interface FaqItem {
   answer: string;
 }
 
-export interface DataItem {
+export interface RegisterItem {
   name: string;
   email: string;
   mobile: string;
@@ -36,4 +36,15 @@ export interface DataItem {
   course: string;
   notes: string;
   vegan: boolean;
+}
+
+export interface CreateTeamItem {
+  team_name: string,
+  member_email: string,
+  new_team_code: string
+}
+
+export interface JoinTeamItem {
+  team_code: string,
+  member_email: string,
 }

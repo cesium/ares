@@ -1,7 +1,7 @@
 import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
-import type { DataItem } from "~/types";
+import type { RegisterItem } from "~/types";
 import { SMTPClient } from "emailjs";
 
 export const prerender = false;
@@ -40,7 +40,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const files: any = formData.getAll("cv");
-  const data: DataItem = {
+  const data: RegisterItem = {
     name: formData.get("name")?.toString() ?? "",
     email: formData.get("email")?.toString() ?? "",
     mobile: formData.get("mobile")?.toString() ?? "",
