@@ -22,6 +22,7 @@ export default function JoinTeam() {
       window.location.href = "/";
     }
   }
+
   function openModal() {
     setShowModal(true);
   }
@@ -33,7 +34,6 @@ export default function JoinTeam() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-0 pb-24">
       <div className="mx-auto max-w-3xl">
-
         <form
           onSubmit={submit}
           className="space-y-5"
