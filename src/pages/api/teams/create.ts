@@ -39,8 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
   const { data, error } = await supabase.rpc("create_team", insertion_data);
 
   if (error) {
-    console.error(error);
-    errors.push("There was an error with your credentials. Check if you are already in a team or if you are not registered.");
+    errors.push("There was an error with your submission. Please try again!");
 
     return new Response(
       JSON.stringify({

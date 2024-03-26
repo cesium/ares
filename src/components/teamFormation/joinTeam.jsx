@@ -35,7 +35,6 @@ export default function JoinTeam() {
       <div className="mx-auto max-w-3xl">
 
         <form
-          encType="multipart/form-data"
           onSubmit={submit}
           className="space-y-5"
         >
@@ -59,7 +58,6 @@ export default function JoinTeam() {
             title="Confirmation code"
             placeholder="Enter your confirmation code"
           />
-
 
           {responseErrors.length > 0 && (
             <div class="rounded-md bg-red-50 p-4">
@@ -103,7 +101,7 @@ export default function JoinTeam() {
           </button>
           {showModal &&
             <ConfirmationModal
-              placeHolder="Are you sure you want to create this team?"
+              placeHolder="Are you sure you want to join this team?"
               closeModal={closeModal}
             />
           }

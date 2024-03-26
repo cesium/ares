@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import JoinTeam from "./teamFormation/joinTeam.jsx";
 import CreateTeam from "./teamFormation/createTeam.jsx";
 

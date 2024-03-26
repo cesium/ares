@@ -35,7 +35,6 @@ export default function CreateTeam() {
     <div className="mx-auto max-w-7xl px-4 sm:px-0 pb-24">
       <div className="mx-auto max-w-3xl">
         <form
-          encType="multipart/form-data"
           onSubmit={submit}
           className="space-y-5"
         >
