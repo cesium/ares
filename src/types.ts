@@ -39,12 +39,12 @@ export interface RegisterItem {
 }
 
 export interface CreateTeamItem {
-  team_name: string,
-  member_email: string,
-  new_team_code: string
+  team_name: string;
+  member_email: string;
+  new_team_code: string;
 }
 
 export interface JoinTeamItem {
-  team_code: string,
-  member_email: string,
+  team_code: string;
+  member_email: string;
 }

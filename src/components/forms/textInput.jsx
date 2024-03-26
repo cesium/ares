@@ -1,11 +1,20 @@
-export default function TextInput({ param, type, title, placeholder }) {
+export default function TextInput({
+  param,
+  type,
+  title,
+  placeholder,
+  help = "",
+}) {
   return (
     <div>
       <label
         htmlFor={param}
         className="block mb-2 text-sm font-medium text-white dark:text-white"
       >
-        {title}
+        <div class="flex flex-col">
+          {title}
+          {help && <span className="text-xs text-gray-400">{help}</span>}
+        </div>
       </label>
       <input
         type={type}

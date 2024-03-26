@@ -66,12 +66,16 @@ const validateForms = async (formData: FormData, errors: String[]) => {
 
   if (error) {
     console.error(error);
-    errors.push("There was an error checking your registrarion credentials. Try again later.");
+    errors.push(
+      "There was an error checking your registration credentials. Try again later.",
+    );
     valid = false;
   }
 
   if (participants && participants.length === 0) {
-    errors.push("The email and confirmation code do not match. Please try again.");
+    errors.push(
+      "The email and confirmation code do not match. Please try again.",
+    );
     valid = false;
   }
 
@@ -84,12 +88,16 @@ const validateForms = async (formData: FormData, errors: String[]) => {
 
   if (team_error) {
     console.error(team_error);
-    errors.push("There was an error connecting to the server. Try again later.");
+    errors.push(
+      "There was an error connecting to the server. Try again later.",
+    );
     valid = false;
   }
 
   if (team_members && team_members.length >= 5) {
-    errors.push("The team is already full. Try joining or creating another team.");
+    errors.push(
+      "The team is already full. Try joining or creating another team.",
+    );
     valid = false;
   }
 

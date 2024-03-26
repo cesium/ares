@@ -34,10 +34,7 @@ export default function JoinTeam() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-0 pb-24">
       <div className="mx-auto max-w-3xl">
-        <form
-          onSubmit={submit}
-          className="space-y-5"
-        >
+        <form onSubmit={submit} className="space-y-5">
           <TextInput
             type="text"
             param="code"
@@ -57,6 +54,7 @@ export default function JoinTeam() {
             param="confirmation"
             title="Confirmation code"
             placeholder="Enter your confirmation code"
+            help="The code emailed to you when you registered"
           />
 
           {responseErrors.length > 0 && (
@@ -99,12 +97,12 @@ export default function JoinTeam() {
           >
             Join
           </button>
-          {showModal &&
+          {showModal && (
             <ConfirmationModal
               placeHolder="Are you sure you want to join this team?"
               closeModal={closeModal}
             />
-          }
+          )}
         </form>
       </div>
     </div>

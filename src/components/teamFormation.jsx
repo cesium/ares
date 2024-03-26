@@ -13,17 +13,19 @@ export default function TeamFormation() {
             Team Formation
           </h2>
           <p className="mt-1 max-w-2xl text-xl leading-6 text-white">
-            If you have already registered, you can join a team or create a new one.
+            If you have already registered, you can join a team or create a new
+            one.
           </p>
         </div>
         <div className="text-sm font-medium text-center text-white dark:text-gray-400 dark:border-gray-700 mb-4">
           <ul className="flex flex-wrap justify-center -mb-px">
             <li className="me-2">
               <button
-                className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg ${selectedTab === "create"
-                  ? "text-secondary border-white"
-                  : "text-white hover:text-secondary"
-                  }`}
+                className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg ${
+                  selectedTab === "create"
+                    ? "text-secondary border-white"
+                    : "text-white hover:text-secondary"
+                }`}
                 onClick={() => setSelectedTab("create")}
               >
                 Create a team
@@ -31,10 +33,11 @@ export default function TeamFormation() {
             </li>
             <li className="me-2">
               <button
-                className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg ${selectedTab === "join"
-                  ? "text-secondary border-white"
-                  : "text-white hover:text-secondary"
-                  }`}
+                className={`inline-block p-4 border-b-2 border-transparent rounded-t-lg ${
+                  selectedTab === "join"
+                    ? "text-secondary border-white"
+                    : "text-white hover:text-secondary"
+                }`}
                 onClick={() => setSelectedTab("join")}
               >
                 Join a team
@@ -42,11 +45,7 @@ export default function TeamFormation() {
             </li>
           </ul>
         </div>
-        {selectedTab === "join" ? (
-          <JoinTeam />
-        ) : (
-          <CreateTeam />
-        )}
+        {selectedTab === "join" ? <JoinTeam /> : <CreateTeam />}
       </div>
     </div>
   );
