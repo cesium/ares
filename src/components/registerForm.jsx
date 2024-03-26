@@ -91,11 +91,11 @@ export default function Form() {
           <FileUpload param="cv" title="Upload CV" />
 
           {responseErrors.length > 0 && (
-            <div class="rounded-md bg-red-50 p-4">
-              <div class="flex">
-                <div class="flex-shrink-0">
+            <div className="rounded-md bg-red-50 p-4">
+              <div className="flex">
+                <div className="flex-shrink-0">
                   <svg
-                    class="h-5 w-5 text-red-400"
+                    className="h-5 w-5 text-red-400"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                     aria-hidden="true"
@@ -107,13 +107,13 @@ export default function Form() {
                     />
                   </svg>
                 </div>
-                <div class="ml-3">
-                  <h3 class="text-sm font-medium text-red-800">
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
                     There were {responseErrors.length} error(s) with your
                     submission
                   </h3>
-                  <div class="mt-2 text-sm text-red-700">
-                    <ul role="list" class="list-disc space-y-1 pl-5">
+                  <div className="mt-2 text-sm text-red-700">
+                    <ul role="list" className="list-disc space-y-1 pl-5">
                       {responseErrors.map((error) => (
                         <li>{error}</li>
                       ))}
@@ -123,11 +123,11 @@ export default function Form() {
               </div>
             </div>
           )}
-          <div class="flex items-center mb-5">
-            <div class="flex items-center h-5">
+          <div className="flex items-center mb-5">
+            <div className="flex items-center h-5">
               <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary" required />
             </div>
-            <label for="terms" class="ms-2 text-sm font-medium text-white ">I agree with the <a href="/docs/regulation.pdf" class="text-primary hover:underline">event regulations</a></label>
+            <label htmlFor="terms" class="ms-2 text-sm font-medium text-white ">I agree with the <a href="/docs/regulation.pdf" class="text-primary hover:underline">event regulations</a></label>
           </div>
           <button className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             Send
