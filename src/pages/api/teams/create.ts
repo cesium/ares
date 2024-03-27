@@ -1,10 +1,18 @@
 import ShortUniqueId from "short-unique-id";
 import { createClient } from "@supabase/supabase-js";
-import { sendEmail } from "~/pages/api/utils/mailer.ts";
 import type { APIRoute } from "astro";
 import type { CreateTeamItem } from "~/types";
+import { SMTPClient } from "emailjs";
 
 export const prerender = false;
+
+const senderEmail = import.meta.env.SENDER_EMAIL;
+const client = new SMTPClient({
+  user: import.meta.env.SMTP_USER,
+  password: import.meta.env.SMTP_PASS,
+  host: import.meta.env.SMTP_HOST,
+  ssl: true,
+});
 
 const supabase = createClient(
   import.meta.env.SUPABASE_URL,
@@ -87,19 +95,33 @@ const sendTeamCreationEmail = async (
   teamName: string,
   code: string,
 ) => {
-  const subject = "[BugsByte] Team creation confirmation";
-  const content = `<h1>Hello again 👋</h1>
+  const message = {
+    text: "",
+    from: senderEmail.toString(),
+    to: to,
+    subject: "[BugsByte] Registration confirmation",
+    attachment: [
+      {
+        data: `<h1>Hello again 👋</h1>
           <div>
             <p>You just created a new team - <b>${teamName}</b></p>
             <p>In order for new team members to join your team, you need to share this code with them: #<b>${code}</b>.</p>
             <p>This will allow them to join the team on our website!</p>
             <p>Looking forward to seeing you soon,</p>
             <p>Organization team 🪲</p>
-          </div>`.toString();
+          </div>`.toString(),
+        alternative: true,
+      },
+    ],
+  };
 
   try {
-    await sendEmail(to, subject, content);
+    client.send(message, function(err, message) {
+      console.log(err || message);
+    });
+
+    return null;
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };
