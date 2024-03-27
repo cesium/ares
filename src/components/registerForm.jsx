@@ -125,9 +125,23 @@ export default function Form() {
           )}
           <div className="flex items-center mb-5">
             <div className="flex items-center h-5">
-              <input id="terms" type="checkbox" value="" class="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary" required />
+              <input
+                id="terms"
+                type="checkbox"
+                value=""
+                class="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary"
+                required
+              />
             </div>
-            <label htmlFor="terms" class="ms-2 text-sm font-medium text-white ">I agree with the <a href="/docs/regulation.pdf" class="text-primary hover:underline">event regulations</a></label>
+            <label htmlFor="terms" class="ms-2 text-sm font-medium text-white ">
+              I agree with the{" "}
+              <a
+                href="/docs/regulation.pdf"
+                class="text-primary hover:underline"
+              >
+                event regulations
+              </a>
+            </label>
           </div>
           <button className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
             Send

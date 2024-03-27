@@ -41,7 +41,7 @@ export const POST: APIRoute = async ({ request }) => {
   const insertion_data: CreateTeamItem = {
     team_name: formData.get("name")?.toString() ?? "",
     member_email: formData.get("email")?.toString() ?? "",
-    new_team_code: randomUUID().toUpperCase()
+    new_team_code: randomUUID().toUpperCase(),
   };
 
   const { data, error } = await supabase.rpc("create_team", insertion_data);
@@ -58,7 +58,11 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  sendTeamCreationEmail(insertion_data.member_email, insertion_data.team_name, insertion_data.new_team_code);
+  sendTeamCreationEmail(
+    insertion_data.member_email,
+    insertion_data.team_name,
+    insertion_data.new_team_code,
+  );
 
   return new Response(
     JSON.stringify({
@@ -78,7 +82,9 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   let valid = true;
   if (participants && participants.length === 0) {
     valid = false;
-    errors.push("Participant not registered or confirmation code does not match");
+    errors.push(
+      "Participant not registered or confirmation code does not match",
+    );
   }
 
   return valid;

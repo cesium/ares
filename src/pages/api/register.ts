@@ -167,7 +167,7 @@ const sendConfirmationEmail = async (
   };
 
   try {
-    client.send(message, function(err, message) {
+    client.send(message, function (err, message) {
       console.log(err || message);
     });
 

@@ -1,5 +1,5 @@
-import TextInput from "~/components/forms/textInput.jsx";
 import { useState } from "react";
+import TextInput from "~/components/forms/textInput.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
 
 export default function CreateTeam() {
@@ -34,10 +34,7 @@ export default function CreateTeam() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-0 pb-24">
       <div className="mx-auto max-w-3xl">
-        <form
-          onSubmit={submit}
-          className="space-y-5"
-        >
+        <form onSubmit={submit} className="space-y-5">
           <TextInput
             type="text"
             param="name"
@@ -57,6 +54,7 @@ export default function CreateTeam() {
             param="confirmation"
             title="Confirmation code"
             placeholder="Enter your confirmation code"
+            help="The code emailed to you when you registered"
           />
 
           {responseErrors.length > 0 && (
@@ -99,12 +97,12 @@ export default function CreateTeam() {
           >
             Create
           </button>
-          {showModal &&
+          {showModal && (
             <ConfirmationModal
               placeHolder="Are you sure you want to create this team?"
               closeModal={closeModal}
             />
-          }
+          )}
         </form>
       </div>
     </div>
