@@ -1,10 +1,10 @@
 export default function ConfirmationModal({ placeHolder, closeModal }) {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
-      <div className="relative bg-black rounded-lg shadow-lg">
+      <div className="relative bg-black border-2 border-gray-500 rounded-lg shadow-lg">
         <div className="p-4 md:p-5 text-center">
           <svg
-            className="mx-auto mb-4 text-gray-400 w-12 h-12"
+            className="mx-auto mb-4 text-white w-12 h-12"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
