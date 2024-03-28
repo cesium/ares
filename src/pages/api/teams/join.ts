@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import type { APIRoute } from "astro";
+import { SMTPClient } from "emailjs";
 
 export const prerender = false;
 
@@ -7,6 +8,14 @@ const supabase = createClient(
   import.meta.env.SUPABASE_URL,
   import.meta.env.SUPABASE_ANON_KEY,
 );
+
+const senderEmail = import.meta.env.SENDER_EMAIL;
+const client = new SMTPClient({
+  user: import.meta.env.SMTP_USER,
+  password: import.meta.env.SMTP_PASS,
+  host: import.meta.env.SMTP_HOST,
+  ssl: true,
+});
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
@@ -45,6 +54,17 @@ export const POST: APIRoute = async ({ request }) => {
       }),
       { status: 500 },
     );
+  }
+
+  // get the team name to send the email
+  const { data: data, error: error } = await supabase
+    .from("teams")
+    .select("name")
+    .eq("code", team_code);
+
+  if (data && data.length > 0) {
+    const team_name = data[0].name;
+    sendTeamEntryEmail(email, team_name);
   }
 
   return new Response(
@@ -102,4 +122,34 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   }
 
   return valid;
+};
+
+const sendTeamEntryEmail = async (to: string, team_name: string) => {
+  const message = {
+    text: "",
+    from: senderEmail.toString(),
+    to: to,
+    subject: "[BugsByte] Team entry confirmation",
+    attachment: [
+      {
+        data: `<h1>Hello again 👋</h1>
+          <div>
+            <p>You just entered a new team - <b>${team_name}</b></p>
+            <p>Looking forward to seeing you soon!</p>
+            <p>Organization team 🪲</p>
+          </div>`.toString(),
+        alternative: true,
+      },
+    ],
+  };
+
+  try {
+    client.send(message, function (err, message) {
+      console.log(err || message);
+    });
+
+    return null;
+  } catch (error) {
+    return error;
+  }
 };
