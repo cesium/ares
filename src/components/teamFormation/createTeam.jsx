@@ -1,14 +1,17 @@
 import { useState } from "react";
 import TextInput from "~/components/forms/textInput.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import SubmitButton from "~/components/forms/submitButton.jsx";
 
 export default function CreateTeam() {
   const [responseErrors, setResponseErrors] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [loadingState, setLoadingState] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
     closeModal();
+    setLoadingState(true);
     const formData = new FormData(e.target);
     const response = await fetch("/api/teams/create", {
       method: "POST",
@@ -18,6 +21,7 @@ export default function CreateTeam() {
     const data = await response.json();
     if (!response.ok) {
       setResponseErrors(data.message.errors);
+      setLoadingState(false);
     } else {
       window.location.href = "/";
     }
@@ -90,13 +94,12 @@ export default function CreateTeam() {
               </div>
             </div>
           )}
-          <button
-            className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-            type="button"
+          <SubmitButton
+            loading={loadingState}
+            placeholder="Create"
             onClick={openModal}
-          >
-            Create
-          </button>
+            type="button"
+          />
           {showModal && (
             <ConfirmationModal
               placeHolder="Are you sure you want to create this team?"
