@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TextInput from "~/components/forms/textInput.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
-import SubmitButton from "~/components/forms/submitButton.jsx";
+import Button from "~/components/button.jsx";
 
 export default function CreateTeam() {
   const [responseErrors, setResponseErrors] = useState("");
@@ -94,11 +94,10 @@ export default function CreateTeam() {
               </div>
             </div>
           )}
-          <SubmitButton
-            loading={loadingState}
+          <Button
+            loadingState={loadingState}
             placeholder="Create"
             onClick={openModal}
-            type="button"
           />
           {showModal && (
             <ConfirmationModal

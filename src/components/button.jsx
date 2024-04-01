@@ -1,12 +1,11 @@
-export default function Button({ placeholder, loading, onClick, type }) {
+export default function Button({ placeholder, loadingState, onClick }) {
   return (
     <div>
       <button
         className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        type={type}
         onClick={onClick}
       >
-        {loading ? (
+        {loadingState ? (
           <div role="status">
             <svg
               aria-hidden="true"
@@ -24,7 +23,6 @@ export default function Button({ placeholder, loading, onClick, type }) {
                 fill="currentFill"
               />
             </svg>
-            <span className="sr-only">Loading...</span>
           </div>
         ) : (
           placeholder

@@ -1,7 +1,7 @@
 import TextInput from "~/components/forms/textInput.jsx";
 import { useState } from "react";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
-import SubmitButton from "~/components/forms/submitButton.jsx";
+import Button from "~/components/button.jsx";
 
 export default function JoinTeam() {
   const [responseErrors, setResponseErrors] = useState("");
@@ -94,11 +94,10 @@ export default function JoinTeam() {
               </div>
             </div>
           )}
-          <SubmitButton
-            loading={loadingState}
+          <Button
+            loadingState={loadingState}
             placeholder="Join"
             onClick={openModal}
-            type="button"
           />
           {showModal && (
             <ConfirmationModal
