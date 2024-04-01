@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const email = formData.get("email")?.toString() ?? "";
-  const team_code = formData.get("code")?.toString() ?? "";
+  const team_code = formData.get("code")?.toString().replace("#", "");
 
   const insertion_msg = await supabase
     .from("participants")
@@ -78,11 +78,17 @@ export const POST: APIRoute = async ({ request }) => {
 const validateForms = async (formData: FormData, errors: String[]) => {
   let valid = true;
 
+  const email = formData.get("email")?.toString() ?? "";
+  const confirmation = formData
+    .get("confirmation")
+    ?.toString()
+    .replace("#", "");
+
   const { data: participants, error } = await supabase
     .from("participants")
     .select("email, confirmation")
-    .eq("email", formData.get("email")?.toString() ?? "")
-    .eq("confirmation", formData.get("confirmation")?.toString() ?? "");
+    .eq("email", email)
+    .eq("confirmation", confirmation);
 
   if (error) {
     console.error(error);
@@ -100,7 +106,7 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   }
 
   // confirm that the number of elements in the team is less than or equal to 5
-  const team_code = formData.get("code")?.toString() ?? "";
+  const team_code = formData.get("code")?.toString().replace("#", "");
   const { data: team_members, error: team_error } = await supabase
     .from("participants")
     .select("email")

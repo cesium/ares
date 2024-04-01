@@ -73,11 +73,17 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {
+  const email = formData.get("email")?.toString() ?? "";
+  const confirmation = formData
+    .get("confirmation")
+    ?.toString()
+    .replace("#", "");
+
   let { data: participants, error } = await supabase
     .from("participants")
     .select("email, confirmation")
-    .eq("email", formData.get("email")?.toString() ?? "")
-    .eq("confirmation", formData.get("confirmation")?.toString() ?? "");
+    .eq("email", email)
+    .eq("confirmation", confirmation);
 
   let valid = true;
   if (participants && participants.length === 0) {
@@ -116,7 +122,7 @@ const sendTeamCreationEmail = async (
   };
 
   try {
-    client.send(message, function(err, message) {
+    client.send(message, function (err, message) {
       console.log(err || message);
     });
 

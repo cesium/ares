@@ -4,15 +4,21 @@ import Selector from "~/components/forms/selector.jsx";
 import TextBox from "~/components/forms/textBox.jsx";
 import FileUpload from "~/components/forms/fileUpload.jsx";
 import ToggleButton from "~/components/forms/toggleButton.jsx";
+import Button from "~/components/button.jsx";
+import ConfirmationModal from "~/components/confirmationModal.jsx";
 import { useState } from "react";
 
 import universities from "~/data/institutes.json";
 
 export default function Form() {
   const [responseErrors, setResponseErrors] = useState("");
+  const [loadingState, setLoadingState] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
+    closeModal();
+    setLoadingState(true);
     const formData = new FormData(e.target);
     const response = await fetch("/api/register", {
       method: "POST",
@@ -22,9 +28,18 @@ export default function Form() {
     const data = await response.json();
     if (!response.ok) {
       setResponseErrors(data.message.errors);
+      setLoadingState(false);
     } else {
       window.location.href = "/";
     }
+  }
+
+  function openModal() {
+    setShowModal(true);
+  }
+
+  function closeModal() {
+    setShowModal(false);
   }
 
   return (
@@ -129,23 +144,34 @@ export default function Form() {
                 id="terms"
                 type="checkbox"
                 value=""
-                class="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary"
+                className="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary"
                 required
               />
             </div>
-            <label htmlFor="terms" class="ms-2 text-sm font-medium text-white ">
+            <label
+              htmlFor="terms"
+              className="ms-2 text-sm font-medium text-white "
+            >
               I agree with the{" "}
               <a
                 href="/docs/regulation.pdf"
-                class="text-primary hover:underline"
+                className="text-primary hover:underline"
               >
                 event regulations
               </a>
             </label>
           </div>
-          <button className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-            Send
-          </button>
+          <Button
+            loadingState={loadingState}
+            placeholder="Submit"
+            onClick={openModal}
+          />
+          {showModal && (
+            <ConfirmationModal
+              placeHolder="Are you sure you want to submit?"
+              closeModal={closeModal}
+            />
+          )}
         </form>
       </div>
     </div>
