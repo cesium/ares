@@ -7,16 +7,16 @@ import { SMTPClient } from "emailjs";
 export const prerender = false;
 
 const supabase = createClient(
-  import.meta.env.SUPABASE_URL,
-  import.meta.env.SUPABASE_ANON_KEY,
+  import.meta.env.PUBLIC_SUPABASE_URL,
+  import.meta.env.PUBLIC_SUPABASE_ANON_KEY,
 );
-const senderEmail = import.meta.env.SENDER_EMAIL;
-const discordInvite = import.meta.env.DISCORD_INVITE;
+const senderEmail = import.meta.env.PUBLIC_SENDER_EMAIL;
+const discordInvite = import.meta.env.PUBLIC_DISCORD_INVITE;
 
 const client = new SMTPClient({
-  user: import.meta.env.SMTP_USER,
-  password: import.meta.env.SMTP_PASS,
-  host: import.meta.env.SMTP_HOST,
+  user: import.meta.env.PUBLIC_SMTP_USER,
+  password: import.meta.env.PUBLIC_SMTP_PASS,
+  host: import.meta.env.PUBLIC_SMTP_HOST,
   ssl: true,
 });
 
