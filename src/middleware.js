@@ -1,5 +1,5 @@
-const host_url = import.meta.env.HOST_URL;
-const blocked_urls = import.meta.env.BLOCKED_URLS.split(",");
+const host_url = import.meta.env.PUBLIC_HOST_URL;
+const blocked_urls = import.meta.env.PUBLIC_BLOCKED_URLS.split(",");
 
 export function onRequest({ locals, request }, next) {
   for (const blockedPath of blocked_urls) {
