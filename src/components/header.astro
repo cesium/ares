@@ -36,11 +36,10 @@ const headerClass = sticky
             ))
           }
           <li>
-            <a
-              href="/register"
+            <button
               type="button"
-              class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-secondary"
-              >Register</a
+              class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white cursor-not-allowed"
+              >Register</button
             >
           </li>
         </ul>
@@ -72,11 +71,6 @@ const headerClass = sticky
           </a>
           <nav>
             <ul class="flex flex-col">
-              <li>
-                <a class="block py-4 text-center text-xl" href="/register">
-                  Register
-                </a>
-              </li>
               {
                 navItems.map(({ title, url }) => (
                   <li>
