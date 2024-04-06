@@ -5,10 +5,9 @@ import type { CompatibilityItem } from "~/types";
 export interface Props {
   items: Array<CompatibilityItem>;
   title: string;
-  url: string;
 }
 
-const { items, title, url } = Astro.props;
+const { items, title } = Astro.props;
 ---
 
 <div class="w-full max-w-4xl space-y-2">

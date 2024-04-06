@@ -10,14 +10,6 @@ import companies from "~/data/companies.json";
     Check out some of the companies envolved in the event.
   </Fragment>
   <br />
-  <CompatibilityList
-    items={companies.sponsors}
-    title="Sponsor"
-    url="https://docs.astro.build/core-concepts/framework-components/"
-  />
-  <CompatibilityList
-    items={companies.supporters}
-    title="Supporters"
-    url="https://docs.astro.build/guides/deploy/"
-  />
+  <CompatibilityList items={companies.sponsors} title="Sponsor" />
+  <CompatibilityList items={companies.supporters} title="Supporters" />
 </ContentSection>
