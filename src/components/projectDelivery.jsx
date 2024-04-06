@@ -61,6 +61,7 @@ export default function ProjectDelivery() {
         />
         <TextInput
           type="link"
+          param="link"
           title="Project link"
           placeholder="Insert your project repo link"
         />

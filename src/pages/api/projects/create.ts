@@ -38,7 +38,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const data: DeliverProjectItem = {
-    team_code: formData.get("team_code")?.toString() ?? "",
+    team_code: formData.get("team_code")?.toString().replace("#", "") ?? "",
     name: formData.get("name")?.toString() ?? "",
     description: formData.get("description")?.toString() ?? "",
     link: formData.get("link")?.toString() ?? "",
