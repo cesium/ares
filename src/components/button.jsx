@@ -3,6 +3,7 @@ export default function Button({ placeholder, loadingState, onClick }) {
     <div>
       <button
         className="text-white bg-primary hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+        type="button"
         onClick={onClick}
       >
         {loadingState ? (

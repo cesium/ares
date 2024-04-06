@@ -48,3 +48,10 @@ export interface JoinTeamItem {
   team_code: string;
   member_email: string;
 }
+
+export interface DeliverProjectItem {
+  team_code: string;
+  name: string;
+  description: string;
+  link: string;
+}
