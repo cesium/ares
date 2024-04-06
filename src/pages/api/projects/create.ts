@@ -69,5 +69,24 @@ export const POST: APIRoute = async ({ request }) => {
 
 const validateForms = async (formData: FormData, errors: String[]) => {
   let valid = true;
+
+  // check if there's already a project with the same team code
+  // if there is one, return an error
+  const team_code = formData.get("team_code")?.toString().replace("#", "");
+  let { data: projects, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("team_code", team_code);
+
+  if (error) {
+    errors.push(
+      "There was an error connecting to the server. Try again later.",
+    );
+    valid = false;
+  } else if (projects && projects?.length > 0) {
+    errors.push("There's already a project with this team code.");
+    valid = false;
+  }
+
   return valid;
 };
