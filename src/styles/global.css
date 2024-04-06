@@ -35,3 +35,10 @@ dd,
 p {
   font-family: "VT323", monospace;
 }
+
+input[type="link"] {
+  appearance: none;
+  border-style: solid;
+  border-radius: 10px;
+  outline: none;
+}

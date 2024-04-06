@@ -42,8 +42,8 @@ export default function ProjectDelivery() {
 
   return (
     <FormsTemplate
-      title="Project Delivery"
-      description="To deliver your project, please provide the following information."
+      title="Project Submission"
+      description="To submit your project, please provide the following information."
     >
       <form onSubmit={submit} className="space-y-5">
         <TextInput

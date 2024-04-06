@@ -1,10 +1,10 @@
 ---
-import ProjectDelivery from "~/components/projectDelivery.jsx";
+import ProjectSubmission from "~/components/projectSubmission.jsx";
 import BaseLayout from "~/layouts/baseLayout.astro";
 import Header from "~/components/header.astro";
 ---
 
 <BaseLayout>
   <Header sticky={true} />
-  <ProjectDelivery client:load />
+  <ProjectSubmission client:load />
 </BaseLayout>
