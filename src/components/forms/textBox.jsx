@@ -1,11 +1,14 @@
-export default function TextBox({ param, title, placeholder }) {
+export default function TextBox({ param, title, placeholder, help = "" }) {
   return (
     <div>
       <label
         htmlFor={param}
         className="block mb-2 text-sm font-medium text-white dark:text-white"
       >
-        {title}
+        <div className="flex flex-col">
+          {title}
+          {help && <span className="text-xs text-gray-400">{help}</span>}
+        </div>
       </label>
       <textarea
         id={param}
