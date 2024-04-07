@@ -49,7 +49,7 @@ export interface JoinTeamItem {
   member_email: string;
 }
 
-export interface DeliverProjectItem {
+export interface SubmitProjectItem {
   team_code: string;
   name: string;
   description: string;

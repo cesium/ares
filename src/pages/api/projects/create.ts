@@ -1,7 +1,7 @@
 import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
-import type { DeliverProjectItem } from "~/types";
+import type { SubmitProjectItem } from "~/types";
 import { SMTPClient } from "emailjs";
 
 export const prerender = false;
@@ -37,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const data: DeliverProjectItem = {
+  const data: SubmitProjectItem = {
     team_code: formData.get("team_code")?.toString().replace("#", "") ?? "",
     name: formData.get("name")?.toString() ?? "",
     description: formData.get("description")?.toString() ?? "",
