@@ -19,8 +19,17 @@ const { title, id } = Astro.props;
       {title}
     </h2>
   </div>
-  <p class="w-full max-w-xl lg:max-w-6xl text-justify text-2xl uppercase">
-    <slot name="lead" />
-  </p>
+  {
+    Astro.slots["lead-center"] ? (
+      <p class="w-full max-w-xl lg:max-w-6xl text-center text-2xl uppercase">
+        <slot name="lead-center" />
+      </p>
+    ) : (
+      <p class="w-full max-w-xl lg:max-w-6xl text-justify text-2xl uppercase">
+        <slot name="lead" />
+      </p>
+    )
+  }
+
   <slot />
 </section>
