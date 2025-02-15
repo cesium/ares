@@ -38,12 +38,13 @@ export const POST: APIRoute = async ({ request }) => {
   const email = formData.get("email")?.toString() ?? "";
   const team_code = formData.get("code")?.toString().replace("#", "");
 
-  const insertion_msg = await supabase
-    .from("participants")
-    .update({ team_code: team_code })
-    .eq("email", email)
-    .select();
+  const insertion_msg = await supabase.rpc("update_participant_team", {
+    participant_email: email,
+    new_team_code: team_code,
+  });
+
   if (insertion_msg.error) {
+    console.error(insertion_msg.error);
     let msg = "There was an error joining the team. Try again later.";
     errors.push(msg);
 
