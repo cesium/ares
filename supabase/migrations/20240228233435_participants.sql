@@ -11,10 +11,7 @@ create table
     notes text null,
     confirmation text null,
     team_code character varying null,
-    constraint participants_confirmation_key unique (confirmation)
-    constraint fk_team_code
-      foreign key (team_code)
-      references public.teams(code)
+    constraint participants_confirmation_key unique (confirmation),
     constraint participants_pkey
       primary key (email)
   ) tablespace pg_default;
