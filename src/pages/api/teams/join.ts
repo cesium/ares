@@ -44,10 +44,15 @@ export const POST: APIRoute = async ({ request }) => {
   });
 
   if (insertion_msg.error) {
-    console.error(insertion_msg.error);
-    let msg = "There was an error joining the team. Try again later.";
-    errors.push(msg);
+    let msg = "";
+    if (insertion_msg.error.message.includes("violates check constraint \"teams_num_team_mem_check\"")) {
+      msg = "The team is already full. Try joining or creating another team.";
+    }
+    else {
+      msg = "There was an error joining the team. Try again later.";
+    }
 
+    errors.push(msg);
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -57,15 +62,21 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  // get the team name to send the email
+  // get the team name and created_by to send the emails
   const { data: data, error: error } = await supabase
     .from("teams")
-    .select("name")
+    .select("name, created_by, num_team_mem, total_value_payment")
     .eq("code", team_code);
 
   if (data && data.length > 0) {
+    console.log(data);
     const team_name = data[0].name;
     sendTeamEntryEmail(email, team_name);
+    
+    const created_by = data[0].created_by;
+    const num_team_mem = data[0].num_team_mem;
+    const total_value_payment = data[0].total_value_payment;
+    sendNotificationEmail(team_name, created_by, num_team_mem, total_value_payment);
   }
 
   return new Response(
@@ -160,3 +171,37 @@ const sendTeamEntryEmail = async (to: string, team_name: string) => {
     return error;
   }
 };
+
+
+const sendNotificationEmail = async (team_name: string, email: string, num_team_mem: number, total_value_payment: number) => {
+  const message = {
+    text: "",
+    from: senderEmail.toString(),
+    to: email,
+    subject: "[BugsByte] New team member",
+    attachment: [
+      {
+        data: `<h1>Hello 🪲</h1>
+          <div>
+            <p>A new member just joined the team <b>${team_name}</b></p>
+            <p>Email: ${email}</p>
+            <p>Number of team members: ${num_team_mem}</p>
+            <p>Remember that you or other team members needs to pay the total value of the team to confirm the registration in CeSIUM.</p>
+            <p>Total value: ${total_value_payment}€</p>
+            <p>Looking forward to seeing you soon!</p>
+          </div>`.toString(),
+        alternative: true,
+      },
+    ],
+  };
+
+  try {
+    client.send(message, function (err, message) {
+      console.log(err || message);
+    });
+
+    return null;
+  } catch (error) {
+    return error;
+  }
+}
