@@ -3,6 +3,11 @@ CREATE OR REPLACE FUNCTION update_participant_team(
   new_team_code VARCHAR
 ) RETURNS VOID AS $$
 BEGIN
+  -- Check if team paid collumn is true
+  IF (SELECT paid FROM public.teams WHERE code = new_team_code) THEN
+    RAISE EXCEPTION 'Team already paid';
+  END IF;
+
   -- Update the participant's team_code
   UPDATE public.participants
   SET team_code = new_team_code

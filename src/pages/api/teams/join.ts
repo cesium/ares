@@ -44,9 +44,13 @@ export const POST: APIRoute = async ({ request }) => {
   });
 
   if (insertion_msg.error) {
+    console.error(insertion_msg.error);
     let msg = "";
     if (insertion_msg.error.message.includes("violates check constraint \"teams_num_team_mem_check\"")) {
       msg = "The team is already full. Try joining or creating another team.";
+    }
+    else if (insertion_msg.error.message.includes("Team already paid")) {
+      msg = "The team is already paid. You can't join it.";
     }
     else {
       msg = "There was an error joining the team. Try again later.";
@@ -72,7 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.log(data);
     const team_name = data[0].name;
     sendTeamEntryEmail(email, team_name);
-    
+
     const created_by = data[0].created_by;
     const num_team_mem = data[0].num_team_mem;
     const total_value_payment = data[0].total_value_payment;
