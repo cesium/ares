@@ -1,11 +1,23 @@
-import { CircleAlert } from "lucide-react";
-
 export default function ConfirmationModal({ title, content, closeModal }) {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
       <div className="relative bg-black border-2 border-gray-500 rounded-lg shadow-lg">
         <div className="p-4 md:p-5 text-center">
-          <CircleAlert className="mx-auto mb-4 text-white w-12 h-12" />
+          <svg
+            className="mx-auto mb-4 text-white w-12 h-12"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
           <h3 className="mb-5 text-lg font-normal text-white">{title}</h3>
           <p className="text-white mb-5">{content}</p>
           <button
