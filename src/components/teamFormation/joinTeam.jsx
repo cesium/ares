@@ -128,7 +128,7 @@ export default function JoinTeam() {
               content={
                 <>
                   You've successfully joined the team <strong>{team_name}</strong>! <br />
-                  Don't forget to go to the CeSIUM room to make the payment. <br />
+                  Don't forget to go to the CeSIUM room (DI 1.04) to make the payment. <br />
                   See you at the event!
                 </>
               }

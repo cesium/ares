@@ -170,7 +170,8 @@ const sendNotificationEmail = async (team_name: string, email: string, num_team_
             <p>A new member just joined the team <b>${team_name}</b></p>
             <p>Email: ${email}</p>
             <p>Number of team members: ${num_team_mem}</p>
-            <p>Remember that you or other team members needs to pay the total value of the team to confirm the registration in CeSIUM.</p>
+            <p>Remember that you or other team members needs to pay the total value of the team to confirm the registration at CeSIUM (DI 1.04).</p>
+            <p>When the payment is done, the team will be closed and no more members can join it.</p>
             <p>Total value: ${total_value_payment}€</p>
             <p>Looking forward to seeing you soon!</p>
           </div>`.toString(),

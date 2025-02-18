@@ -120,7 +120,7 @@ export default function CreateTeam() {
               content={
                 <>
                   The cost of the participation is 2€ per person in the team, to a maximum of 5 people. <br />
-                  When your team is complete, go to the CeSIUM room to make the payment.
+                  When your team is complete, go to the CeSIUM room (DI 1.04) to make the payment.
                 </>
               }
               closeModal={closeConfirmationModal}
