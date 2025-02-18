@@ -4,8 +4,8 @@ language plpgsql
 as $$
 
 begin
-  insert into public.teams (code, name)
-  values (new_team_code, team_name);
+  insert into public.teams (code, name, created_by)
+  values (new_team_code, team_name, member_email);
 
   update public.participants
   set team_code = new_team_code
