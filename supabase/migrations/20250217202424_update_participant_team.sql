@@ -17,6 +17,6 @@ BEGIN
   UPDATE public.teams
   SET num_team_mem = num_team_mem + 1,
       total_value_payment = (num_team_mem + 1) * 2
-  WHERE team_code = new_team_code;
+  WHERE code = new_team_code;
 END;
 $$ LANGUAGE plpgsql;

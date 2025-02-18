@@ -1,16 +1,19 @@
 import TextInput from "~/components/forms/textInput.jsx";
 import { useState } from "react";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import InformationModal from "~/components/informationModal.jsx";
 import Button from "~/components/button.jsx";
 
 export default function JoinTeam() {
   const [responseErrors, setResponseErrors] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showInformationModal, setShowInformationModal] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
+  const [team_name, setTeamName] = useState("");
 
   async function submit(e) {
     e.preventDefault();
-    closeModal();
+    closeConfirmationModal();
     setLoadingState(true);
     const formData = new FormData(e.target);
     const response = await fetch("/api/teams/join", {
@@ -23,16 +26,30 @@ export default function JoinTeam() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      window.location.href = "/";
+      setTeamName(data.message.team_name);
+      openInformationModal();
     }
   }
 
-  function openModal() {
-    setShowModal(true);
+  function goBack() {
+    closeInformationModal();
+    window.location.href = "/";
   }
 
-  function closeModal() {
-    setShowModal(false);
+  function openConfirmationModal() {
+    setShowConfirmationModal(true);
+  }
+
+  function closeConfirmationModal() {
+    setShowConfirmationModal(false);
+  }
+
+  function openInformationModal() {
+    setShowInformationModal(true);
+  }
+
+  function closeInformationModal() {
+    setShowInformationModal(false);
   }
 
   return (
@@ -97,12 +114,25 @@ export default function JoinTeam() {
           <Button
             loadingState={loadingState}
             placeholder="Join"
-            onClick={openModal}
+            onClick={openConfirmationModal}
           />
-          {showModal && (
+          {showConfirmationModal && (
             <ConfirmationModal
-              placeHolder="Are you sure you want to join this team?"
-              closeModal={closeModal}
+              title="Are you sure you want to join this team?"
+              closeModal={closeConfirmationModal}
+            />
+          )}
+          {showInformationModal && (
+            <InformationModal
+              title="You've joined the team!"
+              content={
+                <>
+                  You've successfully joined the team <strong>{team_name}</strong>! <br />
+                  Don't forget to go to the CeSIUM room to make the payment. <br />
+                  See you at the event!
+                </>
+              }
+              closeModal={goBack}
             />
           )}
         </form>

@@ -72,9 +72,10 @@ export const POST: APIRoute = async ({ request }) => {
     .select("name, created_by, num_team_mem, total_value_payment")
     .eq("code", team_code);
 
+  let team_name = null;
+
   if (data && data.length > 0) {
-    console.log(data);
-    const team_name = data[0].name;
+    team_name = data[0].name;
     sendTeamEntryEmail(email, team_name);
 
     const created_by = data[0].created_by;
@@ -85,6 +86,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   return new Response(
     JSON.stringify({
+      message: { team_name: team_name },
       status: 200,
     }),
     { status: 200 },
@@ -117,28 +119,6 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   if (participants && participants.length === 0) {
     errors.push(
       "The email and confirmation code do not match. Please try again.",
-    );
-    valid = false;
-  }
-
-  // confirm that the number of elements in the team is less than or equal to 5
-  const team_code = formData.get("code")?.toString().replace("#", "");
-  const { data: team_members, error: team_error } = await supabase
-    .from("participants")
-    .select("email")
-    .eq("team_code", team_code);
-
-  if (team_error) {
-    console.error(team_error);
-    errors.push(
-      "There was an error connecting to the server. Try again later.",
-    );
-    valid = false;
-  }
-
-  if (team_members && team_members.length >= 5) {
-    errors.push(
-      "The team is already full. Try joining or creating another team.",
     );
     valid = false;
   }

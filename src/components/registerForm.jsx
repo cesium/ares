@@ -6,6 +6,7 @@ import FileUpload from "~/components/forms/fileUpload.jsx";
 import ToggleButton from "~/components/forms/toggleButton.jsx";
 import Button from "~/components/button.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import InformationModal from "~/components/informationModal.jsx";
 import FormsTemplate from "./forms/formsTemplate.jsx";
 import ErrorBox from "~/components/forms/errorBox.jsx";
 import { useState } from "react";
@@ -15,11 +16,12 @@ import universities from "~/data/institutes.json";
 export default function Form() {
   const [responseErrors, setResponseErrors] = useState("");
   const [loadingState, setLoadingState] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showInformationModal, setShowInformationModal] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
-    closeModal();
+    closeConfirmationModal();
     setLoadingState(true);
     const formData = new FormData(e.target);
     const response = await fetch("/api/register", {
@@ -32,16 +34,29 @@ export default function Form() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      window.location.href = "/";
+      openInformationModal();
     }
   }
 
-  function openModal() {
-    setShowModal(true);
+  function goBack() {
+    closeInformationModal();
+    window.location.href = "/";
   }
 
-  function closeModal() {
-    setShowModal(false);
+  function openConfirmationModal() {
+    setShowConfirmationModal(true);
+  }
+
+  function closeConfirmationModal() {
+    setShowConfirmationModal(false);
+  }
+
+  function openInformationModal() {
+    setShowInformationModal(true);
+  }
+
+  function closeInformationModal() {
+    setShowInformationModal(false);
   }
 
   return (
@@ -130,12 +145,24 @@ export default function Form() {
         <Button
           loadingState={loadingState}
           placeholder="Submit"
-          onClick={openModal}
+          onClick={openConfirmationModal}
         />
-        {showModal && (
+        {showConfirmationModal && (
           <ConfirmationModal
-            placeHolder="Are you sure you want to submit?"
-            closeModal={closeModal}
+            title="Are you sure you want to submit?"
+            closeModal={closeConfirmationModal}
+          />
+        )}
+        {showInformationModal && (
+          <InformationModal
+            title="You're registered!"
+            content={
+              <>
+                Your registration was successful! We've sent you an email with your confirmation code. <br />
+                Head over to the teams page to create your own team or join a team with your partners.
+              </>
+            }
+            closeModal={goBack}
           />
         )}
       </form>
