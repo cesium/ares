@@ -38,6 +38,19 @@ export const POST: APIRoute = async ({ request }) => {
   const email = formData.get("email")?.toString() ?? "";
   const team_code = formData.get("code")?.toString().replace("#", "");
 
+  // check if the participant is already in a team
+  const team_code_already = await checkAlreadyInTeam(email);
+  if (team_code_already) {
+    errors.push("You are already in a team. You can't join another one.");
+    return new Response(
+      JSON.stringify({
+        message: { errors: errors },
+        status: 400,
+      }),
+      { status: 400 },
+    );
+  }
+
   const insertion_msg = await supabase.rpc("update_participant_team", {
     participant_email: email,
     new_team_code: team_code,
@@ -169,3 +182,11 @@ const sendNotificationEmail = async (
     </div>`;
   await sendEmail(email, "[BugsByte] New team member", body);
 };
+
+const checkAlreadyInTeam = async (email: string) => {
+  const { data, error } = await supabase
+    .from("participants")
+    .select("team_code")
+    .eq("email", email);
+  return data && data.length > 0 && data[0].team_code;
+}
