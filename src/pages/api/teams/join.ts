@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import type { APIRoute } from "astro";
-import { SMTPClient } from "emailjs";
 
 export const prerender = false;
 
@@ -9,22 +9,22 @@ const supabase = createClient(
   import.meta.env.SUPABASE_ANON_KEY,
 );
 
-const senderEmail = import.meta.env.SENDER_EMAIL;
-const client = new SMTPClient({
-  user: import.meta.env.SMTP_USER,
-  password: import.meta.env.SMTP_PASS,
-  host: import.meta.env.SMTP_HOST,
-  ssl: true,
+const ses = new SESClient({
+  region: import.meta.env.AWS_REGION,
+  credentials: {
+    accessKeyId: import.meta.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
+
+const senderEmail = import.meta.env.SENDER_EMAIL;
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
-
   let errors: String[] = [];
 
   // forms validation
   const valid = await validateForms(formData, errors);
-
   if (!valid) {
     return new Response(
       JSON.stringify({
@@ -45,17 +45,16 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (insertion_msg.error) {
     console.error(insertion_msg.error);
-    let msg = "";
-    if (insertion_msg.error.message.includes("violates check constraint \"teams_num_team_mem_check\"")) {
+    let msg = "There was an error joining the team. Try again later.";
+    if (
+      insertion_msg.error.message.includes(
+        'violates check constraint "teams_num_team_mem_check"',
+      )
+    ) {
       msg = "The team is already full. Try joining or creating another team.";
-    }
-    else if (insertion_msg.error.message.includes("Team already paid")) {
+    } else if (insertion_msg.error.message.includes("Team already paid")) {
       msg = "The team is already paid. You can't join it.";
     }
-    else {
-      msg = "There was an error joining the team. Try again later.";
-    }
-
     errors.push(msg);
     return new Response(
       JSON.stringify({
@@ -67,7 +66,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   // get the team name and created_by to send the emails
-  const { data: data, error: error } = await supabase
+  const { data, error } = await supabase
     .from("teams")
     .select("name, created_by, num_team_mem, total_value_payment")
     .eq("code", team_code);
@@ -76,12 +75,13 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (data && data.length > 0) {
     team_name = data[0].name;
-    sendTeamEntryEmail(email, team_name);
-
-    const created_by = data[0].created_by;
-    const num_team_mem = data[0].num_team_mem;
-    const total_value_payment = data[0].total_value_payment;
-    sendNotificationEmail(team_name, created_by, num_team_mem, total_value_payment);
+    await sendTeamEntryEmail(email, team_name);
+    await sendNotificationEmail(
+      team_name,
+      data[0].created_by,
+      data[0].num_team_mem,
+      data[0].total_value_payment,
+    );
   }
 
   return new Response(
@@ -95,7 +95,6 @@ export const POST: APIRoute = async ({ request }) => {
 
 const validateForms = async (formData: FormData, errors: String[]) => {
   let valid = true;
-
   const email = formData.get("email")?.toString() ?? "";
   const confirmation = formData
     .get("confirmation")
@@ -115,78 +114,58 @@ const validateForms = async (formData: FormData, errors: String[]) => {
     );
     valid = false;
   }
-
   if (participants && participants.length === 0) {
     errors.push(
       "The email and confirmation code do not match. Please try again.",
     );
     valid = false;
   }
-
   return valid;
 };
 
-const sendTeamEntryEmail = async (to: string, team_name: string) => {
-  const message = {
-    text: "",
-    from: senderEmail.toString(),
-    to: to,
-    subject: "[BugsByte] Team entry confirmation",
-    attachment: [
-      {
-        data: `<h1>Hello again 👋</h1>
-          <div>
-            <p>You just entered a new team - <b>${team_name}</b></p>
-            <p>Looking forward to seeing you soon!</p>
-            <p>Organization team 🪲</p>
-          </div>`.toString(),
-        alternative: true,
-      },
-    ],
+const sendEmail = async (to: string, subject: string, body: string) => {
+  const params = {
+    Source: senderEmail,
+    Destination: {
+      ToAddresses: [to],
+    },
+    Message: {
+      Subject: { Data: subject },
+      Body: { Html: { Data: body } },
+    },
   };
-
   try {
-    client.send(message, function (err, message) {
-      console.log(err || message);
-    });
-
-    return null;
+    await ses.send(new SendEmailCommand(params));
   } catch (error) {
-    return error;
+    console.error("Error sending email:", error);
   }
 };
 
+const sendTeamEntryEmail = async (to: string, team_name: string) => {
+  const body = `<h2>Hello again 👋</h2>
+    <div>
+      <p>You just entered a new team - <b>${team_name}</b></p>
+      <p>Looking forward to seeing you soon!</p>
+      <p>Organization team 🪲</p>
+    </div>`;
+  await sendEmail(to, "[BugsByte] Team entry confirmation", body);
+};
 
-const sendNotificationEmail = async (team_name: string, email: string, num_team_mem: number, total_value_payment: number) => {
-  const message = {
-    text: "",
-    from: senderEmail.toString(),
-    to: email,
-    subject: "[BugsByte] New team member",
-    attachment: [
-      {
-        data: `<h1>Hello 🪲</h1>
-          <div>
-            <p>A new member just joined the team <b>${team_name}</b></p>
-            <p>Email: ${email}</p>
-            <p>Number of team members: ${num_team_mem}</p>
-            <p>Remember that you or other team members needs to pay the total value of the team to confirm the registration at CeSIUM (DI 1.04).</p>
-            <p>When the payment is done, the team will be closed and no more members can join it.</p>
-            <p>Total value: ${total_value_payment}€</p>
-            <p>Looking forward to seeing you soon!</p>
-          </div>`.toString(),
-        alternative: true,
-      },
-    ],
-  };
-
-  try {
-    client.send(message, function (err, message) {
-      console.log(err || message);
-    });
-
-    return null;
-  } catch (error) {
-    return error;
-  }
-}
+const sendNotificationEmail = async (
+  team_name: string,
+  email: string,
+  num_team_mem: number,
+  total_value_payment: number,
+) => {
+  const body = `<h2>Hello again 👋</h2>
+    <div>
+      <p>A new member just joined the team <b>${team_name}</b></p>
+      <p>Number of team members: ${num_team_mem}</p>
+      <p>Remember that you or other team members need to pay the total value of the team to confirm the registration at CeSIUM (DI 1.04).</p>
+      <p>When the payment is done, the team will be closed and no more members will be able to join it.</p>
+      <p>Total value: <b>${total_value_payment}€</b></p>
+      <p>Looking forward to seeing you soon!</p>
+      <p>Organization team 🪲</p>
+    </div>`;
+  await sendEmail(email, "[BugsByte] New team member", body);
+};

@@ -1,8 +1,8 @@
 import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import type { RegisterItem } from "~/types";
-import { SMTPClient } from "emailjs";
 
 export const prerender = false;
 
@@ -12,12 +12,12 @@ const supabase = createClient(
 );
 const senderEmail = import.meta.env.SENDER_EMAIL;
 const discordInvite = import.meta.env.DISCORD_INVITE;
-
-const client = new SMTPClient({
-  user: import.meta.env.SMTP_USER,
-  password: import.meta.env.SMTP_PASS,
-  host: import.meta.env.SMTP_HOST,
-  ssl: true,
+const ses = new SESClient({
+  region: import.meta.env.AWS_REGION,
+  credentials: {
+    accessKeyId: import.meta.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
 
 const { randomUUID } = new ShortUniqueId({ length: 6 });
@@ -57,9 +57,9 @@ export const POST: APIRoute = async ({ request }) => {
     .insert([data])
     .select();
   if (insertion_msg.error) {
-    let msg = "There was an error connecting to the server. Try again later.";
-    errors.push(msg);
-
+    errors.push(
+      "There was an error connecting to the server. Try again later.",
+    );
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -77,13 +77,10 @@ export const POST: APIRoute = async ({ request }) => {
     .from("files")
     .upload(filePath, file);
   if (file_insertion_msg.error) {
-    let msg =
-      "There was an error connecting to the server file storage. Try again later.";
-    errors.push(msg);
-
-    // delete previously created participant
+    errors.push(
+      "There was an error connecting to the server file storage. Try again later.",
+    );
     await supabase.from("participants").delete().eq("email", data.email);
-
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -93,24 +90,17 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  sendConfirmationEmail(data.email, data.name, data.confirmation);
+  await sendConfirmationEmail(data.email, data.name, data.confirmation);
 
-  return new Response(
-    JSON.stringify({
-      status: 200,
-    }),
-    { status: 200 },
-  );
+  return new Response(JSON.stringify({ status: 200 }), { status: 200 });
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {
-  let { data: emails, error } = await supabase
-    .from("participants")
-    .select("email");
-
+  let { data: emails } = await supabase.from("participants").select("email");
   const emailList: string[] | undefined = emails?.map((obj) => obj.email);
   const email: string | undefined = formData.get("email")?.toString();
   let valid = true;
+
   if (emailList && email && emailList.includes(email)) {
     valid = false;
     errors.push("Email already in use");
@@ -126,14 +116,14 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   const mobile: string | undefined = formData.get("mobile")?.toString().trim();
   if (mobile && !mobile_re.test(mobile)) {
     valid = false;
-    errors.push("Invalid portuguese phone number");
+    errors.push("Invalid Portuguese phone number");
   }
 
   const cv: any = formData.get("cv");
   if (cv && cv.size > 8000000) {
     valid = false;
     errors.push("File too big");
-  } else if (cv && cv.type != "application/pdf") {
+  } else if (cv && cv.type !== "application/pdf") {
     valid = false;
     errors.push("File must be a PDF");
   }
@@ -146,33 +136,29 @@ const sendConfirmationEmail = async (
   name: string,
   confirmation: string,
 ) => {
-  const message = {
-    text: "",
-    from: senderEmail.toString(),
-    to: email.toString(),
-    subject: "[BugsByte] Registration confirmation",
-    attachment: [
-      {
-        data: `<h1>Hello, ${name} 👋</h1>
-          <div>
-            <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is #${confirmation}</p>
-            <p>Make sure to keep this email handy, it's your ticket to the event! Plus, stay tuned for more details as we'll be reaching out to you shortly with all the necessary information.</p>
-            <p>If you want to join our discord server, here's the link: ${discordInvite}</p>
-            <p>See you soon,</p>
-            <p>Organization team 🪲</p>
-          </div>`.toString(),
-        alternative: true,
+  const params = new SendEmailCommand({
+    Source: senderEmail,
+    Destination: { ToAddresses: [email] },
+    Message: {
+      Subject: { Data: "[BugsByte] Registration Confirmation" },
+      Body: {
+        Html: {
+          Data: `<h2>Hello, ${name} 👋</h2>
+            <div>
+              <p>Your participation in the BugsByte Hackathon is confirmed! Your confirmation number is <b>#${confirmation}</b></p>
+              <p>Make sure to keep this email handy, it's your ticket to the event! Plus, stay tuned for more details as we'll be reaching out to you shortly with all the necessary information.</p>
+              <p>If you want to join our discord server, here's the link: ${discordInvite}</p>
+              <p>See you soon,</p>
+              <p>Organization team 🪲</p>
+            </div>`,
+        },
       },
-    ],
-  };
+    },
+  });
 
   try {
-    client.send(message, function (err, message) {
-      console.log(err || message);
-    });
-
-    return null;
+    await ses.send(params);
   } catch (error) {
-    return error;
+    console.error("Error sending email:", error);
   }
 };

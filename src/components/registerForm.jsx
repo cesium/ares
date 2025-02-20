@@ -158,8 +158,10 @@ export default function Form() {
             title="You're registered!"
             content={
               <>
-                Your registration was successful! We've sent you an email with your confirmation code. <br />
-                Head over to the teams page to create your own team or join a team with your partners.
+                Your registration was successful! We've sent you an email with
+                your confirmation code. <br />
+                Head over to the teams page to create your own team or join a
+                team with your partners.
               </>
             }
             closeModal={goBack}

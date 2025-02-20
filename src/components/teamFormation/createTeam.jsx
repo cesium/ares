@@ -119,8 +119,10 @@ export default function CreateTeam() {
               title="Are you sure you want to create this team?"
               content={
                 <>
-                  The cost of the participation is 2€ per person in the team, to a maximum of 5 people. <br />
-                  When your team is complete, go to the CeSIUM room (DI 1.04) to make the payment.
+                  The cost of the participation is 2€ per person in the team, to
+                  a maximum of 5 people. <br />
+                  When your team is complete, go to the CeSIUM room (DI 1.04) to
+                  make the payment.
                 </>
               }
               closeModal={closeConfirmationModal}
@@ -132,7 +134,9 @@ export default function CreateTeam() {
               content={
                 <>
                   Your team was successfully created! <br />
-                  We sent you an email with the confirmation code related to your team.<br />
+                  We sent you an email with the confirmation code related to
+                  your team.
+                  <br />
                   Share this code with your teammates so they can join the team.
                 </>
               }
