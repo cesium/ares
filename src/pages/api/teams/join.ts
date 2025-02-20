@@ -10,10 +10,10 @@ const supabase = createClient(
 );
 
 const ses = new SESClient({
-  region: import.meta.env.SES_AWS_REGION,
+  region: import.meta.env.SES_REGION,
   credentials: {
-    accessKeyId: import.meta.env.SES_AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.SES_AWS_SECRET_ACCESS_KEY,
+    accessKeyId: import.meta.env.SES_ACCESS,
+    secretAccessKey: import.meta.env.SES_SECRET,
   },
 });
 
