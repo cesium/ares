@@ -118,30 +118,6 @@ export default function Form() {
         {responseErrors.length > 0 && (
           <ErrorBox responseErrors={responseErrors} />
         )}
-
-        <div className="flex items-center mb-5">
-          <div className="flex items-center h-5">
-            <input
-              id="terms"
-              type="checkbox"
-              value=""
-              className="w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary"
-              required
-            />
-          </div>
-          <label
-            htmlFor="terms"
-            className="ms-2 text-sm font-medium text-white "
-          >
-            I agree with the{" "}
-            <a
-              href="/docs/regulation.pdf"
-              className="text-primary hover:underline"
-            >
-              event regulations
-            </a>
-          </label>
-        </div>
         <Button
           loadingState={loadingState}
           placeholder="Submit"
