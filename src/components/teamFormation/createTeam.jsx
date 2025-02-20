@@ -1,16 +1,18 @@
 import { useState } from "react";
 import TextInput from "~/components/forms/textInput.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import InformationModal from "~/components/informationModal.jsx";
 import Button from "~/components/button.jsx";
 
 export default function CreateTeam() {
   const [responseErrors, setResponseErrors] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showInformationModal, setShowInformationModal] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
 
   async function submit(e) {
     e.preventDefault();
-    closeModal();
+    closeConfirmationModal();
     setLoadingState(true);
     const formData = new FormData(e.target);
     const response = await fetch("/api/teams/create", {
@@ -23,16 +25,29 @@ export default function CreateTeam() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      window.location.href = "/";
+      openInformationModal();
     }
   }
 
-  function openModal() {
-    setShowModal(true);
+  function goBack() {
+    closeInformationModal();
+    window.location.href = "/";
   }
 
-  function closeModal() {
-    setShowModal(false);
+  function openConfirmationModal() {
+    setShowConfirmationModal(true);
+  }
+
+  function closeConfirmationModal() {
+    setShowConfirmationModal(false);
+  }
+
+  function openInformationModal() {
+    setShowInformationModal(true);
+  }
+
+  function closeInformationModal() {
+    setShowInformationModal(false);
   }
 
   return (
@@ -97,12 +112,35 @@ export default function CreateTeam() {
           <Button
             loadingState={loadingState}
             placeholder="Create"
-            onClick={openModal}
+            onClick={openConfirmationModal}
           />
-          {showModal && (
+          {showConfirmationModal && (
             <ConfirmationModal
-              placeHolder="Are you sure you want to create this team?"
-              closeModal={closeModal}
+              title="Are you sure you want to create this team?"
+              content={
+                <>
+                  The cost of the participation is 2€ per person in the team, to
+                  a maximum of 5 people. <br />
+                  When your team is complete, go to the CeSIUM room (DI 1.04) to
+                  make the payment.
+                </>
+              }
+              closeModal={closeConfirmationModal}
+            />
+          )}
+          {showInformationModal && (
+            <InformationModal
+              title="Team created!"
+              content={
+                <>
+                  Your team was successfully created! <br />
+                  We sent you an email with the confirmation code related to
+                  your team.
+                  <br />
+                  Share this code with your teammates so they can join the team.
+                </>
+              }
+              closeModal={goBack}
             />
           )}
         </form>

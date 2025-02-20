@@ -2,16 +2,17 @@ import ShortUniqueId from "short-unique-id";
 import { createClient } from "@supabase/supabase-js";
 import type { APIRoute } from "astro";
 import type { CreateTeamItem } from "~/types";
-import { SMTPClient } from "emailjs";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 export const prerender = false;
 
 const senderEmail = import.meta.env.SENDER_EMAIL;
-const client = new SMTPClient({
-  user: import.meta.env.SMTP_USER,
-  password: import.meta.env.SMTP_PASS,
-  host: import.meta.env.SMTP_HOST,
-  ssl: true,
+const ses = new SESClient({
+  region: import.meta.env.SES_REGION,
+  credentials: {
+    accessKeyId: import.meta.env.SES_ACCESS,
+    secretAccessKey: import.meta.env.SES_SECRET,
+  },
 });
 
 const supabase = createClient(
@@ -29,6 +30,21 @@ export const POST: APIRoute = async ({ request }) => {
   // forms validation
   const valid = await validateForms(formData, errors);
   if (!valid) {
+    return new Response(
+      JSON.stringify({
+        message: { errors: errors },
+        status: 400,
+      }),
+      { status: 400 },
+    );
+  }
+
+  const email = formData.get("email")?.toString() ?? "";
+
+  // check if the participant is already in a team
+  const team_code_already = await checkAlreadyInTeam(email);
+  if (team_code_already) {
+    errors.push("You are already in a team. You can't create another one.");
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -58,7 +74,7 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  sendTeamCreationEmail(
+  await sendTeamCreationEmail(
     insertion_data.member_email,
     insertion_data.team_name,
     insertion_data.new_team_code,
@@ -101,33 +117,42 @@ const sendTeamCreationEmail = async (
   teamName: string,
   code: string,
 ) => {
-  const message = {
-    text: "",
-    from: senderEmail.toString(),
-    to: to,
-    subject: "[BugsByte] Registration confirmation",
-    attachment: [
-      {
-        data: `<h1>Hello again 👋</h1>
+  const params = new SendEmailCommand({
+    Source: senderEmail,
+    Destination: {
+      ToAddresses: [to],
+    },
+    Message: {
+      Subject: {
+        Data: "[BugsByte] Registration confirmation",
+      },
+      Body: {
+        Html: {
+          Data: `<h2>Hello again 👋</h2>
           <div>
             <p>You just created a new team - <b>${teamName}</b></p>
             <p>In order for new team members to join your team, you need to share this code with them: #<b>${code}</b>.</p>
             <p>This will allow them to join the team on our website!</p>
             <p>Looking forward to seeing you soon,</p>
             <p>Organization team 🪲</p>
-          </div>`.toString(),
-        alternative: true,
+          </div>`,
+        },
       },
-    ],
-  };
+    },
+  });
 
   try {
-    client.send(message, function (err, message) {
-      console.log(err || message);
-    });
-
-    return null;
+    await ses.send(params);
+    console.log("Email sent successfully");
   } catch (error) {
-    return error;
+    console.error("Error sending email:", error);
   }
 };
+
+const checkAlreadyInTeam = async (email: string) => {
+  const { data, error } = await supabase
+    .from("participants")
+    .select("team_code")
+    .eq("email", email);
+  return data && data.length > 0 && data[0].team_code;
+}

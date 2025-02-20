@@ -9,6 +9,6 @@ import netlify from "@astrojs/netlify";
 export default defineConfig({
   site: import.meta.env.PUBLIC_HOST_URL,
   integrations: [tailwind(), icon(), react()],
-  output: "static",
+  output: "server",
   adapter: netlify(),
 });
