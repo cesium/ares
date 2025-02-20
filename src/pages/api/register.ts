@@ -13,10 +13,10 @@ const supabase = createClient(
 const senderEmail = import.meta.env.SENDER_EMAIL;
 const discordInvite = import.meta.env.DISCORD_INVITE;
 const ses = new SESClient({
-  region: import.meta.env.AWS_REGION,
+  region: import.meta.env.SES_AWS_REGION,
   credentials: {
-    accessKeyId: import.meta.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: import.meta.env.SES_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.SES_AWS_SECRET_ACCESS_KEY,
   },
 });
 

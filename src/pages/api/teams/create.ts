@@ -8,10 +8,10 @@ export const prerender = false;
 
 const senderEmail = import.meta.env.SENDER_EMAIL;
 const ses = new SESClient({
-  region: import.meta.env.AWS_REGION,
+  region: import.meta.env.SES_AWS_REGION,
   credentials: {
-    accessKeyId: import.meta.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: import.meta.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: import.meta.env.SES_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.SES_AWS_SECRET_ACCESS_KEY,
   },
 });
 
