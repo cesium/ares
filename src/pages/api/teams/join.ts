@@ -94,6 +94,7 @@ export const POST: APIRoute = async ({ request }) => {
       data[0].created_by,
       data[0].num_team_mem,
       data[0].total_value_payment,
+      email
     );
   }
 
@@ -169,10 +170,12 @@ const sendNotificationEmail = async (
   email: string,
   num_team_mem: number,
   total_value_payment: number,
+  new_member_email: string,
 ) => {
   const body = `<h2>Hello again 👋</h2>
     <div>
       <p>A new member just joined the team <b>${team_name}</b></p>
+      <p>New member: ${new_member_email}</p>
       <p>Number of team members: ${num_team_mem}</p>
       <p>Remember that you or other team members need to pay the total value of the team to confirm the registration at CeSIUM (DI 1.04).</p>
       <p>When the payment is done, the team will be closed and no more members will be able to join it.</p>
