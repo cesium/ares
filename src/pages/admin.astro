@@ -1,0 +1,19 @@
+---
+import BaseLayout from "~/layouts/baseLayout.astro";
+import background from "/public/background.jpg";
+import { Image } from "astro:assets";
+import AdminForm  from "~/components/adminForm.jsx";
+---
+
+<BaseLayout>
+    <div class="relative min-h-screen">
+        <div class="absolute inset-0 -z-10">
+            <Image
+                class="h-full w-full object-cover opacity-40"
+                src={background}
+                alt="background"
+            />
+        </div>
+        <AdminForm client:load />
+    </div>
+</BaseLayout>
