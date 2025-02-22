@@ -11,7 +11,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (secret !== password) {
         return new Response(
             JSON.stringify({
-                message: { error: "Unauthorized" },
+                message: { error: "Password Incorrect" },
                 status: 400,
             }),
             { status: 400 },
