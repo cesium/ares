@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AdminForm() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function checkAuth() {
+      const response = await fetch("/api/admin", { method: "GET" });
+      const data = await response.json();
+      if (response.ok) {
+        window.location.href = "/admin/dashboard";
+      }
+    }
+    checkAuth();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -19,19 +30,15 @@ export default function AdminForm() {
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.message.error)
+        setError(data.message.error);
       } else {
-        // Use a more controlled navigation approach
-        const redirectTimer = setTimeout(() => {
-          window.location.href = "/"
-        }, 100)
-
-        return () => clearTimeout(redirectTimer)
+        document.cookie = `authToken=${data.token}; path=/; Secure; HttpOnly;`; // Store token in cookie
+        window.location.href = "/admin/dashboard"; // Redirect to dashboard
       }
     } catch (err) {
-      setError("An unexpected error occurred. Please try again.")
+      setError("An unexpected error occurred. Please try again.");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 

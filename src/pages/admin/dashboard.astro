@@ -1,0 +1,17 @@
+---
+import BaseLayout from "~/layouts/baseLayout.astro";
+import DashboardComponent from "~/components/dashboard.jsx";
+import Sidebar from "~/components/sidebar.jsx";
+
+const navigationItems = [
+    { name: "Teams", href: "/admin/dashboard" },
+];
+
+---
+
+<BaseLayout>
+    <Sidebar items={navigationItems} client:load />
+    <main class="p-4 md:ml-64 bg-zinc-800">
+        <DashboardComponent client:load />
+    </main>
+</BaseLayout>
