@@ -21,11 +21,11 @@ export const POST: APIRoute = async ({ request }) => {
         );
     }
 
-    const token = AUTH_SECRET; // Simple auth token for now
+    const token = AUTH_SECRET;
     const cookie = serialize(AUTH_COOKIE_NAME, token, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
         path: "/"
     });
 
@@ -38,19 +38,42 @@ export const POST: APIRoute = async ({ request }) => {
     );
 }
 
-export const GET: APIRoute = async ({ request }) => {
-  const cookies = request.headers.get("cookie") || "";
-  const authToken = cookies.split("; ").find(row => row.startsWith(`${AUTH_COOKIE_NAME}=`))?.split("=")[1];
-  
-  if (authToken !== AUTH_SECRET) {
-      return new Response(
-          JSON.stringify({ message: { error: "Unauthorized" } }),
-          { status: 401 }
-      );
+export const GET: APIRoute = async ({ request, cookies }) => {
+  const authToken = cookies.get(AUTH_COOKIE_NAME);
+ 
+  if (!authToken || authToken.value !== AUTH_SECRET) {
+    return new Response(
+        JSON.stringify({ message: { error: "Unauthorized" } }),
+        { status: 401 }
+    );
   }
-  
+
+  console.log("Authorized")
   return new Response(
       JSON.stringify({ message: { success: "Authorized" } }),
       { status: 200 }
   );
 };
+
+export const DELETE: APIRoute = async ({ request, cookies }) => {
+    const authToken = cookies.get(AUTH_COOKIE_NAME);
+
+    if (!authToken || authToken.value !== AUTH_SECRET) {
+        return new Response(
+            JSON.stringify({ message: { error: "Unauthorized" } }),
+            { status: 401 }
+        );
+    }
+
+    const cookie = serialize(AUTH_COOKIE_NAME, "", {
+        expires: new Date(0),
+        httpOnly: true,
+        secure: true,
+        path: "/"
+    });
+
+    return new Response(
+        JSON.stringify({ message: { success: "Logged out" } }),
+        { status: 200, headers: { "Set-Cookie": cookie } }
+    );
+}

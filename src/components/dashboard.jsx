@@ -18,7 +18,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function checkAuth() {
-      const response = await fetch("/api/admin", { method: "GET"});
+      const response = await fetch("/api/admin", { method: "GET", credentials: "include" });
       const data = await response.json();
       if (!response.ok) {
         window.location.href = "/";
@@ -47,13 +47,16 @@ export default function Dashboard() {
                 Name
               </th>
               <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Num Elementos
+                Num Participants
               </th>
               <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Pagamento
+                Created by
+              </th>
+              <th scope="col" className="px-6 py-3 border-r border-green-400">
+                Payment Value
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Pago
+                Paid?
               </th>
             </tr>
           </thead>
@@ -65,6 +68,7 @@ export default function Dashboard() {
                 </td>
                 <td className="px-6 py-4 border-r border-white text-white">{team.name}</td>
                 <td className="px-6 py-4 border-r border-white text-white">{team.num_team_mem}</td>
+                <td className="px-6 py-4 border-r border-white text-white">{team.created_by}</td>
                 <td className="px-6 py-4 border-r border-white text-white">
                   {team.total_value_payment ? `${team.total_value_payment}€` : "2€"}
                 </td>

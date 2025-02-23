@@ -6,8 +6,7 @@ export default function AdminForm() {
 
   useEffect(() => {
     async function checkAuth() {
-      const response = await fetch("/api/admin", { method: "GET" });
-      const data = await response.json();
+      const response = await fetch("/api/admin", { method: "GET", credentials: "include"});
       if (response.ok) {
         window.location.href = "/admin/dashboard";
       }
@@ -32,7 +31,6 @@ export default function AdminForm() {
       if (!response.ok) {
         setError(data.message.error);
       } else {
-        document.cookie = `authToken=${data.token}; path=/; Secure; HttpOnly;`; // Store token in cookie
         window.location.href = "/admin/dashboard"; // Redirect to dashboard
       }
     } catch (err) {

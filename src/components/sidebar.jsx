@@ -6,9 +6,14 @@ import { useState } from "react"
 export default function Sidebar({ items }) {
   const [isOpen, setIsOpen] = useState(false)
 
-  function onSignOut() {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-    window.location.href = "/"
+  async function onSignOut() {
+    const response = await fetch("/api/admin", { method: "DELETE", credentials: "include" })
+    if (!response.ok) {
+      console.error("Failed to sign out")
+    }
+    else {
+      window.location.href = "/"
+    }
   }
 
   return (
