@@ -48,7 +48,6 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     );
   }
 
-  console.log("Authorized")
   return new Response(
       JSON.stringify({ message: { success: "Authorized" } }),
       { status: 200 }

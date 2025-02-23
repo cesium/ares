@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
+import ConfirmationModal from "~/components/confirmationModal.jsx";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [teams, setTeams] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
   useEffect(() => {
     async function fetchTeams() {
@@ -29,6 +32,25 @@ export default function Dashboard() {
     checkAuth();
   }, []);
 
+  async function handleCheckedTeam(team) {
+    if (team.paid) return;
+    setSelectedTeam(team);
+    setShowModal(true);
+  }
+
+  async function markTeamAsPaid() {
+    const response = await fetch(`/api/teams/${selectedTeam.code}/paid`, { method: "POST" });
+    if (response.ok) {
+      const updatedTeams = teams.map((team) => {
+        if (team.code === selectedTeam.code) {
+          return { ...team, paid: true };
+        }
+        return team;
+      });
+      setTeams(updatedTeams);
+      setShowModal(false);
+    }
+  }
 
   if (loading) {
     return <div className="flex justify-center items-center min-h-screen text-green-600">Loading...</div>;
@@ -77,8 +99,9 @@ export default function Dashboard() {
                     <label className="relative inline-flex cursor-pointer items-center">
                       <input
                         type="checkbox"
+                        disabled={team.num_team_mem === 1 || team.paid}
                         checked={team.paid}
-                        disabled={team.paid}
+                        onChange={() => handleCheckedTeam(team)}
                         className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 bg-white transition-colors checked:border-primary checked:bg-primary checked:hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                       />
                       <Check className="pointer-events-none absolute h-4 w-4 text-white opacity-0 peer-checked:opacity-100" />
@@ -90,6 +113,14 @@ export default function Dashboard() {
           </tbody>
         </table>
       </div>
+      {showModal && (
+        <ConfirmationModal
+          title="Are you sure?"
+          content={`Are you sure you want to mark the team ${selectedTeam.name} as paid?`}
+          closeModal={() => setShowModal(false)}
+          confirmationModal={async () => markTeamAsPaid()}
+        />
+      )}          
     </div>
   );
 }
