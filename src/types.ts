@@ -54,3 +54,8 @@ export interface SubmitProjectItem {
   description: string;
   link: string;
 }
+
+export interface SideBarOption {
+  title: string;
+  url: string;
+}
