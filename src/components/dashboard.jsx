@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import Badge from "~/components/badge.jsx";
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
@@ -58,55 +59,57 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen flex items-center w-full">
-      <div className="flex w-full rounded-lg shadow-lg overflow-hidden">
-        <table className="w-full text-left text-sm text-gray-500 ">
-          <thead className="bg-green-500 text-xs uppercase text-gray-700">
-            <tr>
-              <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Code
-              </th>
-              <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Name
-              </th>
-              <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Num Participants
-              </th>
-              <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Created by
-              </th>
-              <th scope="col" className="px-6 py-3 border-r border-green-400">
-                Payment Value
-              </th>
-              <th scope="col" className="px-6 py-3 text-center">
-                Paid?
-              </th>
+      <div className="flex w-full rounded-lg shadow-lg bg-zinc-800 border-zinc-700 overflow-auto">
+        <table className="w-full text-left text-sm text-gray-500 overflow-x-auto">
+          <thead className="bg-zinc-700">
+            <tr className="border-b border-zinc-600 hover:bg-transparent">
+              <th scope="col" className="text-green-500 font-medium px-6 py-3">CODE</th>
+              <th scope="col" className="text-green-500 font-medium px-6 py-3 ">NAME</th>
+              <th scope="col" className="text-green-500 font-medium text-center px-6 py-3">PARTICIPANTS</th>
+              <th scope="col" className="text-green-500 font-medium px-6 py-3">CREATED BY</th>
+              <th scope="col" className="text-green-500 font-medium text-right px-6 py-3">PAYMENT VALUE</th>
+              <th scope="col" className="text-green-500 font-medium text-center px-6 py-3">PAYMENT STATUS</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white ">
+          <tbody className="divide-y divide-zinc-700">
             {teams.map((team) => (
-              <tr key={team.code} className="bg-zinc-700 hover:bg-zinc-600">
-                <td className="whitespace-nowrap px-6 py-4 font-medium text-white border-r border-white">
+              <tr key={team.code} className="hover:bg-zinc-700 transition-colors">
+                <td className="font-mono text-gray-300 px-6 py-4">
                   {team.code}
                 </td>
-                <td className="px-6 py-4 border-r border-white text-white">{team.name}</td>
-                <td className="px-6 py-4 border-r border-white text-white">{team.num_team_mem}</td>
-                <td className="px-6 py-4 border-r border-white text-white">{team.created_by}</td>
-                <td className="px-6 py-4 border-r border-white text-white">
+                <td className="px-6 py-4 font-medium text-white">{team.name}</td>
+                <td className="px-6 py-4 text-center">
+                  <Badge className="bg-green-500/10 border-green-500/30">
+                    <span className="text-green-500">{team.num_team_mem}</span>
+                  </Badge>
+                </td>
+                <td className="px-6 py-4 text-gray-400 max-w-[200px] truncate">{team.created_by}</td>
+                <td className="px-6 py-4 text-right font-medium text-white">
                   {team.total_value_payment ? `${team.total_value_payment}€` : "2€"}
                 </td>
-                <td className="px-6 py-4">
-                  <div className="flex justify-center">
-                    <label className="relative inline-flex cursor-pointer items-center">
-                      <input
-                        type="checkbox"
-                        disabled={team.num_team_mem === 1 || team.paid}
-                        checked={team.paid}
-                        onChange={() => handleCheckedTeam(team)}
-                        className="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 bg-white transition-colors checked:border-primary checked:bg-primary checked:hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
-                      />
-                      <Check className="pointer-events-none absolute h-4 w-4 text-white opacity-0 peer-checked:opacity-100" />
-                    </label>
-                  </div>
+                <td className="px-6 py-4 text-center">
+                  <button
+                    onClick={() => handleCheckedTeam(team)}
+                    className="group focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-zinc-800 rounded-full"
+                    title={team.paid ? "Click to mark as unpaid" : "Click to mark as paid"}
+                    disabled={team.num_team_mem === 1 || team.paid}
+                  >
+                    {team.paid ? (
+                      <Badge className="bg-green-500/20 border-0 border-green-500/30">
+                        <Check className="h-3.5 w-3.5 mr-1 text-green-500" />
+                        <span className="text-green-500">Paid</span>
+                      </Badge>
+                    ) : (
+                      <Badge
+                        variant="outline"
+                        className={team.num_team_mem !== 1 ? 
+                          ("bg-orange-500/10  border-orange-500/30 hover:bg-orange-500/20 transition-colors cursor-pointer") :
+                          ("bg-orange-500/10  border-orange-500/30 cursor-not-allowed")}
+                      >
+                        <span className={team.num_team_mem !== 1 ? "text-orange-400" : "text-orange-400/50"}>Click to mark as paid</span>
+                      </Badge>
+                    )}
+                  </button>
                 </td>
               </tr>
             ))}

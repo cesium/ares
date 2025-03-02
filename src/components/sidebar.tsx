@@ -40,7 +40,7 @@ export default function Sidebar({ items = [] }: SidebarProps) {
     <>
       {/* Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-30 sm:hidden" onClick={() => setIsOpen(false)} />
+        <div className="fixed inset-0 bg-zinc-950 bg-opacity-50 z-30 sm:hidden" onClick={() => setIsOpen(false)} />
       )}
 
       {/* Toggle Button */}
@@ -73,10 +73,10 @@ export default function Sidebar({ items = [] }: SidebarProps) {
         } sm:translate-x-0`}
         aria-label="Sidebar"
       >
-        <div className="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-zinc-900">
+        <div className="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-zinc-950">
           <div>
             <div className="flex items-center justify-between pb-4">
-              <span className="text-xl font-bold whitespace-nowrap text-green-500">BugsByte</span>
+              <span className="text-2xl font-bold text-green-500">BugsByte</span>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded-lg text-gray-400 hover:bg-zinc-800 hover:text-white sm:hidden"
@@ -85,12 +85,12 @@ export default function Sidebar({ items = [] }: SidebarProps) {
                 <span className="sr-only">Close sidebar</span>
               </button>
             </div>
-            <ul className="space-y-2 font-medium">
+            <ul className="space-y-2 mt-6">
               {items.map((item, index) => (
-                <li key={index} className="shadow-lg shadow-green-900 bg-zinc-800 rounded">
+                <li key={index} className="bg-green-500/10 text-green-500 rounded-lg hover:gd-green-500/20">
                   <a
                     href={item.url}
-                    className="flex items-center p-2 text-white rounded-lg hover:bg-green-900 group"
+                    className="flex items-center p-2 rounded-lg hover:bg-green-900 hover:text-green-500"
                     onClick={() => {
                       if (window.innerWidth < 640) {
                         // sm breakpoint
@@ -106,10 +106,10 @@ export default function Sidebar({ items = [] }: SidebarProps) {
           </div>
           <button
             onClick={onSignOut}
-            className="flex items-center p-2 text-white rounded-lg bg-zinc-800 hover:bg-red-800 group"
+            className="flex items-center p-2 w-full text-gray-400 hover:text-white hover:bg-zinc-700 rounded-lg"
           >
             <svg
-              className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-red-500"
+              className="shrink-0 w-5 h-5 transition duration-75 group-hover:text-red-500"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
