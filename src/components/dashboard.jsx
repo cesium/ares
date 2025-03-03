@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Check , Search } from 'lucide-react';
+import { Check , Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import ConfirmationModal from "~/components/confirmationModal.jsx";
 import Badge from "~/components/badge.jsx";
 import Dropdown from "~/components/dropdown.jsx";
@@ -18,6 +18,48 @@ export default function Dashboard() {
   const [selectedOption, setSelectedOption] = useState("all");
   const [filteredTeams, setFilteredTeams] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5
+  const totalPages = Math.ceil(filteredTeams.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentTeams = filteredTeams.slice(startIndex, endIndex)
+
+  // Navigation functions
+  const goToNextPage = () => {
+    setCurrentPage((current) => Math.min(current + 1, totalPages))
+  }
+
+  const goToPreviousPage = () => {
+    setCurrentPage((current) => Math.max(current - 1, 1))
+  }
+
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [search, selectedOption])
+
+  const getPageNumbers = () => {
+    const pageNumbers = []
+    const maxVisiblePages = 3
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2))
+    const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1)
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1)
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageNumbers.push(i)
+    }
+
+    return pageNumbers
+  }  
 
   useEffect(() => {
     async function fetchTeams() {
@@ -129,7 +171,7 @@ export default function Dashboard() {
               </thead>
               <tbody className="divide-y divide-zinc-700">
                 {filteredTeams.length > 0 ? (
-                  filteredTeams.map((team) => (
+                  currentTeams.map((team) => (
                   <tr key={team.code} className="hover:bg-zinc-700 transition-colors">
                     <td className="font-mono text-gray-300 px-6 py-4">
                       {team.code}
@@ -185,6 +227,47 @@ export default function Dashboard() {
               confirmationModal={async () => markTeamAsPaid()}
             />
           )}          
+          <div className="p-4 border-t border-zinc-700 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-400">
+            <div>
+              Showing {startIndex + 1}-{Math.min(endIndex, filteredTeams.length)} of {filteredTeams.length} teams
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className="flex items-center p-2 rounded-lg bg-zinc-700 border-zinc-600 text-gray-300 hover:bg-zinc-600 disabled:opacity-50"
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Previous
+              </button>
+
+              <div className="flex gap-1">
+                {getPageNumbers().map((pageNumber) => (
+                  <button
+                    key={pageNumber}
+                    onClick={() => goToPage(pageNumber)}
+                    className={`min-w-[2.5rem] border-zinc-600 rounded-lg 
+                      ${
+                        pageNumber === currentPage
+                          ? "bg-green-500 hover:bg-green-600 text-white"
+                          : "text-gray-300 hover:bg-zinc-700"
+                      }`}
+                  >
+                    {pageNumber}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className="flex items-center p-2 rounded-lg bg-zinc-700 border-zinc-600 text-gray-300 hover:bg-zinc-600 disabled:opacity-50"
+              >
+                Next
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

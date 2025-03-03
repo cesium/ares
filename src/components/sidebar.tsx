@@ -106,7 +106,7 @@ export default function Sidebar({ items = [] }: SidebarProps) {
           </div>
           <button
             onClick={onSignOut}
-            className="flex items-center p-2 w-full text-gray-400 hover:text-white hover:bg-zinc-700 rounded-lg"
+            className="flex items-center p-2 w-full text-gray-400 bg-zinc-700 hover:text-white hover:bg-zinc-600 rounded-lg"
           >
             <svg
               className="shrink-0 w-5 h-5 transition duration-75 group-hover:text-red-500"
