@@ -17,6 +17,7 @@ export default function Dashboard() {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedOption, setSelectedOption] = useState("all");
   const [filteredTeams, setFilteredTeams] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function fetchTeams() {
@@ -42,6 +43,15 @@ export default function Dashboard() {
     }
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (search) {
+      const searchResults = teams.filter((team) => team.name.toLowerCase().includes(search.toLowerCase()));
+      setFilteredTeams(searchResults);
+    } else {
+      filterTeams(selectedOption);
+    }
+  }, [search]);
 
   async function handleCheckedTeam(team) {
     if (team.paid) return;
@@ -95,8 +105,10 @@ export default function Dashboard() {
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
               <input
-                placeholder="Not working for now..."
+                placeholder="Search teams..."
                 className="pl-9 bg-zinc-700 border-zinc-600 text-gray-300 focus:border-green-500 rounded"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <div className="flex items-center gap-2">
