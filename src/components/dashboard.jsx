@@ -246,7 +246,7 @@ export default function Dashboard() {
                   <button
                     key={pageNumber}
                     onClick={() => goToPage(pageNumber)}
-                    className={`min-w-[2.5rem] border-zinc-600 rounded-lg 
+                    className={`p-2 min-w-[2.5rem] border-zinc-600 rounded-lg 
                       ${
                         pageNumber === currentPage
                           ? "bg-green-500 hover:bg-green-600 text-white"
