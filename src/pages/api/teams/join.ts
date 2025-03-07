@@ -94,7 +94,7 @@ export const POST: APIRoute = async ({ request }) => {
       data[0].created_by,
       data[0].num_team_mem,
       data[0].total_value_payment,
-      email
+      email,
     );
   }
 
@@ -192,4 +192,4 @@ const checkAlreadyInTeam = async (email: string) => {
     .select("team_code")
     .eq("email", email);
   return data && data.length > 0 && data[0].team_code;
-}
+};

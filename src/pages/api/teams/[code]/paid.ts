@@ -6,6 +6,9 @@ const supabase = createClient(
   import.meta.env.SUPABASE_ANON_KEY,
 );
 
+const AUTH_COOKIE_NAME = "authToken";
+const AUTH_SECRET = import.meta.env.AUTH_SECRET;
+
 const internal_error = new Response(
   JSON.stringify({
     message: { error: "Internal server error" },
@@ -14,10 +17,19 @@ const internal_error = new Response(
   { status: 500 },
 );
 
-export const POST: APIRoute = async ({ params }) => {
+export const POST: APIRoute = async ({ params, cookies }) => {
+  const authToken = cookies.get(AUTH_COOKIE_NAME);
+
+  if (!authToken || authToken.value !== AUTH_SECRET) {
+    return new Response(
+      JSON.stringify({ message: { error: "Unauthorized" } }),
+      { status: 401 },
+    );
+  }
+
   const { code } = params;
 
-  if (typeof code !== 'string') {
+  if (typeof code !== "string") {
     return new Response(
       JSON.stringify({
         message: { error: "Invalid team code" },
@@ -53,7 +65,7 @@ export const POST: APIRoute = async ({ params }) => {
 
   return new Response(
     JSON.stringify({
-    status: 200,
+      status: 200,
     }),
     { status: 200 },
   );

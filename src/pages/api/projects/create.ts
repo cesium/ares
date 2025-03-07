@@ -1,4 +1,3 @@
-import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
 import type { SubmitProjectItem } from "~/types";

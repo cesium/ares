@@ -3,15 +3,12 @@ import BaseLayout from "~/layouts/baseLayout.astro";
 import DashboardComponent from "~/components/dashboard.jsx";
 import Sidebar from "~/components/sidebar.tsx";
 
-const navigationItems = [
-    { name: "Teams", url: "/admin/dashboard" },
-];
-
+const navigationItems = [{ name: "Teams", url: "/admin/dashboard" }];
 ---
 
 <BaseLayout>
-    <Sidebar items={navigationItems} client:load />
-    <main class="md:ml-64 bg-zinc-900">
-        <DashboardComponent client:load />
-    </main>
+  <Sidebar items={navigationItems} client:load />
+  <main class="md:ml-64 bg-zinc-900">
+    <DashboardComponent client:load />
+  </main>
 </BaseLayout>

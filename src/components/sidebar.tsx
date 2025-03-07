@@ -1,38 +1,44 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import { X } from "lucide-react"
+import { useEffect, useRef, useState } from "react";
+import { X } from "lucide-react";
 
 interface SidebarItem {
-  name: string
-  url: string
+  name: string;
+  url: string;
 }
 
 interface SidebarProps {
-  items?: SidebarItem[]
+  items?: SidebarItem[];
 }
 
 export default function Sidebar({ items = [] }: SidebarProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const sidebarRef = useRef<HTMLDivElement>(null)
+  const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+      if (
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   async function onSignOut() {
-    const response = await fetch("/api/admin", { method: "DELETE", credentials: "include" })
+    const response = await fetch("/api/admin", {
+      method: "DELETE",
+      credentials: "include",
+    });
     if (!response.ok) {
-      console.error("Failed to sign out")
+      console.error("Failed to sign out");
     } else {
-      window.location.href = "/"
+      window.location.href = "/";
     }
   }
 
@@ -40,7 +46,10 @@ export default function Sidebar({ items = [] }: SidebarProps) {
     <>
       {/* Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-zinc-950 bg-opacity-50 z-30 sm:hidden" onClick={() => setIsOpen(false)} />
+        <div
+          className="fixed inset-0 bg-zinc-950 bg-opacity-50 z-30 sm:hidden"
+          onClick={() => setIsOpen(false)}
+        />
       )}
 
       {/* Toggle Button */}
@@ -76,7 +85,9 @@ export default function Sidebar({ items = [] }: SidebarProps) {
         <div className="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-zinc-950">
           <div>
             <div className="flex items-center justify-between pb-4">
-              <span className="text-2xl font-bold text-green-500">BugsByte</span>
+              <span className="text-2xl font-bold text-green-500">
+                BugsByte
+              </span>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded-lg text-gray-400 hover:bg-zinc-800 hover:text-white sm:hidden"
@@ -87,14 +98,17 @@ export default function Sidebar({ items = [] }: SidebarProps) {
             </div>
             <ul className="space-y-2 mt-6">
               {items.map((item, index) => (
-                <li key={index} className="bg-green-500/10 text-green-500 rounded-lg hover:gd-green-500/20">
+                <li
+                  key={index}
+                  className="bg-green-500/10 text-green-500 rounded-lg hover:gd-green-500/20"
+                >
                   <a
                     href={item.url}
                     className="flex items-center p-2 rounded-lg hover:bg-green-900 hover:text-green-500"
                     onClick={() => {
                       if (window.innerWidth < 640) {
                         // sm breakpoint
-                        setIsOpen(false)
+                        setIsOpen(false);
                       }
                     }}
                   >
@@ -128,5 +142,5 @@ export default function Sidebar({ items = [] }: SidebarProps) {
         </div>
       </aside>
     </>
-  )
+  );
 }

@@ -155,4 +155,4 @@ const checkAlreadyInTeam = async (email: string) => {
     .select("team_code")
     .eq("email", email);
   return data && data.length > 0 && data[0].team_code;
-}
+};
