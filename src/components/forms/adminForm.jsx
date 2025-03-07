@@ -6,7 +6,10 @@ export default function AdminForm() {
 
   useEffect(() => {
     async function checkAuth() {
-      const response = await fetch("/api/admin", { method: "GET", credentials: "include"});
+      const response = await fetch("/api/admin", {
+        method: "GET",
+        credentials: "include",
+      });
       if (response.ok) {
         window.location.href = "/admin/dashboard";
       }
@@ -15,18 +18,18 @@ export default function AdminForm() {
   }, []);
 
   async function handleSubmit(e) {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     try {
-      const formData = new FormData(e.target)
+      const formData = new FormData(e.target);
       const response = await fetch("/api/admin", {
         method: "POST",
         body: formData,
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
         setError(data.message.error);
@@ -49,10 +52,14 @@ export default function AdminForm() {
           </h2>
         </div>
         <div className="pb-4 px-4">
-          <form className="space-y-4" onSubmit={handleSubmit} encType="multipart/form-data">
+          <form
+            className="space-y-4"
+            onSubmit={handleSubmit}
+            encType="multipart/form-data"
+          >
             <div className="space-y-2">
-              <label 
-                htmlFor="password" 
+              <label
+                htmlFor="password"
                 className="block text-sm font-medium text-zinc-900"
               >
                 Password
@@ -92,7 +99,7 @@ export default function AdminForm() {
                 </div>
               </div>
             )}
-            <button 
+            <button
               className="w-full rounded-lg bg-primary py-2 transition-colors
                          hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"

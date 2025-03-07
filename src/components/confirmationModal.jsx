@@ -1,4 +1,9 @@
-export default function ConfirmationModal({ title, content, closeModal, confirmationModal }) {
+export default function ConfirmationModal({
+  title,
+  content,
+  closeModal,
+  confirmationModal,
+}) {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
       <div className="relative bg-black border-2 border-gray-500 rounded-lg shadow-lg">
