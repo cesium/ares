@@ -9,7 +9,18 @@
       "title": "MCSonae",
       "icon": "companies/mcsonae",
       "url": "https://mc.sonae.pt/"
+    },
+    {
+      "title": "SingleStore",
+      "icon": "companies/singlestore",
+      "url": "https://www.singlestore.com/"
     }
   ],
-  "supporters": []
+  "supporters": [
+    {
+      "title": "Startup Braga",
+      "icon": "companies/startup",
+      "url": "https://www.startupbraga.com"
+    }
+  ]
 }
