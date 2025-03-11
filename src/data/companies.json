@@ -4,23 +4,23 @@
       "title": "Uphold",
       "icon": "companies/uphold",
       "url": "https://uphold.com/"
+    },
+    {
+      "title": "MCSonae",
+      "icon": "companies/mcsonae",
+      "url": "https://mc.sonae.pt/"
+    },
+    {
+      "title": "SingleStore",
+      "icon": "companies/singlestore",
+      "url": "https://www.singlestore.com/"
     }
   ],
   "supporters": [
     {
-      "title": "RedBull",
-      "icon": "companies/redbull",
-      "url": "https://www.redbull.com/pt-pt/"
-    },
-    {
-      "title": "DSPA",
-      "icon": "companies/dspa",
-      "url": "https://dspa.pt/"
-    },
-    {
       "title": "Startup Braga",
       "icon": "companies/startup",
-      "url": "https://www.startupbraga.com/"
+      "url": "https://www.startupbraga.com"
     }
   ]
 }
