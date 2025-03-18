@@ -105,6 +105,14 @@ export default function Form() {
           placeholder="Engenharia Informática"
         />
 
+        <TextInput
+          type="text"
+          param="team_code"
+          title="Team Code"
+          placeholder="XXXXX"
+          help="Since the registration is closed, you can only register if you have a team waiting for you."
+        />
+
         <ToggleButton title="Vegan" param="vegan" />
 
         <TextBox

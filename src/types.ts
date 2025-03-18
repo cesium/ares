@@ -33,6 +33,7 @@ export interface RegisterItem {
   confirmation: string;
   university: string;
   course: string;
+  team_code: string;
   notes: string;
   vegan: boolean;
 }
