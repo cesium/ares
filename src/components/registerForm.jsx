@@ -34,8 +34,41 @@ export default function Form() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      openInformationModal();
+      const { ok: ok, message: responseJoinTeam } = await joinTeam(
+        formData.get("email"),
+        formData.get("team_code"),
+        data.message.confirmation
+      );
+
+
+      if (!ok) {
+        setResponseErrors(responseJoinTeam.message.errors);
+        setLoadingState(false);
+      } else {
+        console.log("opening modal")
+        openInformationModal();
+      }
     }
+  }
+
+  async function joinTeam(email, teamCode, confirmation) {
+    const JoinFormData = new FormData();
+    JoinFormData.append("confirmation", confirmation);
+    JoinFormData.append("email", email);
+    JoinFormData.append("code", teamCode);
+    JoinFormData.append("delete_user_on_error", true);
+
+    const responseJoinTeam = await fetch("/api/teams/join", {
+      method: "POST",
+      body: JoinFormData,
+    });
+
+    const dataJoinTeam = await responseJoinTeam.json();
+
+    return {
+      ok: responseJoinTeam.ok, 
+      message: dataJoinTeam,
+    };
   }
 
   function goBack() {
@@ -165,10 +198,9 @@ export default function Form() {
             title="You're registered!"
             content={
               <>
-                Your registration was successful! We've sent you an email with
-                your confirmation code. <br />
-                Head over to the teams page to create your own team or join a
-                team with your partners.
+                Your registration was successful! 
+                We've sent you an email with your confirmation code,
+                and you've successfully joined the team. <br />
               </>
             }
             closeModal={goBack}

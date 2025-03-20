@@ -40,30 +40,18 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const files: any = formData.getAll("cv");
+  const confirmation = randomUUID().toUpperCase();
   const data: RegisterItem = {
     name: formData.get("name")?.toString() ?? "",
     email: formData.get("email")?.toString() ?? "",
     mobile: formData.get("mobile")?.toString() ?? "",
     age: Number(formData.get("age")),
-    confirmation: randomUUID().toUpperCase(),
+    confirmation: confirmation,
     university: formData.get("university")?.toString() ?? "",
     course: formData.get("course")?.toString() ?? "",
-    team_code: formData.get("team_code")?.toString() ?? "",
     notes: formData.get("notes")?.toString() ?? "",
     vegan: formData.get("vegan") === "on",
   };
-
-  const team_code_check = await checkTeamCode(data.team_code);
-
-  if (!team_code_check.valid) {
-    return new Response(
-      JSON.stringify({
-        message: { errors: team_code_check.errors },
-        status: 400,
-      }),
-      { status: 400 },
-    );
-  }
 
   const insertion_msg = await supabase
     .from("participants")
@@ -103,25 +91,9 @@ export const POST: APIRoute = async ({ request }) => {
     );
   }
 
-  const join_team_msg = await joinParticipantToTeam(data.team_code, data.email);
-
-  if (!join_team_msg.success) {
-    errors.push(
-      "There was an error joining the team. Try again later.",
-    );
-    await supabase.from("participants").delete().eq("email", data.email);
-    return new Response(
-      JSON.stringify({
-        message: { errors: errors },
-        status: 500,
-      }),
-      { status: 500 },
-    );
-  }
-
   await sendConfirmationEmail(data.email, data.name, data.confirmation);
 
-  return new Response(JSON.stringify({ status: 200 }), { status: 200 });
+  return new Response(JSON.stringify({ message: {confirmation: confirmation}, status: 200 }), { status: 200 });
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {
@@ -189,60 +161,5 @@ const sendConfirmationEmail = async (
     await ses.send(params);
   } catch (error) {
     console.error("Error sending email:", error);
-  }
-};
-
-const checkTeamCode = async (team_code: string) => {
-  const { data: team } = await supabase
-    .from("teams")
-    .select("code, num_team_mem, paid")
-    .eq("code", team_code);
-
-  if (team?.length === 0) {
-    return {
-      valid: false,
-      errors: ["Invalid team code"],
-    }
-  }
-
-  if (team && team[0].paid) {
-    return {
-      valid: false,
-      errors: ["Team already paid"],
-    }
-  }
-
-  if (team && team[0].num_team_mem == 5) {
-    return {
-      valid: false,
-      errors: ["Team already full"],
-    }
-  }
-
-  return {
-    valid: true,
-    errors: [],
-  }
-}
-
-const joinParticipantToTeam = async (team_code: string, email: string) => {
-  const insertion_msg = await supabase.rpc("update_participant_team", {
-    participant_email: email,
-    new_team_code: team_code,
-  });
-
-  if (insertion_msg.error) {
-    console.error(insertion_msg.error);
-    let msg = "There was an error joining the team. Try again later.";
-    return {
-      success: false,
-      errors: [msg],
-    }
-  }
-  else {
-    return {
-      success: true,
-      errors: [],
-    }
   }
 };
