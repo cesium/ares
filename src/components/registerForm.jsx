@@ -37,15 +37,14 @@ export default function Form() {
       const { ok: ok, message: responseJoinTeam } = await joinTeam(
         formData.get("email"),
         formData.get("team_code"),
-        data.message.confirmation
+        data.message.confirmation,
       );
-
 
       if (!ok) {
         setResponseErrors(responseJoinTeam.message.errors);
         setLoadingState(false);
       } else {
-        console.log("opening modal")
+        console.log("opening modal");
         openInformationModal();
       }
     }
@@ -66,7 +65,7 @@ export default function Form() {
     const dataJoinTeam = await responseJoinTeam.json();
 
     return {
-      ok: responseJoinTeam.ok, 
+      ok: responseJoinTeam.ok,
       message: dataJoinTeam,
     };
   }
@@ -198,9 +197,9 @@ export default function Form() {
             title="You're registered!"
             content={
               <>
-                Your registration was successful! 
-                We've sent you an email with your confirmation code,
-                and you've successfully joined the team. <br />
+                Your registration was successful! We've sent you an email with
+                your confirmation code, and you've successfully joined the team.{" "}
+                <br />
               </>
             }
             closeModal={goBack}

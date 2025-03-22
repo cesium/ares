@@ -1,56 +1,68 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useRef, useEffect } from "react"
+import type React from "react";
+import { useState, useRef, useEffect } from "react";
 
-type TooltipPosition = "top" | "right" | "bottom" | "left" | "topStart" | "topEnd"
+type TooltipPosition =
+  | "top"
+  | "right"
+  | "bottom"
+  | "left"
+  | "topStart"
+  | "topEnd";
 
 interface TooltipProps {
-  content: React.ReactNode
-  position?: TooltipPosition
-  delay?: number
-  children: React.ReactNode
-  className?: string
+  content: React.ReactNode;
+  position?: TooltipPosition;
+  delay?: number;
+  children: React.ReactNode;
+  className?: string;
 }
 
 // Helper function to conditionally join class names
 const cn = (...classes: (string | boolean | undefined)[]) => {
-  return classes.filter(Boolean).join(" ")
-}
+  return classes.filter(Boolean).join(" ");
+};
 
-export function Tooltip({ content, position = "top", delay = 300, children, className }: TooltipProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const [isMounted, setIsMounted] = useState(false)
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const tooltipRef = useRef<HTMLDivElement>(null)
+export function Tooltip({
+  content,
+  position = "top",
+  delay = 300,
+  children,
+  className,
+}: TooltipProps) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isVisible && !isMounted) {
-      setIsMounted(true)
+      setIsMounted(true);
     }
 
     return () => {
       if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+        clearTimeout(timeoutRef.current);
       }
-    }
-  }, [isVisible, isMounted])
+    };
+  }, [isVisible, isMounted]);
 
   const showTooltip = () => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = setTimeout(() => {
-      setIsVisible(true)
-    }, delay)
-  }
+      setIsVisible(true);
+    }, delay);
+  };
 
   const hideTooltip = () => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+      clearTimeout(timeoutRef.current);
     }
-    setIsVisible(false)
-  }
+    setIsVisible(false);
+  };
 
   const positionClasses = {
     top: "bottom-full left-1/2 -translate-x-1/2 -translate-y-2",
@@ -59,10 +71,14 @@ export function Tooltip({ content, position = "top", delay = 300, children, clas
     left: "right-full top-1/2 -translate-x-2 -translate-y-1/2",
     topStart: "bottom-full left-0 -translate-y-2",
     topEnd: "bottom-full right-0 -translate-y-2",
-  }
+  };
 
   return (
-    <div className="relative inline-block" onMouseEnter={showTooltip} onMouseLeave={hideTooltip}>
+    <div
+      className="relative inline-block"
+      onMouseEnter={showTooltip}
+      onMouseLeave={hideTooltip}
+    >
       {children}
       {isMounted && (
         <div
@@ -82,8 +98,7 @@ export function Tooltip({ content, position = "top", delay = 300, children, clas
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default Tooltip
-
+export default Tooltip;

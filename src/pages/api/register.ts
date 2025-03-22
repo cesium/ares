@@ -93,7 +93,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   await sendConfirmationEmail(data.email, data.name, data.confirmation);
 
-  return new Response(JSON.stringify({ message: {confirmation: confirmation}, status: 200 }), { status: 200 });
+  return new Response(
+    JSON.stringify({ message: { confirmation: confirmation }, status: 200 }),
+    { status: 200 },
+  );
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {

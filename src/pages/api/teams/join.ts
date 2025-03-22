@@ -37,8 +37,9 @@ export const POST: APIRoute = async ({ request }) => {
 
   const email = formData.get("email")?.toString() ?? "";
   const team_code = formData.get("code")?.toString().replace("#", "");
-  const delete_user_on_error = formData.get("delete_user_on_error")?.toString() === "true";
-  
+  const delete_user_on_error =
+    formData.get("delete_user_on_error")?.toString() === "true";
+
   // check if the participant is already in a team
   const team_code_already = await checkAlreadyInTeam(email);
   if (team_code_already) {
@@ -47,9 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (delete_user_on_error) {
       const deleted = await deleteParticipant(email);
       if (!deleted.sucess) {
-        errors.push(
-          deleted.error,
-        );
+        errors.push(deleted.error);
       }
     }
     return new Response(
@@ -83,9 +82,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (delete_user_on_error) {
       const deleted = await deleteParticipant(email);
       if (!deleted.sucess) {
-        errors.push(
-          deleted.error,
-        );
+        errors.push(deleted.error);
       }
     }
 
@@ -214,13 +211,12 @@ const checkAlreadyInTeam = async (email: string) => {
   return data && data.length > 0 && data[0].team_code;
 };
 
-
 const deleteParticipant = async (email: string) => {
   const resposeParticipant = await supabase
     .from("participants")
     .delete()
     .eq("email", email);
-  
+
   if (resposeParticipant.error) {
     return { sucess: false, error: "Error deleting participant" };
   }
@@ -232,8 +228,7 @@ const deleteParticipant = async (email: string) => {
   }
 
   return { sucess: true, error: "" };
-}
-
+};
 
 const deleteFolder = async (folderPath: string) => {
   try {
@@ -241,7 +236,7 @@ const deleteFolder = async (folderPath: string) => {
     const { data: files, error: listError } = await supabase.storage
       .from("files")
       .list(folderPath);
-        
+
     if (listError) {
       console.error("Error listing files:", listError.message);
       return { success: false };

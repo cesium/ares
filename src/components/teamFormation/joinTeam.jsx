@@ -19,7 +19,7 @@ export default function JoinTeam() {
     /* This option exists because of the phase of registration when the participant joins the team at the same time that they register.
        In the registration form, if there is an error, the user is deleted from the database.
     */
-    formData.append("delete_user_on_error", false); 
+    formData.append("delete_user_on_error", false);
     const response = await fetch("/api/teams/join", {
       method: "POST",
       body: formData,
