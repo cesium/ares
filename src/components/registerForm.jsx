@@ -34,8 +34,40 @@ export default function Form() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      openInformationModal();
+      const { ok: ok, message: responseJoinTeam } = await joinTeam(
+        formData.get("email"),
+        formData.get("team_code"),
+        data.message.confirmation,
+      );
+
+      if (!ok) {
+        setResponseErrors(responseJoinTeam.message.errors);
+        setLoadingState(false);
+      } else {
+        console.log("opening modal");
+        openInformationModal();
+      }
     }
+  }
+
+  async function joinTeam(email, teamCode, confirmation) {
+    const JoinFormData = new FormData();
+    JoinFormData.append("confirmation", confirmation);
+    JoinFormData.append("email", email);
+    JoinFormData.append("code", teamCode);
+    JoinFormData.append("delete_user_on_error", true);
+
+    const responseJoinTeam = await fetch("/api/teams/join", {
+      method: "POST",
+      body: JoinFormData,
+    });
+
+    const dataJoinTeam = await responseJoinTeam.json();
+
+    return {
+      ok: responseJoinTeam.ok,
+      message: dataJoinTeam,
+    };
   }
 
   function goBack() {
@@ -105,6 +137,14 @@ export default function Form() {
           placeholder="Engenharia Informática"
         />
 
+        <TextInput
+          type="text"
+          param="team_code"
+          title="Team Code"
+          placeholder="XXXXX"
+          help="Since the registration is closed, you can only register if you have a team waiting for you."
+        />
+
         <ToggleButton title="Vegan" param="vegan" />
 
         <TextBox
@@ -158,9 +198,8 @@ export default function Form() {
             content={
               <>
                 Your registration was successful! We've sent you an email with
-                your confirmation code. <br />
-                Head over to the teams page to create your own team or join a
-                team with your partners.
+                your confirmation code, and you've successfully joined the team.{" "}
+                <br />
               </>
             }
             closeModal={goBack}

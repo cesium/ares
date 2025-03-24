@@ -37,11 +37,20 @@ export const POST: APIRoute = async ({ request }) => {
 
   const email = formData.get("email")?.toString() ?? "";
   const team_code = formData.get("code")?.toString().replace("#", "");
+  const delete_user_on_error =
+    formData.get("delete_user_on_error")?.toString() === "true";
 
   // check if the participant is already in a team
   const team_code_already = await checkAlreadyInTeam(email);
   if (team_code_already) {
     errors.push("You are already in a team. You can't join another one.");
+
+    if (delete_user_on_error) {
+      const deleted = await deleteParticipant(email);
+      if (!deleted.sucess) {
+        errors.push(deleted.error);
+      }
+    }
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -69,6 +78,14 @@ export const POST: APIRoute = async ({ request }) => {
       msg = "The team is already paid. You can't join it.";
     }
     errors.push(msg);
+
+    if (delete_user_on_error) {
+      const deleted = await deleteParticipant(email);
+      if (!deleted.sucess) {
+        errors.push(deleted.error);
+      }
+    }
+
     return new Response(
       JSON.stringify({
         message: { errors: errors },
@@ -192,4 +209,54 @@ const checkAlreadyInTeam = async (email: string) => {
     .select("team_code")
     .eq("email", email);
   return data && data.length > 0 && data[0].team_code;
+};
+
+const deleteParticipant = async (email: string) => {
+  const resposeParticipant = await supabase
+    .from("participants")
+    .delete()
+    .eq("email", email);
+
+  if (resposeParticipant.error) {
+    return { sucess: false, error: "Error deleting participant" };
+  }
+
+  const responseStorage = await deleteFolder(`cv/${email}`);
+
+  if (responseStorage.success === false) {
+    return { sucess: false, error: "Error deleting participant files" };
+  }
+
+  return { sucess: true, error: "" };
+};
+
+const deleteFolder = async (folderPath: string) => {
+  try {
+    // List all files in the folder
+    const { data: files, error: listError } = await supabase.storage
+      .from("files")
+      .list(folderPath);
+
+    if (listError) {
+      console.error("Error listing files:", listError.message);
+      return { success: false };
+    }
+
+    // Extract file paths
+    const filePaths = files.map((file) => `${folderPath}/${file.name}`);
+    // Remove all files
+    const { data, error: removeError } = await supabase.storage
+      .from("files")
+      .remove(filePaths);
+
+    if (removeError) {
+      console.error("Error removing files:", removeError.message);
+      return { success: false };
+    }
+
+    return { success: true, data };
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return { success: false };
+  }
 };

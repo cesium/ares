@@ -40,12 +40,13 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const files: any = formData.getAll("cv");
+  const confirmation = randomUUID().toUpperCase();
   const data: RegisterItem = {
     name: formData.get("name")?.toString() ?? "",
     email: formData.get("email")?.toString() ?? "",
     mobile: formData.get("mobile")?.toString() ?? "",
     age: Number(formData.get("age")),
-    confirmation: randomUUID().toUpperCase(),
+    confirmation: confirmation,
     university: formData.get("university")?.toString() ?? "",
     course: formData.get("course")?.toString() ?? "",
     notes: formData.get("notes")?.toString() ?? "",
@@ -92,7 +93,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   await sendConfirmationEmail(data.email, data.name, data.confirmation);
 
-  return new Response(JSON.stringify({ status: 200 }), { status: 200 });
+  return new Response(
+    JSON.stringify({ message: { confirmation: confirmation }, status: 200 }),
+    { status: 200 },
+  );
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {
