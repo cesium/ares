@@ -19,6 +19,7 @@ const ses = new SESClient({
     secretAccessKey: import.meta.env.SES_SECRET,
   },
 });
+
 const { randomUUID } = new ShortUniqueId({ length: 6 });
 
 export const POST: APIRoute = async ({ request }) => {
