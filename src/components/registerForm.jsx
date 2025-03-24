@@ -10,7 +10,7 @@ import InformationModal from "~/components/informationModal.jsx";
 import FormsTemplate from "./forms/formsTemplate.jsx";
 import ErrorBox from "~/components/forms/errorBox.jsx";
 import { useState } from "react";
-import { sendConfirmationEmail } from "~/lib/sendEmail.js";
+import { sendConfirmationEmail } from "~/lib/sendEmail.ts";
 
 import universities from "~/data/institutes.json";
 

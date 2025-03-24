@@ -1,7 +1,6 @@
 import ShortUniqueId from "short-unique-id";
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 import type { RegisterItem } from "~/types";
 
 export const prerender = false;
