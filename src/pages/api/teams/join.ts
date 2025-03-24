@@ -19,6 +19,8 @@ const ses = new SESClient({
 
 const senderEmail = import.meta.env.SENDER_EMAIL;
 
+const discordInvite = import.meta.env.DISCORD_INVITE;
+
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
   let errors: String[] = [];
@@ -176,6 +178,7 @@ const sendTeamEntryEmail = async (to: string, team_name: string) => {
   const body = `<h2>Hello again 👋</h2>
     <div>
       <p>You just entered a new team - <b>${team_name}</b></p>
+      <p>If you want to join our discord server, here's the link: ${discordInvite}</p>
       <p>Looking forward to seeing you soon!</p>
       <p>Organization team 🪲</p>
     </div>`;
