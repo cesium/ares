@@ -10,6 +10,7 @@ import InformationModal from "~/components/informationModal.jsx";
 import FormsTemplate from "./forms/formsTemplate.jsx";
 import ErrorBox from "~/components/forms/errorBox.jsx";
 import { useState } from "react";
+import { sendConfirmationEmail } from "~/lib/sendEmail.js";
 
 import universities from "~/data/institutes.json";
 
@@ -44,6 +45,11 @@ export default function Form() {
         setResponseErrors(responseJoinTeam.message.errors);
         setLoadingState(false);
       } else {
+        sendConfirmationEmail(
+          data.message.email,
+          data.message.name,
+          data.message.confirmation,
+        );
         console.log("opening modal");
         openInformationModal();
       }
