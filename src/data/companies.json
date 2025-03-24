@@ -21,6 +21,16 @@
       "title": "Startup Braga",
       "icon": "companies/startup",
       "url": "https://www.startupbraga.com"
+    },
+    {
+      "title": "Decathlon",
+      "icon": "companies/decathlon-logo",
+      "url": "https://www.decathlon.pt"
+    },
+    {
+      "title": "Redbull",
+      "icon": "companies/redbullata",
+      "url": "https://www.redbull.com/pt-pt"
     }
   ]
 }
