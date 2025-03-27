@@ -10,6 +10,7 @@ const supabase = createClient(
 );
 
 const apiGithub = "https://api.github.com/repos/";
+// TODO: Change this date to the contest start date
 const beginContestDate = new Date("2022-03-28T18:00:00Z");
 
 export const POST: APIRoute = async ({ request }) => {
@@ -34,6 +35,7 @@ export const POST: APIRoute = async ({ request }) => {
     name: formData.get("name")?.toString() ?? "",
     description: formData.get("description")?.toString() ?? "",
     link: formData.get("link")?.toString() ?? "",
+    theme: formData.get("theme")?.toString() ?? "",
   };
 
   const insertion_msg = await supabase.from("projects").insert([data]).select();
