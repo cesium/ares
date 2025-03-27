@@ -3,6 +3,7 @@ import FormsTemplate from "./forms/formsTemplate.jsx";
 import TextInput from "~/components/forms/textInput.jsx";
 import TextBox from "~/components/forms/textBox.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
+import InformationModal from "~/components/informationModal.jsx";
 import Button from "./button.jsx";
 import ErrorBox from "~/components/forms/errorBox.jsx";
 
@@ -10,6 +11,7 @@ export default function ProjectDelivery() {
   const [responseErrors, setResponseErrors] = useState([]);
   const [loadingState, setLoadingState] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   async function submit(e) {
     console.log("submit");
@@ -28,7 +30,8 @@ export default function ProjectDelivery() {
       setResponseErrors(data.message.errors);
       setLoadingState(false);
     } else {
-      window.location.href = "/";
+      setShowInfoModal(true);
+      setLoadingState(false);
     }
   }
 
@@ -38,6 +41,15 @@ export default function ProjectDelivery() {
 
   function closeModal() {
     setShowModal(false);
+  }
+
+  function goBack() {
+    closeInfoModal();
+    window.location.href = "/";
+  }
+
+  function closeInfoModal() {
+    setShowInfoModal(false);
   }
 
   return (
@@ -83,10 +95,24 @@ export default function ProjectDelivery() {
         />
         {showModal && (
           <ConfirmationModal
-            placeHolder="Are you sure you want to submit?"
+            title="Are you sure you want to submit?"
+            content="This is a unique submission and cannot be undone."
             closeModal={closeModal}
           />
         )}
+        {showInfoModal && (
+          <InformationModal
+            title="Project submitted!"
+            content={
+              <>
+                Your project has been successfully submitted!
+                Thank you for participating in <span class="text-primary">Hackathon Bugsbyte</span>. Good luck!
+              </>
+            }
+            closeModal={goBack}
+          />
+        )}
+
       </form>
     </FormsTemplate>
   );

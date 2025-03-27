@@ -10,7 +10,7 @@ const supabase = createClient(
 );
 
 const apiGithub = "https://api.github.com/repos/";
-const beginContestDate = new Date("2025-03-28T18:00:00Z");
+const beginContestDate = new Date("2022-03-28T18:00:00Z");
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
