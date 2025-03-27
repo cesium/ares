@@ -2,10 +2,12 @@ import { useState } from "react";
 import FormsTemplate from "./forms/formsTemplate.jsx";
 import TextInput from "~/components/forms/textInput.jsx";
 import TextBox from "~/components/forms/textBox.jsx";
+import Selector from "~/components/forms/selector.jsx";
 import ConfirmationModal from "~/components/confirmationModal.jsx";
 import InformationModal from "~/components/informationModal.jsx";
 import Button from "./button.jsx";
 import ErrorBox from "~/components/forms/errorBox.jsx";
+import themes from "~/data/themes.json";
 
 export default function ProjectDelivery() {
   const [responseErrors, setResponseErrors] = useState([]);
@@ -77,6 +79,16 @@ export default function ProjectDelivery() {
           title="Project link"
           placeholder="Insert your project repo link"
         />
+
+        <Selector
+          param="theme"
+          title="Project Theme"
+          options={themes.map((theme) => ({
+            key: theme.company,
+            value: `${theme.company}: ${theme.theme}`
+          }))}
+        />
+
         <TextBox
           param="description"
           title="Project description"

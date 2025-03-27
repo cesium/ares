@@ -16,7 +16,7 @@ export default function Selector({ param, title, options }) {
           --Please choose an option--
         </option>
         {options.map((option) => (
-          <option key={option}>{option}</option>
+          <option key={option.key}>{option.value}</option>
         ))}
       </select>
     </div>

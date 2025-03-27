@@ -127,7 +127,7 @@ export default function Form() {
         <Selector
           param="university"
           title="University"
-          options={universities}
+          options={universities.map((uni) => ({ key: uni, value: uni }))}
         />
 
         <TextInput
