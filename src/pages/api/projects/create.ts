@@ -9,6 +9,9 @@ const supabase = createClient(
   import.meta.env.SUPABASE_ANON_KEY,
 );
 
+const apiGithub = "https://api.github.com/repos/";
+const beginContestDate = new Date("2025-03-28T18:00:00Z");
+
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
 
@@ -57,15 +60,27 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 const validateForms = async (formData: FormData, errors: String[]) => {
+  const team_code = formData.get("team_code")?.toString().replace("#", "");
+  const link = formData.get("link")?.toString();
+
+  if (!team_code || !link) {
+    errors.push("All fields are required.");
+    return false
+  }
+
+  const valid = (await validateTeamCode(team_code, errors) && await validateLink(link, errors))
+
+  return valid;
+};
+
+
+const validateTeamCode = async (team_code: string, errors: String[]) => {
   let valid = true;
 
-  // check if there's already a project with the same team code
-  // if there is one, return an error
-  const team_code = formData.get("team_code")?.toString().replace("#", "");
   let { data: projects, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("team_code", team_code);
+  .from("projects")
+  .select("*")
+  .eq("team_code", team_code);
 
   if (error) {
     errors.push(
@@ -78,4 +93,31 @@ const validateForms = async (formData: FormData, errors: String[]) => {
   }
 
   return valid;
-};
+}  
+
+const validateLink = async (link: string, errors: String[]) => {
+  const githubLinkRegex = /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
+
+  const match = link.match(githubLinkRegex);
+  if (!match) {
+    errors.push("The link must be a valid GitHub repository URL.");
+    return false;
+  }
+
+  const [, username, repositoryName] = match;
+
+  const response = await fetch(apiGithub + `${username}/${repositoryName}`);
+  if (!response.ok) {
+    errors.push("The repository doesn't exist or is private.");
+    return false;
+  }
+
+  const data = await response.json();
+  const creationDate = new Date(data.created_at);
+  if (creationDate < beginContestDate) {
+    errors.push("The repository must be created after the contest start date.");
+    return false;
+  }
+
+  return true;
+}
