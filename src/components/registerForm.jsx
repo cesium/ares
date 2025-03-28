@@ -174,7 +174,7 @@ export default function Form() {
           >
             I agree with the{" "}
             <a
-              href="/docs/RegulamenteFinalBugsByte25.pdf"
+              href="/docs/RegulamentoBugsByte2025.pdf"
               className="text-primary hover:underline"
             >
               event regulations
