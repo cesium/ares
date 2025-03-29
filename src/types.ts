@@ -53,6 +53,7 @@ export interface SubmitProjectItem {
   name: string;
   description: string;
   link: string;
+  theme: string;
 }
 
 export interface SideBarOption {
