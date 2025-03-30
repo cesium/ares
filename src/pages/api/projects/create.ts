@@ -98,6 +98,22 @@ const validateTeamCode = async (team_code: string, errors: String[]) => {
 }  
 
 const validateLink = async (link: string, errors: String[]) => {
+  const links = link.split(" ");
+
+  for (let i = 0; i < links.length; i++) {
+    const link = links[i].trim();
+    if (link.length > 0) {
+      const valid = await validateGithubLink(link, errors);
+      if (!valid) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+const validateGithubLink = async (link: string, errors: String[]) => {
   const githubLinkRegex = /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
 
   const match = link.match(githubLinkRegex);
