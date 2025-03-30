@@ -11,7 +11,7 @@ export default function AdminForm() {
         credentials: "include",
       });
       if (response.ok) {
-        window.location.href = "/admin/dashboard";
+        window.location.href = "/admin/teams";
       }
     }
     checkAuth();
@@ -34,7 +34,7 @@ export default function AdminForm() {
       if (!response.ok) {
         setError(data.message.error);
       } else {
-        window.location.href = "/admin/dashboard"; // Redirect to dashboard
+        window.location.href = "/admin/teams"; // Redirect to dashboard
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");

@@ -16,7 +16,6 @@ export default function ProjectDelivery() {
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   async function submit(e) {
-    console.log("submit");
     e.preventDefault();
     closeModal();
     setLoadingState(true);
@@ -27,7 +26,7 @@ export default function ProjectDelivery() {
     });
 
     const data = await response.json();
-    console.log(data);
+
     if (!response.ok) {
       setResponseErrors(data.message.errors);
       setLoadingState(false);

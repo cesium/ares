@@ -3,16 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 
-interface SidebarItem {
-  name: string;
-  url: string;
-}
+const items = [
+  { name: "Teams", url: "/admin/teams" },
+  { name: "Projects", url: "/admin/projects" }
+];
 
-interface SidebarProps {
-  items?: SidebarItem[];
-}
-
-export default function Sidebar({ items = [] }: SidebarProps) {
+export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
 

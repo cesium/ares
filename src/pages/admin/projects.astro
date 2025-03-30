@@ -1,0 +1,13 @@
+---
+import BaseLayout from "~/layouts/baseLayout.astro";
+import DashboardComponent from "~/components/dashboard_projects.jsx";
+import Sidebar from "~/components/sidebar.tsx";
+
+---
+
+<BaseLayout>
+  <Sidebar client:load />
+  <main class="md:ml-64 bg-zinc-900">
+    <DashboardComponent client:load />
+  </main>
+</BaseLayout>

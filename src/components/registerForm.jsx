@@ -24,7 +24,7 @@ export default function Form() {
     closeConfirmationModal();
     setLoadingState(true);
     const formData = new FormData(e.target);
-    const response = await fetch("/api/register", {
+    const response = await fetch("/api/participants/register", {
       method: "POST",
       body: formData,
     });
@@ -44,7 +44,6 @@ export default function Form() {
         setResponseErrors(responseJoinTeam.message.errors);
         setLoadingState(false);
       } else {
-        console.log("opening modal");
         openInformationModal();
       }
     }
