@@ -122,7 +122,6 @@ export default function Dashboard() {
         codes: projects.map((project) => project.team_code).join(","),
     }).toString();
 
-    // Fetch the participants and teams data
     const participants_request = await fetch(`/api/participants/list?${queryParams}`, {
         method: "GET",
     });
@@ -131,27 +130,21 @@ export default function Dashboard() {
         method: "GET"
     });
 
-    // Parse the JSON responses
     const map_code_participants = await participants_request.json();
     const list_teams = await teams_request.json();
 
-    // Create a map from team names to participants
     const map_teams_participants = {};
 
     list_teams.forEach((team) => {
-        const teamCode = team.code; // Assuming "code" is the key that maps team codes
-        const teamName = team.name; // Extract the team name
+        const teamCode = team.code; 
+        const teamName = team.name;
 
         if (map_code_participants[teamCode]) {
             // Map the team name to the corresponding participants
             map_teams_participants[teamName] = map_code_participants[teamCode];
-        } else {
-            // If no participants are found for the team code, assign an empty array
-            map_teams_participants[teamName] = [];
         }
     });
 
-    // Example: return or process map_teams_participants as needed
     console.log(map_teams_participants);
 
     const map_teams_cvs = {}
@@ -167,9 +160,9 @@ export default function Dashboard() {
       const cvs = await cvsrequest.json();
       
       map_teams_cvs[teamName] = cvs;
-      console.log(cvs);
     });
 
+    console.log(map_teams_cvs);
 }
 
 
