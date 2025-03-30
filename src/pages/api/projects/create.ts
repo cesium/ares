@@ -11,7 +11,7 @@ const supabase = createClient(
 
 const apiGithub = "https://api.github.com/repos/";
 // TODO: Change this date to the contest start date
-const beginContestDate = new Date("2025-03-28T18:00:00Z");
+const beginContestDate = new Date("2000-03-28T18:00:00Z");
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
@@ -98,6 +98,22 @@ const validateTeamCode = async (team_code: string, errors: String[]) => {
 }  
 
 const validateLink = async (link: string, errors: String[]) => {
+  const links = link.split(" ");
+
+  for (let i = 0; i < links.length; i++) {
+    const link = links[i].trim();
+    if (link.length > 0) {
+      const valid = await validateGithubLink(link, errors);
+      if (!valid) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+const validateGithubLink = async (link: string, errors: String[]) => {
   const githubLinkRegex = /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
 
   const match = link.match(githubLinkRegex);
