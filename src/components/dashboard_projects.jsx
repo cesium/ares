@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Search, ChevronLeft, ChevronRight, Download } from "lucide-react";
+import { Check, Search, ChevronLeft, ChevronRight, Download } from "lucide-react";
 import Dropdown from "~/components/dropdown.jsx";
 import { cn } from "@udecode/cn";
-
+import Badge from "~/components/badge.jsx";
+import InformationModal from "~/components/informationModal.jsx";
 
 const options = [
   { value: "all", label: "Filter Themes" },
@@ -13,6 +14,8 @@ const options = [
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
+  const [loadingCommits, setLoadingCommits] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [projects, setProjects] = useState([]);
   const [selectedOption, setSelectedOption] = useState("all");
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -258,6 +261,12 @@ export default function Dashboard() {
                   >
                     DESCRIPTION
                   </th>
+                  <th
+                    scope="col"
+                    className="text-green-500 font-medium text-center px-6 py-3"
+                  >
+                    COMMITS
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-700">
@@ -293,6 +302,18 @@ export default function Dashboard() {
                           "None"
                         )}
                       </td>
+                      <td className="px-6 py-4 text-center font-medium text-white">
+                        <button
+                          onClick={() => CheckCommits(team)}
+                          className="group focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-zinc-800 rounded-full"
+                          title="Check Commits"
+                        >
+                          <Badge className="bg-green-500/20 border-0 border-green-500/30">
+                            <Check className="h-3.5 w-3.5 mr-1 text-green-500" />
+                            <span className="text-green-500">Check Commits</span>
+                          </Badge>
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -305,6 +326,13 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
+          {showModal && (
+            <InformationModal
+              title="Are you sure?"
+              content={`Checking`}
+              closeModal={() => setShowModal(false)}
+            />
+          )}
           <div className="p-4 border-t border-zinc-700 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-400">
             <div>
               Showing {startIndex + 1}-

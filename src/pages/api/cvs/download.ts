@@ -51,7 +51,9 @@ export const GET: APIRoute = async ({ request, cookies }) => {
         { status: 404 },
       );
     }
-    const zip = new JSZip();
+
+    // TODO: Create a zip file with the CVs
+    /* const zip = new JSZip();
     cvs.forEach((cv, index) => {
       zip.file(`cv_${index + 1}.pdf`, cv);
     });
@@ -65,6 +67,7 @@ export const GET: APIRoute = async ({ request, cookies }) => {
       "Content-Disposition": "attachment; filename=cvs.zip",
       },
     });
+    */
   }
 
   return new Response(
