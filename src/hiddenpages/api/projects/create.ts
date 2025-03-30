@@ -11,7 +11,7 @@ const supabase = createClient(
 
 const apiGithub = "https://api.github.com/repos/";
 // TODO: Change this date to the contest start date
-const beginContestDate = new Date("2025-03-28T18:00:00Z");
+const beginContestDate = new Date("2000-03-28T18:00:00Z");
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
@@ -67,22 +67,23 @@ const validateForms = async (formData: FormData, errors: String[]) => {
 
   if (!team_code || !link) {
     errors.push("All fields are required.");
-    return false
+    return false;
   }
 
-  const valid = (await validateTeamCode(team_code, errors) && await validateLink(link, errors))
+  const valid =
+    (await validateTeamCode(team_code, errors)) &&
+    (await validateLink(link, errors));
 
   return valid;
 };
-
 
 const validateTeamCode = async (team_code: string, errors: String[]) => {
   let valid = true;
 
   let { data: projects, error } = await supabase
-  .from("projects")
-  .select("*")
-  .eq("team_code", team_code);
+    .from("projects")
+    .select("*")
+    .eq("team_code", team_code);
 
   if (error) {
     errors.push(
@@ -95,7 +96,7 @@ const validateTeamCode = async (team_code: string, errors: String[]) => {
   }
 
   return valid;
-}  
+};
 
 const validateLink = async (link: string, errors: String[]) => {
   const links = link.split(" ");
@@ -111,10 +112,11 @@ const validateLink = async (link: string, errors: String[]) => {
   }
 
   return true;
-}
+};
 
 const validateGithubLink = async (link: string, errors: String[]) => {
-  const githubLinkRegex = /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
+  const githubLinkRegex =
+    /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
 
   const match = link.match(githubLinkRegex);
   if (!match) {
@@ -138,4 +140,4 @@ const validateGithubLink = async (link: string, errors: String[]) => {
   }
 
   return true;
-}
+};

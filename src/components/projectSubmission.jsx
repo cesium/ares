@@ -84,7 +84,7 @@ export default function ProjectDelivery() {
           title="Project Theme"
           options={themes.map((theme) => ({
             key: theme.company,
-            value: `${theme.company}: ${theme.theme}`
+            value: `${theme.company}: ${theme.theme}`,
           }))}
         />
 
@@ -116,14 +116,14 @@ export default function ProjectDelivery() {
             title="Project submitted!"
             content={
               <>
-                Your project has been successfully submitted!
-                Thank you for participating in <span class="text-primary">Hackathon Bugsbyte</span>. Good luck!
+                Your project has been successfully submitted! Thank you for
+                participating in{" "}
+                <span class="text-primary">Hackathon Bugsbyte</span>. Good luck!
               </>
             }
             closeModal={goBack}
           />
         )}
-
       </form>
     </FormsTemplate>
   );

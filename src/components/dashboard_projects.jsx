@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Check, Search, ChevronLeft, ChevronRight, Download } from "lucide-react";
+import {
+  Check,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+} from "lucide-react";
 import Dropdown from "~/components/dropdown.jsx";
 import { cn } from "@udecode/cn";
 import Badge from "~/components/badge.jsx";
@@ -93,9 +99,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (search) {
-      const searchResults = projects.filter((project) =>
-        project.name.toLowerCase().includes(search.toLowerCase()) ||
-        project.team_code.toLowerCase().includes(search.toLowerCase()),
+      const searchResults = projects.filter(
+        (project) =>
+          project.name.toLowerCase().includes(search.toLowerCase()) ||
+          project.team_code.toLowerCase().includes(search.toLowerCase()),
       );
       setFilteredProjects(searchResults);
     } else {
@@ -109,28 +116,35 @@ export default function Dashboard() {
     if (option === "all") {
       setFilteredProjects(projects);
     } else if (option === "mmcsonae") {
-      const mcsonaeProjects = projects.filter((team) => team.theme === "McSonae");
+      const mcsonaeProjects = projects.filter(
+        (team) => team.theme === "McSonae",
+      );
       setFilteredProjects(mcsonaeProjects);
     } else if (option === "uphold") {
       const upholdProjects = projects.filter((team) => team.theme === "Uphold");
       setFilteredProjects(upholdProjects);
     } else if (option === "singlestore") {
-      const singlestoreProjects = projects.filter((team) => team.theme === "SingleStore");
+      const singlestoreProjects = projects.filter(
+        (team) => team.theme === "SingleStore",
+      );
       setFilteredProjects(singlestoreProjects);
     }
   }
 
   async function downloadCvs() {
     const queryParams = new URLSearchParams({
-        codes: projects.map((project) => project.team_code).join(","),
+      codes: projects.map((project) => project.team_code).join(","),
     }).toString();
 
-    const participants_request = await fetch(`/api/participants/list?${queryParams}`, {
+    const participants_request = await fetch(
+      `/api/participants/list?${queryParams}`,
+      {
         method: "GET",
-    });
+      },
+    );
 
     const teams_request = await fetch("/api/teams/list", {
-        method: "GET"
+      method: "GET",
     });
 
     const map_code_participants = await participants_request.json();
@@ -139,31 +153,33 @@ export default function Dashboard() {
     const map_teams_participants = {};
 
     list_teams.forEach((team) => {
-        const teamCode = team.code; 
-        const teamName = team.name;
+      const teamCode = team.code;
+      const teamName = team.name;
 
-        if (map_code_participants[teamCode]) {
-            // Map the team name to the corresponding participants
-            map_teams_participants[teamName] = map_code_participants[teamCode];
-        }
+      if (map_code_participants[teamCode]) {
+        // Map the team name to the corresponding participants
+        map_teams_participants[teamName] = map_code_participants[teamCode];
+      }
     });
 
     console.log(map_teams_participants);
 
-    const map_teams_cvs = {}
+    const map_teams_cvs = {};
 
-    Object.entries(map_teams_participants).forEach(async ([teamName, participants]) => {
-      const queryParamsCvs = new URLSearchParams({
-        emails: participants.join(","),
-      }).toString();
+    Object.entries(map_teams_participants).forEach(
+      async ([teamName, participants]) => {
+        const queryParamsCvs = new URLSearchParams({
+          emails: participants.join(","),
+        }).toString();
 
-      const cvsrequest = await fetch(`/api/cvs/download?${queryParamsCvs}`, {
-        method: "GET",
-      });
-      const cvs = await cvsrequest.json();
-      
-      map_teams_cvs[teamName] = cvs;
-    });
+        const cvsrequest = await fetch(`/api/cvs/download?${queryParamsCvs}`, {
+          method: "GET",
+        });
+        const cvs = await cvsrequest.json();
+
+        map_teams_cvs[teamName] = cvs;
+      },
+    );
 
     console.log(map_teams_cvs);
   }
@@ -176,17 +192,15 @@ export default function Dashboard() {
     const data = await response.json();
     setLoadingCommits(false);
     if (response.ok) {
-      const result = data.valid ? (
-        "Last commit is valid"
-      ) : (
-        "Last commit after the deadline"
-      );
+      const result = data.message.valid
+        ? "Last commit is valid"
+        : "Last commit after the deadline";
       setResultCommits(result);
     } else {
       setResultCommits("Error fetching commits");
+      console.error("Error fetching commits:", data.message.error);
     }
   }
-
 
   if (loading) {
     return (
@@ -217,26 +231,27 @@ export default function Dashboard() {
               />
             </div>
             <div className="flex gap-2">
-                <button className={
-                    cn(
-                    "flex items-center p-2 rounded-xl bg-zinc-700 border-zinc-600 text-gray-300 hover:bg-zinc-600 text-sm",
-                    selectedOption === "all" ? "cursor-not-allowed opacity-50" : ""
-                    )
-                }
+              <button
+                className={cn(
+                  "flex items-center p-2 rounded-xl bg-zinc-700 border-zinc-600 text-gray-300 hover:bg-zinc-600 text-sm",
+                  selectedOption === "all"
+                    ? "cursor-not-allowed opacity-50"
+                    : "",
+                )}
                 onClick={downloadCvs}
-                >
-                    <div className="flex items-center gap-2">
-                        <Download className="h-4 w-4" />
-                        <span>CVs</span>
-                    </div>
-                </button>
+              >
                 <div className="flex items-center gap-2">
-                    <Dropdown
-                    options={options}
-                    functionOnChange={filterProjects}
-                    client:load
-                    />
+                  <Download className="h-4 w-4" />
+                  <span>CVs</span>
                 </div>
+              </button>
+              <div className="flex items-center gap-2">
+                <Dropdown
+                  options={options}
+                  functionOnChange={filterProjects}
+                  client:load
+                />
+              </div>
             </div>
           </div>
           <div className="flex bg-zinc-800 border-zinc-700 overflow-auto">
@@ -301,24 +316,19 @@ export default function Dashboard() {
                         {project.name}
                       </td>
                       <td className="px-6 py-4 text-center text-white">
-                        <a
-                          href={project.link}
-                        >
-                            {project.link}
-                        </a>
+                        <a href={project.link}>{project.link}</a>
                       </td>
                       <td className="px-6 py-4 text-gray-400 text-center">
-                        {new Date(project.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {new Date(project.created_at).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </td>
                       <td className="px-6 py-4 text-center font-medium text-white">
                         {project.theme}
                       </td>
                       <td className="px-6 py-4 text-center max-w-[200px] truncate">
-                        {project.description ? (
-                            project.description
-                        ) : (
-                          "None"
-                        )}
+                        {project.description ? project.description : "None"}
                       </td>
                       <td className="px-6 py-4 text-center font-medium text-white">
                         <button
@@ -328,7 +338,9 @@ export default function Dashboard() {
                         >
                           <Badge className="bg-green-500/20 border-0 border-green-500/30">
                             <Check className="h-3.5 w-3.5 mr-1 text-green-500" />
-                            <span className="text-green-500">Check Commits</span>
+                            <span className="text-green-500">
+                              Check Commits
+                            </span>
                           </Badge>
                         </button>
                       </td>

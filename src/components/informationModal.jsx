@@ -14,7 +14,7 @@ export default function InformationModal({ title, content, closeModal }) {
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-circle-check-big text-center text-green-500 h-12 w-12"
+              className="lucide lucide-circle-check-big text-center text-green-500 h-12 w-12"
             >
               <path d="M21.801 10A10 10 0 1 1 17 3.335" />
               <path d="m9 11 3 3L22 4" />

@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
 
-
 export const prerender = false;
 
 const supabase = createClient(
@@ -14,14 +13,14 @@ const AUTH_SECRET = import.meta.env.AUTH_SECRET;
 
 export const GET: APIRoute = async ({ request, cookies }) => {
   const authToken = cookies.get(AUTH_COOKIE_NAME);
-  
+
   if (!authToken || authToken.value !== AUTH_SECRET) {
     return new Response(
       JSON.stringify({ message: { error: "Unauthorized" } }),
       { status: 401 },
     );
   }
-  
+
   const url = new URL(request.url);
   const emailsParam = url.searchParams.get("emails");
   const emails = emailsParam ? emailsParam.split(",") : null;
@@ -32,8 +31,7 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     for (const email of emails) {
       const name = email.split("@")[0];
       const path = `cv/${email}/${name}.pdf`;
-      const { data: cv, error } = await supabase
-        .storage
+      const { data: cv, error } = await supabase.storage
         .from("files")
         .download(path);
 

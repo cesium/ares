@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 
 const items = [
   { name: "Teams", url: "/admin/teams" },
-  { name: "Projects", url: "/admin/projects" }
+  { name: "Projects", url: "/admin/projects" },
 ];
 
 export default function Sidebar() {

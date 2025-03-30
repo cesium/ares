@@ -12,17 +12,18 @@ const AUTH_COOKIE_NAME = "authToken";
 const AUTH_SECRET = import.meta.env.AUTH_SECRET;
 
 const apiGithub = "https://api.github.com/repos/";
+const lastCommitDate = new Date("2025-03-30T13:30:00Z");
 
 export const GET: APIRoute = async ({ request, cookies }) => {
   const authToken = cookies.get(AUTH_COOKIE_NAME);
-  
+
   if (!authToken || authToken.value !== AUTH_SECRET) {
     return new Response(
       JSON.stringify({ message: { error: "Unauthorized" } }),
       { status: 401 },
     );
   }
-  
+
   const url = new URL(request.url);
   const teamParam = url.searchParams.get("team");
 
@@ -33,7 +34,7 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     );
   }
 
-  const { data: commits, error } = await supabase
+  const { data: links, error } = await supabase
     .from("projects")
     .select("link")
     .eq("team_code", teamParam)
@@ -45,40 +46,67 @@ export const GET: APIRoute = async ({ request, cookies }) => {
       { status: 404 },
     );
   }
-  const urls = commits.link.split(",");
 
-  const valid = checkCommits(urls);
+  const valid = await checkCommits(links.link);
+
+  if (!valid) {
+    return new Response(
+      JSON.stringify({ message: { valid: false, error: "Invalid commits" } }),
+      { status: 200 },
+    );
+  }
+  return new Response(
+    JSON.stringify({
+      message: { valid: true, error: null },
+      status: 200,
+    }),
+    { status: 200 },
+  );
 };
 
+const checkCommits = async (link: string) => {
+  const links = typeof link === "string" ? link.split(" ") : [];
 
-const checkCommits = (urls: string[]) => {
-    const valid = urls.every((url) => {
-        const urlParts = url.split("/");
-        const repoName = urlParts[urlParts.length - 1];
-        const commitUrl = `${apiGithub}${repoName}/commits?per_page=1`;
-    
-        getLastCommitDate(commitUrl);
-    });
-    
-    if (valid) {
-        return new Response(
-        JSON.stringify({ message: { error: "Commits not found" } }),
-        { status: 404 },
-        );
+  for (let i = 0; i < links.length; i++) {
+    const link = links[i].trim();
+    if (link.length > 0) {
+      const valid = await validateCommit(link);
+      if (!valid) {
+        return false;
+      }
     }
-}
-async function getLastCommitDate() {
-
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/vnd.github+json",
-      },
-    });
-
-    const lastCommitDate = response.data[0].commit.committer.date;
-    console.log(`The last commit date is: ${lastCommitDate}`);
-  } catch (error) {
-    console.error("Error fetching the last commit date:", error);
   }
-}
+
+  return true;
+};
+
+const validateCommit = async (link: string) => {
+  const githubLinkRegex =
+    /^https:\/\/github\.com\/([A-Za-z0-9_.-]+)\/([A-Za-z0-9_.-]+)$/;
+
+  const match = link.match(githubLinkRegex);
+  if (!match) {
+    console.log("Invalid link format");
+    return false;
+  }
+
+  const [, username, repositoryName] = match;
+
+  const response = await fetch(
+    apiGithub + `${username}/${repositoryName}/commits`,
+  );
+  if (!response.ok) {
+    console.log("Error fetching commits");
+    return false;
+  }
+
+  const data = await response.json();
+  const lastCommit = new Date(data[0].commit.author.date);
+
+  if (lastCommit >= lastCommitDate) {
+    console.log("Last commit is too recent");
+    return false;
+  }
+
+  return true;
+};
