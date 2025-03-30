@@ -15,7 +15,7 @@ const options = [
 export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [loadingCommits, setLoadingCommits] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [resultCommits, setResultCommits] = useState("");
   const [projects, setProjects] = useState([]);
   const [selectedOption, setSelectedOption] = useState("all");
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -166,8 +166,26 @@ export default function Dashboard() {
     });
 
     console.log(map_teams_cvs);
-}
+  }
 
+  async function CheckCommits(team_code) {
+    setLoadingCommits(true);
+    const response = await fetch(`/api/projects/commits?team=${team_code}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    setLoadingCommits(false);
+    if (response.ok) {
+      const result = data.valid ? (
+        "Last commit is valid"
+      ) : (
+        "Last commit after the deadline"
+      );
+      setResultCommits(result);
+    } else {
+      setResultCommits("Error fetching commits");
+    }
+  }
 
 
   if (loading) {
@@ -304,7 +322,7 @@ export default function Dashboard() {
                       </td>
                       <td className="px-6 py-4 text-center font-medium text-white">
                         <button
-                          onClick={() => CheckCommits(team)}
+                          onClick={() => CheckCommits(project.team_code)}
                           className="group focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-zinc-800 rounded-full"
                           title="Check Commits"
                         >
@@ -326,11 +344,18 @@ export default function Dashboard() {
               </tbody>
             </table>
           </div>
-          {showModal && (
+          {loadingCommits && (
             <InformationModal
-              title="Are you sure?"
-              content={`Checking`}
-              closeModal={() => setShowModal(false)}
+              title="Loading Commits"
+              content="Please wait while we fetch the commits."
+              closeModal={() => setLoadingCommits(false)}
+            />
+          )}
+          {resultCommits && (
+            <InformationModal
+              title="Commits"
+              content={resultCommits}
+              closeModal={() => setResultCommits("")}
             />
           )}
           <div className="p-4 border-t border-zinc-700 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-400">
