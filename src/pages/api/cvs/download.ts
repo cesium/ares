@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { createClient } from "@supabase/supabase-js";
+import JSZip from "jszip";
 
 export const prerender = false;
 
@@ -25,9 +26,9 @@ export const GET: APIRoute = async ({ request, cookies }) => {
   const emailsParam = url.searchParams.get("emails");
   const emails = emailsParam ? emailsParam.split(",") : null;
 
-  const cvs: Blob[] = [];
-
   if (emails && Array.isArray(emails)) {
+    const zip = new JSZip();
+
     for (const email of emails) {
       const name = email.split("@")[0];
       const path = `cv/${email}/${name}.pdf`;
@@ -41,31 +42,25 @@ export const GET: APIRoute = async ({ request, cookies }) => {
           { status: 404 },
         );
       }
-      cvs.push(cv);
-    }
-    if (cvs.length === 0) {
-      return new Response(
-        JSON.stringify({ message: { error: "No CVs found" } }),
-        { status: 404 },
-      );
+
+      const arrayBuffer = await cv.arrayBuffer();
+      zip.file(`${name}.pdf`, arrayBuffer);
     }
 
-    // TODO: Create a zip file with the CVs
-    /* const zip = new JSZip();
-    cvs.forEach((cv, index) => {
-      zip.file(`cv_${index + 1}.pdf`, cv);
-    });
+    if (Object.keys(zip.files).length === 0) {
+      return new Response(JSON.stringify({ error: "No CVs found" }), {
+        status: 404,
+      });
+    }
 
     const zipBlob = await zip.generateAsync({ type: "blob" });
 
     return new Response(zipBlob, {
-      status: 200,
       headers: {
-      "Content-Type": "application/zip",
-      "Content-Disposition": "attachment; filename=cvs.zip",
+        "Content-Disposition": "attachment; filename=cvs.zip",
+        "Content-Type": "application/zip",
       },
     });
-    */
   }
 
   return new Response(

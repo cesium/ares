@@ -10,6 +10,7 @@ import Dropdown from "~/components/dropdown.jsx";
 import { cn } from "@udecode/cn";
 import Badge from "~/components/badge.jsx";
 import InformationModal from "~/components/informationModal.jsx";
+import JSZip from "jszip";
 
 const options = [
   { value: "all", label: "Filter Themes" },
@@ -162,26 +163,52 @@ export default function Dashboard() {
       }
     });
 
-    console.log(map_teams_participants);
-
     const map_teams_cvs = {};
 
-    Object.entries(map_teams_participants).forEach(
-      async ([teamName, participants]) => {
-        const queryParamsCvs = new URLSearchParams({
-          emails: participants.join(","),
-        }).toString();
+    await Promise.all(
+      Object.entries(map_teams_participants).map(
+        async ([teamName, participants]) => {
+          const queryParamsCvs = new URLSearchParams({
+            emails: participants.join(","),
+          }).toString();
 
-        const cvsrequest = await fetch(`/api/cvs/download?${queryParamsCvs}`, {
-          method: "GET",
-        });
-        const cvs = await cvsrequest.json();
+          const cvsrequest = await fetch(
+            `/api/cvs/download?${queryParamsCvs}`,
+            {
+              method: "GET",
+            },
+          );
 
-        map_teams_cvs[teamName] = cvs;
-      },
+          if (!cvsrequest.ok) {
+            console.error(`Failed to download CVs for ${teamName}`);
+            return;
+          }
+
+          const blob = await cvsrequest.blob();
+          map_teams_cvs[teamName] = blob;
+        },
+      ),
     );
 
-    console.log(map_teams_cvs);
+    if (Object.keys(map_teams_cvs).length === 0) {
+      console.error("No CVs were downloaded.");
+      return;
+    }
+
+    // Create ZIP file
+    const zip = new JSZip();
+    for (const [teamName, blob] of Object.entries(map_teams_cvs)) {
+      zip.file(`${teamName}.zip`, blob);
+    }
+
+    // Generate and download ZIP
+    const zipBlob = await zip.generateAsync({ type: "blob" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(zipBlob);
+    link.download = selectedOption + ".zip";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   async function CheckCommits(team_code) {
@@ -198,7 +225,6 @@ export default function Dashboard() {
       setResultCommits(result);
     } else {
       setResultCommits("Error fetching commits");
-      console.error("Error fetching commits:", data.message.error);
     }
   }
 
