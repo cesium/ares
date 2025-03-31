@@ -37,10 +37,22 @@ export const GET: APIRoute = async ({ request, cookies }) => {
         .download(path);
 
       if (error) {
-        return new Response(
-          JSON.stringify({ message: { error: "CV not found" } }),
-          { status: 404 },
-        );
+        const path_PDF = `cv/${email}/${name}.PDF`;
+        const { data: cv_PDF, error: error_PDF } = await supabase.storage
+          .from("files")
+          .download(path_PDF);
+
+        if (error_PDF) {
+          console.error("Error downloading CV:", name);
+          return new Response(
+            JSON.stringify({ message: { error: "CV not found" } }),
+            { status: 404 },
+          );
+        }
+
+        const arrayBuffer = await cv_PDF.arrayBuffer();
+        zip.file(`${name}.pdf`, arrayBuffer);
+        continue;
       }
 
       const arrayBuffer = await cv.arrayBuffer();
