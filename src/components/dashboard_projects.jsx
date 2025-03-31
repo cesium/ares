@@ -134,7 +134,7 @@ export default function Dashboard() {
 
   async function downloadCvs() {
     const queryParams = new URLSearchParams({
-      codes: projects.map((project) => project.team_code).join(","),
+      codes: filteredProjects.map((project) => project.team_code).join(","),
     }).toString();
 
     const participants_request = await fetch(
