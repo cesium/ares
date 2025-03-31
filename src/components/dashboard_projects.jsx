@@ -116,7 +116,7 @@ export default function Dashboard() {
 
     if (option === "all") {
       setFilteredProjects(projects);
-    } else if (option === "mmcsonae") {
+    } else if (option === "mcsonae") {
       const mcsonaeProjects = projects.filter(
         (team) => team.theme === "McSonae",
       );
