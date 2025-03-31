@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
+  Loader,
 } from "lucide-react";
 import Dropdown from "~/components/dropdown.jsx";
 import { cn } from "@udecode/cn";
@@ -28,6 +29,7 @@ export default function Dashboard() {
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [dowloaingCvs, setDownloadingCvs] = useState(false);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -133,6 +135,8 @@ export default function Dashboard() {
   }
 
   async function downloadCvs() {
+    setDownloadingCvs(true);
+
     const queryParams = new URLSearchParams({
       codes: filteredProjects.map((project) => project.team_code).join(","),
     }).toString();
@@ -209,6 +213,7 @@ export default function Dashboard() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    setDownloadingCvs(false);
   }
 
   async function CheckCommits(team_code) {
@@ -267,7 +272,12 @@ export default function Dashboard() {
                 onClick={downloadCvs}
               >
                 <div className="flex items-center gap-2">
-                  <Download className="h-4 w-4" />
+                  {dowloaingCvs && (
+                    <Loader className="animate-spin h-4 w-4 mr-1" />
+                  )}
+                  {!dowloaingCvs && (
+                    <Download className="h-4 w-4 mr-1" />
+                  )}
                   <span>CVs</span>
                 </div>
               </button>
