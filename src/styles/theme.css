@@ -1,9 +1,0 @@
-[data-theme="dark"] {
-  --color-primary: #67b22e;
-  --color-secondary: #8b89e9;
-  --color-text: theme("colors.gray.50");
-  --color-text-offset: theme("colors.gray.400");
-  --color-background: theme("colors.black");
-  --color-background-offset: theme("colors.gray.800");
-  --color-border: theme("colors.gray.50" / 10%);
-}

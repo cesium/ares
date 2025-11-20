@@ -1,23 +1,18 @@
-# ![BugsByte banner](.github/brand/bugsbyte-banner24.png)
+# Bugsbyte
 
-[![Built with Astro](https://astro.badg.es/v2/built-with-astro/small.svg)](https://astro.build)
+To start your Phoenix server:
 
-</div>
+* Run `mix setup` to install and setup dependencies
+* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-## 🤝 Contributing
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-Please note we have a [code of conduct](CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
+## Learn more
 
-We have a [Contributing Guide](CONTRIBUTING.md) to help you getting started.
-
-## 📝 License
-
-<img src=".github/brand/cesium-DARK.svg#gh-light-mode-only" width="300">
-<img src=".github/brand/cesium-LIGHT.svg#gh-dark-mode-only" width="300">
-
-Copyright (c) 2024, CeSIUM.
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE)
-file for details.
+* Official website: https://www.phoenixframework.org/
+* Guides: https://hexdocs.pm/phoenix/overview.html
+* Docs: https://hexdocs.pm/phoenix
+* Forum: https://elixirforum.com/c/phoenix-forum
+* Source: https://github.com/phoenixframework/phoenix

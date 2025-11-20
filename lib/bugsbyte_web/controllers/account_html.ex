@@ -1,0 +1,103 @@
+defmodule BugsbyteWeb.AccountHTML do
+  use BugsbyteWeb, :html
+
+  # Embed templates in lib/bugsbyte_web/templates/account/* so
+  # the controller's render/3 can find "new.html" and "edit.html".
+  embed_templates "account/*"
+
+  import BugsbyteWeb.NavComponent
+  import BugsbyteWeb.FooterComponent
+
+  # Fallback component and render functions to avoid runtime lookup
+  # errors when embed_templates may not have generated the expected
+  # functions due to compile ordering.
+  def new(assigns) do
+    ~H"""
+    <.navbar fixed={true} />
+
+    <main class="min-h-screen bg-black text-white">
+      <div class="max-w-xl mx-auto py-16">
+        <h1 class="text-4xl font-black mb-6 text-center">Personal Information</h1>
+        <p class="text-sm text-gray-300 text-center mb-8">Use a permanent address where you can receive mail.</p>
+
+        <form action="/register" method="post" class="space-y-6">
+          <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Full name</label>
+            <input name="user[name]" placeholder="John Doe" class="w-full bg-white text-black rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Your email</label>
+            <input name="user[email]" placeholder="your-email@bugsbyte.org" class="w-full bg-white text-black rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Phone number</label>
+            <input name="user[phone]" placeholder="929 357 457" class="w-full bg-white text-black rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Age</label>
+            <select name="user[age]" class="w-full bg-white text-black rounded px-3 py-2">
+              <option>18+</option>
+              <option>17</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">University</label>
+            <input name="user[university]" placeholder="Universidade do Minho" class="w-full bg-white text-black rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Course</label>
+            <input name="user[course]" placeholder="Engenharia Informática" class="w-full bg-white text-black rounded px-3 py-2" />
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Team Code</label>
+            <input name="user[team_code]" placeholder="XXXXX" class="w-full bg-white text-black rounded px-3 py-2" />
+            <p class="text-xs text-gray-400 mt-1">Since the registration is closed, you can only register if you have a team waiting for you.</p>
+          </div>
+
+          <div>
+            <label class="inline-flex items-center gap-3">
+              <input type="checkbox" name="user[vegan]" />
+              <span class="text-sm text-gray-200">Vegan</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Notes</label>
+            <textarea name="user[notes]" placeholder="If you have any notes about food restrictions or anything else let us know" class="w-full bg-white text-black rounded px-3 py-2 h-24"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm text-gray-200 mb-2">Upload CV</label>
+            <input type="file" name="user[cv]" class="text-sm text-gray-200" />
+            <p class="text-xs text-gray-400 mt-1">Upload your CV so that the companies at the event know who you are 👀</p>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <label class="inline-flex items-center gap-2">
+              <input type="checkbox" name="user[agree]" />
+              <span class="text-sm text-gray-200">I agree with the <a href="/regulamento" class="text-primary underline">event regulations</a></span>
+            </label>
+          </div>
+
+          <div>
+            <button class="px-4 py-2 bg-emerald-600 rounded text-white">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <.footer />
+    </main>
+    """
+  end
+
+  def render("new.html", assigns), do: new(assigns)
+  def render(template, _assigns), do: raise("template not found: #{template}")
+end
