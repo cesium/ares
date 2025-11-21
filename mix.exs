@@ -65,7 +65,9 @@ defmodule Bugsbyte.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      # dev/test tooling
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -88,6 +90,8 @@ defmodule Bugsbyte.MixProject do
         "esbuild bugsbyte --minify",
         "phx.digest"
       ],
+      # lint alias to run credo in strict mode
+      lint: ["credo --all --strict"],
       precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
     ]
   end

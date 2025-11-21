@@ -30,10 +30,10 @@ defmodule BugsbyteWeb.PageHTML do
     end)
   end
 
-  def average_team_size(teams) when length(teams) == 0, do: 0
+  def average_team_size([]), do: 0
 
   def average_team_size(teams) do
     total = total_members(teams)
-    (total / length(teams)) |> Float.round(1)
+    (total / Enum.count(teams)) |> Float.round(1)
   end
 end

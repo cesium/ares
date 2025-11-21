@@ -29,6 +29,9 @@ defmodule BugsbyteWeb.CoreComponents do
   use Phoenix.Component
   use Gettext, backend: BugsbyteWeb.Gettext
 
+  alias Phoenix.Component
+  alias Phoenix.HTML.Form
+  alias Phoenix.HTML.FormField
   alias Phoenix.LiveView.JS
 
   @doc """
@@ -119,7 +122,7 @@ defmodule BugsbyteWeb.CoreComponents do
   @doc """
   Renders an input with label and error messages.
 
-  A `Phoenix.HTML.FormField` may be passed as argument,
+  A `FormField` may be passed as argument,
   which is used to retrieve the input name, id, and values.
   Otherwise all attributes may be passed explicitly.
 
@@ -152,7 +155,7 @@ defmodule BugsbyteWeb.CoreComponents do
     values: ~w(checkbox color date datetime-local email file month number password
                search select tel text textarea time url week)
 
-  attr :field, Phoenix.HTML.FormField,
+  attr :field, FormField,
     doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   attr :errors, :list, default: []
@@ -167,8 +170,8 @@ defmodule BugsbyteWeb.CoreComponents do
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
 
-  def input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
-    errors = if Phoenix.Component.used_input?(field), do: field.errors, else: []
+  def input(%{field: %FormField{} = field} = assigns) do
+  errors = if Component.used_input?(field), do: field.errors, else: []
 
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
@@ -181,7 +184,7 @@ defmodule BugsbyteWeb.CoreComponents do
   def input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
-        Phoenix.HTML.Form.normalize_value("checkbox", assigns[:value])
+  Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""

@@ -20,6 +20,8 @@ defmodule Bugsbyte.DataCase do
     quote do
       alias Bugsbyte.Repo
 
+      alias Ecto.Adapters.SQL
+
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
@@ -36,8 +38,8 @@ defmodule Bugsbyte.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Bugsbyte.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    pid = SQL.Sandbox.start_owner!(Bugsbyte.Repo, shared: not tags[:async])
+    on_exit(fn -> SQL.Sandbox.stop_owner(pid) end)
   end
 
   @doc """

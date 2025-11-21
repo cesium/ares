@@ -9,24 +9,21 @@ defmodule Bugsbyte.Faqs do
   Gets all FAQ items from the JSON file
   """
   def get_faqs do
-    case File.read(@faqs_path) do
-      {:ok, content} ->
-        case Jason.decode(content) do
-          {:ok, faqs} ->
-            faqs
-            |> Enum.with_index(1)
-            |> Enum.map(fn {faq, index} ->
-              Map.put(faq, "id", index)
-              |> Map.put("expanded", false)
-            end)
-
-          {:error, _reason} ->
-            []
-        end
-
-      {:error, _reason} ->
-        []
+    with {:ok, content} <- File.read(@faqs_path),
+         {:ok, faqs} <- Jason.decode(content) do
+      build_faqs(faqs)
+    else
+      _ -> []
     end
+  end
+
+  defp build_faqs(faqs) do
+    faqs
+    |> Enum.with_index(1)
+    |> Enum.map(fn {faq, index} ->
+      Map.put(faq, "id", index)
+      |> Map.put("expanded", false)
+    end)
   end
 
   @doc """
