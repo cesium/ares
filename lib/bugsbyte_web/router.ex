@@ -20,13 +20,19 @@ defmodule BugsbyteWeb.Router do
     live "/", HomeLive.Index, :index
     live "/faqs", FaqsLive.Index, :index
     live "/register", AccountLive.Index, :new
-    post "/register", BugsbyteWeb.AccountController, :create
     live "/team-formation", TeamFormationLive.Index, :index
-    post "/team-formation", BugsbyteWeb.PageController, :create_team
-    post "/team-join", BugsbyteWeb.PageController, :join_team
+
     live "/teams", TeamsLive.Index, :index
   end
 
+  # Routes handled by top-level controllers (BugsbyteWeb.*)
+  scope "/", BugsbyteWeb do
+    pipe_through :browser
+
+    post "/register", AccountController, :create
+    post "/team-formation", PageController, :create_team
+    post "/team-join", PageController, :join_team
+  end
   # Other scopes may use custom stacks.
   # scope "/api", BugsbyteWeb do
   #   pipe_through :api
