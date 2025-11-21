@@ -12,12 +12,14 @@
         <div class="border border-gray-700 rounded-lg p-4 bg-gray-900">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-xl font-bold"><%= team.name %></h3>
-              <p class="text-sm text-gray-400">Captain: <%= team.captain_name || "-" %></p>
+              <h3 class="text-xl font-bold">{team.name}</h3>
+              <p class="text-sm text-gray-400">Captain: {team.captain_name || "-"}</p>
             </div>
             <div class="text-right text-sm text-gray-300">
-              <p>Members: <%= BugsbyteWeb.PageHTML.count_team_members(team) %></p>
-              <p class="mt-1"><%= if team.looking_for_members, do: "Looking for members", else: "Closed" %></p>
+              <p>Members: {BugsbyteWeb.PageHTML.count_team_members(team)}</p>
+              <p class="mt-1">
+                {if team.looking_for_members, do: "Looking for members", else: "Closed"}
+              </p>
             </div>
           </div>
         </div>

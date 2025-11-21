@@ -18,24 +18,38 @@ defmodule BugsbyteWeb.AccountHTML do
     <main class="min-h-screen bg-black text-white">
       <div class="max-w-xl mx-auto py-16">
         <h1 class="text-4xl font-black mb-6 text-center">Personal Information</h1>
-        <p class="text-sm text-gray-300 text-center mb-8">Use a permanent address where you can receive mail.</p>
+        <p class="text-sm text-gray-300 text-center mb-8">
+          Use a permanent address where you can receive mail.
+        </p>
 
         <form action="/register" method="post" class="space-y-6">
           <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Full name</label>
-            <input name="user[name]" placeholder="John Doe" class="w-full bg-white text-black rounded px-3 py-2" />
+            <input
+              name="user[name]"
+              placeholder="John Doe"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
           </div>
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Your email</label>
-            <input name="user[email]" placeholder="your-email@bugsbyte.org" class="w-full bg-white text-black rounded px-3 py-2" />
+            <input
+              name="user[email]"
+              placeholder="your-email@bugsbyte.org"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
           </div>
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Phone number</label>
-            <input name="user[phone]" placeholder="929 357 457" class="w-full bg-white text-black rounded px-3 py-2" />
+            <input
+              name="user[phone]"
+              placeholder="929 357 457"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
           </div>
 
           <div>
@@ -48,18 +62,32 @@ defmodule BugsbyteWeb.AccountHTML do
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">University</label>
-            <input name="user[university]" placeholder="Universidade do Minho" class="w-full bg-white text-black rounded px-3 py-2" />
+            <input
+              name="user[university]"
+              placeholder="Universidade do Minho"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
           </div>
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Course</label>
-            <input name="user[course]" placeholder="Engenharia Informática" class="w-full bg-white text-black rounded px-3 py-2" />
+            <input
+              name="user[course]"
+              placeholder="Engenharia Informática"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
           </div>
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Team Code</label>
-            <input name="user[team_code]" placeholder="XXXXX" class="w-full bg-white text-black rounded px-3 py-2" />
-            <p class="text-xs text-gray-400 mt-1">Since the registration is closed, you can only register if you have a team waiting for you.</p>
+            <input
+              name="user[team_code]"
+              placeholder="XXXXX"
+              class="w-full bg-white text-black rounded px-3 py-2"
+            />
+            <p class="text-xs text-gray-400 mt-1">
+              Since the registration is closed, you can only register if you have a team waiting for you.
+            </p>
           </div>
 
           <div>
@@ -71,19 +99,28 @@ defmodule BugsbyteWeb.AccountHTML do
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Notes</label>
-            <textarea name="user[notes]" placeholder="If you have any notes about food restrictions or anything else let us know" class="w-full bg-white text-black rounded px-3 py-2 h-24"></textarea>
+            <textarea
+              name="user[notes]"
+              placeholder="If you have any notes about food restrictions or anything else let us know"
+              class="w-full bg-white text-black rounded px-3 py-2 h-24"
+            ></textarea>
           </div>
 
           <div>
             <label class="block text-sm text-gray-200 mb-2">Upload CV</label>
             <input type="file" name="user[cv]" class="text-sm text-gray-200" />
-            <p class="text-xs text-gray-400 mt-1">Upload your CV so that the companies at the event know who you are 👀</p>
+            <p class="text-xs text-gray-400 mt-1">
+              Upload your CV so that the companies at the event know who you are 👀
+            </p>
           </div>
 
           <div class="flex items-center gap-3">
             <label class="inline-flex items-center gap-2">
               <input type="checkbox" name="user[agree]" />
-              <span class="text-sm text-gray-200">I agree with the <a href="/regulamento" class="text-primary underline">event regulations</a></span>
+              <span class="text-sm text-gray-200">
+                I agree with the
+                <a href="/regulamento" class="text-primary underline">event regulations</a>
+              </span>
             </label>
           </div>
 

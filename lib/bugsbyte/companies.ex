@@ -15,6 +15,7 @@ defmodule Bugsbyte.Companies do
           {:ok, data} -> {:ok, data}
           {:error, _} -> {:error, "Failed to parse JSON"}
         end
+
       {:error, _} ->
         {:error, "Failed to read companies file"}
     end

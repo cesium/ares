@@ -122,8 +122,8 @@ defmodule BugsbyteWeb do
       import BugsbyteWeb.FooterComponent
       use Gettext, backend: BugsbyteWeb.Gettext
 
-  # optional helpers module (remove or add if you have project-specific helpers)
-  # import BugsbyteWeb.Helpers
+      # optional helpers module (remove or add if you have project-specific helpers)
+      # import BugsbyteWeb.Helpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

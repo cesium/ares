@@ -37,11 +37,11 @@ defmodule BugsbyteWeb.ImageUploader do
               <img class={[@rounded && "p-0", not @rounded && "p-4", @image_class]} src={@image} />
             <% else %>
               <%= if @placeholder do %>
-                <%= render_slot(@placeholder) %>
+                {render_slot(@placeholder)}
               <% else %>
                 <div class="select-none flex flex-col gap-2 items-center text-lightMuted dark:text-darkMuted">
                   <.icon name={@icon} class="w-12 h-12" />
-                  <p class="px-4 text-center"><%= gettext("Upload a file or drag and drop.") %></p>
+                  <p class="px-4 text-center">{gettext("Upload a file or drag and drop.")}</p>
                 </div>
               <% end %>
             <% end %>
@@ -60,18 +60,18 @@ defmodule BugsbyteWeb.ImageUploader do
               <% else %>
                 <div class="select-none flex flex-col gap-2 items-center text-lightMuted dark:text-darkMuted">
                   <.icon name="hero-document" class="w-12 h-12" />
-                  <p class="px-4 text-center"><%= entry.client_name %></p>
+                  <p class="px-4 text-center">{entry.client_name}</p>
                 </div>
               <% end %>
             </figure>
             <%= for err <- upload_errors(@upload, entry) do %>
-              <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+              <p class="alert alert-danger">{Phoenix.Naming.humanize(err)}</p>
             <% end %>
           </article>
         <% end %>
       <% end %>
       <%= for err <- upload_errors(@upload) do %>
-        <p class="alert alert-danger"><%= Phoenix.Naming.humanize(err) %></p>
+        <p class="alert alert-danger">{Phoenix.Naming.humanize(err)}</p>
       <% end %>
     </section>
     """

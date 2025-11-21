@@ -19,7 +19,9 @@ defmodule Bugsbyte.Faqs do
               Map.put(faq, "id", index)
               |> Map.put("expanded", false)
             end)
-          {:error, _reason} -> []
+
+          {:error, _reason} ->
+            []
         end
 
       {:error, _reason} ->

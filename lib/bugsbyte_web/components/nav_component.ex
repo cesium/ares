@@ -28,12 +28,18 @@ defmodule BugsbyteWeb.NavComponent do
           <nav class="hidden sm:block">
             <ul class="flex items-center gap-4 lg:gap-6">
               <li>
-                <a class="text-sm hover:text-secondary transition-colors" href="images/docs/SurvivalGuideBugsByte2025.pdf">
+                <a
+                  class="text-sm hover:text-secondary transition-colors"
+                  href="images/docs/SurvivalGuideBugsByte2025.pdf"
+                >
                   Survival Guide
                 </a>
               </li>
               <li>
-                <a class="text-sm hover:text-secondary transition-colors" href="images/docs/RegulamentoBugsByte2025.pdf">
+                <a
+                  class="text-sm hover:text-secondary transition-colors"
+                  href="images/docs/RegulamentoBugsByte2025.pdf"
+                >
                   Regulation
                 </a>
               </li>
@@ -43,7 +49,10 @@ defmodule BugsbyteWeb.NavComponent do
                 </a>
               </li>
               <li>
-                <a class="text-sm hover:text-secondary transition-colors" href="https://2024.bugsbyte.org/">
+                <a
+                  class="text-sm hover:text-secondary transition-colors"
+                  href="https://2024.bugsbyte.org/"
+                >
                   Previous edition
                 </a>
               </li>
@@ -70,11 +79,20 @@ defmodule BugsbyteWeb.NavComponent do
             onclick="document.getElementById('menu-modal').classList.toggle('hidden'); console.log('Menu toggled');"
           >
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             </svg>
           </button>
         </div>
-        <div id="menu-modal" class="modal hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-[100]" aria-hidden="true">
+        <div
+          id="menu-modal"
+          class="modal hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-[100]"
+          aria-hidden="true"
+        >
           <div class="space-y-4" role="dialog" aria-modal="true">
             <header class="text-right">
               <button
@@ -84,8 +102,18 @@ defmodule BugsbyteWeb.NavComponent do
                 aria-label="Close navigation"
                 onclick="document.getElementById('menu-modal').classList.add('hidden'); console.log('Menu closed');"
               >
-                <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                <svg
+                  class="w-6 h-6 sm:w-8 sm:h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </header>
@@ -95,32 +123,50 @@ defmodule BugsbyteWeb.NavComponent do
             <nav>
               <ul class="flex flex-col space-y-2">
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="/register">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="/register"
+                  >
                     Register
                   </a>
                 </li>
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="images/docs/SurvivalGuideBugsByte2025.pdf">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="images/docs/SurvivalGuideBugsByte2025.pdf"
+                  >
                     Survival Guide
                   </a>
                 </li>
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="images/docs/RegulamentoBugsByte2025.pdf">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="images/docs/RegulamentoBugsByte2025.pdf"
+                  >
                     Regulation
                   </a>
                 </li>
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="/faqs">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="/faqs"
+                  >
                     FAQs
                   </a>
                 </li>
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="https://2024.bugsbyte.org/">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="https://2024.bugsbyte.org/"
+                  >
                     Previous edition
                   </a>
                 </li>
                 <li>
-                  <a class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors" href="/team-formation">
+                  <a
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    href="/team-formation"
+                  >
                     Team formation
                   </a>
                 </li>

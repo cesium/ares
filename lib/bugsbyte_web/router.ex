@@ -33,6 +33,7 @@ defmodule BugsbyteWeb.Router do
     post "/team-formation", PageController, :create_team
     post "/team-join", PageController, :join_team
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", BugsbyteWeb do
   #   pipe_through :api
