@@ -4,16 +4,16 @@ on:
   push:
     branches: [main]
     paths:
-    - '**/*.ex'
-    - '**/*.exs'
-    - '**/*.html.heex'
+      - "**/*.ex"
+      - "**/*.exs"
+      - "**/*.html.heex"
   pull_request:
     branches: [main]
     types: [opened, synchronize]
     paths:
-    - '**/*.ex'
-    - '**/*.exs'
-    - '**/*.html.heex'
+      - "**/*.ex"
+      - "**/*.exs"
+      - "**/*.html.heex"
 
 jobs:
   build:
@@ -21,12 +21,12 @@ jobs:
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     env:
       MIX_ENV: test
-    
+
     strategy:
       matrix:
         otp: [27.x]
-        elixir: [1.19.x]
-    
+        elixir: [1.15.x]
+
     services:
       db:
         image: postgres:14.1
@@ -47,6 +47,6 @@ jobs:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
           build-flags: --all-warnings --warnings-as-errors
-  
+
       - name: 🔬 Run the tests
         run: mix test --warnings-as-errors

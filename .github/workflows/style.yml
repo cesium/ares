@@ -5,9 +5,9 @@ on:
     branches: [main]
     types: [opened, synchronize]
     paths:
-    - '**/*.ex'
-    - '**/*.exs'
-    - '**/*.html.heex'
+      - "**/*.ex"
+      - "**/*.exs"
+      - "**/*.html.heex"
 
 jobs:
   style:
@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         otp: [27.x]
-        elixir: [1.19.x]
+        elixir: [1.15.x]
 
     steps:
       - name: ☁️ Checkout repository
