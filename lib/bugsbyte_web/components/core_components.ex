@@ -171,7 +171,7 @@ defmodule BugsbyteWeb.CoreComponents do
                 multiple pattern placeholder readonly required rows size step)
 
   def input(%{field: %FormField{} = field} = assigns) do
-  errors = if Component.used_input?(field), do: field.errors, else: []
+    errors = if Component.used_input?(field), do: field.errors, else: []
 
     assigns
     |> assign(field: nil, id: assigns.id || field.id)
@@ -184,7 +184,7 @@ defmodule BugsbyteWeb.CoreComponents do
   def input(%{type: "checkbox"} = assigns) do
     assigns =
       assign_new(assigns, :checked, fn ->
-  Form.normalize_value("checkbox", assigns[:value])
+        Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""
