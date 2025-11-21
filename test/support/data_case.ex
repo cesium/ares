@@ -16,6 +16,9 @@ defmodule Bugsbyte.DataCase do
 
   use ExUnit.CaseTemplate
 
+  # Alias nested module so Credo won't warn about nested modules
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       alias Bugsbyte.Repo
@@ -36,8 +39,8 @@ defmodule Bugsbyte.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Bugsbyte.Repo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    pid = Sandbox.start_owner!(Bugsbyte.Repo, shared: not tags[:async])
+    on_exit(fn -> Sandbox.stop_owner(pid) end)
   end
 
   @doc """
