@@ -1,9 +1,24 @@
+[asdf-vm]: https://asdf-vm.com/
+
 # 🚀 Getting Started
 
 These instructions will get you a copy of the project up and running on your
 local machine for development and testing purposes.
 
-## 🔧 Commands
+## 📥 Prerequisites
+
+The following software is required to be installed on your system:
+
+- [Erlang 26+](https://www.erlang.org/downloads)
+- [Elixir 1.19+](https://elixir-lang.org/install.html)
+- [PostgreSQL 13+](https://www.postgresql.org/download/)(see [this section](#-docker) for setting up with docker)
+
+We recommend using [asdf version manager][asdf-vm] to install and manage all
+the programming languages' requirements.
+
+If you prefer to use docker, see the [section below](#-docker).
+
+## 🔧 Setup
 
 First, clone the repository:
 
@@ -12,35 +27,83 @@ git clone git@github.com:cesium/ares.git
 cd ares
 ```
 
-Then all the commands you'll need to start developing are here:
-| Command | Action |
-| :--------------------- | :------------------------------------------------ |
-| `npm install` | Install dependencies |
-| `npm run dev` | Start local dev server at `localhost:4321` |
-| `npm run build` | Build your production site to `./dist/` |
-| `npm run preview` | Preview your build locally, before deploying |
-| `npm run astro ...` | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI |
-| `npm run format` | Format code with [Prettier](https://prettier.io/) |
-| `npm run clean` | Remove `node_modules` and build output |
-
-## 🔼 Opening a PR
-
-### Previewing your work
-
-To preview your amazing work, run Ares (`npm run dev`) and open your page. It should be in http://localhost:4321/.
-
-After you are done writing, commit your changes to your branch and push.
+Then, run the setup script to get all dependencies configured. Make sure the database is up and running.
 
 ```
-git add *your changed files*
-git commit -m "Your commit message"
-git push
+bin/setup
 ```
 
-Now all that is left to do is opening a Pull Request so your contribution can be published into production. If you don't know how to open a Pull Request, please refer to [this guide](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request). **_Don't forget to select the reviewers_**.
-Once your PR is approved, your commit will be pushed to main and to production. Congratulations, you just contributed to the Ares repository.
+Then you should change the `.env.dev` file as needed. Run this script again if
+needed.
 
-### Note for those not a part of the CeSIUM team
+## 🔨 Development
 
-If you are not a member of our team on Github, then instead of creating a branch you need to fork this project. If you don't know how to do that, please [refer to this guide](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+Start the development server and then you can visit `http://localhost:4000`
+from your browser.
+
+```
+bin/server
+```
+
+Run the tests.
+
+```
+bin/test
+```
+
+Lint your code.
+
+```
+bin/lint
+```
+
+Format your code.
+
+```
+bin/format
+```
+
+## 🐳 Docker
+
+For data persistence this project uses a PostgreSQL database. You should have
+PostgreSQL up and running.
+
+If you want to setup the required database using docker containers you can
+easily do it with [docker-compose](https://docs.docker.com/compose/install/).
+
+Create and start the database containers. You should use `linux.yml` if running on Linux and `darwin.yml` if running on macOS.
+
+```
+cp .env.dev.sample .env.dev
+docker-compose -f docker-compose.dev.yml -f {linux,darwin}.yml up db
+```
+
+Start the previously created containers.
+
+```
+docker-compose -f docker-compose.dev.yml -f {linux,darwin}.yml start
+```
+
+Stop the containers.
+
+```
+docker-compose -f docker-compose.dev.yml -f {linux,darwin}.yml stop
+```
+
+Destroy the containers and volumes created.
+
+```
+docker-compose -f docker-compose.dev.yml -f {linux,darwin}.yml down -v
+```
+
+## 🔗 References
+
+You can use these resources to learn more about the technologies this project
+uses.
+
+- [Getting Started with Elixir](https://elixir-lang.org/getting-started/introduction.html)
+- [Erlang/Elixir Syntax: A Crash Course](https://elixir-lang.org/crash-course.html)
+- [Elixir School Course](https://elixirschool.com/en/)
+- [Phoenix Guides Overview](https://hexdocs.pm/phoenix/overview.html)
+- [Phoenix Documentation](https://hexdocs.pm/phoenix)
+- [Ecto Documentation](https://hexdocs.pm/ecto)

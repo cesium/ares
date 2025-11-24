@@ -1,6 +1,5 @@
-# ![BugsByte banner](.github/brand/bugsbyte-banner24.png)
+# ![BugsByte banner](priv/static/images/assets/cesium.png)
 
-[![Built with Astro](https://astro.badg.es/v2/built-with-astro/small.svg)](https://astro.build)
 
 </div>
 
@@ -17,7 +16,8 @@ We have a [Contributing Guide](CONTRIBUTING.md) to help you getting started.
 <img src=".github/brand/cesium-DARK.svg#gh-light-mode-only" width="300">
 <img src=".github/brand/cesium-LIGHT.svg#gh-dark-mode-only" width="300">
 
-Copyright (c) 2024, CeSIUM.
+Copyright (c) 2025, CeSIUM.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE)
 file for details.
+

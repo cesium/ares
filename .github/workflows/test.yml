@@ -1,6 +1,12 @@
-name: Code Quality
+name: Build and Test
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.ex"
+      - "**/*.exs"
+      - "**/*.html.heex"
   pull_request:
     branches: [main]
     types: [opened, synchronize]
@@ -10,14 +16,26 @@ on:
       - "**/*.html.heex"
 
 jobs:
-  style:
+  build:
     runs-on: ubuntu-latest
-    name: Code Quality
+    name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+    env:
+      MIX_ENV: test
 
     strategy:
       matrix:
         otp: [27.x]
         elixir: [1.15.x]
+
+    services:
+      db:
+        image: postgres:14.1
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USERNAME: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOSTNAME: 0.0.0.0
 
     steps:
       - name: ☁️ Checkout repository
@@ -30,8 +48,5 @@ jobs:
           elixir-version: ${{ matrix.elixir }}
           build-flags: --all-warnings --warnings-as-errors
 
-      - name: 🎨 Check code formating
-        run: mix format --check-formatted
-
-      - name: 🔍 Lint the code
-        run: mix credo --all --strict
+      - name: 🔬 Run the tests
+        run: mix test --warnings-as-errors

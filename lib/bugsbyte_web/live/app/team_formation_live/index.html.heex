@@ -1,0 +1,378 @@
+<.navbar fixed={true} />
+
+<div class="min-h-screen bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-xl mx-auto">
+    <div class="text-center mb-6">
+      <h1 class="md:text-6xl text-3xl font-extrabold tracking-tight mb-2">Team Formation</h1>
+      <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+        If you have already registered, you can join a team or create a new one.
+      </p>
+    </div>
+    <div class="flex justify-center mt-6 mb-6">
+      <nav class="flex items-center space-x-8" role="tablist" aria-label="Team tabs">
+        <a
+          href="?tab=create"
+          class={"text-sm pb-2 " <> (if @tab == "create", do: "text-indigo-400 border-b-2 border-indigo-400", else: "text-gray-400 hover:text-gray-200")}
+          aria-selected={@tab == "create"}
+        >
+          Create a team
+        </a>
+        <a
+          href="?tab=join"
+          class={"text-sm pb-2 " <> (if @tab == "join", do: "text-indigo-400 border-b-2 border-indigo-400", else: "text-gray-400 hover:text-gray-200")}
+          aria-selected={@tab == "join"}
+        >
+          Join a team
+        </a>
+      </nav>
+    </div>
+
+    <div :if={@flash["info"]} class="alert alert-success mb-6">
+      <div class="flex items-center">
+        <.icon name="hero-check-circle" class="w-5 h-5 mr-2" />
+        {@flash["info"]}
+      </div>
+    </div>
+
+    <div :if={@flash["error"]} class="alert alert-error mb-6">
+      <div class="flex items-center">
+        <.icon name="hero-exclamation-circle" class="w-5 h-5 mr-2" />
+        {@flash["error"]}
+      </div>
+    </div>
+
+    <div :if={@tab == "create"} class="bg-transparent rounded-lg p-8">
+      <.form
+        :let={f}
+        for={@changeset}
+        action={~p"/team-formation"}
+        method="post"
+        class="space-y-8"
+      >
+        <div class="border-b border-gray-200 pb-8">
+          <h2 class="text-2xl font-semibold text-white mb-6">Informacoes da Equipa</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="md:col-span-2">
+              <.input
+                field={f[:name]}
+                type="text"
+                label="Team name"
+                placeholder="Enter your new team name"
+                required
+                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+              />
+            </div>
+
+            <div class="md:col-span-2">
+              <.input
+                field={f[:description]}
+                type="textarea"
+                label="Description"
+                placeholder="Describe your team, goals and what you want to achieve"
+                rows="4"
+                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+              />
+            </div>
+
+            <div>
+              <.input
+                field={f[:experience_level]}
+                type="select"
+                label="Experience level"
+                options={[
+                  {"Beginner", "beginner"},
+                  {"Intermediate", "intermediate"},
+                  {"Advanced", "advanced"},
+                  {"Mixed", "mixed"}
+                ]}
+                class="w-full bg-white text-gray-800 rounded-md px-3 py-2 shadow-sm"
+              />
+            </div>
+
+            <div class="flex items-center">
+              <.input
+                field={f[:looking_for_members]}
+                type="checkbox"
+                label="Looking for members"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="border-b border-gray-200 pb-8">
+          <h2 class="text-2xl font-semibold text-white mb-6">Capitao da Equipa</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <.input
+                field={f[:captain_name]}
+                type="text"
+                label="Your name"
+                placeholder="Enter your full name"
+                required
+                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+              />
+            </div>
+
+            <div>
+              <.input
+                field={f[:captain_email]}
+                type="email"
+                label="Your email"
+                placeholder="Enter the email you used to register"
+                required
+                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+              />
+            </div>
+
+            <div>
+              <.input
+                field={f[:captain_phone]}
+                type="tel"
+                label="Phone (optional)"
+                placeholder="+351 912 345 678"
+                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+              />
+            </div>
+          </div>
+        </div>
+        
+<!-- Team Members -->
+        <div class="border-b border-gray-200 pb-8">
+          <h2 class="text-2xl font-semibold text-white mb-6">Membros da Equipa</h2>
+          <p class="text-sm text-gray-600 mb-6">
+            Adiciona os membros que já tens confirmados (opcional)
+          </p>
+          
+<!-- Member 1 -->
+          <div class="mb-6">
+            <h3 class="text-lg font-medium text-white mb-4">Membro 1</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <.input
+                  field={f[:member1_name]}
+                  type="text"
+                  label="Member 1 name"
+                  placeholder="Full name"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+              <div>
+                <.input
+                  field={f[:member1_email]}
+                  type="email"
+                  label="Member 1 email"
+                  placeholder="email@example.com"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+          
+<!-- Member 2 -->
+          <div class="mb-6">
+            <h3 class="text-lg font-medium text-white mb-4">Membro 2</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <.input
+                  field={f[:member2_name]}
+                  type="text"
+                  label="Member 2 name"
+                  placeholder="Full name"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+              <div>
+                <.input
+                  field={f[:member2_email]}
+                  type="email"
+                  label="Member 2 email"
+                  placeholder="email@example.com"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+          
+<!-- Member 3 -->
+          <div class="mb-6">
+            <h3 class="text-lg font-medium text-white mb-4">Membro 3</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <.input
+                  field={f[:member3_name]}
+                  type="text"
+                  label="Member 3 name"
+                  placeholder="Full name"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+              <div>
+                <.input
+                  field={f[:member3_email]}
+                  type="email"
+                  label="Member 3 email"
+                  placeholder="email@example.com"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+          
+<!-- Member 4 -->
+          <div>
+            <h3 class="text-lg font-medium text-white mb-4">Membro 4</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <.input
+                  field={f[:member4_name]}
+                  type="text"
+                  label="Member 4 name"
+                  placeholder="Full name"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+              <div>
+                <.input
+                  field={f[:member4_email]}
+                  type="email"
+                  label="Member 4 email"
+                  placeholder="email@example.com"
+                  class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+<!-- Submit Button -->
+        <div class="flex justify-center pt-6">
+          <button
+            type="submit"
+            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-lg inline-flex items-center"
+          >
+            <.icon name="hero-users" class="w-5 h-5 mr-2" /> Create
+          </button>
+        </div>
+      </.form>
+    </div>
+    
+<!-- Join form -->
+    <div :if={@tab == "join"} class="bg-transparent rounded-lg p-8">
+      <form action="/team-join" method="post" class="space-y-6">
+        <div>
+          <label for="team_name" class="block text-sm font-medium text-gray-300">Team name</label>
+          <div class="mt-1">
+            <input
+              id="team_name"
+              name="join[team_name]"
+              type="text"
+              required
+              placeholder="Enter your team name"
+              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300">Your email</label>
+          <div class="mt-1">
+            <input
+              id="email"
+              name="join[email]"
+              type="email"
+              required
+              placeholder="Enter the email you used to register"
+              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="confirmation_code" class="block text-sm font-medium text-gray-300">
+            Confirmation code
+          </label>
+          <p class="text-xs text-gray-500 mt-1">The code emailed to you when you registered</p>
+          <div class="mt-1">
+            <input
+              id="confirmation_code"
+              name="join[confirmation_code]"
+              type="text"
+              required
+              placeholder="Enter your confirmation code"
+              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
+            />
+          </div>
+        </div>
+
+        <div class="flex items-center">
+          <button
+            type="submit"
+            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md"
+          >
+            Create
+          </button>
+        </div>
+      </form>
+    </div>
+    
+<!-- Additional Info -->
+    <div class="mt-12 bg-black p-6">
+      <h3 class="text-lg font-semibold text-white mb-3">Informações Importantes</h3>
+      <ul class="text-gray-300 space-y-4">
+        <li class="flex items-start gap-3">
+          <.icon
+            name="hero-information-circle"
+            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+          />
+          <div>
+            <div class="font-medium text-white">Equipas</div>
+            <div class="text-sm text-gray-300">As equipas podem ter entre 2 a 5 membros</div>
+          </div>
+        </li>
+
+        <li class="flex items-start gap-3">
+          <.icon
+            name="hero-information-circle"
+            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+          />
+          <div>
+            <div class="font-medium text-white">Registo</div>
+            <div class="text-sm text-gray-300">
+              Podes registar a tua equipa mesmo sem ter todos os membros confirmados
+            </div>
+          </div>
+        </li>
+
+        <li class="flex items-start gap-3">
+          <.icon
+            name="hero-information-circle"
+            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+          />
+          <div>
+            <div class="font-medium text-white">Procurar membros</div>
+            <div class="text-sm text-gray-300">
+              Marca "À procura de novos membros" se quiseres que outros participantes te contactem
+            </div>
+          </div>
+        </li>
+
+        <li class="flex items-start gap-3">
+          <.icon
+            name="hero-information-circle"
+            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+          />
+          <div>
+            <div class="font-medium text-white">Edição</div>
+            <div class="text-sm text-gray-300">
+              Podes editar as informações da tua equipa até ao início do evento
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<.footer />
