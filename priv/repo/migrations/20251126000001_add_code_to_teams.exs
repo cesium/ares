@@ -1,4 +1,4 @@
-defmodule Bugsbyte.Repo.Migrations.AddCodToTeams do
+defmodule Ares.Repo.Migrations.AddCodToTeams do
   use Ecto.Migration
 
   def change do

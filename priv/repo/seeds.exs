@@ -5,14 +5,14 @@
 # Inside the script, you can read and write to any of your
 # repositories directly:
 #
-#     Bugsbyte.Repo.insert!(%Bugsbyte.SomeSchema{})
+#     Ares.Repo.insert!(%Ares.SomeSchema{})
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Bugsbyte.Repo
-alias Bugsbyte.Users.User
-alias Bugsbyte.Teams.Team
+alias Ares.Repo
+alias Ares.Users.User
+alias Ares.Teams.Team
 
 # Create sample users
 users = [

@@ -23,7 +23,7 @@ erl_crash.dump
 /tmp/
 
 # Ignore package tarball (built via "mix hex.build").
-bugsbyte-*.tar
+ares-*.tar
 
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
@@ -35,3 +35,4 @@ bugsbyte-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.env.dev

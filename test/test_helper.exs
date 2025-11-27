@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(Bugsbyte.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Ares.Repo, :manual)

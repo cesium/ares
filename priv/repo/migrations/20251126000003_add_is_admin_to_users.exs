@@ -1,4 +1,4 @@
-defmodule Bugsbyte.Repo.Migrations.AddIsAdminToUsers do
+defmodule Ares.Repo.Migrations.AddIsAdminToUsers do
   use Ecto.Migration
 
   def change do
