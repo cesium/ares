@@ -1,4 +1,4 @@
-defmodule Bugsbyte.Repo.Migrations.CreateTeams do
+defmodule Ares.Repo.Migrations.CreateTeams do
   use Ecto.Migration
 
   def change do
