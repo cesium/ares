@@ -2,7 +2,6 @@ defmodule AresWeb.App.HomeLive.Index do
   use AresWeb, :app_view
 
   alias Ares.Companies
-  alias Ares.Faqs
   alias Ares.Gallery
   alias Ares.Users
 
