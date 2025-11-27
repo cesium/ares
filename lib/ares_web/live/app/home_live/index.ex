@@ -2,8 +2,9 @@ defmodule AresWeb.App.HomeLive.Index do
   use AresWeb, :app_view
 
   alias Ares.Companies
-  alias Ares.Users
+  alias Ares.Faqs
   alias Ares.Gallery
+  alias Ares.Users
 
   @impl true
   def mount(_params, session, socket) do

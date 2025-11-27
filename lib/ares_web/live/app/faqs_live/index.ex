@@ -1,8 +1,8 @@
 defmodule AresWeb.App.FaqsLive.Index do
   use AresWeb, :app_view
 
-  alias Ares.Users
   alias Ares.Faqs
+  alias Ares.Users
 
   @impl true
   def mount(_params, session, socket) do

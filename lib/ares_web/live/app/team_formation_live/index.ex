@@ -1,8 +1,8 @@
 defmodule AresWeb.App.TeamFormationLive.Index do
   use AresWeb, :app_view
 
-  alias Ares.Users
   alias Ares.Teams
+  alias Ares.Users
 
   @impl true
   def mount(params, session, socket) do
