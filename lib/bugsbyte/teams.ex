@@ -37,6 +37,22 @@ defmodule Bugsbyte.Teams do
   def get_team!(id), do: Repo.get!(Team, id)
 
   @doc """
+  Gets a single team by code.
+
+  Returns nil if the Team does not exist.
+
+  ## Examples
+
+      iex> get_team_by_code("ABC123")
+      %Team{}
+
+      iex> get_team_by_code("INVALID")
+      nil
+
+  """
+  def get_team_by_code(code), do: Repo.get_by(Team, code: code)
+
+  @doc """
   Creates a team.
 
   ## Examples

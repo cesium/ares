@@ -21,8 +21,9 @@ defmodule BugsbyteWeb.Router do
     live "/faqs", FaqsLive.Index, :index
     live "/register", AccountLive.Index, :new
     live "/team-formation", TeamFormationLive.Index, :index
-
     live "/teams", TeamsLive.Index, :index
+    live "/profile", ProfileLive.Index, :index
+    live "/admin", AdminLive.Index, :index
   end
 
   # Routes handled by top-level controllers (BugsbyteWeb.*)
@@ -30,6 +31,8 @@ defmodule BugsbyteWeb.Router do
     pipe_through :browser
 
     post "/register", AccountController, :create
+    post "/login", AccountController, :login
+    post "/logout", AccountController, :logout
     post "/team-formation", PageController, :create_team
     post "/team-join", PageController, :join_team
   end

@@ -1,4 +1,4 @@
-<.navbar fixed={true} />
+<.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <div class="min-h-screen bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
   <div class="max-w-xl mx-auto">
@@ -260,61 +260,53 @@
     
 <!-- Join form -->
     <div :if={@tab == "join"} class="bg-transparent rounded-lg p-8">
-      <form action="/team-join" method="post" class="space-y-6">
-        <div>
-          <label for="team_name" class="block text-sm font-medium text-gray-300">Team name</label>
-          <div class="mt-1">
-            <input
-              id="team_name"
-              name="join[team_name]"
-              type="text"
-              required
-              placeholder="Enter your team name"
-              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
-            />
-          </div>
+      <h2 class="text-2xl font-semibold text-white mb-6">Available Teams</h2>
+      
+      <%= if Enum.empty?(@available_teams) do %>
+        <div class="bg-gray-900 rounded-lg p-8 text-center">
+          <p class="text-gray-400">No teams are currently looking for members.</p>
         </div>
+      <% else %>
+        <div class="space-y-4">
+          <%= for team <- @available_teams do %>
+            <div class="border border-gray-700 rounded-lg p-6 bg-gray-900 hover:border-primary transition-colors">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <h3 class="text-xl font-bold text-white"><%= team.name %></h3>
+                  <p class="text-sm text-gray-400 mt-1">Captain: <%= team.captain_name %></p>
+                </div>
+                <button
+                  phx-click="join_team"
+                  phx-value-team_code={team.code}
+                  class="px-4 py-2 bg-primary hover:bg-secondary text-black font-bold rounded-md transition-colors"
+                >
+                  Join
+                </button>
+              </div>
+              
+              <p class="text-gray-300 mb-4"><%= team.description %></p>
+              
+              <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p class="text-gray-400">Experience Level</p>
+                  <p class="text-white font-semibold capitalize"><%= team.experience_level %></p>
+                </div>
+                <div>
+                  <p class="text-gray-400">Members</p>
+                  <p class="text-white font-semibold"><%= BugsbyteWeb.PageHTML.count_team_members(team) %>/5</p>
+                </div>
+              </div>
 
-        <div>
-          <label for="email" class="block text-sm font-medium text-gray-300">Your email</label>
-          <div class="mt-1">
-            <input
-              id="email"
-              name="join[email]"
-              type="email"
-              required
-              placeholder="Enter the email you used to register"
-              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
-            />
-          </div>
+              <%= if team.skills_needed do %>
+                <div class="mt-4 pt-4 border-t border-gray-700">
+                  <p class="text-sm text-gray-400 mb-2">Skills Needed</p>
+                  <p class="text-white"><%= team.skills_needed %></p>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
         </div>
-
-        <div>
-          <label for="confirmation_code" class="block text-sm font-medium text-gray-300">
-            Confirmation code
-          </label>
-          <p class="text-xs text-gray-500 mt-1">The code emailed to you when you registered</p>
-          <div class="mt-1">
-            <input
-              id="confirmation_code"
-              name="join[confirmation_code]"
-              type="text"
-              required
-              placeholder="Enter your confirmation code"
-              class="w-full rounded-md bg-white text-gray-800 placeholder-gray-500 px-4 py-3 shadow-sm"
-            />
-          </div>
-        </div>
-
-        <div class="flex items-center">
-          <button
-            type="submit"
-            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md"
-          >
-            Create
-          </button>
-        </div>
-      </form>
+      <% end %>
     </div>
     
 <!-- Additional Info -->

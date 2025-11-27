@@ -8,6 +8,7 @@ defmodule Bugsbyte.Teams.Team do
   schema "teams" do
     field :name, :string
     field :description, :string
+    field :code, :string
     field :captain_name, :string
     field :captain_email, :string
     field :captain_phone, :string
@@ -32,6 +33,7 @@ defmodule Bugsbyte.Teams.Team do
     |> cast(attrs, [
       :name,
       :description,
+      :code,
       :captain_name,
       :captain_email,
       :captain_phone,

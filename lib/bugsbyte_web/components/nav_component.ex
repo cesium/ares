@@ -8,6 +8,8 @@ defmodule BugsbyteWeb.NavComponent do
   Renders the navigation header with mobile menu support.
   """
   attr :fixed, :boolean, default: false
+  attr :user, :map, default: nil
+  attr :csrf_token, :string, default: ""
 
   def navbar(assigns) do
     ~H"""
@@ -61,13 +63,55 @@ defmodule BugsbyteWeb.NavComponent do
                   Teams
                 </a>
               </li>
-              <li>
-                <a
-                  href="/register"
-                  class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-secondary"
-                >
-                  Register
-                </a>
+              <%= if @user && @user.is_admin do %>
+                <li>
+                  <a class="text-sm hover:text-secondary transition-colors text-yellow-400 font-bold" href="/admin">
+                    Admin
+                  </a>
+                </li>
+              <% end %>
+              <li class="relative z-50">
+                <%= if @user do %>
+                  <button
+                    onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
+                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
+                    title={@user.name}
+                  >
+                    <%= String.first(@user.name) %>
+                  </button>
+                  <div
+                    id="profile-menu"
+                    class="hidden absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-700 z-50"
+                  >
+                    <a
+                      href="/profile"
+                      class="block px-4 py-2 text-sm text-white hover:bg-gray-800 rounded-t-lg transition-colors"
+                    >
+                      View Profile
+                    </a>
+                    <form
+                      action="/logout"
+                      method="post"
+                      class="border-t border-gray-700"
+                      onsubmit="return confirm('Are you sure you want to logout?');"
+                    >
+                      <input type="hidden" name="_csrf_token" value={@csrf_token} />
+                      <button
+                        type="submit"
+                        class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800 rounded-b-lg transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </form>
+                  </div>
+                <% else %>
+                  <a
+                    href="/register"
+                    class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-secondary"
+                  >
+                    Register
+                  </a>
+                <% end %>
               </li>
             </ul>
           </nav>
@@ -123,13 +167,40 @@ defmodule BugsbyteWeb.NavComponent do
             <nav>
               <ul class="flex flex-col space-y-2">
                 <li>
-                  <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
-                    href="/register"
-                  >
-                    Register
-                  </a>
+                  <%= if @user do %>
+                    <a
+                      href="/profile"
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                      title={@user.name}
+                    >
+                      Profile
+                    </a>
+                  <% else %>
+                    <a
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                      href="/register"
+                    >
+                      Register
+                    </a>
+                  <% end %>
                 </li>
+                <%= if @user do %>
+                  <li>
+                    <form
+                      action="/logout"
+                      method="post"
+                      onsubmit="return confirm('Are you sure you want to logout?');"
+                    >
+                      <input type="hidden" name="_csrf_token" value={@csrf_token} />
+                      <button
+                        type="submit"
+                        class="block w-full py-3 sm:py-4 text-center text-lg sm:text-xl text-red-400 hover:text-red-300 transition-colors"
+                      >
+                        Logout
+                      </button>
+                    </form>
+                  </li>
+                <% end %>
                 <li>
                   <a
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
@@ -170,6 +241,16 @@ defmodule BugsbyteWeb.NavComponent do
                     Team formation
                   </a>
                 </li>
+                <%= if @user && @user.is_admin do %>
+                  <li>
+                    <a
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-yellow-400 font-bold hover:text-yellow-300 transition-colors"
+                      href="/admin"
+                    >
+                      Admin Dashboard
+                    </a>
+                  </li>
+                <% end %>
               </ul>
             </nav>
           </div>
