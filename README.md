@@ -1,4 +1,4 @@
-# ![Ares banner](priv/static/images/assets/cesium.png)
+# ![BugsByte banner](priv/static/images/assets/cesium.png)
 
 
 </div>

@@ -30,7 +30,7 @@ defmodule AresWeb.NavComponent do
               <li>
                 <a
                   class="text-sm hover:text-secondary transition-colors"
-                  href="images/docs/SurvivalGuideAres2025.pdf"
+                  href="images/docs/SurvivalGuideBugsByte2025.pdf"
                 >
                   Survival Guide
                 </a>
@@ -38,7 +38,7 @@ defmodule AresWeb.NavComponent do
               <li>
                 <a
                   class="text-sm hover:text-secondary transition-colors"
-                  href="images/docs/RegulamentoAres2025.pdf"
+                  href="images/docs/RegulamentoBugsByte2025.pdf"
                 >
                   Regulation
                 </a>
@@ -51,7 +51,7 @@ defmodule AresWeb.NavComponent do
               <li>
                 <a
                   class="text-sm hover:text-secondary transition-colors"
-                  href="https://2024.ares.org/"
+                  href="https://2024.bugsbyte.org/"
                 >
                   Previous edition
                 </a>
@@ -133,7 +133,7 @@ defmodule AresWeb.NavComponent do
                 <li>
                   <a
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
-                    href="images/docs/SurvivalGuideAres2025.pdf"
+                    href="images/docs/SurvivalGuideBugsByte2025.pdf"
                   >
                     Survival Guide
                   </a>
@@ -141,7 +141,7 @@ defmodule AresWeb.NavComponent do
                 <li>
                   <a
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
-                    href="images/docs/RegulamentoAres2025.pdf"
+                    href="images/docs/RegulamentoBugsByte2025.pdf"
                   >
                     Regulation
                   </a>
@@ -157,7 +157,7 @@ defmodule AresWeb.NavComponent do
                 <li>
                   <a
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
-                    href="https://2024.ares.org/"
+                    href="https://2024.bugsbyte.org/"
                   >
                     Previous edition
                   </a>
