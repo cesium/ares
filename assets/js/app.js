@@ -22,7 +22,7 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
-import {hooks as colocatedHooks} from "phoenix-colocated/bugsbyte"
+import {hooks as colocatedHooks} from "phoenix-colocated/ares"
 import topbar from "../vendor/topbar"
 import MobileNavigationHook from "./mobile_navigation_hook"
 import FaqToggleHook from "./faq_toggle_hook"

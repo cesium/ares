@@ -1,4 +1,4 @@
-defmodule Bugsbyte.DataCase do
+defmodule Ares.DataCase do
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -10,7 +10,7 @@ defmodule Bugsbyte.DataCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use Bugsbyte.DataCase, async: true`, although
+  by setting `use Ares.DataCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -21,17 +21,17 @@ defmodule Bugsbyte.DataCase do
 
   using do
     quote do
-      alias Bugsbyte.Repo
+      alias Ares.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
-      import Bugsbyte.DataCase
+      import Ares.DataCase
     end
   end
 
   setup tags do
-    Bugsbyte.DataCase.setup_sandbox(tags)
+    Ares.DataCase.setup_sandbox(tags)
     :ok
   end
 
@@ -39,7 +39,7 @@ defmodule Bugsbyte.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Sandbox.start_owner!(Bugsbyte.Repo, shared: not tags[:async])
+    pid = Sandbox.start_owner!(Ares.Repo, shared: not tags[:async])
     on_exit(fn -> Sandbox.stop_owner(pid) end)
   end
 

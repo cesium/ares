@@ -1,5 +1,5 @@
-defmodule BugsbyteWeb.PageControllerTest do
-  use BugsbyteWeb.ConnCase
+defmodule AresWeb.PageControllerTest do
+  use AresWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

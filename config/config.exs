@@ -7,19 +7,19 @@
 # General application configuration
 import Config
 
-config :bugsbyte,
-  ecto_repos: [Bugsbyte.Repo],
+config :ares,
+  ecto_repos: [Ares.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :bugsbyte, BugsbyteWeb.Endpoint,
+config :ares, AresWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: BugsbyteWeb.ErrorHTML, json: BugsbyteWeb.ErrorJSON],
+    formats: [html: AresWeb.ErrorHTML, json: AresWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Bugsbyte.PubSub,
+  pubsub_server: Ares.PubSub,
   live_view: [signing_salt: "+ixLmJDz"]
 
 # Configures the mailer
@@ -29,12 +29,12 @@ config :bugsbyte, BugsbyteWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :bugsbyte, Bugsbyte.Mailer, adapter: Swoosh.Adapters.Local
+config :ares, Ares.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.25.4",
-  bugsbyte: [
+  ares: [
     args:
       ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
@@ -44,7 +44,7 @@ config :esbuild,
 # Configure tailwind (the version is required)
 config :tailwind,
   version: "4.1.7",
-  bugsbyte: [
+  ares: [
     args: ~w(
       --input=assets/css/app.css
       --output=priv/static/assets/css/app.css

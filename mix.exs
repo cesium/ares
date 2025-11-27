@@ -1,9 +1,9 @@
-defmodule Bugsbyte.MixProject do
+defmodule Ares.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :bugsbyte,
+      app: :ares,
       version: "0.1.0",
       elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -20,7 +20,7 @@ defmodule Bugsbyte.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Bugsbyte.Application, []},
+      mod: {Ares.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
@@ -84,10 +84,10 @@ defmodule Bugsbyte.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind bugsbyte", "esbuild bugsbyte"],
+      "assets.build": ["compile", "tailwind Ares", "esbuild Ares"],
       "assets.deploy": [
-        "tailwind bugsbyte --minify",
-        "esbuild bugsbyte --minify",
+        "tailwind Ares --minify",
+        "esbuild Ares --minify",
         "phx.digest"
       ],
       # lint alias to run credo in strict mode
