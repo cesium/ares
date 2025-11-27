@@ -22,8 +22,8 @@ defmodule AresWeb.Router do
     live "/register", AccountLive.Index, :new
     live "/team-formation", TeamFormationLive.Index, :index
     live "/teams", TeamsLive.Index, :index
-    # live "/profile", ProfileLive.Index, :index
-    # live "/admin", AdminLive.Index, :index
+    live "/profile", ProfileLive.Index, :index
+    live "/admin", AdminLive.Index, :index
   end
 
   # Routes handled by top-level controllers (AresWeb.*)

@@ -65,7 +65,10 @@ defmodule AresWeb.NavComponent do
               </li>
               <%= if @user && @user.is_admin do %>
                 <li>
-                  <a class="text-sm hover:text-secondary transition-colors text-yellow-400 font-bold" href="/admin">
+                  <a
+                    class="text-sm hover:text-secondary transition-colors text-yellow-400 font-bold"
+                    href="/admin"
+                  >
                     Admin
                   </a>
                 </li>
@@ -77,7 +80,7 @@ defmodule AresWeb.NavComponent do
                     class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
                     title={@user.name}
                   >
-                    <%= String.first(@user.name) %>
+                    {String.first(@user.name)}
                   </button>
                   <div
                     id="profile-menu"

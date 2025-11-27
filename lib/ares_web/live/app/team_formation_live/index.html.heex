@@ -261,7 +261,7 @@
 <!-- Join form -->
     <div :if={@tab == "join"} class="bg-transparent rounded-lg p-8">
       <h2 class="text-2xl font-semibold text-white mb-6">Available Teams</h2>
-      
+
       <%= if Enum.empty?(@available_teams) do %>
         <div class="bg-gray-900 rounded-lg p-8 text-center">
           <p class="text-gray-400">No teams are currently looking for members.</p>
@@ -272,8 +272,8 @@
             <div class="border border-gray-700 rounded-lg p-6 bg-gray-900 hover:border-primary transition-colors">
               <div class="flex items-start justify-between mb-4">
                 <div>
-                  <h3 class="text-xl font-bold text-white"><%= team.name %></h3>
-                  <p class="text-sm text-gray-400 mt-1">Captain: <%= team.captain_name %></p>
+                  <h3 class="text-xl font-bold text-white">{team.name}</h3>
+                  <p class="text-sm text-gray-400 mt-1">Captain: {team.captain_name}</p>
                 </div>
                 <button
                   phx-click="join_team"
@@ -283,24 +283,26 @@
                   Join
                 </button>
               </div>
-              
-              <p class="text-gray-300 mb-4"><%= team.description %></p>
-              
+
+              <p class="text-gray-300 mb-4">{team.description}</p>
+
               <div class="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p class="text-gray-400">Experience Level</p>
-                  <p class="text-white font-semibold capitalize"><%= team.experience_level %></p>
+                  <p class="text-white font-semibold capitalize">{team.experience_level}</p>
                 </div>
                 <div>
                   <p class="text-gray-400">Members</p>
-                  <p class="text-white font-semibold"><%= AresWeb.PageHTML.count_team_members(team) %>/5</p>
+                  <p class="text-white font-semibold">
+                    {AresWeb.PageHTML.count_team_members(team)}/5
+                  </p>
                 </div>
               </div>
 
               <%= if team.skills_needed do %>
                 <div class="mt-4 pt-4 border-t border-gray-700">
                   <p class="text-sm text-gray-400 mb-2">Skills Needed</p>
-                  <p class="text-white"><%= team.skills_needed %></p>
+                  <p class="text-white">{team.skills_needed}</p>
                 </div>
               <% end %>
             </div>

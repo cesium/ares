@@ -6,8 +6,8 @@
       <h1 class="text-6xl font-extrabold tracking-tight mb-2">Teams</h1>
       <p class="text-lg text-gray-300 max-w-2xl mx-auto">All registered teams</p>
     </div>
-
-    <!-- User's Team Section -->
+    
+<!-- User's Team Section -->
     <%= if @user_team do %>
       <div class="mb-12 pb-8 border-b border-gray-700">
         <h2 class="text-2xl font-bold text-yellow-400 mb-4">Your Team</h2>
@@ -27,8 +27,8 @@
         </div>
       </div>
     <% end %>
-
-    <!-- All Teams -->
+    
+<!-- All Teams -->
     <div class="mb-8">
       <h2 class="text-2xl font-bold mb-4">
         {if @user_team, do: "Other Teams", else: "All Teams"}

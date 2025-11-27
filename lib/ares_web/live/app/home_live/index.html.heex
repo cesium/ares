@@ -37,8 +37,8 @@
   </div>
 
   <.navbar user={@user} csrf_token={get_csrf_token()} />
-
-  <!-- Flash Messages -->
+  
+<!-- Flash Messages -->
   <%= if Phoenix.Flash.get(@flash, :info) do %>
     <div
       id="flash-info"
@@ -46,7 +46,7 @@
       data-auto-dismiss="3000"
       class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg"
     >
-      <%= Phoenix.Flash.get(@flash, :info) %>
+      {Phoenix.Flash.get(@flash, :info)}
     </div>
   <% end %>
 
@@ -57,7 +57,7 @@
       data-auto-dismiss="3000"
       class="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg"
     >
-      <%= Phoenix.Flash.get(@flash, :error) %>
+      {Phoenix.Flash.get(@flash, :error)}
     </div>
   <% end %>
 </div>
