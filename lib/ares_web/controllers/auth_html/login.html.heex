@@ -6,7 +6,7 @@
 
       <form action={~p"/auth/login"} method="post" class="space-y-4">
         <input type="hidden" name="_csrf_token" value={Phoenix.Controller.get_csrf_token()} />
-        
+
         <div>
           <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
           <input
@@ -20,7 +20,9 @@
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+          <label for="password" class="block text-sm font-medium text-gray-300 mb-2">
+            Password
+          </label>
           <input
             type="password"
             name="password"
@@ -50,8 +52,8 @@
 
       <div class="mt-8 pt-6 border-t border-gray-700">
         <p class="text-xs text-gray-500 text-center">
-          <strong>Demo credentials:</strong><br />
-          Email: admin@cesium.pt | Password: admin123<br />
+          <strong>Demo credentials:</strong>
+          <br /> Email: admin@cesium.pt | Password: admin123<br />
           Email: joao@cesium.pt | Password: user123
         </p>
       </div>

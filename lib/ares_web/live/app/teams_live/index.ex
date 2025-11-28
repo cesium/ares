@@ -8,6 +8,7 @@ defmodule AresWeb.App.TeamsLive.Index do
   def mount(_params, session, socket) do
     teams = Teams.list_teams()
     user_id = session["user_id"]
+
     user =
       case user_id && Users.get_user(user_id) do
         {:ok, u} -> u

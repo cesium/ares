@@ -7,6 +7,7 @@ defmodule AresWeb.App.ProfileLive.Index do
   @impl true
   def mount(_params, session, socket) do
     user_id = session["user_id"]
+
     user =
       case user_id && Users.get_user(user_id) do
         {:ok, u} -> u

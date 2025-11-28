@@ -1,6 +1,6 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
-<main class="min-h-screen bg-black text-white">
+<main class="min-h-screen mt-8 bg-black text-white">
   <div class="max-w-2xl mx-auto py-16 px-4">
     <div class="text-center mb-12">
       <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-secondary mx-auto mb-4 flex items-center justify-center">
@@ -151,7 +151,9 @@
           </div>
 
           <div class="mt-8">
-            <h4 class="text-xl font-bold mb-4 text-yellow-200">Team Members ({Enum.count(@team_members)})</h4>
+            <h4 class="text-xl font-bold mb-4 text-yellow-200">
+              Team Members ({Enum.count(@team_members)})
+            </h4>
             <div class="space-y-3">
               <%= for member <- @team_members do %>
                 <div class="bg-gray-800 rounded-lg p-4">

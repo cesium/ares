@@ -49,8 +49,12 @@ defmodule Ares.Users do
           "" -> changeset
           _ -> Ecto.Changeset.add_error(changeset, :team_code, "Admins cannot join teams")
         end
-      false -> changeset
-      nil -> changeset
+
+      false ->
+        changeset
+
+      nil ->
+        changeset
     end
   end
 

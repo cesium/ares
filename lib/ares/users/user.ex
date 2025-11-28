@@ -81,6 +81,7 @@ defmodule Ares.Users.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
         put_change(changeset, :password_hash, Bcrypt.hash_pwd_salt(password))
+
       _ ->
         changeset
     end
@@ -90,6 +91,7 @@ defmodule Ares.Users.User do
     case changeset do
       %Ecto.Changeset{changes: %{password: password}} ->
         put_change(changeset, :password_hash, Bcrypt.hash_pwd_salt(password))
+
       _ ->
         changeset
     end

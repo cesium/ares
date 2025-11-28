@@ -1,6 +1,6 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
-<main class="flex flex-col min-h-screen bg-black text-white">
+<main class="flex flex-col mt-8 min-h-screen bg-black text-white">
   <div class="max-w-xl mx-auto py-16 px-4 flex-grow w-full">
     <!-- Tabs Navigation -->
     <div class="flex gap-2 mb-8 border-b border-gray-600">
@@ -31,8 +31,8 @@
         Login
       </button>
     </div>
-
-    <!-- Register Tab -->
+    
+<!-- Register Tab -->
     <%= if @tab == "register" do %>
       <div>
         <h1 class="text-4xl font-black mb-6 text-center">Create Your Account</h1>

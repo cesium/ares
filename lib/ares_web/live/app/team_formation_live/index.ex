@@ -9,6 +9,7 @@ defmodule AresWeb.App.TeamFormationLive.Index do
     changeset = Teams.change_team(%Teams.Team{})
     tab = Map.get(params, "tab", "create")
     user_id = session["user_id"]
+
     user =
       case user_id && Users.get_user(user_id) do
         {:ok, u} -> u

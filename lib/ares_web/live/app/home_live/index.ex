@@ -12,6 +12,7 @@ defmodule AresWeb.App.HomeLive.Index do
     gallery_images = Gallery.get_gallery_images()
 
     user_id = session["user_id"]
+
     user =
       case user_id && Users.get_user(user_id) do
         {:ok, u} -> u

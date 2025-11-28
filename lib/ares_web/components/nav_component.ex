@@ -60,7 +60,11 @@ defmodule AresWeb.NavComponent do
                 </a>
               </li>
               <li>
-                <a class="text-sm hover:text-secondary transition-colors" target="_black" href="/team-formation">
+                <a
+                  class="text-sm hover:text-secondary transition-colors"
+                  target="_black"
+                  href="/team-formation"
+                >
                   Teams
                 </a>
               </li>

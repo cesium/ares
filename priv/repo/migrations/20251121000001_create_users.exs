@@ -4,7 +4,7 @@ defmodule Ares.Repo.Migrations.CreateUsers do
   def change do
     create table(:users, primary_key: false) do
       add :name, :string, null: false
-      add :id, :binary_id , primary_key: true
+      add :id, :binary_id, primary_key: true
       add :email, :string, null: false
       add :phone, :string
       add :age, :string
