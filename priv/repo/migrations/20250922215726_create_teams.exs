@@ -2,7 +2,8 @@ defmodule Ares.Repo.Migrations.CreateTeams do
   use Ecto.Migration
 
   def change do
-    create table(:teams) do
+    create table(:teams, primary_key: false) do
+      add :id, :binary_id, primary_key: true
       add :name, :string, null: false
       add :description, :text
       add :captain_name, :string, null: false
