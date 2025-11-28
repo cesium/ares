@@ -2,10 +2,10 @@ defmodule Ares.Repo.Migrations.PopulateTeamCodes do
   use Ecto.Migration
 
   def up do
-    execute("UPDATE teams SET code = 'TEAM001' WHERE id = 1;")
-    execute("UPDATE teams SET code = 'TEAM002' WHERE id = 2;")
-    execute("UPDATE teams SET code = 'TEAM003' WHERE id = 3;")
-    execute("UPDATE teams SET code = 'TEAM004' WHERE id = 4;")
+    execute("UPDATE teams SET code = 'TEAM001' WHERE name = 'Bug Hunters';")
+    execute("UPDATE teams SET code = 'TEAM002' WHERE name = 'Data Ninjas';")
+    execute("UPDATE teams SET code = 'TEAM003' WHERE name = 'Code Masters';")
+    execute("UPDATE teams SET code = 'TEAM004' WHERE name = 'Web Wizards';")
   end
 
   def down do

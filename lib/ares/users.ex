@@ -33,9 +33,45 @@ defmodule Ares.Users do
     |> Repo.insert()
   end
 
+  def register_user(attrs \\ %{}) do
+    %User{}
+    |> User.registration_changeset(attrs)
+    |> validate_not_admin_joining_team()
+    |> Repo.insert()
+  end
+
+  defp validate_not_admin_joining_team(changeset) do
+    # Check if user is admin and trying to join a team
+    case Ecto.Changeset.get_field(changeset, :is_admin) do
+      true ->
+        case Ecto.Changeset.get_field(changeset, :team_code) do
+          nil -> changeset
+          "" -> changeset
+          _ -> Ecto.Changeset.add_error(changeset, :team_code, "Admins cannot join teams")
+        end
+      false -> changeset
+      nil -> changeset
+    end
+  end
+
+  def authenticate_user(email, password) do
+    case get_user_by_email(email) do
+      {:ok, user} ->
+        if User.verify_password(password, user.password_hash) do
+          {:ok, user}
+        else
+          {:error, :invalid_credentials}
+        end
+
+      {:error, _} ->
+        {:error, :invalid_credentials}
+    end
+  end
+
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
+    |> validate_not_admin_joining_team()
     |> Repo.update()
   end
 
@@ -45,5 +81,9 @@ defmodule Ares.Users do
 
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def list_users_by_team_code(team_code) do
+    Repo.all(from u in User, where: u.team_code == ^team_code, order_by: u.inserted_at)
   end
 end

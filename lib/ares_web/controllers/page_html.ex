@@ -8,16 +8,10 @@ defmodule AresWeb.PageHTML do
 
   embed_templates "page_html/*"
 
-  def count_team_members(team) do
-    members = [
-      team.captain_name,
-      team.member1_name,
-      team.member2_name,
-      team.member3_name,
-      team.member4_name
-    ]
+  alias Ares.Teams
 
-    Enum.count(members, fn member -> member && String.trim(member) != "" end)
+  def count_team_members(team) do
+    Teams.count_team_members(team)
   end
 
   def count_teams_looking_for_members(teams) do

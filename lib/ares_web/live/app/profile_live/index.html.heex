@@ -151,47 +151,21 @@
           </div>
 
           <div class="mt-8">
-            <h4 class="text-xl font-bold mb-4 text-yellow-200">Team Members</h4>
+            <h4 class="text-xl font-bold mb-4 text-yellow-200">Team Members ({Enum.count(@team_members)})</h4>
             <div class="space-y-3">
-              <!-- Captain -->
-              <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-yellow-400">
-                <div class="flex items-start justify-between">
-                  <div>
-                    <p class="font-bold text-white">{@user_team.captain_name}</p>
-                    <p class="text-sm text-gray-400">{@user_team.captain_email}</p>
+              <%= for member <- @team_members do %>
+                <div class="bg-gray-800 rounded-lg p-4">
+                  <div class="flex items-start justify-between">
+                    <div>
+                      <p class="font-bold text-white">{member.name}</p>
+                      <p class="text-sm text-gray-400">{member.email}</p>
+                    </div>
+                    <%= if member.id == @user.id do %>
+                      <span class="bg-primary text-black text-xs font-bold px-2 py-1 rounded">
+                        You
+                      </span>
+                    <% end %>
                   </div>
-                  <span class="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
-                    Captain
-                  </span>
-                </div>
-              </div>
-              
-<!-- Members -->
-              <%= if @user_team.member1_name do %>
-                <div class="bg-gray-800 rounded-lg p-4">
-                  <p class="font-bold text-white">{@user_team.member1_name}</p>
-                  <p class="text-sm text-gray-400">{@user_team.member1_email}</p>
-                </div>
-              <% end %>
-
-              <%= if @user_team.member2_name do %>
-                <div class="bg-gray-800 rounded-lg p-4">
-                  <p class="font-bold text-white">{@user_team.member2_name}</p>
-                  <p class="text-sm text-gray-400">{@user_team.member2_email}</p>
-                </div>
-              <% end %>
-
-              <%= if @user_team.member3_name do %>
-                <div class="bg-gray-800 rounded-lg p-4">
-                  <p class="font-bold text-white">{@user_team.member3_name}</p>
-                  <p class="text-sm text-gray-400">{@user_team.member3_email}</p>
-                </div>
-              <% end %>
-
-              <%= if @user_team.member4_name do %>
-                <div class="bg-gray-800 rounded-lg p-4">
-                  <p class="font-bold text-white">{@user_team.member4_name}</p>
-                  <p class="text-sm text-gray-400">{@user_team.member4_email}</p>
                 </div>
               <% end %>
             </div>

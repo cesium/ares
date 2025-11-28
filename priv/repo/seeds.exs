@@ -14,6 +14,11 @@ alias Ares.Repo
 alias Ares.Users.User
 alias Ares.Teams.Team
 
+# Hash for password "admin123"
+admin_hash = "$2b$12$w.N.VigbjG9dXh/xgx/VruM1eBwP4cHOxbd4BLKUiXlkb3xoug2Mq"
+# Hash for password "user123"
+user_hash = "$2b$12$3wC3kLpov3qN/oGsUjO1uu/Lw6dxzDmUGu0w3X5JRshSeVm85AVrS"
+
 # Create sample users
 users = [
   %User{
@@ -26,7 +31,8 @@ users = [
     vegan: false,
     notes: "Administrator account",
     cv_filename: nil,
-    is_admin: true
+    is_admin: true,
+    password_hash: admin_hash
   },
   %User{
     name: "João Silva",
@@ -38,7 +44,8 @@ users = [
     team_code: "TEAM001",
     vegan: false,
     notes: "Interested in cybersecurity and backend development",
-    cv_filename: "joao_cv.pdf"
+    cv_filename: "joao_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Maria Costa",
@@ -50,7 +57,8 @@ users = [
     team_code: "TEAM001",
     vegan: true,
     notes: "Passionate about frontend and UI/UX design",
-    cv_filename: "maria_cv.pdf"
+    cv_filename: "maria_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Pedro Oliveira",
@@ -62,7 +70,8 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "Expert in machine learning and data science",
-    cv_filename: "pedro_cv.pdf"
+    cv_filename: "pedro_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Ana Santos",
@@ -74,7 +83,8 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "DevOps and cloud infrastructure specialist",
-    cv_filename: "ana_cv.pdf"
+    cv_filename: "ana_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Rui Ferreira",
@@ -86,7 +96,8 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "Full-stack developer with 2 years of experience",
-    cv_filename: "rui_cv.pdf"
+    cv_filename: "rui_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Sofia Martins",
@@ -98,7 +109,8 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Mobile app developer with focus on iOS",
-    cv_filename: "sofia_cv.pdf"
+    cv_filename: "sofia_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Carlos Mendes",
@@ -110,7 +122,8 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Game developer and graphics specialist",
-    cv_filename: "carlos_cv.pdf"
+    cv_filename: "carlos_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Inês Rocha",
@@ -122,7 +135,8 @@ users = [
     team_code: "TEAM005",
     vegan: true,
     notes: "Web security expert and ethical hacker",
-    cv_filename: "ines_cv.pdf"
+    cv_filename: "ines_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Tiago Gomes",
@@ -134,7 +148,8 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Cloud architect and infrastructure expert",
-    cv_filename: "tiago_cv.pdf"
+    cv_filename: "tiago_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Mariana Silva",
@@ -146,7 +161,8 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "Database design specialist with PostgreSQL expertise",
-    cv_filename: "mariana_cv.pdf"
+    cv_filename: "mariana_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Lucas Barbosa",
@@ -158,7 +174,8 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "AI and machine learning enthusiast",
-    cv_filename: "lucas_cv.pdf"
+    cv_filename: "lucas_cv.pdf",
+    password_hash: user_hash
   },
   %User{
     name: "Rafael Costa",
@@ -170,7 +187,21 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Network engineer and systems administrator",
-    cv_filename: "rafael_cv.pdf"
+    cv_filename: "rafael_cv.pdf",
+    password_hash: user_hash
+  },
+  %User{
+    name: "Bernardo Dias",
+    email: "bernardo@cesium.pt",
+    phone: "925345689",
+    age: "22",
+    university: "Universidade do Minho",
+    course: "Engenharia Informática",
+    team_code: nil,
+    vegan: false,
+    notes: "Independent developer looking for a team",
+    cv_filename: "bernardo_cv.pdf",
+    password_hash: user_hash
   }
 ]
 
@@ -184,11 +215,6 @@ teams = [
     name: "Bug Hunters",
     description: "Team focused on security and bug bounty",
     code: "TEAM001",
-    captain_name: "João Silva",
-    captain_email: "joao@cesium.pt",
-    captain_phone: "925123456",
-    member1_name: "Maria Costa",
-    member1_email: "maria@cesium.pt",
     skills_needed: "Security, Backend",
     experience_level: "intermediate",
     looking_for_members: false
@@ -197,11 +223,6 @@ teams = [
     name: "Data Ninjas",
     description: "Machine learning and data analytics specialists",
     code: "TEAM002",
-    captain_name: "Pedro Oliveira",
-    captain_email: "pedro@cesium.pt",
-    captain_phone: "925345678",
-    member1_name: "Ana Santos",
-    member1_email: "ana@cesium.pt",
     skills_needed: "Python, ML, Data Science",
     experience_level: "advanced",
     looking_for_members: false
@@ -210,13 +231,6 @@ teams = [
     name: "Code Masters",
     description: "Full-stack development excellence",
     code: "TEAM003",
-    captain_name: "Rui Ferreira",
-    captain_email: "rui@cesium.pt",
-    captain_phone: "925567890",
-    member1_name: "Mariana Silva",
-    member1_email: "mariana@cesium.pt",
-    member2_name: "Lucas Barbosa",
-    member2_email: "lucas@cesium.pt",
     skills_needed: "Elixir, React, DevOps",
     experience_level: "advanced",
     looking_for_members: false
@@ -225,9 +239,6 @@ teams = [
     name: "Innovation Lab",
     description: "Exploring new technologies and paradigms",
     code: "TEAM004",
-    captain_name: "Tech Leader",
-    captain_email: "innovation@cesium.pt",
-    captain_phone: "925678901",
     skills_needed: "Any skills welcome",
     experience_level: "beginner",
     looking_for_members: true
@@ -236,17 +247,6 @@ teams = [
     name: "Tech Titans",
     description: "Elite team of versatile developers tackling complex problems",
     code: "TEAM005",
-    captain_name: "Sofia Martins",
-    captain_email: "sofia@cesium.pt",
-    captain_phone: "925678901",
-    member1_name: "Carlos Mendes",
-    member1_email: "carlos@cesium.pt",
-    member2_name: "Inês Rocha",
-    member2_email: "ines@cesium.pt",
-    member3_name: "Tiago Gomes",
-    member3_email: "tiago@cesium.pt",
-    member4_name: "Rafael Costa",
-    member4_email: "rafael@cesium.pt",
     skills_needed: "Mobile, Games, Security, Cloud",
     experience_level: "advanced",
     looking_for_members: false

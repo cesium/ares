@@ -4,6 +4,7 @@ defmodule AresWeb.Router do
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug AresWeb.SessionPlug
     plug :fetch_live_flash
     plug :put_root_layout, html: {AresWeb.Layouts, :root}
     plug :protect_from_forgery
@@ -29,6 +30,12 @@ defmodule AresWeb.Router do
   # Routes handled by top-level controllers (AresWeb.*)
   scope "/", AresWeb do
     pipe_through :browser
+
+    get "/auth/login", AuthController, :login
+    post "/auth/login", AuthController, :login_submit
+    get "/auth/register", AuthController, :register
+    post "/auth/register", AuthController, :register_submit
+    post "/auth/logout", AuthController, :logout
 
     post "/register", AccountController, :create
     post "/login", AccountController, :login

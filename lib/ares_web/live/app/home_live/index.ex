@@ -12,7 +12,11 @@ defmodule AresWeb.App.HomeLive.Index do
     gallery_images = Gallery.get_gallery_images()
 
     user_id = session["user_id"]
-    user = if user_id, do: Users.get_user!(user_id), else: nil
+    user =
+      case user_id && Users.get_user(user_id) do
+        {:ok, u} -> u
+        _ -> nil
+      end
 
     socket =
       socket

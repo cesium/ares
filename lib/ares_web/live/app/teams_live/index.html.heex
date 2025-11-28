@@ -15,9 +15,8 @@
           <div class="flex items-center justify-between">
             <div>
               <h3 class="text-2xl font-bold text-yellow-300">{@user_team.name}</h3>
-              <p class="text-sm text-gray-300 mt-2">Captain: {@user_team.captain_name || "-"}</p>
             </div>
-            <div class="text-right text-sm text-gray-300">
+            <div class="text-right text-sm text-white">
               <p>Members: {AresWeb.PageHTML.count_team_members(@user_team)}</p>
               <p class="mt-1">
                 {if @user_team.looking_for_members, do: "Looking for members", else: "Closed"}
@@ -42,7 +41,6 @@
             <div class="flex items-center justify-between">
               <div>
                 <h3 class="text-xl font-bold">{team.name}</h3>
-                <p class="text-sm text-gray-400">Captain: {team.captain_name || "-"}</p>
               </div>
               <div class="text-right text-sm text-gray-300">
                 <p>Members: {AresWeb.PageHTML.count_team_members(team)}</p>

@@ -9,19 +9,31 @@ defmodule AresWeb.App.TeamFormationLive.Index do
     changeset = Teams.change_team(%Teams.Team{})
     tab = Map.get(params, "tab", "create")
     user_id = session["user_id"]
-    user = if user_id, do: Users.get_user!(user_id), else: nil
+    user =
+      case user_id && Users.get_user(user_id) do
+        {:ok, u} -> u
+        _ -> nil
+      end
 
-    # Load teams that are looking for members
-    available_teams = Teams.list_teams() |> Enum.filter(& &1.looking_for_members)
+    # If user already has a team, redirect to teams page
+    if user && user.team_code do
+      {:ok,
+       socket
+       |> put_flash(:info, "You are already in a team!")
+       |> redirect(to: "/teams")}
+    else
+      # Load teams that are looking for members
+      available_teams = Teams.list_teams() |> Enum.filter(& &1.looking_for_members)
 
-    socket =
-      socket
-      |> assign(:changeset, changeset)
-      |> assign(:tab, tab)
-      |> assign(:user, user)
-      |> assign(:available_teams, available_teams)
+      socket =
+        socket
+        |> assign(:changeset, changeset)
+        |> assign(:tab, tab)
+        |> assign(:user, user)
+        |> assign(:available_teams, available_teams)
 
-    {:ok, socket}
+      {:ok, socket}
+    end
   end
 
   @impl true
