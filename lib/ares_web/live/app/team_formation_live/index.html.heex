@@ -3,8 +3,8 @@
 <div class="min-h-screen bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
   <div class="max-w-xl mx-auto">
     <div class="text-center mb-6">
-      <h1 class="md:text-6xl text-3xl font-extrabold tracking-tight mb-2">Team Formation</h1>
-      <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+      <h1 class="md:text-6xl text-3xl font-extrabold tracking-tight mb-3">Team Formation</h1>
+      <p class="text-3xl text-gray-300 max-w-2xl mx-auto">
         If you have already registered, you can join a team or create a new one.
       </p>
     </div>
@@ -41,7 +41,10 @@
       </div>
     </div>
 
-    <div :if={@tab == "create"} class="bg-transparent rounded-lg p-8">
+    <div
+      :if={@tab == "create"}
+      class="bg-transparent rounded-lg p-8 transform scale-125 mt-56 mb-40"
+    >
       <.form
         :let={f}
         for={@changeset}
@@ -64,7 +67,7 @@
               />
             </div>
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-2 ">
               <.input
                 field={f[:description]}
                 type="textarea"
@@ -140,8 +143,8 @@
         
 <!-- Team Members -->
         <div class="border-b border-gray-200 pb-8">
-          <h2 class="text-2xl font-semibold text-white mb-6">Membros da Equipa</h2>
-          <p class="text-sm text-gray-600 mb-6">
+          <h2 class="text-2xl font-semibold text-white mb-4">Membros da Equipa</h2>
+          <p class="text-lg text-gray-600 mb-6 ">
             Adiciona os membros que já tens confirmados (opcional)
           </p>
           
@@ -250,9 +253,9 @@
         <div class="flex justify-center pt-6">
           <button
             type="submit"
-            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-lg inline-flex items-center"
+            class="px-4 py-2 bg-[#67b22e] cursor-pointer hover:bg-[#4f8c21] text-white rounded-md text-lg inline-flex items-center"
           >
-            <.icon name="hero-users" class="w-5 h-5 mr-2" /> Create
+            <.icon name="hero-users" class="w-5 h-5 mr-2  " /> Create
           </button>
         </div>
       </.form>
@@ -309,7 +312,7 @@
         <div class="flex items-center">
           <button
             type="submit"
-            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md"
+            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md "
           >
             Create
           </button>
@@ -318,7 +321,7 @@
     </div>
     
 <!-- Additional Info -->
-    <div class="mt-12 bg-black p-6">
+    <div class="mt-12 bg-black p-6 mt-56">
       <h3 class="text-lg font-semibold text-white mb-3">Informações Importantes</h3>
       <ul class="text-gray-300 space-y-4">
         <li class="flex items-start gap-3">
