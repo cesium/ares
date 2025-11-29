@@ -1,9 +1,9 @@
 <.navbar fixed={true} />
 
 <main class="min-h-screen bg-black text-white">
-  <div class="max-w-xl mx-auto py-16">
-    <h1 class="text-4xl font-black mb-6 text-center">Personal Information</h1>
-    <p class="text-sm text-gray-300 text-center mb-8">
+  <div class="max-w-xl mx-auto py-16 mt-12">
+    <h1 class="text-6xl font-black mb-6 text-center">Personal Information</h1>
+    <p class="text-2xl text-gray-300 text-center mb-8">
       Use a permanent address where you can receive mail.
     </p>
 
@@ -70,7 +70,7 @@
           placeholder="XXXXX"
           class="w-full bg-white text-black rounded px-3 py-2"
         />
-        <p class="text-xs text-gray-400 mt-1">
+        <p class="text-sm text-gray-400 mt-1">
           Since the registration is closed, you can only register if you have a team waiting for you.
         </p>
       </div>
@@ -83,7 +83,7 @@
       </div>
 
       <div>
-        <label class="block text-sm text-gray-200 mb-2">Notes</label>
+        <label class="block text-base text-gray-200 mb-2">Notes</label>
         <textarea
           name="user[notes]"
           placeholder="If you have any notes about food restrictions or anything else let us know"
@@ -94,7 +94,7 @@
       <div>
         <label class="block text-sm text-gray-200 mb-2">Upload CV</label>
         <input type="file" name="user[cv]" class="text-sm text-gray-200" />
-        <p class="text-xs text-gray-400 mt-1">
+        <p class="text-small text-gray-400 mt-1">
           Upload your CV so that the companies at the event know who you are 👀
         </p>
       </div>
@@ -102,7 +102,7 @@
       <div class="flex items-center gap-3">
         <label class="inline-flex items-center gap-2">
           <input type="checkbox" name="user[agree]" />
-          <span class="text-sm text-gray-200">
+          <span class="text-base text-gray-200">
             I agree with the
             <a href="/regulamento" class="text-primary underline">event regulations</a>
           </span>
@@ -110,7 +110,7 @@
       </div>
 
       <div>
-        <button class="px-4 py-2 bg-emerald-600 rounded text-white">Submit</button>
+        <button class="px-4 py-2 bg-[#67b22e] cursor-pointer hover:bg-[#4f8c21] rounded text-white">Submit</button>
       </div>
     </form>
   </div>
