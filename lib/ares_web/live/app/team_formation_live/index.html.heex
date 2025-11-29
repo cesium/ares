@@ -12,14 +12,14 @@
       <nav class="flex items-center space-x-8" role="tablist" aria-label="Team tabs">
         <a
           href="?tab=create"
-          class={"text-sm pb-2 " <> (if @tab == "create", do: "text-indigo-400 border-b-2 border-indigo-400", else: "text-gray-400 hover:text-gray-200")}
+          class={"text-sm pb-2 " <> (if @tab == "create", do: "text-pink border-b-2 border-pink", else: "text-gray-400 hover:text-gray-200")}
           aria-selected={@tab == "create"}
         >
           Create a team
         </a>
         <a
           href="?tab=join"
-          class={"text-sm pb-2 " <> (if @tab == "join", do: "text-indigo-400 border-b-2 border-indigo-400", else: "text-gray-400 hover:text-gray-200")}
+          class={"text-sm pb-2 " <> (if @tab == "join", do: "text-pink border-b-2 border-pink", else: "text-gray-400 hover:text-gray-200")}
           aria-selected={@tab == "join"}
         >
           Join a team
@@ -50,7 +50,7 @@
         class="space-y-8"
       >
         <div class="border-b border-gray-200 pb-8">
-          <h2 class="text-2xl font-semibold text-white mb-6">Informacoes da Equipa</h2>
+          <h2 class="text-2xl font-semibold text-white mb-6">Team Information</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="md:col-span-2">
@@ -60,7 +60,7 @@
                 label="Team name"
                 placeholder="Enter your new team name"
                 required
-                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -71,7 +71,7 @@
                 label="Description"
                 placeholder="Describe your team, goals and what you want to achieve"
                 rows="4"
-                class="w-full bg-white text-gray-800 placeholder-gray-500 rounded-md px-4 py-3 shadow-sm"
+                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -86,7 +86,7 @@
                   {"Advanced", "advanced"},
                   {"Mixed", "mixed"}
                 ]}
-                class="w-full bg-white text-gray-800 rounded-md px-3 py-2 shadow-sm"
+                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
               />
             </div>
 
@@ -104,9 +104,9 @@
         <div class="flex justify-center pt-6">
           <button
             type="submit"
-            class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md text-lg inline-flex items-center"
+            class="px-4 py-2 bg-pink hover:bg-dark-pink cursor-pointer text-white rounded-md text-lg inline-flex items-center"
           >
-            <.icon name="hero-users" class="w-5 h-5 mr-2" /> Create
+            <.icon name="hero-users" class="w-5 h-5 mr-2 " /> Create
           </button>
         </div>
       </.form>
@@ -123,30 +123,32 @@
       <% else %>
         <div class="space-y-4">
           <%= for team <- @available_teams do %>
-            <div class="border border-gray-700 rounded-lg p-6 bg-gray-900 hover:border-primary transition-colors">
+            <div class="border border-gray-900 rounded-lg p-6 transition-colors">
               <div class="flex items-start justify-between mb-4">
                 <div>
-                  <h3 class="text-xl font-bold text-white">{team.name}</h3>
+                  <h3 class="text-2xl font-bold text-white">{team.name}</h3>
                 </div>
                 <button
                   phx-click="join_team"
                   phx-value-team_code={team.code}
-                  class="px-4 py-2 bg-primary hover:bg-secondary text-black font-bold rounded-md transition-colors"
+                  class="px-4 py-2 bg-pink hover:bg-dark-pink text-black font-bold text-sm rounded-md transition-colors"
                 >
                   Join
                 </button>
               </div>
 
-              <p class="text-gray-300 mb-4">{team.description}</p>
+              <p class="text-gray-300 text-lg mb-4">{team.description}</p>
 
-              <div class="grid grid-cols-2 gap-4 text-sm">
+              <div class="grid grid-cols-2 text-lg gap-4 text-sm">
                 <div>
-                  <p class="text-gray-400">Experience Level</p>
-                  <p class="text-white font-semibold capitalize">{team.experience_level}</p>
+                  <p class="text-gray-400 text-lg">Experience Level</p>
+                  <p class="text-white text-md font-semibold capitalize">
+                    {team.experience_level}
+                  </p>
                 </div>
                 <div>
-                  <p class="text-gray-400">Members</p>
-                  <p class="text-white font-semibold">
+                  <p class="text-gray-400 text-lg">Members</p>
+                  <p class="text-white text-md font-semibold">
                     {AresWeb.PageHTML.count_team_members(team)}/5
                   </p>
                 </div>
@@ -166,12 +168,12 @@
     
 <!-- Additional Info -->
     <div class="mt-12 bg-black p-6">
-      <h3 class="text-lg font-semibold text-white mb-3">Informações Importantes</h3>
+      <h3 class="text-lg font-semibold text-white mb-3">Important Info</h3>
       <ul class="text-gray-300 space-y-4">
         <li class="flex items-start gap-3">
           <.icon
             name="hero-information-circle"
-            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
           />
           <div>
             <div class="font-medium text-white">Equipas</div>
@@ -182,7 +184,7 @@
         <li class="flex items-start gap-3">
           <.icon
             name="hero-information-circle"
-            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
           />
           <div>
             <div class="font-medium text-white">Registo</div>
@@ -195,7 +197,7 @@
         <li class="flex items-start gap-3">
           <.icon
             name="hero-information-circle"
-            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
           />
           <div>
             <div class="font-medium text-white">Procurar membros</div>
@@ -208,7 +210,7 @@
         <li class="flex items-start gap-3">
           <.icon
             name="hero-information-circle"
-            class="w-5 h-5 text-indigo-400 mt-0.5 flex-shrink-0"
+            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
           />
           <div>
             <div class="font-medium text-white">Edição</div>

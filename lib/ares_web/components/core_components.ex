@@ -165,6 +165,7 @@ defmodule AresWeb.CoreComponents do
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
   attr :class, :string, default: nil, doc: "the input class to use over defaults"
   attr :error_class, :string, default: nil, doc: "the input error class to use over defaults"
+  attr :label_class, :string, default: nil, doc: "the label class to use over defaults"
 
   attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
@@ -189,20 +190,18 @@ defmodule AresWeb.CoreComponents do
 
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
-        <span class="label">
-          <input
-            type="checkbox"
-            id={@id}
-            name={@name}
-            value="true"
-            checked={@checked}
-            class={@class || "checkbox checkbox-sm"}
-            {@rest}
-          />{@label}
-        </span>
-      </label>
+      <div class="flex gap-2">
+        <label>{@label}</label>
+        <input
+          type="checkbox"
+          id={@id}
+          name={@name}
+          value="true"
+          checked={@checked}
+          class={@class || "checkbox checkbox-sm"}
+          {@rest}
+        />
+      </div>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
@@ -211,19 +210,17 @@ defmodule AresWeb.CoreComponents do
   def input(%{type: "select"} = assigns) do
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <select
-          id={@id}
-          name={@name}
-          class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
-          multiple={@multiple}
-          {@rest}
-        >
-          <option :if={@prompt} value="">{@prompt}</option>
-          {Phoenix.HTML.Form.options_for_select(@options, @value)}
-        </select>
-      </label>
+      <label class={@label_class}>{@label}</label>
+      <select
+        id={@id}
+        name={@name}
+        class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
+        multiple={@multiple}
+        {@rest}
+      >
+        <option :if={@prompt} value="">{@prompt}</option>
+        {Phoenix.HTML.Form.options_for_select(@options, @value)}
+      </select>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
@@ -232,18 +229,16 @@ defmodule AresWeb.CoreComponents do
   def input(%{type: "textarea"} = assigns) do
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <textarea
-          id={@id}
-          name={@name}
-          class={[
-            @class || "w-full textarea",
-            @errors != [] && (@error_class || "textarea-error")
-          ]}
-          {@rest}
-        >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
-      </label>
+      <label class={@label_class}>{@label}</label>
+      <textarea
+        id={@id}
+        name={@name}
+        class={[
+          @class || "w-full textarea",
+          @errors != [] && (@error_class || "textarea-error")
+        ]}
+        {@rest}
+      >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
@@ -253,20 +248,18 @@ defmodule AresWeb.CoreComponents do
   def input(assigns) do
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <input
-          type={@type}
-          name={@name}
-          id={@id}
-          value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-          class={[
-            @class || "w-full input",
-            @errors != [] && (@error_class || "input-error")
-          ]}
-          {@rest}
-        />
-      </label>
+      <label :if={@label} class={@label_class}>{@label}</label>
+      <input
+        type={@type}
+        name={@name}
+        id={@id}
+        value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+        class={[
+          @class || "w-full input",
+          @errors != [] && (@error_class || "input-error")
+        ]}
+        {@rest}
+      />
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """

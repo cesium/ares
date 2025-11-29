@@ -17,11 +17,14 @@ defmodule AresWeb.NavComponent do
       id="page-header"
       class={[
         "z-50 flex w-full items-center justify-between border-b border-transparent px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-white",
-        if(@fixed, do: "fixed top-0 bg-black backdrop-blur-md shadow-lg", else: "absolute bottom-0")
+        if(@fixed,
+          do: "fixed-header fixed top-0 bg-black backdrop-blur-md shadow-lg",
+          else: "absolute bottom-0"
+        )
       ]}
       phx-hook="MobileNavigation"
     >
-      <a class="flex items-center gap-2 sm:gap-3 hover:text-white" href="/">
+      <a class="flex items-center gap-2 sm:gap-3 hover:text-pink" href="/">
         <img src="/images/cesium.svg" alt="Cesium" class="object-fill w-7 h-7 sm:w-8 sm:h-8" />
         <span class="sm:hidden text-white font-semibold text-base sm:text-lg">CeSIUM</span>
       </a>
@@ -31,7 +34,7 @@ defmodule AresWeb.NavComponent do
             <ul class="flex items-center gap-4 lg:gap-6">
               <li>
                 <a
-                  class="text-sm hover:text-secondary transition-colors"
+                  class="text-sm hover:text-pink transition-colors"
                   target="_blank"
                   href="images/docs/SurvivalGuideBugsByte2025.pdf"
                 >
@@ -40,20 +43,20 @@ defmodule AresWeb.NavComponent do
               </li>
               <li>
                 <a
-                  class="text-sm hover:text-secondary transition-colors"
+                  class="text-sm hover:text-pink transition-colors"
                   href="images/docs/RegulamentoBugsByte2025.pdf"
                 >
                   Regulation
                 </a>
               </li>
               <li>
-                <a class="text-sm hover:text-secondary transition-colors" href="/faqs">
+                <a class="text-sm hover:text-pink transition-colors" href="/faqs">
                   FAQs
                 </a>
               </li>
               <li>
                 <a
-                  class="text-sm hover:text-secondary transition-colors"
+                  class="text-sm hover:text-pink transition-colors"
                   href="https://2024.bugsbyte.org/"
                 >
                   Previous edition
@@ -61,7 +64,7 @@ defmodule AresWeb.NavComponent do
               </li>
               <li>
                 <a
-                  class="text-sm hover:text-secondary transition-colors"
+                  class="text-sm hover:text-pink transition-colors"
                   target="_black"
                   href="/team-formation"
                 >
@@ -71,25 +74,27 @@ defmodule AresWeb.NavComponent do
               <%= if @user && @user.is_admin do %>
                 <li>
                   <a
-                    class="text-sm hover:text-secondary transition-colors text-yellow-400 font-bold"
+                    class="text-sm hover:text-pink transition-colors text-pink"
                     href="/admin"
                   >
                     Admin
                   </a>
                 </li>
               <% end %>
-              <li class="relative z-50">
+              <li class="relative">
                 <%= if @user do %>
                   <button
                     onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
-                    class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
+                    class="w-10 h-10 cursor-pointer rounded-full bg-gradient-to-br from-darkest-pink to-pink flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
                     title={@user.name}
                   >
                     {String.first(@user.name)}
                   </button>
                   <div
                     id="profile-menu"
-                    class="hidden absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-700 z-50"
+                    class={[
+                      "hidden absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
+                    ]}
                   >
                     <a
                       href="/profile"
@@ -106,7 +111,7 @@ defmodule AresWeb.NavComponent do
                       <input type="hidden" name="_csrf_token" value={@csrf_token} />
                       <button
                         type="submit"
-                        class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-800 rounded-b-lg transition-colors"
+                        class="w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-800 rounded-b-lg transition-colors cursor-pointer"
                       >
                         Logout
                       </button>
@@ -178,14 +183,14 @@ defmodule AresWeb.NavComponent do
                   <%= if @user do %>
                     <a
                       href="/profile"
-                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                       title={@user.name}
                     >
                       Profile
                     </a>
                   <% else %>
                     <a
-                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                       href="/register"
                     >
                       Register
@@ -211,7 +216,7 @@ defmodule AresWeb.NavComponent do
                 <% end %>
                 <li>
                   <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                     href="images/docs/SurvivalGuideBugsByte2025.pdf"
                   >
                     Survival Guide
@@ -219,7 +224,7 @@ defmodule AresWeb.NavComponent do
                 </li>
                 <li>
                   <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                     href="images/docs/RegulamentoBugsByte2025.pdf"
                   >
                     Regulation
@@ -227,7 +232,7 @@ defmodule AresWeb.NavComponent do
                 </li>
                 <li>
                   <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                     href="/faqs"
                   >
                     FAQs
@@ -235,7 +240,7 @@ defmodule AresWeb.NavComponent do
                 </li>
                 <li>
                   <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                     href="https://2024.bugsbyte.org/"
                   >
                     Previous edition
@@ -243,7 +248,7 @@ defmodule AresWeb.NavComponent do
                 </li>
                 <li>
                   <a
-                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-secondary transition-colors"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
                     href="/team-formation"
                   >
                     Team formation
@@ -252,7 +257,7 @@ defmodule AresWeb.NavComponent do
                 <%= if @user && @user.is_admin do %>
                   <li>
                     <a
-                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-yellow-400 font-bold hover:text-yellow-300 transition-colors"
+                      class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-pink font-bold hover:text-yellow-300 transition-colors"
                       href="/admin"
                     >
                       Admin Dashboard

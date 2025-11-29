@@ -3,7 +3,7 @@
 <main class="min-h-screen mt-8 bg-black text-white">
   <div class="max-w-2xl mx-auto py-16 px-4">
     <div class="text-center mb-12">
-      <div class="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-secondary mx-auto mb-4 flex items-center justify-center">
+      <div class="w-24 h-24 rounded-full bg-gradient-to-bl from-pink to-darkest-pink mx-auto mb-4 flex items-center justify-center">
         <span class="text-4xl font-black">
           {String.first(@user.name)}
         </span>
@@ -12,123 +12,125 @@
       <p class="text-gray-400">{@user.email}</p>
     </div>
 
-    <div class="bg-gray-900 rounded-lg p-8">
+    <div class="bg-gray rounded-lg p-8 border border-gray-900">
       <h2 class="text-2xl font-black mb-6">Edit Profile</h2>
 
       <form phx-submit="save" class="space-y-6">
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Full name</label>
-          <input
+          <.input
             type="text"
             name="user[name]"
             value={@changeset.data.name}
             placeholder="John Doe"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Name"
           />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Email</label>
-          <input
+          <.input
             type="email"
             name="user[email]"
             value={@changeset.data.email}
             placeholder="your-email@bugsbyte.org"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Email"
           />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Phone number</label>
-          <input
+          <.input
             type="tel"
             name="user[phone]"
             value={@changeset.data.phone}
             placeholder="929 357 457"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Phone"
           />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Age</label>
-          <select
+          <.input
+            type="select"
             name="user[age]"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
-          >
-            <option value="">Select age</option>
-            <option value="17" selected={@changeset.data.age == "17"}>17</option>
-            <option value="18+" selected={@changeset.data.age == "18+"}>18+</option>
-          </select>
+            value={@changeset.data.age}
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Age"
+            prompt="Select age"
+            options={[
+              {"17", "17"},
+              {"18+", "18+"}
+            ]}
+          />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">University</label>
-          <input
+          <.input
             type="text"
             name="user[university]"
             value={@changeset.data.university}
             placeholder="Universidade do Minho"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="University"
           />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Course</label>
-          <input
+          <.input
             type="text"
             name="user[course]"
             value={@changeset.data.course}
             placeholder="Engenharia Informática"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Course"
           />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Team Code</label>
-          <input
+          <.input
             type="text"
             name="user[team_code]"
             value={@changeset.data.team_code}
             placeholder="XXXXX"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none"
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+            label="Team Code"
           />
-          <p class="text-xs text-gray-400 mt-1">
+          <p class="text-md text-gray-400 mt-1">
             Since the registration is closed, you can only register if you have a team waiting for you.
           </p>
         </div>
 
         <div>
-          <label class="inline-flex items-center gap-3">
-            <input
-              type="checkbox"
-              name="user[vegan]"
-              value="true"
-              checked={@changeset.data.vegan}
-              class="rounded"
-            />
-            <span class="text-sm text-gray-200">Vegan</span>
-          </label>
+          <.input
+            type="checkbox"
+            name="user[vegan]"
+            value="true"
+            checked={@changeset.data.vegan}
+            class="rounded"
+            label="Vegan"
+          />
         </div>
 
         <div>
-          <label class="block text-sm text-gray-200 mb-2">Notes</label>
-          <textarea
+          <.input
+            type="textarea"
+            value={@changeset.data.notes}
             name="user[notes]"
             placeholder="If you have any notes about food restrictions or anything else let us know"
-            class="w-full bg-gray-800 text-white rounded px-3 py-2 border border-gray-700 focus:border-primary focus:outline-none h-24"
-          ><%= @changeset.data.notes %></textarea>
+            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none h-24"
+          />
         </div>
 
         <div class="flex gap-4">
           <button
             type="submit"
-            class="flex-1 bg-primary text-black font-bold py-3 rounded-lg hover:bg-secondary transition-colors"
+            class="flex-1 bg-pink text-gray-300 font-bold py-3 rounded-lg hover:bg-dark-pink transition-colors cursor-pointer"
           >
             Save Changes
           </button>
           <a
             href="/"
-            class="flex-1 bg-gray-800 text-white font-bold py-3 rounded-lg hover:bg-gray-700 transition-colors text-center"
+            class="flex-1 bg-gray-900 text-gray-300 font-bold py-3 rounded-lg hover:bg-darkest-pink transition-colors text-center"
           >
             Cancel
           </a>
@@ -138,13 +140,13 @@
     
 <!-- My Team Section -->
     <%= if @user_team do %>
-      <div class="mt-12">
+      <div class="mt-12 bg-gray rounded-lg p-8 border border-gray-800">
         <h2 class="text-2xl font-black mb-6">My Team</h2>
         <div class="bg-yellow-400 bg-opacity-10 border-2 border-yellow-400 rounded-lg p-8">
           <div class="mb-6">
             <h3 class="text-3xl font-black text-yellow-200 mb-2">{@user_team.name}</h3>
             <p class="text-white mb-4">{@user_team.description}</p>
-            <div class="bg-gray-800 rounded px-3 py-2 inline-block">
+            <div class="bg-gray-900 rounded px-3 py-2 inline-block">
               <span class="text-sm text-gray-300">Team Code: </span>
               <span class="text-white font-bold">{@user_team.code}</span>
             </div>
@@ -156,7 +158,7 @@
             </h4>
             <div class="space-y-3">
               <%= for member <- @team_members do %>
-                <div class="bg-gray-800 rounded-lg p-4">
+                <div class="bg-gray-900 rounded-lg p-4">
                   <div class="flex items-start justify-between">
                     <div>
                       <p class="font-bold text-white">{member.name}</p>
@@ -172,7 +174,7 @@
               <% end %>
             </div>
 
-            <div class="mt-6 pt-6 border-t border-gray-700">
+            <div class="mt-6 pt-6 border-t border-gray-800">
               <div class="grid grid-cols-2 gap-4">
                 <div>
                   <p class="text-sm text-gray-400 mb-1">Experience Level</p>
@@ -192,13 +194,13 @@
         </div>
       </div>
     <% else %>
-      <div class="mt-12">
+      <div class="mt-12 bg-gray rounded-lg p-8 border border-gray-800">
         <h2 class="text-2xl font-black mb-6">My Team</h2>
-        <div class="bg-gray-900 rounded-lg p-8 text-center">
+        <div class="rounded-lg p-8 text-center">
           <p class="text-gray-400 mb-4">You are not yet in a team.</p>
           <a
             href="/team-formation"
-            class="inline-block bg-primary text-black font-bold py-2 px-6 rounded-lg hover:bg-secondary transition-colors"
+            class="flex-1 bg-pink text-gray-300 font-bold py-3 px-5 rounded-lg hover:bg-dark-pink transition-colors cursor-pointer"
           >
             Join a Team
           </a>

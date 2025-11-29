@@ -85,7 +85,7 @@ defmodule AresWeb.AccountHTML do
               placeholder="XXXXX"
               class="w-full bg-white text-black rounded px-3 py-2"
             />
-            <p class="text-xs text-gray-400 mt-1">
+            <p class="text-md text-gray-400 mt-1">
               Since the registration is closed, you can only register if you have a team waiting for you.
             </p>
           </div>
