@@ -76,17 +76,21 @@
   --tw-ring-color: var(--color-secondary);
 }
 
-/* Navigation styles */
 .fixed-header {
   @apply fixed bottom-auto top-0;
   @apply border-gray-900 bg-black text-white;
 }
+
+/* Dropdown positioning based on header type */
 .fixed-header .profile-menu-dropdown {
-  top: 100%;
+  top: 100%; /* Below the navbar when fixed at top */
+  margin-top: 0.5rem; /* Add spacing from navbar */
 }
 
 header:not(.fixed-header) .profile-menu-dropdown {
-  top: -5rem;
+  bottom: 100%; /* Above the navbar when at bottom */
+  top: auto;
+  margin-bottom: 0.5rem; /* Add spacing from navbar */
 }
 
 .modal.is-open {

@@ -93,7 +93,7 @@ defmodule AresWeb.NavComponent do
                   <div
                     id="profile-menu"
                     class={[
-                      "hidden absolute right-0 mt-2 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
+                      "hidden absolute right-0 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
                     ]}
                   >
                     <a
