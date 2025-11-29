@@ -41,7 +41,10 @@
       </div>
     </div>
 
-    <div :if={@tab == "create"} class="bg-transparent rounded-lg p-8 transform scale-125 mt-56 mb-40">
+    <div
+      :if={@tab == "create"}
+      class="bg-transparent rounded-lg p-8 transform scale-125 mt-56 mb-40"
+    >
       <.form
         :let={f}
         for={@changeset}
