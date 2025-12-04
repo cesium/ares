@@ -1,25 +1,26 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
-<div class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-xl mx-auto">
-    <div class="text-center mb-6">
-      <h1 class="md:text-6xl text-3xl font-extrabold tracking-tight mb-2">Team Formation</h1>
+<main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-2">Team Formation</h1>
       <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-        If you have already registered, you can join a team or create a new one.
+        Create your dream team or join forces with other participants
       </p>
     </div>
+
     <div class="flex justify-center mt-6 mb-6">
       <nav class="flex items-center space-x-8" role="tablist" aria-label="Team tabs">
         <a
           href="?tab=create"
-          class={"text-sm pb-2 " <> (if @tab == "create", do: "text-pink border-b-2 border-pink", else: "text-gray-400 hover:text-gray-200")}
+          class={"text-md pb-2 " <> (if @tab == "create", do: "text-primary border-b-2 border-primary", else: "text-gray-400 hover:text-gray-200")}
           aria-selected={@tab == "create"}
         >
           Create a team
         </a>
         <a
           href="?tab=join"
-          class={"text-sm pb-2 " <> (if @tab == "join", do: "text-pink border-b-2 border-pink", else: "text-gray-400 hover:text-gray-200")}
+          class={"text-md pb-2 " <> (if @tab == "join", do: "text-primary border-b-2 border-primary", else: "text-gray-400 hover:text-gray-200")}
           aria-selected={@tab == "join"}
         >
           Join a team
@@ -27,201 +28,250 @@
       </nav>
     </div>
 
-    <div :if={@flash["info"]} class="alert alert-success mb-6">
-      <div class="flex items-center">
-        <.icon name="hero-check-circle" class="w-5 h-5 mr-2" />
-        {@flash["info"]}
+    <%= if @flash["info"] do %>
+      <div class="mb-6 bg-green-900 border border-green-500 rounded-lg p-4">
+        <div class="flex items-center">
+          <.icon name="hero-check-circle" class="w-5 h-5 mr-3 text-green-400 flex-shrink-0" />
+          <p class="text-white text-lg">{@flash["info"]}</p>
+        </div>
       </div>
-    </div>
+    <% end %>
 
-    <div :if={@flash["error"]} class="alert alert-error mb-6">
-      <div class="flex items-center">
-        <.icon name="hero-exclamation-circle" class="w-5 h-5 mr-2" />
-        {@flash["error"]}
+    <%= if @flash["error"] do %>
+      <div class="mb-6 bg-red-900 border border-red-500 rounded-lg p-4">
+        <div class="flex items-center">
+          <.icon name="hero-exclamation-circle" class="w-5 h-5 mr-3 text-red-400 flex-shrink-0" />
+          <p class="text-white text-lg">{@flash["error"]}</p>
+        </div>
       </div>
-    </div>
+    <% end %>
 
-    <div :if={@tab == "create"} class="bg-transparent rounded-lg p-8">
-      <.form
-        :let={f}
-        for={@changeset}
-        action={~p"/team-formation"}
-        method="post"
-        class="space-y-8"
-      >
-        <div class="border-b border-gray-200 pb-8">
-          <h2 class="text-2xl font-semibold text-white mb-6">Team Information</h2>
+    <%= if @tab == "create" do %>
+      <div class="bg-gray rounded-lg p-8 border border-gray-800 mb-12">
+        <div class="mb-8">
+          <h2 class="text-3xl font-black mb-2">Create Your Team</h2>
+          <p class="text-gray-400">Fill in the details to create a new team</p>
+        </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="md:col-span-2">
+        <.form
+          :let={f}
+          for={@changeset}
+          action={~p"/team-formation"}
+          method="post"
+          class="space-y-8"
+        >
+          <div class="space-y-6">
+            <div>
               <.input
                 field={f[:name]}
                 type="text"
-                label="Team name"
-                placeholder="Enter your new team name"
+                label="Team Name"
+                placeholder="e.g., Code Ninjas, Bug Hunters..."
                 required
-                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-              />
-            </div>
-
-            <div class="md:col-span-2">
-              <.input
-                field={f[:description]}
-                type="textarea"
-                label="Description"
-                placeholder="Describe your team, goals and what you want to achieve"
-                rows="4"
-                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+                class="input-standard"
+                label_class="label-standard"
               />
             </div>
 
             <div>
               <.input
-                field={f[:experience_level]}
-                type="select"
-                label="Experience level"
-                options={[
-                  {"Beginner", "beginner"},
-                  {"Intermediate", "intermediate"},
-                  {"Advanced", "advanced"},
-                  {"Mixed", "mixed"}
-                ]}
-                class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
+                field={f[:description]}
+                type="textarea"
+                label="Team Description"
+                placeholder="Describe your team's goals, what you want to achieve, and what makes your team unique..."
+                rows="4"
+                class="input-standard"
+                label_class="label-standard"
               />
             </div>
 
-            <div class="flex items-center">
-              <.input
-                field={f[:looking_for_members]}
-                type="checkbox"
-                label="Looking for members"
-              />
-            </div>
-          </div>
-        </div>
-        
-<!-- Submit Button -->
-        <div class="flex justify-center pt-6">
-          <button
-            type="submit"
-            class="px-4 py-2 bg-pink hover:bg-dark-pink cursor-pointer text-white rounded-md text-lg inline-flex items-center"
-          >
-            <.icon name="hero-users" class="w-5 h-5 mr-2 " /> Create
-          </button>
-        </div>
-      </.form>
-    </div>
-    
-<!-- Join form -->
-    <div :if={@tab == "join"} class="bg-transparent rounded-lg p-8">
-      <h2 class="text-2xl font-semibold text-white mb-6">Available Teams</h2>
-
-      <%= if Enum.empty?(@available_teams) do %>
-        <div class="bg-gray-900 rounded-lg p-8 text-center">
-          <p class="text-gray-400">No teams are currently looking for members.</p>
-        </div>
-      <% else %>
-        <div class="space-y-4">
-          <%= for team <- @available_teams do %>
-            <div class="border border-gray-900 rounded-lg p-6 transition-colors">
-              <div class="flex items-start justify-between mb-4">
-                <div>
-                  <h3 class="text-2xl font-bold text-white">{team.name}</h3>
-                </div>
-                <button
-                  phx-click="join_team"
-                  phx-value-team_code={team.code}
-                  class="px-4 py-2 bg-pink hover:bg-dark-pink text-black font-bold text-sm rounded-md transition-colors"
-                >
-                  Join
-                </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <.input
+                  field={f[:experience_level]}
+                  type="select"
+                  label="Team Experience Level"
+                  options={[
+                    {"Beginner - New to hackathons", "beginner"},
+                    {"Intermediate - Some experience", "intermediate"},
+                    {"Advanced - Experienced hackers", "advanced"},
+                    {"Mixed - Various skill levels", "mixed"}
+                  ]}
+                  class="input-standard"
+                  label_class="label-standard"
+                />
               </div>
 
-              <p class="text-gray-300 text-lg mb-4">{team.description}</p>
+              <div>
+                <.input
+                  field={f[:skills_needed]}
+                  type="text"
+                  label="Skills Needed (Optional)"
+                  placeholder="e.g., Frontend, Backend, Design..."
+                  class="input-standard"
+                  label_class="label-standard"
+                />
+              </div>
+            </div>
 
-              <div class="grid grid-cols-2 text-lg gap-4 text-sm">
-                <div>
-                  <p class="text-gray-400 text-lg">Experience Level</p>
-                  <p class="text-white text-md font-semibold capitalize">
-                    {team.experience_level}
-                  </p>
-                </div>
-                <div>
-                  <p class="text-gray-400 text-lg">Members</p>
-                  <p class="text-white text-md font-semibold">
-                    {AresWeb.PageHTML.count_team_members(team)}/5
+            <div class="rounded-lg p-6 border border-gray-800">
+              <div class="flex items-start gap-4">
+                <.input
+                  field={f[:looking_for_members]}
+                  type="checkbox"
+                  class="checkbox-standard mt-1"
+                />
+                <div class="flex-1">
+                  <label class="text-white font-bold text-lg cursor-pointer">
+                    Looking for team members
+                  </label>
+                  <p class="text-sm text-gray-400 mt-1">
+                    Enable this if you want your team to be visible to other participants who are looking to join a team
                   </p>
                 </div>
               </div>
-
-              <%= if team.skills_needed do %>
-                <div class="mt-4 pt-4 border-t border-gray-700">
-                  <p class="text-sm text-gray-400 mb-2">Skills Needed</p>
-                  <p class="text-white">{team.skills_needed}</p>
-                </div>
-              <% end %>
             </div>
-          <% end %>
+          </div>
+
+          <div class="flex justify-center pt-6">
+            <button
+              type="submit"
+              class="bg-primary text-white  py-4 px-8 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg inline-flex items-center shadow-lg"
+            >
+              <.icon name="hero-user-group" class="w-5 h-5 mr-2" />
+              Create Team
+            </button>
+          </div>
+        </.form>
+      </div>
+    <% end %>
+
+    <%= if @tab == "join" do %>
+      <div class="mb-12">
+        <div class="mb-8 text-center">
+          <h2 class="text-3xl font-black mb-2">Join a Team</h2>
+          <p class="text-gray-400">Browse available teams and find your perfect match</p>
         </div>
-      <% end %>
-    </div>
-    
-<!-- Additional Info -->
-    <div class="mt-12 bg-black p-6">
-      <h3 class="text-lg font-semibold text-white mb-3">Important Info</h3>
-      <ul class="text-gray-300 space-y-4">
-        <li class="flex items-start gap-3">
-          <.icon
-            name="hero-information-circle"
-            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
-          />
-          <div>
-            <div class="font-medium text-white">Equipas</div>
-            <div class="text-sm text-gray-300">As equipas podem ter entre 2 a 5 membros</div>
-          </div>
-        </li>
 
-        <li class="flex items-start gap-3">
-          <.icon
-            name="hero-information-circle"
-            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
-          />
-          <div>
-            <div class="font-medium text-white">Registo</div>
-            <div class="text-sm text-gray-300">
-              Podes registar a tua equipa mesmo sem ter todos os membros confirmados
-            </div>
+        <%= if Enum.empty?(@available_teams) do %>
+          <div class="bg-gray rounded-lg p-12 text-center border border-gray-800">
+            <.icon name="hero-user-group" class="w-16 h-16 mx-auto mb-4 text-gray-600" />
+            <h3 class="text-2xl font-bold mb-2">No Teams Available</h3>
+            <p class="text-gray-400 text-lg mb-6">
+              There are currently no teams looking for members.
+            </p>
+            <a
+              href="?tab=create"
+              class="inline-block bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer"
+            >
+              Create Your Own Team
+            </a>
           </div>
-        </li>
+        <% else %>
+          <div class="space-y-6">
+            <%= for team <- @available_teams do %>
+              <div class="bg-gray rounded-lg p-6 border border-gray-800 transition-colors">
+                <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                  <div class="flex-1">
+                    <div class="mb-4">
+                      <h3 class="text-3xl font-black mb-2">{team.name}</h3>
+                      <p class="text-gray-300 text-lg">{team.description}</p>
+                    </div>
 
-        <li class="flex items-start gap-3">
-          <.icon
-            name="hero-information-circle"
-            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
-          />
-          <div>
-            <div class="font-medium text-white">Procurar membros</div>
-            <div class="text-sm text-gray-300">
-              Marca "À procura de novos membros" se quiseres que outros participantes te contactem
-            </div>
-          </div>
-        </li>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+                      <div class="rounded-lg p-3 border border-gray-800">
+                        <p class="text-sm text-gray-400 mb-1">Experience</p>
+                        <p class="text-white font-bold capitalize">{team.experience_level}</p>
+                      </div>
+                      <div class="rounded-lg p-3 border border-gray-800">
+                        <p class="text-sm text-gray-400 mb-1">Members</p>
+                        <p class="text-white font-bold">
+                          {AresWeb.PageHTML.count_team_members(team)}/5
+                        </p>
+                      </div>
+                      <%= if team.skills_needed && team.skills_needed != "" do %>
+                        <div class="rounded-lg p-3 border border-gray-800 col-span-2 md:col-span-1">
+                          <p class="text-sm text-gray-400 mb-1">Skills Needed</p>
+                          <p class="text-white font-bold">{team.skills_needed}</p>
+                        </div>
+                      <% end %>
+                    </div>
 
-        <li class="flex items-start gap-3">
-          <.icon
-            name="hero-information-circle"
-            class="w-5 h-5 text-pink mt-0.5 flex-shrink-0"
-          />
-          <div>
-            <div class="font-medium text-white">Edição</div>
-            <div class="text-sm text-gray-300">
-              Podes editar as informações da tua equipa até ao início do evento
-            </div>
+                    <div class="flex items-center gap-2">
+                      <.icon name="hero-users" class="w-5 h-5 text-primary" />
+                      <span class="text-sm text-gray-400">
+                        {5 - AresWeb.PageHTML.count_team_members(team)} spot{if 5 - AresWeb.PageHTML.count_team_members(team) != 1, do: "s"} available
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center">
+                    <button
+                      phx-click="join_team"
+                      phx-value-team_code={team.code}
+                      class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg whitespace-nowrap inline-flex items-center shadow-lg"
+                    >
+                      <.icon name="hero-arrow-right" class="w-5 h-5 mr-2" />
+                      Join Team
+                    </button>
+                  </div>
+                </div>
+              </div>
+            <% end %>
           </div>
-        </li>
-      </ul>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="bg-gray rounded-lg p-8 border border-gray-800">
+      <div class="flex items-center gap-3 mb-6">
+        <.icon name="hero-information-circle" class="w-8 h-8 text-pink" />
+        <h3 class="text-2xl font-black">Important Information</h3>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+            <.icon name="hero-users" class="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-lg mb-1">Team Size</h4>
+            <p class="text-gray-400">Teams can have between 2 to 5 members</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+            <.icon name="hero-clipboard-document-check" class="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-lg mb-1">Registration</h4>
+            <p class="text-gray-400">You can register your team even without all members confirmed</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+            <.icon name="hero-magnifying-glass" class="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-lg mb-1">Finding Members</h4>
+            <p class="text-gray-400">Mark "Looking for members" if you want other participants to contact you</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+            <.icon name="hero-pencil-square" class="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h4 class="font-bold text-white text-lg mb-1">Editing</h4>
+            <p class="text-gray-400">You can edit your team information until the event starts</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</main>
 
 <.footer />

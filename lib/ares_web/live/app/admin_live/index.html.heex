@@ -1,6 +1,6 @@
 <.navbar fixed={true} user={@user} csrf_token={@csrf_token} />
 
-<main class="min-h-screen mt-8 bg-black text-white">
+<main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
   <%= if @error do %>
     <div class="max-w-2xl mx-auto py-16 px-4">
       <div class="bg-red-900 bg-opacity-20 border border-red-500 rounded-lg p-8 text-center">
@@ -18,7 +18,7 @@
     <div class="max-w-6xl mx-auto py-16 px-4">
       <div class="mb-12">
         <h1 class="text-4xl font-black mb-2">Admin Dashboard</h1>
-        <p class="text-xl text-pink">Manage all teams and participants</p>
+        <p class="text-xl text-primary">Manage all teams and participants</p>
       </div>
       
 <!-- Teams Grid -->
@@ -47,7 +47,7 @@
               <div>
                 <p class="text-lg text-gray-400 mb-1">Status</p>
                 <%= if team.looking_for_members do %>
-                  <p class="text-lg font-bold text-pink">Looking for members</p>
+                  <p class="text-lg font-bold text-primary">Looking for members</p>
                 <% else %>
                   <p class="text-lg font-bold">Team Complete</p>
                 <% end %>

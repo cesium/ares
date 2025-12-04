@@ -127,8 +127,22 @@ defmodule Ares.Teams do
       3
 
   """
+
   def count_team_members(%Team{code: code}) do
     from(u in "users", where: u.team_code == ^code)
     |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
+  Counts the total number of teams.
+
+  ## Examples
+
+      iex> count_teams()
+      15
+
+  """
+  def count_teams do
+    Repo.aggregate(Team, :count, :id)
   end
 end

@@ -113,6 +113,19 @@ users = [
     password_hash: user_hash
   },
   %User{
+    name: "Jonas Johaness",
+    email: "jonas@cesium.pt",
+    phone: "925123456",
+    age: "21",
+    university: "Universidade do Minho",
+    course: "Engenharia Informática",
+    team_code: "TEAM004",
+    vegan: false,
+    notes: "Interested in cybersecurity and backend development",
+    cv_filename: "joao_cv.pdf",
+    password_hash: user_hash
+  },
+  %User{
     name: "Carlos Mendes",
     email: "carlos@cesium.pt",
     phone: "925789012",
@@ -158,7 +171,7 @@ users = [
     age: "20",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM003",
+    team_code: nil,
     vegan: false,
     notes: "Database design specialist with PostgreSQL expertise",
     cv_filename: "mariana_cv.pdf",

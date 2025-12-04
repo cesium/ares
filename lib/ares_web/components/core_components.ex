@@ -184,12 +184,14 @@ defmodule AresWeb.CoreComponents do
 
   def input(%{type: "checkbox"} = assigns) do
     assigns =
-      assign_new(assigns, :checked, fn ->
+      assigns
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:checked, fn ->
         Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""
-    <div class="fieldset mb-2">
+    <div class="fieldset">
       <div class="flex gap-2">
         <label>{@label}</label>
         <input
@@ -208,6 +210,8 @@ defmodule AresWeb.CoreComponents do
   end
 
   def input(%{type: "select"} = assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
     ~H"""
     <div class="fieldset mb-2">
       <label class={@label_class}>{@label}</label>
@@ -227,6 +231,9 @@ defmodule AresWeb.CoreComponents do
   end
 
   def input(%{type: "textarea"} = assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
+
     ~H"""
     <div class="fieldset mb-2">
       <label class={@label_class}>{@label}</label>
@@ -246,6 +253,8 @@ defmodule AresWeb.CoreComponents do
 
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
     ~H"""
     <div class="fieldset mb-2">
       <label :if={@label} class={@label_class}>{@label}</label>

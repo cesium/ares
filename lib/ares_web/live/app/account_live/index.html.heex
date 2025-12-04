@@ -1,7 +1,7 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <main class="flex flex-col mt-8 min-h-screen bg-black text-white">
-  <div class="max-w-xl mx-auto py-16 px-4 flex-grow w-full">
+  <div class="max-w-6xl mx-auto py-16 px-4 flex-grow w-full">
     <!-- Tabs Navigation -->
     <div class="flex gap-2 mb-8 border-b border-gray-600">
       <button
@@ -32,106 +32,104 @@
       </button>
     </div>
     
-<!-- Register Tab -->
+    <!-- Register Tab -->
     <%= if @tab == "register" do %>
       <div>
         <h1 class="text-4xl font-black mb-6 text-center">Create Your Account</h1>
-        <p class="text-sm text-gray-300 text-center mb-8">
+        <p class="text-md text-gray-300 text-center mb-8">
           Join us and be part of the competition!
         </p>
 
         <form action="/register" method="post" class="space-y-6">
           <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Full name</label>
-            <input
-              name="user[name]"
-              placeholder="John Doe"
-              class="w-full bg-white text-black rounded px-3 py-2"
-            />
-          </div>
+          <.input
+            name="user[name]"
+            label="Full name"
+            placeholder="John Doe"
+            class="input-standard"
+            label_class="label-standard"
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Your email</label>
-            <input
-              name="user[email]"
-              placeholder="your-email@bugsbyte.org"
-              class="w-full bg-white text-black rounded px-3 py-2"
-            />
-          </div>
+          <.input
+            name="user[email]"
+            type="email"
+            label="Your email"
+            placeholder="your-email@bugsbyte.org"
+            class="input-standard"
+            label_class="label-standard"
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Phone number</label>
-            <input
-              name="user[phone]"
-              placeholder="929 357 457"
-              class="w-full bg-white text-black rounded px-3 py-2"
-            />
-          </div>
+          <.input
+            name="user[phone]"
+            type="tel"
+            label="Phone number"
+            placeholder="929 357 457"
+            class="input-standard"
+            label_class="label-standard"
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Age</label>
-            <select name="user[age]" class="w-full bg-white text-black rounded px-3 py-2">
-              <option>18+</option>
-              <option>17</option>
-            </select>
-          </div>
+          <.input
+            name="user[age]"
+            type="select"
+            label="Age"
+            options={["18+", "17"]}
+            class="input-standard"
+            label_class="label-standard"
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">University</label>
-            <input
-              name="user[university]"
-              placeholder="Universidade do Minho"
-              class="w-full bg-white text-black rounded px-3 py-2"
-            />
-          </div>
+          <.input
+            name="user[university]"
+            label="University"
+            placeholder="Universidade do Minho"
+            class="input-standard"
+            label_class="label-standard"
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Course</label>
-            <input
-              name="user[course]"
-              placeholder="Engenharia Informática"
-              class="w-full bg-white text-black rounded px-3 py-2"
-            />
-          </div>
+          <.input
+            name="user[course]"
+            label="Course"
+            placeholder="Engenharia Informática"
+            class="input-standard"
+            label_class="label-standard"
+          />
 
           <div>
             <label class="inline-flex items-center gap-3">
-              <input type="checkbox" name="user[vegan]" />
-              <span class="text-sm text-gray-200">Vegan</span>
+              <.input class="checkbox-standard" type="checkbox" name="user[vegan]" />
+              <span class="text-lg text-gray-200">Vegan</span>
             </label>
           </div>
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Notes</label>
-            <textarea
-              name="user[notes]"
-              placeholder="If you have any notes about food restrictions or anything else let us know"
-              class="w-full bg-white text-black rounded px-3 py-2 h-24"
-            ></textarea>
-          </div>
+          <.input
+            name="user[notes]"
+            type="textarea"
+            label="Notes"
+            placeholder="If you have any notes about food restrictions or anything else let us know"
+            class="input-standard h-24"
+            label_class="label-standard"
+          />
 
           <div>
-            <label class="block text-sm text-gray-200 mb-2">Upload CV</label>
-            <input type="file" name="user[cv]" class="text-sm text-gray-200" />
-            <p class="text-xs text-gray-400 mt-1">
-              Upload your CV so that the companies at the event know who you are 👀
+            <label class="label-standard">Upload CV</label>
+            <.input type="file" name="user[cv]" class="text-lg text-gray-200 p-2 rounded-lg bg-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80" />
+            <p class="text-sm text-gray-400 mt-2">
+              Upload your CV so that the companies at the event know who you are
             </p>
           </div>
 
           <div class="flex items-center gap-3">
             <label class="inline-flex items-center gap-2">
-              <input type="checkbox" name="user[agree]" />
-              <span class="text-sm text-gray-200">
+              <.input class="checkbox-standard" type="checkbox" name="user[agree]" />
+              <span class="text-lg text-gray-200">
                 I agree with the
-                <a href="/regulamento" class="text-primary underline">event regulations</a>
+                <a href="/regulamento" class="text-pink underline">event regulations</a>
               </span>
             </label>
           </div>
 
           <div>
-            <button class="w-full px-4 py-2 bg-primary rounded text-white font-semibold hover:bg-opacity-90 transition-all">
+            <button class="w-full px-4 py-3 bg-primary hover:bg-primary/50 rounded-lg text-white transition-all cursor-pointer font-bold text-lg">
               Create Account
             </button>
           </div>
@@ -141,52 +139,48 @@
       <!-- Login Tab -->
       <div>
         <h1 class="text-4xl font-black mb-6 text-center">Login</h1>
-        <p class="text-sm text-gray-300 text-center mb-8">
+        <p class="text-md text-gray-300 text-center mb-8">
           Welcome back! Log in to your account.
         </p>
 
         <form action="/login" method="post" class="space-y-6">
           <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="your-email@bugsbyte.org"
-              class="w-full bg-white text-black rounded px-3 py-2"
-              required
-            />
-          </div>
+          <.input
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="your-email@bugsbyte.org"
+            class="input-standard"
+            label_class="label-standard"
+            required
+          />
 
-          <div>
-            <label class="block text-sm text-gray-200 mb-2">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              class="w-full bg-white text-black rounded px-3 py-2"
-              required
-            />
-          </div>
+          <.input
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Enter your password"
+            class="input-standard"
+            label_class="label-standard"
+            required
+          />
 
-          <div>
-            <button
-              type="submit"
-              class="w-full px-4 py-2 bg-primary rounded text-white font-semibold hover:bg-opacity-90 transition-all"
-            >
-              Login
-            </button>
-          </div>
+          <button
+            type="submit"
+            class="w-full px-4 py-3 mt-4 bg-primary rounded-lg text-white font-bold hover:bg-primary/50 transition-all cursor-pointer text-lg"
+          >
+            Login
+          </button>
 
           <div class="text-center">
-            <p class="text-sm text-gray-400">
+            <p class="text-lg text-gray-400">
               Don't have an account?
               <button
                 type="button"
                 phx-click="switch_tab"
                 phx-value-tab="register"
-                class="text-primary underline hover:text-opacity-80"
+                class="text-pink underline hover:text-opacity-80 cursor-pointer"
               >
                 Register here
               </button>

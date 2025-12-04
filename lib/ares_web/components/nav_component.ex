@@ -74,7 +74,7 @@ defmodule AresWeb.NavComponent do
               <%= if @user && @user.is_admin do %>
                 <li>
                   <a
-                    class="text-sm hover:text-pink transition-colors text-pink"
+                    class="text-sm hover:text-pink transition-colors text-white"
                     href="/admin"
                   >
                     Admin
@@ -93,12 +93,12 @@ defmodule AresWeb.NavComponent do
                   <div
                     id="profile-menu"
                     class={[
-                      "hidden absolute right-0 w-48 bg-gray-900 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
+                      "hidden absolute right-0 w-48 bg-gray-100 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
                     ]}
                   >
                     <a
                       href="/profile"
-                      class="block px-4 py-2 text-sm text-white hover:bg-gray-800 rounded-t-lg transition-colors"
+                      class="block px-4 py-2 text-sm text-black hover:bg-gray-300 rounded-t-lg transition-colors"
                     >
                       View Profile
                     </a>
@@ -111,7 +111,7 @@ defmodule AresWeb.NavComponent do
                       <input type="hidden" name="_csrf_token" value={@csrf_token} />
                       <button
                         type="submit"
-                        class="w-full text-left px-4 py-2 text-sm text-white hover:bg-gray-800 rounded-b-lg transition-colors cursor-pointer"
+                        class="w-full text-left px-4 py-2 text-sm text-black hover:text-pink rounded-b-lg transition-colors cursor-pointer"
                       >
                         Logout
                       </button>
@@ -120,7 +120,7 @@ defmodule AresWeb.NavComponent do
                 <% else %>
                   <a
                     href="/register"
-                    class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-secondary"
+                    class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-pink"
                   >
                     Register
                   </a>

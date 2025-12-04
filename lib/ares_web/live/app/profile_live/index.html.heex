@@ -1,136 +1,157 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
-<main class="min-h-screen mt-8 bg-black text-white">
-  <div class="max-w-2xl mx-auto py-16 px-4">
+<main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
-      <div class="w-24 h-24 rounded-full bg-gradient-to-bl from-pink to-darkest-pink mx-auto mb-4 flex items-center justify-center">
-        <span class="text-4xl font-black">
+      <div class="w-32 h-32 rounded-full bg-gradient-to-bl from-pink to-darkest-pink mx-auto mb-6 flex items-center justify-center shadow-2xl">
+        <span class="text-5xl font-black">
           {String.first(@user.name)}
         </span>
       </div>
-      <h1 class="text-4xl font-black mb-2">{@user.name}</h1>
-      <p class="text-gray-400">{@user.email}</p>
+      <h1 class="text-6xl font-extrabold tracking-tight mb-2">{@user.name}</h1>
+      <p class="text-lg text-gray-300">{@user.email}</p>
     </div>
 
-    <div class="bg-gray rounded-lg p-8 border border-gray-900">
-      <h2 class="text-2xl font-black mb-6">Edit Profile</h2>
+    <div class="bg-gray rounded-lg p-8 border border-gray-800 mb-8">
+      <h2 class="text-3xl font-black mb-8">Edit Profile</h2>
 
       <form phx-submit="save" class="space-y-6">
-        <div>
-          <.input
-            type="text"
-            name="user[name]"
-            value={@changeset.data.name}
-            placeholder="John Doe"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Name"
-          />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="md:col-span-2">
+            <.input
+              type="text"
+              name="user[name]"
+              value={@changeset.data.name}
+              placeholder="John Doe"
+              class="input-standard"
+              label_class="label-standard"
+              label="Name"
+            />
+          </div>
+
+          <div>
+            <.input
+              type="email"
+              name="user[email]"
+              value={@changeset.data.email}
+              placeholder="your-email@bugsbyte.org"
+              class="input-standard"
+              label_class="label-standard"
+              label="Email"
+            />
+          </div>
+
+          <div>
+            <.input
+              type="tel"
+              name="user[phone]"
+              value={@changeset.data.phone}
+              placeholder="929 357 457"
+              class="input-standard"
+              label_class="label-standard"
+              label="Phone"
+            />
+          </div>
+
+          <div>
+            <.input
+              type="select"
+              name="user[age]"
+              value={@changeset.data.age}
+              class="input-standard"
+              label_class="label-standard"
+              label="Age"
+              prompt="Select age"
+              options={[
+                {"17", "17"},
+                {"18+", "18+"}
+              ]}
+            />
+          </div>
+
+          <div>
+            <.input
+              type="text"
+              name="user[university]"
+              value={@changeset.data.university}
+              placeholder="Universidade do Minho"
+              class="input-standard"
+              label_class="label-standard"
+              label="University"
+            />
+          </div>
+
+          <div class="md:col-span-2">
+            <.input
+              type="text"
+              name="user[course]"
+              value={@changeset.data.course}
+              placeholder="Engenharia Informática"
+              class="input-standard"
+              label_class="label-standard"
+              label="Course"
+            />
+          </div>
         </div>
 
-        <div>
-          <.input
-            type="email"
-            name="user[email]"
-            value={@changeset.data.email}
-            placeholder="your-email@bugsbyte.org"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Email"
-          />
+        <div class="pt-6 border-t border-gray-800">
+          <h3 class="text-2xl font-black mb-4">Team Information</h3>
+          
+          <div>
+            <.input
+              type="text"
+              name="user[team_code]"
+              value={@changeset.data.team_code}
+              placeholder="XXXXX"
+              class="input-standard"
+              label_class="label-standard"
+              label="Team Code"
+            />
+            <p class="text-sm text-gray-400 mt-2">
+              Since registration is closed, you can only register if you have a team waiting for you.
+            </p>
+          </div>
         </div>
 
-        <div>
-          <.input
-            type="tel"
-            name="user[phone]"
-            value={@changeset.data.phone}
-            placeholder="929 357 457"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Phone"
-          />
+        <div class="pt-6 border-t border-gray-800">
+          <h3 class="text-2xl font-black mb-4">Dietary Preferences</h3>
+          
+          <div class="space-y-4">
+            <div class="flex items-center">
+              <.input
+                type="checkbox"
+                name="user[vegan]"
+                value="true"
+                checked={@changeset.data.vegan}
+                class="checkbox-standard"
+                label="Vegan"
+              />
+            </div>
+
+            <div>
+              <.input
+                type="textarea"
+                value={@changeset.data.notes}
+                name="user[notes]"
+                placeholder="If you have any notes about food restrictions or anything else, let us know..."
+                class="input-standard h-32"
+                label_class="label-standard"
+                label="Additional Notes"
+              />
+            </div>
+          </div>
         </div>
 
-        <div>
-          <.input
-            type="select"
-            name="user[age]"
-            value={@changeset.data.age}
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Age"
-            prompt="Select age"
-            options={[
-              {"17", "17"},
-              {"18+", "18+"}
-            ]}
-          />
-        </div>
-
-        <div>
-          <.input
-            type="text"
-            name="user[university]"
-            value={@changeset.data.university}
-            placeholder="Universidade do Minho"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="University"
-          />
-        </div>
-
-        <div>
-          <.input
-            type="text"
-            name="user[course]"
-            value={@changeset.data.course}
-            placeholder="Engenharia Informática"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Course"
-          />
-        </div>
-
-        <div>
-          <.input
-            type="text"
-            name="user[team_code]"
-            value={@changeset.data.team_code}
-            placeholder="XXXXX"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none"
-            label="Team Code"
-          />
-          <p class="text-md text-gray-400 mt-1">
-            Since the registration is closed, you can only register if you have a team waiting for you.
-          </p>
-        </div>
-
-        <div>
-          <.input
-            type="checkbox"
-            name="user[vegan]"
-            value="true"
-            checked={@changeset.data.vegan}
-            class="rounded"
-            label="Vegan"
-          />
-        </div>
-
-        <div>
-          <.input
-            type="textarea"
-            value={@changeset.data.notes}
-            name="user[notes]"
-            placeholder="If you have any notes about food restrictions or anything else let us know"
-            class="w-full bg-gray-900 text-white rounded px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none h-24"
-          />
-        </div>
-
-        <div class="flex gap-4">
+        <div class="flex flex-col sm:flex-row gap-4 pt-6">
           <button
             type="submit"
-            class="flex-1 bg-pink text-gray-300 font-bold py-3 rounded-lg hover:bg-dark-pink transition-colors cursor-pointer"
+            class="flex-1 bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg"
           >
             Save Changes
           </button>
           <a
             href="/"
-            class="flex-1 bg-gray-900 text-gray-300 font-bold py-3 rounded-lg hover:bg-darkest-pink transition-colors text-center"
+            class="flex-1 bg-gray-900 text-white py-3 px-6 rounded-lg hover:bg-gray-800 transition-colors text-center text-lg"
           >
             Cancel
           </a>
@@ -138,71 +159,76 @@
       </form>
     </div>
     
-<!-- My Team Section -->
     <%= if @user_team do %>
-      <div class="mt-12 bg-gray rounded-lg p-8 border border-gray-800">
-        <h2 class="text-2xl font-black mb-6">My Team</h2>
-        <div class="bg-yellow-400 bg-opacity-10 border-2 border-yellow-400 rounded-lg p-8">
-          <div class="mb-6">
-            <h3 class="text-3xl font-black text-yellow-200 mb-2">{@user_team.name}</h3>
-            <p class="text-white mb-4">{@user_team.description}</p>
-            <div class="bg-gray-900 rounded px-3 py-2 inline-block">
-              <span class="text-sm text-gray-300">Team Code: </span>
-              <span class="text-white font-bold">{@user_team.code}</span>
+      <div class="bg-gray rounded-lg p-8 border border-gray-800">
+        <h2 class="text-3xl font-black mb-6">My Team</h2>
+        
+        <div class="mb-6 pb-6 border-b border-gray-800">
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+            <div class="mb-4 md:mb-0">
+              <h3 class="text-3xl font-black mb-2">{@user_team.name}</h3>
+              <p class="text-lg text-white">{@user_team.description}</p>
             </div>
+            <%= if @user_team.looking_for_members do %>
+              <span class="bg-primary text-black text-xs font-bold px-3 py-1 rounded self-start">
+                Looking for Members
+              </span>
+            <% else %>
+              <span class="bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded self-start">
+                Team Complete
+              </span>
+            <% end %>
           </div>
+          
+          <div class="bg-gray-900 rounded px-4 py-2 inline-block">
+            <span class="text-sm text-gray-300">Team Code: </span>
+            <span class="text-white font-bold">{@user_team.code}</span>
+          </div>
+        </div>
 
-          <div class="mt-8">
-            <h4 class="text-xl font-bold mb-4 text-yellow-200">
-              Team Members ({Enum.count(@team_members)})
-            </h4>
-            <div class="space-y-3">
-              <%= for member <- @team_members do %>
-                <div class="bg-gray-900 rounded-lg p-4">
-                  <div class="flex items-start justify-between">
-                    <div>
-                      <p class="font-bold text-white">{member.name}</p>
-                      <p class="text-sm text-gray-400">{member.email}</p>
-                    </div>
-                    <%= if member.id == @user.id do %>
-                      <span class="bg-primary text-black text-xs font-bold px-2 py-1 rounded">
-                        You
-                      </span>
-                    <% end %>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <p class="text-sm text-gray-400 mb-1">Experience Level</p>
+            <p class="font-bold text-white capitalize text-lg">{@user_team.experience_level}</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-400 mb-1">Members</p>
+            <p class="font-bold text-white text-lg">{Enum.count(@team_members)}/5</p>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-xl font-bold mb-4">Team Members</h4>
+          <div class="space-y-3">
+            <%= for member <- @team_members do %>
+              <div class="bg-gray-900 rounded-lg p-4">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <p class="font-bold text-white text-lg">{member.name}</p>
+                    <p class="text-sm text-gray-400">{member.email}</p>
                   </div>
-                </div>
-              <% end %>
-            </div>
-
-            <div class="mt-6 pt-6 border-t border-gray-800">
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <p class="text-sm text-gray-400 mb-1">Experience Level</p>
-                  <p class="font-bold text-white capitalize">{@user_team.experience_level}</p>
-                </div>
-                <div>
-                  <p class="text-sm text-gray-400 mb-1">Status</p>
-                  <%= if @user_team.looking_for_members do %>
-                    <p class="font-bold text-white">Looking for members</p>
-                  <% else %>
-                    <p class="font-bold text-white">Team Complete</p>
+                  <%= if member.id == @user.id do %>
+                    <span class="bg-pink text-black text-xs font-bold px-3 py-1 rounded">
+                      You
+                    </span>
                   <% end %>
                 </div>
               </div>
-            </div>
+            <% end %>
           </div>
         </div>
       </div>
     <% else %>
-      <div class="mt-12 bg-gray rounded-lg p-8 border border-gray-800">
-        <h2 class="text-2xl font-black mb-6">My Team</h2>
-        <div class="rounded-lg p-8 text-center">
-          <p class="text-gray-400 mb-4">You are not yet in a team.</p>
+      <div class="bg-gray rounded-lg p-8 border border-gray-800 text-center">
+        <h2 class="text-3xl font-black mb-6">My Team</h2>
+        <div class="py-8">
+          <.icon name="hero-users" class="w-16 h-16 mx-auto mb-4 text-gray-600" />
+          <p class="text-lg text-gray-400 mb-6">You are not yet in a team.</p>
           <a
             href="/team-formation"
-            class="flex-1 bg-pink text-gray-300 font-bold py-3 px-5 rounded-lg hover:bg-dark-pink transition-colors cursor-pointer"
+            class="inline-block bg-primary text-white py-3 px-6 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg"
           >
-            Join a Team
+            Join or Create a Team
           </a>
         </div>
       </div>

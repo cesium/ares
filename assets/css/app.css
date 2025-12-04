@@ -52,10 +52,6 @@
   color: var(--color-secondary);
 }
 
-.bg-primary {
-  background-color: var(--color-primary);
-}
-
 .bg-secondary {
   background-color: var(--color-secondary);
 }
@@ -172,4 +168,21 @@ input[type="link"] {
   border-style: solid;
   border-radius: 10px;
   outline: none;
+}
+
+/* Standard Form Input Styles */
+.input-standard {
+  @apply w-full bg-gray-100 text-black rounded-lg px-4 py-3 border border-gray-800 focus:border-primary focus:outline-none text-lg;
+}
+
+.label-standard {
+  @apply block text-lg text-gray-200 mb-2;
+}
+
+.checkbox-standard {
+  @apply h-5 w-5 rounded;
+}
+
+.form-container {
+  @apply space-y-6;
 }
