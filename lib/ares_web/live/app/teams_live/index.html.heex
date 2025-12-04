@@ -16,11 +16,21 @@
             <div>
               <h3 class="text-2xl font-bold">{@user_team.name}</h3>
             </div>
-            <div class="text-right text-sm text-white">
-              <p class="text-lg">Members: {AresWeb.PageHTML.count_team_members(@user_team)}</p>
-              <p class="mt-1">
-                {if @user_team.looking_for_members, do: "Looking for members", else: "Closed"}
-              </p>
+            <div class="flex gap-4 place-items-center">
+              <button
+                type="button"
+                phx-click={if @user_team.looking_for_members, do: "close_team", else: "open_team"}
+                class="bg-gray-800 h-fit hover:bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded transition-colors"
+              >
+                {if @user_team.looking_for_members, do: "Close Team", else: "Open Team"}
+              </button>
+              <div class="text-right text-sm text-white">
+                <p class="text-lg">Members: {AresWeb.PageHTML.count_team_members(@user_team)}</p>
+                <p class="mt-1">
+                  {if @user_team.looking_for_members, do: "Looking for members", else: "Closed"}
+                  
+                </p>
+              </div>
             </div>
           </div>
         </div>

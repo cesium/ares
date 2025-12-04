@@ -169,15 +169,6 @@
               <h3 class="text-3xl font-black mb-2">{@user_team.name}</h3>
               <p class="text-lg text-white">{@user_team.description}</p>
             </div>
-            <%= if @user_team.looking_for_members do %>
-              <span class="bg-primary text-black text-xs font-bold px-3 py-1 rounded self-start">
-                Looking for Members
-              </span>
-            <% else %>
-              <span class="bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded self-start">
-                Team Complete
-              </span>
-            <% end %>
           </div>
           
           <div class="bg-gray-900 rounded px-4 py-2 inline-block">

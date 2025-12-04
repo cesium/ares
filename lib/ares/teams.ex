@@ -145,4 +145,12 @@ defmodule Ares.Teams do
   def count_teams do
     Repo.aggregate(Team, :count, :id)
   end
+
+  def close_team(%Team{} = team) do
+    update_team(team, %{looking_for_members: false })
+  end
+
+  def open_team(%Team{} = team) do
+    update_team(team, %{looking_for_members: true })
+  end
 end
