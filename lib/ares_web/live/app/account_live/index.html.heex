@@ -1,7 +1,7 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <main class="flex flex-col mt-8 min-h-screen bg-black text-white">
-  <div class="max-w-6xl mx-auto py-16 px-4 flex-grow w-full">
+  <div class="max-w-2xl mx-auto py-16 px-4 flex-grow w-full">
     <!-- Tabs Navigation -->
     <div class="flex gap-2 mb-8 border-b border-gray-600">
       <button
@@ -32,7 +32,7 @@
       </button>
     </div>
     
-    <!-- Register Tab -->
+<!-- Register Tab -->
     <%= if @tab == "register" do %>
       <div>
         <h1 class="text-4xl font-black mb-6 text-center">Create Your Account</h1>
@@ -112,7 +112,11 @@
 
           <div>
             <label class="label-standard">Upload CV</label>
-            <.input type="file" name="user[cv]" class="text-lg text-gray-200 p-2 rounded-lg bg-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80" />
+            <.input
+              type="file"
+              name="user[cv]"
+              class="text-lg text-gray-200 p-2 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80"
+            />
             <p class="text-sm text-gray-400 mt-2">
               Upload your CV so that the companies at the event know who you are
             </p>

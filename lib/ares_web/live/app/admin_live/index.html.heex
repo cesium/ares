@@ -2,7 +2,7 @@
 
 <main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
   <%= if @error do %>
-    <div class="max-w-2xl mx-auto py-16 px-4">
+    <div class="max-w-2xl mx-auto py-16">
       <div class="bg-red-900 bg-opacity-20 border border-red-500 rounded-lg p-8 text-center">
         <h1 class="text-2xl font-black text-red-400 mb-2">Access Denied</h1>
         <p class="text-gray-300 mb-6">{@error}</p>
@@ -15,7 +15,7 @@
       </div>
     </div>
   <% else %>
-    <div class="max-w-6xl mx-auto py-16 px-4">
+    <div class="max-w-5xl mx-auto py-16">
       <div class="mb-12">
         <h1 class="text-4xl font-black mb-2">Admin Dashboard</h1>
         <p class="text-xl text-primary">Manage all teams and participants</p>
@@ -50,6 +50,11 @@
                   <p class="text-lg font-bold text-primary">Looking for members</p>
                 <% else %>
                   <p class="text-lg font-bold">Team Complete</p>
+                <% end %>
+                <%= if team.paid do %>
+                  <p class="text-lg font-bold text-primary">Paid</p>
+                <% else %>
+                  <p class="text-lg font-bold">Not Paid</p>
                 <% end %>
               </div>
               <div>

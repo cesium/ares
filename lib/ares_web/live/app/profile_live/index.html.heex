@@ -1,7 +1,7 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12">
       <div class="w-32 h-32 rounded-full bg-gradient-to-bl from-pink to-darkest-pink mx-auto mb-6 flex items-center justify-center shadow-2xl">
         <span class="text-5xl font-black">
@@ -96,7 +96,7 @@
 
         <div class="pt-6 border-t border-gray-800">
           <h3 class="text-2xl font-black mb-4">Team Information</h3>
-          
+
           <div>
             <.input
               type="text"
@@ -115,7 +115,7 @@
 
         <div class="pt-6 border-t border-gray-800">
           <h3 class="text-2xl font-black mb-4">Dietary Preferences</h3>
-          
+
           <div class="space-y-4">
             <div class="flex items-center">
               <.input
@@ -158,11 +158,11 @@
         </div>
       </form>
     </div>
-    
+
     <%= if @user_team do %>
       <div class="bg-gray rounded-lg p-8 border border-gray-800">
         <h2 class="text-3xl font-black mb-6">My Team</h2>
-        
+
         <div class="mb-6 pb-6 border-b border-gray-800">
           <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
             <div class="mb-4 md:mb-0">
@@ -170,7 +170,7 @@
               <p class="text-lg text-white">{@user_team.description}</p>
             </div>
           </div>
-          
+
           <div class="bg-gray-900 rounded px-4 py-2 inline-block">
             <span class="text-sm text-gray-300">Team Code: </span>
             <span class="text-white font-bold">{@user_team.code}</span>

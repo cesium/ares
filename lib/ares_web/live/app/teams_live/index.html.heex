@@ -1,7 +1,7 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <div class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-5xl mx-auto">
     <div class="text-center mb-8">
       <h1 class="text-6xl font-extrabold tracking-tight mb-2">Teams</h1>
       <p class="text-lg text-gray-300 max-w-2xl mx-auto">All registered teams</p>
@@ -17,6 +17,12 @@
               <h3 class="text-2xl font-bold">{@user_team.name}</h3>
             </div>
             <div class="flex gap-4 place-items-center">
+              <div class="text-right text-sm text-white">
+                <p class="text-lg">Members: {AresWeb.PageHTML.count_team_members(@user_team)}</p>
+                <p class="mt-1">
+                  {if @user_team.looking_for_members, do: "Looking for members", else: "Closed"}
+                </p>
+              </div>
               <button
                 type="button"
                 phx-click={if @user_team.looking_for_members, do: "close_team", else: "open_team"}
@@ -24,13 +30,6 @@
               >
                 {if @user_team.looking_for_members, do: "Close Team", else: "Open Team"}
               </button>
-              <div class="text-right text-sm text-white">
-                <p class="text-lg">Members: {AresWeb.PageHTML.count_team_members(@user_team)}</p>
-                <p class="mt-1">
-                  {if @user_team.looking_for_members, do: "Looking for members", else: "Closed"}
-                  
-                </p>
-              </div>
             </div>
           </div>
         </div>

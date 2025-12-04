@@ -230,7 +230,8 @@ teams = [
     code: "TEAM001",
     skills_needed: "Security, Backend",
     experience_level: "intermediate",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Data Ninjas",
@@ -238,7 +239,8 @@ teams = [
     code: "TEAM002",
     skills_needed: "Python, ML, Data Science",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Code Masters",
@@ -246,7 +248,8 @@ teams = [
     code: "TEAM003",
     skills_needed: "Elixir, React, DevOps",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: true
   },
   %Team{
     name: "Innovation Lab",
@@ -254,7 +257,7 @@ teams = [
     code: "TEAM004",
     skills_needed: "Any skills welcome",
     experience_level: "beginner",
-    looking_for_members: true
+    paid: true
   },
   %Team{
     name: "Tech Titans",
@@ -262,7 +265,8 @@ teams = [
     code: "TEAM005",
     skills_needed: "Mobile, Games, Security, Cloud",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: true
   }
 ]
 

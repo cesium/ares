@@ -233,7 +233,6 @@ defmodule AresWeb.CoreComponents do
   def input(%{type: "textarea"} = assigns) do
     assigns = assign_new(assigns, :value, fn -> nil end)
 
-
     ~H"""
     <div class="fieldset mb-2">
       <label class={@label_class}>{@label}</label>

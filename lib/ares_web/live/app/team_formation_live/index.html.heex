@@ -1,7 +1,7 @@
 <.navbar fixed={true} user={@user} csrf_token={get_csrf_token()} />
 
 <main class="min-h-screen mt-8 bg-black text-white pt-28 pb-16 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-6xl mx-auto">
+  <div class="max-w-5xl mx-auto">
     <div class="text-center mb-12">
       <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-2">Team Formation</h1>
       <p class="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -138,8 +138,7 @@
               type="submit"
               class="bg-primary text-white  py-4 px-8 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg inline-flex items-center shadow-lg"
             >
-              <.icon name="hero-user-group" class="w-5 h-5 mr-2" />
-              Create Team
+              <.icon name="hero-user-group" class="w-5 h-5 mr-2" /> Create Team
             </button>
           </div>
         </.form>
@@ -200,7 +199,10 @@
                     <div class="flex items-center gap-2">
                       <.icon name="hero-users" class="w-5 h-5 text-primary" />
                       <span class="text-sm text-gray-400">
-                        {5 - AresWeb.PageHTML.count_team_members(team)} spot{if 5 - AresWeb.PageHTML.count_team_members(team) != 1, do: "s"} available
+                        {5 - AresWeb.PageHTML.count_team_members(team)} spot{if 5 -
+                                                                                  AresWeb.PageHTML.count_team_members(
+                                                                                    team
+                                                                                  ) != 1, do: "s"} available
                       </span>
                     </div>
                   </div>
@@ -211,8 +213,7 @@
                       phx-value-team_code={team.code}
                       class="bg-primary text-white py-3 px-8 rounded-lg hover:bg-primary/50 transition-colors cursor-pointer text-lg whitespace-nowrap inline-flex items-center shadow-lg"
                     >
-                      <.icon name="hero-arrow-right" class="w-5 h-5 mr-2" />
-                      Join Team
+                      <.icon name="hero-arrow-right" class="w-5 h-5 mr-2" /> Join Team
                     </button>
                   </div>
                 </div>
@@ -228,7 +229,7 @@
         <.icon name="hero-information-circle" class="w-8 h-8 text-pink" />
         <h3 class="text-2xl font-black">Important Information</h3>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
@@ -246,7 +247,9 @@
           </div>
           <div>
             <h4 class="font-bold text-white text-lg mb-1">Registration</h4>
-            <p class="text-gray-400">You can register your team even without all members confirmed</p>
+            <p class="text-gray-400">
+              You can register your team even without all members confirmed
+            </p>
           </div>
         </div>
 
@@ -256,7 +259,9 @@
           </div>
           <div>
             <h4 class="font-bold text-white text-lg mb-1">Finding Members</h4>
-            <p class="text-gray-400">Mark "Looking for members" if you want other participants to contact you</p>
+            <p class="text-gray-400">
+              Mark "Looking for members" if you want other participants to contact you
+            </p>
           </div>
         </div>
 

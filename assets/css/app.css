@@ -172,11 +172,11 @@ input[type="link"] {
 
 /* Standard Form Input Styles */
 .input-standard {
-  @apply w-full bg-gray-100 text-black rounded-lg px-4 py-3 border border-gray-800 focus:border-primary focus:outline-none text-lg;
+  @apply w-full bg-gray-100 text-black rounded-lg px-3 py-2 border border-gray-800 focus:border-primary focus:outline-none text-lg;
 }
 
 .label-standard {
-  @apply block text-lg text-gray-200 mb-2;
+  @apply block text-lg text-gray-200 mb-1;
 }
 
 .checkbox-standard {
