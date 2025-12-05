@@ -61,6 +61,15 @@
           />
 
           <.input
+            name="user[password]"
+            type="password"
+            label="Your password"
+            placeholder="password1234"
+            class="input-standard"
+            label_class="label-standard"
+          />
+
+          <.input
             name="user[phone]"
             type="tel"
             label="Phone number"
@@ -109,18 +118,6 @@
             class="input-standard h-24"
             label_class="label-standard"
           />
-
-          <div>
-            <label class="label-standard">Upload CV</label>
-            <.input
-              type="file"
-              name="user[cv]"
-              class="text-lg text-gray-200 p-2 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/80"
-            />
-            <p class="text-sm text-gray-400 mt-2">
-              Upload your CV so that the companies at the event know who you are
-            </p>
-          </div>
 
           <div class="flex items-center gap-3">
             <label class="inline-flex items-center gap-2">

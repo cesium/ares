@@ -159,6 +159,19 @@
       </form>
     </div>
 
+    <div class="gap-y-8 pb-8">
+      <div class="flex flex-row justify-between items-center mt-10 pb-2 h-12 border-b-2 border-white min-w-72">
+        <h1 class="font-semibold font-terminal uppercase px-2">CV Upload</h1>
+      </div>
+      <.live_component
+        module={AresWeb.Components.CVUpload}
+        id={@user.id || :new}
+        current_user={@user}
+        in_app={true}
+        patch={~p"/profile"}
+      />
+    </div>
+
     <%= if @user_team do %>
       <div class="bg-gray rounded-lg p-8 border border-gray-800">
         <h2 class="text-3xl font-black mb-6">My Team</h2>

@@ -17,6 +17,11 @@ defmodule AresWeb.App.AccountLive.Index do
       socket
       |> assign(:user, user)
       |> assign(:tab, "register")
+      |> allow_upload(:cv,
+        accept: ~w(.pdf),
+        max_entries: 1,
+        max_file_size: 5_000_000
+      )
 
     {:ok, socket}
   end
