@@ -1,4 +1,4 @@
-defmodule AresWeb.Button do
+defmodule AresWeb.Components.Button do
   @moduledoc """
   Button component.
   """

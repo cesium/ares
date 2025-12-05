@@ -30,7 +30,7 @@ users = [
     course: "Engenharia Informática",
     vegan: false,
     notes: "Administrator account",
-    cv_filename: nil,
+    cv: nil,
     is_admin: true,
     password_hash: admin_hash
   },
@@ -44,7 +44,7 @@ users = [
     team_code: "TEAM001",
     vegan: false,
     notes: "Interested in cybersecurity and backend development",
-    cv_filename: "joao_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -57,7 +57,7 @@ users = [
     team_code: "TEAM001",
     vegan: true,
     notes: "Passionate about frontend and UI/UX design",
-    cv_filename: "maria_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -70,7 +70,7 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "Expert in machine learning and data science",
-    cv_filename: "pedro_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -83,7 +83,7 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "DevOps and cloud infrastructure specialist",
-    cv_filename: "ana_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -96,7 +96,7 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "Full-stack developer with 2 years of experience",
-    cv_filename: "rui_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -109,7 +109,20 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Mobile app developer with focus on iOS",
-    cv_filename: "sofia_cv.pdf",
+    cv: nil,
+    password_hash: user_hash
+  },
+  %User{
+    name: "Jonas Johaness",
+    email: "jonas@cesium.pt",
+    phone: "925123456",
+    age: "21",
+    university: "Universidade do Minho",
+    course: "Engenharia Informática",
+    team_code: "TEAM004",
+    vegan: false,
+    notes: "Interested in cybersecurity and backend development",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -122,7 +135,7 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Game developer and graphics specialist",
-    cv_filename: "carlos_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -135,7 +148,7 @@ users = [
     team_code: "TEAM005",
     vegan: true,
     notes: "Web security expert and ethical hacker",
-    cv_filename: "ines_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -148,7 +161,7 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Cloud architect and infrastructure expert",
-    cv_filename: "tiago_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -158,10 +171,10 @@ users = [
     age: "20",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM003",
+    team_code: nil,
     vegan: false,
     notes: "Database design specialist with PostgreSQL expertise",
-    cv_filename: "mariana_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -174,7 +187,7 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "AI and machine learning enthusiast",
-    cv_filename: "lucas_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -187,7 +200,7 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Network engineer and systems administrator",
-    cv_filename: "rafael_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
@@ -200,7 +213,7 @@ users = [
     team_code: nil,
     vegan: false,
     notes: "Independent developer looking for a team",
-    cv_filename: "bernardo_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   }
 ]
@@ -217,7 +230,8 @@ teams = [
     code: "TEAM001",
     skills_needed: "Security, Backend",
     experience_level: "intermediate",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Data Ninjas",
@@ -225,7 +239,8 @@ teams = [
     code: "TEAM002",
     skills_needed: "Python, ML, Data Science",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Code Masters",
@@ -233,7 +248,8 @@ teams = [
     code: "TEAM003",
     skills_needed: "Elixir, React, DevOps",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: true
   },
   %Team{
     name: "Innovation Lab",
@@ -241,7 +257,7 @@ teams = [
     code: "TEAM004",
     skills_needed: "Any skills welcome",
     experience_level: "beginner",
-    looking_for_members: true
+    paid: true
   },
   %Team{
     name: "Tech Titans",
@@ -249,7 +265,8 @@ teams = [
     code: "TEAM005",
     skills_needed: "Mobile, Games, Security, Cloud",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: true
   }
 ]
 

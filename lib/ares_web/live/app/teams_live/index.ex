@@ -26,4 +26,32 @@ defmodule AresWeb.App.TeamsLive.Index do
 
     {:ok, socket}
   end
+
+  @impl true
+  def handle_event("close_team", _params, socket) do
+    case Teams.close_team(socket.assigns.user_team) do
+      {:ok, team} ->
+        {:noreply,
+         socket
+         |> assign(:user_team, team)
+         |> put_flash(:info, "Team closed successfully")}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, "Failed to close team")}
+    end
+  end
+
+  @impl true
+  def handle_event("open_team", _params, socket) do
+    case Teams.open_team(socket.assigns.user_team) do
+      {:ok, team} ->
+        {:noreply,
+         socket
+         |> assign(:user_team, team)
+         |> put_flash(:info, "Team opened successfully")}
+
+      {:error, _changeset} ->
+        {:noreply, put_flash(socket, :error, "Failed to open team")}
+    end
+  end
 end

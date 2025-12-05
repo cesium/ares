@@ -13,7 +13,7 @@ defmodule Ares.Repo.Migrations.CreateUsers do
       add :team_code, :string
       add :vegan, :boolean, default: false
       add :notes, :text
-      add :cv_filename, :string
+      add :cv, :string, null: true
 
       timestamps(type: :utc_datetime)
     end

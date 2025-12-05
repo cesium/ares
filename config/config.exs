@@ -11,6 +11,13 @@ config :ares,
   ecto_repos: [Ares.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv/waffle"
+
+config :waffle,
+  asset_host: {:system, "ASSET_HOST"}
+
 # Configures the endpoint
 config :ares, AresWeb.Endpoint,
   url: [host: "localhost"],

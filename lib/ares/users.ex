@@ -90,4 +90,37 @@ defmodule Ares.Users do
   def list_users_by_team_code(team_code) do
     Repo.all(from u in User, where: u.team_code == ^team_code, order_by: u.inserted_at)
   end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing the user profile (name, handle, password and email).
+  Doesn't validate the uniqueness of the email.
+
+  ## Examples
+
+      iex> change_user_profile(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user_profile(user, attrs \\ %{}) do
+    user
+    |> User.changeset(attrs, validate_email: false)
+  end
+
+  @doc """
+  Updates a user's CV.
+
+  ## Examples
+
+      iex> update_user_cv(user, %{cv: cv})
+      {:ok, %User{}}
+
+      iex> update_user_cv(user, %{cv: bad_cv})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_cv(%User{} = user, attrs) do
+    user
+    |> User.cv_changeset(attrs)
+    |> Repo.update()
+  end
 end

@@ -3,6 +3,11 @@ defmodule Ares.Uploaders.CV do
   Attendee Curriculum Vitae uploader.
   """
 
+  use Ares.Uploader
+
+  alias Ares.Users.User
+
+  @versions [:original]
   @extension_whitelist ~w(.pdf)
 
   def validate({file, _}) do
@@ -10,7 +15,7 @@ defmodule Ares.Uploaders.CV do
     Enum.member?(extension_whitelist(), file_extension)
   end
 
-  def storage_dir(_, {_file, user}) do
+  def storage_dir(_, {_file, %User{} = user}) do
     "uploads/user/cv/#{user.id}"
   end
 

@@ -143,7 +143,7 @@ defmodule AresWeb.CoreComponents do
   ## Examples
 
       <.input field={@form[:email]} type="email" />
-      <.input name="my-input" errors={["oh no!"]} />
+      <.input name="my-input" errors={["oh no!"]} />def input
   """
   attr :id, :any, default: nil
   attr :name, :any
@@ -165,6 +165,7 @@ defmodule AresWeb.CoreComponents do
   attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
   attr :class, :string, default: nil, doc: "the input class to use over defaults"
   attr :error_class, :string, default: nil, doc: "the input error class to use over defaults"
+  attr :label_class, :string, default: nil, doc: "the label class to use over defaults"
 
   attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
@@ -183,67 +184,67 @@ defmodule AresWeb.CoreComponents do
 
   def input(%{type: "checkbox"} = assigns) do
     assigns =
-      assign_new(assigns, :checked, fn ->
+      assigns
+      |> assign_new(:value, fn -> nil end)
+      |> assign_new(:checked, fn ->
         Form.normalize_value("checkbox", assigns[:value])
       end)
 
     ~H"""
-    <div class="fieldset mb-2">
-      <label>
-        <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
-        <span class="label">
-          <input
-            type="checkbox"
-            id={@id}
-            name={@name}
-            value="true"
-            checked={@checked}
-            class={@class || "checkbox checkbox-sm"}
-            {@rest}
-          />{@label}
-        </span>
-      </label>
+    <div class="fieldset">
+      <div class="flex gap-2">
+        <label>{@label}</label>
+        <input
+          type="checkbox"
+          id={@id}
+          name={@name}
+          value="true"
+          checked={@checked}
+          class={@class || "checkbox checkbox-sm"}
+          {@rest}
+        />
+      </div>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
 
   def input(%{type: "select"} = assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <select
-          id={@id}
-          name={@name}
-          class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
-          multiple={@multiple}
-          {@rest}
-        >
-          <option :if={@prompt} value="">{@prompt}</option>
-          {Phoenix.HTML.Form.options_for_select(@options, @value)}
-        </select>
-      </label>
+      <label class={@label_class}>{@label}</label>
+      <select
+        id={@id}
+        name={@name}
+        class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
+        multiple={@multiple}
+        {@rest}
+      >
+        <option :if={@prompt} value="">{@prompt}</option>
+        {Phoenix.HTML.Form.options_for_select(@options, @value)}
+      </select>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
   end
 
   def input(%{type: "textarea"} = assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <textarea
-          id={@id}
-          name={@name}
-          class={[
-            @class || "w-full textarea",
-            @errors != [] && (@error_class || "textarea-error")
-          ]}
-          {@rest}
-        >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
-      </label>
+      <label class={@label_class}>{@label}</label>
+      <textarea
+        id={@id}
+        name={@name}
+        class={[
+          @class || "w-full textarea",
+          @errors != [] && (@error_class || "textarea-error")
+        ]}
+        {@rest}
+      >{Phoenix.HTML.Form.normalize_value("textarea", @value)}</textarea>
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
@@ -251,22 +252,22 @@ defmodule AresWeb.CoreComponents do
 
   # All other inputs text, datetime-local, url, password, etc. are handled here...
   def input(assigns) do
+    assigns = assign_new(assigns, :value, fn -> nil end)
+
     ~H"""
     <div class="fieldset mb-2">
-      <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
-        <input
-          type={@type}
-          name={@name}
-          id={@id}
-          value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-          class={[
-            @class || "w-full input",
-            @errors != [] && (@error_class || "input-error")
-          ]}
-          {@rest}
-        />
-      </label>
+      <label :if={@label} class={@label_class}>{@label}</label>
+      <input
+        type={@type}
+        name={@name}
+        id={@id}
+        value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+        class={[
+          @class || "w-full input",
+          @errors != [] && (@error_class || "input-error")
+        ]}
+        {@rest}
+      />
       <.error :for={msg <- @errors}>{msg}</.error>
     </div>
     """
@@ -471,5 +472,42 @@ defmodule AresWeb.CoreComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+  end
+
+  @doc """
+  Renders a simple form.
+
+  ## Examples
+
+      <.simple_form for={@form} phx-change="validate" phx-submit="save">
+        <.input field={@form[:email]} label="Email"/>
+        <.input field={@form[:username]} label="Username" />
+        <:actions>
+          <.button>Save</.button>
+        </:actions>
+      </.simple_form>
+  """
+  attr :for, :any, required: true, doc: "the datastructure for the form"
+  attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
+  attr :class, :string, default: "", doc: "extra classes"
+
+  attr :rest, :global,
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    doc: "the arbitrary HTML attributes to apply to the form tag"
+
+  slot :inner_block, required: true
+  slot :actions, doc: "the slot for form actions, such as a submit button"
+
+  def simple_form(assigns) do
+    ~H"""
+    <.form :let={f} for={@for} as={@as} {@rest}>
+      <div class={"mt-10 space-y-8 #{@class}"}>
+        {render_slot(@inner_block, f)}
+        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+          {render_slot(action, f)}
+        </div>
+      </div>
+    </.form>
+    """
   end
 end

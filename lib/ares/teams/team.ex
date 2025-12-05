@@ -9,6 +9,7 @@ defmodule Ares.Teams.Team do
     field :name, :string
     field :description, :string
     field :code, :string
+    field :paid, :boolean
     field :skills_needed, :string
     field :experience_level, :string
     field :looking_for_members, :boolean, default: false
@@ -25,6 +26,7 @@ defmodule Ares.Teams.Team do
       :name,
       :description,
       :code,
+      :paid,
       :skills_needed,
       :experience_level,
       :looking_for_members
