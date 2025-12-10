@@ -51,7 +51,7 @@ defmodule AresWeb.App.TeamsLive.Index do
          |> put_flash(:info, "Team opened successfully")}
 
       {:error, _changeset} ->
-        {:noreply, put_flash(socket, :error, "Failed to open team")}
+        {:noreply, socket |> put_flash(:error, "The team is full, you cannot open it")}
     end
   end
 end

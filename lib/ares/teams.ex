@@ -51,7 +51,11 @@ defmodule Ares.Teams do
       nil
 
   """
-  def get_team_by_code(code), do: Repo.get_by(Team, code: code)
+  def get_team_by_code(code) do
+    Team
+    |> Repo.get_by(code: code)
+    |> Repo.preload(:members)
+  end
 
   @doc """
   Creates a team.
@@ -151,6 +155,14 @@ defmodule Ares.Teams do
   end
 
   def open_team(%Team{} = team) do
-    update_team(team, %{looking_for_members: true})
+    if team_is_full(team) do
+      {:error, "The team is full, you cannot open it"}
+    else
+      update_team(team, %{looking_for_members: true})
+    end
+  end
+
+  def team_is_full(%Team{} = team) do
+    Enum.count(team.members) == 5
   end
 end

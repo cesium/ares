@@ -28,7 +28,7 @@ defmodule AresWeb.PageController do
 
     with {:ok, user} <- get_authenticated_user(conn, user_id),
          :ok <- validate_not_admin(user),
-         {:ok, team} <- create_team_with_code(params["team"]),
+         {:ok, team} <- Teams.create_team(params["team"]),
          {:ok, _updated_user} <- Users.update_user(user, %{"team_code" => team.code}) do
       conn
       |> put_flash(:info, "Successfully created the team!")
@@ -76,17 +76,6 @@ defmodule AresWeb.PageController do
         conn
         |> put_flash(:error, "Failed to join team. Please try again.")
         |> redirect(to: "/team-formation")
-    end
-  end
-
-  defp create_team_with_code(team_params) do
-    team_count = Teams.count_teams()
-    team_code = "TEAM#{String.pad_leading(Integer.to_string(team_count + 1), 3, "0")}"
-    completed_team = Map.put(team_params, "code", team_code)
-
-    case Teams.create_team(completed_team) do
-      {:ok, team} -> {:ok, team}
-      {:error, changeset} -> {:error, changeset}
     end
   end
 end

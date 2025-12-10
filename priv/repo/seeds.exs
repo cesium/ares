@@ -23,7 +23,7 @@ user_hash = "$2b$12$3wC3kLpov3qN/oGsUjO1uu/Lw6dxzDmUGu0w3X5JRshSeVm85AVrS"
 users = [
   %User{
     name: "Admin",
-    email: "admin@cesium.pt",
+    email: "admin@bugsbyte.org",
     phone: "925000000",
     age: "25",
     university: "Universidade do Minho",
@@ -36,7 +36,7 @@ users = [
   },
   %User{
     name: "João Silva",
-    email: "joao@cesium.pt",
+    email: "joao@bugsbyte.org",
     phone: "925123456",
     age: "21",
     university: "Universidade do Minho",
@@ -49,7 +49,7 @@ users = [
   },
   %User{
     name: "Maria Costa",
-    email: "maria@cesium.pt",
+    email: "maria@bugsbyte.org",
     phone: "925234567",
     age: "20",
     university: "Universidade do Minho",
@@ -62,7 +62,7 @@ users = [
   },
   %User{
     name: "Pedro Oliveira",
-    email: "pedro@cesium.pt",
+    email: "pedro@bugsbyte.org",
     phone: "925345678",
     age: "22",
     university: "Universidade do Minho",
@@ -75,7 +75,7 @@ users = [
   },
   %User{
     name: "Ana Santos",
-    email: "ana@cesium.pt",
+    email: "ana@bugsbyte.org",
     phone: "925456789",
     age: "21",
     university: "Universidade do Minho",
@@ -88,7 +88,7 @@ users = [
   },
   %User{
     name: "Rui Ferreira",
-    email: "rui@cesium.pt",
+    email: "rui@bugsbyte.org",
     phone: "925567890",
     age: "20",
     university: "Universidade do Minho",
@@ -101,12 +101,12 @@ users = [
   },
   %User{
     name: "Sofia Martins",
-    email: "sofia@cesium.pt",
+    email: "sofia@bugsbyte.org",
     phone: "925678901",
     age: "19",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM005",
+    team_code: nil,
     vegan: false,
     notes: "Mobile app developer with focus on iOS",
     cv: nil,
@@ -114,12 +114,12 @@ users = [
   },
   %User{
     name: "Jonas Johaness",
-    email: "jonas@cesium.pt",
+    email: "jonas@bugsbyte.org",
     phone: "925123456",
     age: "21",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM004",
+    team_code: nil,
     vegan: false,
     notes: "Interested in cybersecurity and backend development",
     cv: nil,
@@ -127,7 +127,7 @@ users = [
   },
   %User{
     name: "Carlos Mendes",
-    email: "carlos@cesium.pt",
+    email: "carlos@bugsbyte.org",
     phone: "925789012",
     age: "23",
     university: "Universidade do Minho",
@@ -140,7 +140,7 @@ users = [
   },
   %User{
     name: "Inês Rocha",
-    email: "ines@cesium.pt",
+    email: "ines@bugsbyte.org",
     phone: "925890123",
     age: "21",
     university: "Universidade do Minho",
@@ -153,7 +153,7 @@ users = [
   },
   %User{
     name: "Tiago Gomes",
-    email: "tiago@cesium.pt",
+    email: "tiago@bugsbyte.org",
     phone: "925901234",
     age: "22",
     university: "Universidade do Minho",
@@ -166,7 +166,7 @@ users = [
   },
   %User{
     name: "Mariana Silva",
-    email: "mariana@cesium.pt",
+    email: "mariana@bugsbyte.org",
     phone: "925012345",
     age: "20",
     university: "Universidade do Minho",
@@ -179,7 +179,7 @@ users = [
   },
   %User{
     name: "Lucas Barbosa",
-    email: "lucas@cesium.pt",
+    email: "lucas@bugsbyte.org",
     phone: "925123467",
     age: "21",
     university: "Universidade do Minho",
@@ -192,7 +192,7 @@ users = [
   },
   %User{
     name: "Rafael Costa",
-    email: "rafael@cesium.pt",
+    email: "rafael@bugsbyte.org",
     phone: "925234578",
     age: "20",
     university: "Universidade do Minho",
@@ -205,7 +205,7 @@ users = [
   },
   %User{
     name: "Bernardo Dias",
-    email: "bernardo@cesium.pt",
+    email: "bernardo@bugsbyte.org",
     phone: "925345689",
     age: "22",
     university: "Universidade do Minho",
@@ -265,7 +265,7 @@ teams = [
     code: "TEAM005",
     skills_needed: "Mobile, Games, Security, Cloud",
     experience_level: "advanced",
-    looking_for_members: false,
+    looking_for_members: true,
     paid: true
   }
 ]

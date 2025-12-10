@@ -31,8 +31,9 @@ defmodule Ares.Teams.Team do
       :experience_level,
       :looking_for_members
     ])
-    |> validate_required([:name])
+    |> validate_required([:name, :code])
     |> validate_length(:name, min: 2, max: 100)
     |> validate_length(:description, max: 500)
+    |> validate_length(:code, max: 512)
   end
 end

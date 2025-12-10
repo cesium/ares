@@ -38,30 +38,109 @@ defmodule AresWeb.App.TeamFormationLive.Index do
   end
 
   @impl true
-  def handle_event("join_team", %{"team_code" => team_code}, socket) do
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :index, params) do
+    tab = Map.get(params, "tab", "create")
+
+    socket
+    |> assign(:tab, tab)
+    |> assign(:page_title, "Team Formation")
+  end
+
+  defp apply_action(socket, :join, params) do
+    tab = Map.get(params, "tab", "join")
+
+    socket
+    |> assign(:tab, tab)
+    |> assign(:page_title, "Join Team")
+  end
+
+  @impl true
+  def handle_event("open_join_modal", %{"team_code" => team_code}, socket) do
+    {:noreply,
+     socket
+     |> assign(:selected_team_code, team_code)
+     |> push_patch(to: ~p"/team-formation/join?#{[tab: socket.assigns.tab]}")}
+  end
+
+  @impl true
+  def handle_event("join_team", %{"team_code" => entered_code}, socket) do
     user = socket.assigns.user
+    expected_code = socket.assigns.selected_team_code
 
-    if user do
-      case Users.update_user(user, %{"team_code" => team_code}) do
-        {:ok, _updated_user} ->
-          socket =
-            socket
-            |> put_flash(:info, "Successfully joined the team!")
-            |> redirect(to: "/teams")
+    cond do
+      !user ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "You must be logged in to join a team.")
+         |> push_navigate(to: "/register")}
 
-          {:noreply, socket}
+      is_nil(expected_code) or entered_code != expected_code ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Team code does not match. Please enter the correct code.")
+         |> assign(:selected_team_code, expected_code)}
 
-        {:error, _changeset} ->
-          socket = put_flash(socket, :error, "Failed to join team. Please try again.")
-          {:noreply, socket}
-      end
-    else
-      socket =
-        socket
-        |> put_flash(:error, "You must be logged in to join a team.")
-        |> redirect(to: "/register")
+      true ->
+        process_team_join(socket, user, entered_code)
+    end
+  end
 
-      {:noreply, socket}
+  defp process_team_join(socket, user, team_code) do
+    case Teams.get_team_by_code(team_code) do
+      nil ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Unable to join team. Please check the team code and try again.")
+         |> push_patch(to: ~p"/team-formation?#{[tab: socket.assigns.tab]}")}
+
+      team ->
+        validate_and_join_team(socket, user, team, team_code)
+    end
+  end
+
+  defp validate_and_join_team(socket, user, team, team_code) do
+    cond do
+      not team.looking_for_members ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "This team is not currently accepting new members.")
+         |> push_patch(to: ~p"/team-formation?#{[tab: socket.assigns.tab]}")}
+
+      length(team.members || []) >= 5 ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "The team is full, you cannot open it")
+         |> push_patch(to: ~p"/team-formation?#{[tab: socket.assigns.tab]}")}
+
+      true ->
+        join_team(socket, user, team, team_code)
+    end
+  end
+
+  defp join_team(socket, user, team, team_code) do
+    case Users.update_user(user, %{"team_code" => team_code}) do
+      {:ok, _updated_user} ->
+        member_count = length(team.members || [])
+        new_member_count = member_count + 1
+
+        if new_member_count >= 5 do
+          Teams.close_team(team)
+        end
+
+        {:noreply,
+         socket
+         |> put_flash(:info, "Successfully joined the team!")
+         |> push_navigate(to: "/teams")}
+
+      {:error, _changeset} ->
+        {:noreply,
+         socket
+         |> put_flash(:error, "Unable to join team. Please try again.")
+         |> push_patch(to: ~p"/team-formation?#{[tab: socket.assigns.tab]}")}
     end
   end
 end
