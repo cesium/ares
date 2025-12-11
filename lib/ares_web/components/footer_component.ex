@@ -12,7 +12,7 @@ defmodule AresWeb.FooterComponent do
     <footer class="relative flex h-48 items-center justify-center">
       <div class="absolute inset-0 overflow-hidden">
         <img
-          class="h-full w-full object-cover object-[40%_83%] opacity-100"
+          class="h-full w-full object-cover object-[40%_83%] opacity-100 squiggle-fast"
           src="/images/footer-background.png"
           alt="Footer background"
         />
