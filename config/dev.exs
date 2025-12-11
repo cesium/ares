@@ -63,6 +63,11 @@ config :ares, AresWeb.Endpoint,
     ]
   ]
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv/waffle",
+  asset_host: "http://localhost:4000"
+
 # Enable dev routes for dashboard and mailbox
 config :ares, dev_routes: true
 

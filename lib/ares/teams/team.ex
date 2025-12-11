@@ -9,6 +9,7 @@ defmodule Ares.Teams.Team do
     field :name, :string
     field :description, :string
     field :code, :string
+    field :paid, :boolean
     field :skills_needed, :string
     field :experience_level, :string
     field :looking_for_members, :boolean, default: false
@@ -25,12 +26,14 @@ defmodule Ares.Teams.Team do
       :name,
       :description,
       :code,
+      :paid,
       :skills_needed,
       :experience_level,
       :looking_for_members
     ])
-    |> validate_required([:name])
+    |> validate_required([:name, :code])
     |> validate_length(:name, min: 2, max: 100)
     |> validate_length(:description, max: 500)
+    |> validate_length(:code, max: 512)
   end
 end

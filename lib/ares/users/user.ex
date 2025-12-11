@@ -15,7 +15,7 @@ defmodule Ares.Users.User do
     field :team_code, :string
     field :vegan, :boolean, default: false
     field :notes, :string
-    field :cv_filename, :string
+    field :cv, Uploaders.CV.Type
     field :is_admin, :boolean, default: false
     field :password, :string, virtual: true
     field :password_hash, :string
@@ -24,7 +24,7 @@ defmodule Ares.Users.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [
       :name,
@@ -36,14 +36,12 @@ defmodule Ares.Users.User do
       :team_code,
       :vegan,
       :notes,
-      :cv_filename,
+      :cv,
       :is_admin,
       :password
     ])
     |> validate_required([:name, :email])
-    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/,
-      message: "deve ter um formato de email válido"
-    )
+    |> validate_email(opts)
     |> validate_length(:name, min: 2, max: 100)
     |> unique_constraint(:email)
     |> hash_password_if_present()
@@ -64,7 +62,7 @@ defmodule Ares.Users.User do
       :team_code,
       :vegan,
       :notes,
-      :cv_filename,
+      :cv,
       :password
     ])
     |> validate_required([:name, :email, :password])
@@ -97,6 +95,24 @@ defmodule Ares.Users.User do
     end
   end
 
+  defp validate_email(changeset, opts) do
+    changeset
+    |> validate_required([:email])
+    |> validate_format(:email, ~r/^[^\s]+@[^\s]+$/, message: "must have the @ sign and no spaces")
+    |> validate_length(:email, max: 160)
+    |> maybe_validate_unique_email(opts)
+  end
+
+  defp maybe_validate_unique_email(changeset, opts) do
+    if Keyword.get(opts, :validate_email, true) do
+      changeset
+      |> unsafe_validate_unique(:email, Ares.Repo)
+      |> unique_constraint(:email)
+    else
+      changeset
+    end
+  end
+
   @doc """
   Verifies the password matches the stored hash.
   """
@@ -104,5 +120,10 @@ defmodule Ares.Users.User do
     Bcrypt.verify_pass(password, password_hash)
   rescue
     _ -> false
+  end
+
+  def cv_changeset(user, attrs) do
+    user
+    |> cast_attachments(attrs, [:cv])
   end
 end

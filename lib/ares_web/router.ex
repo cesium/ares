@@ -22,6 +22,7 @@ defmodule AresWeb.Router do
     live "/faqs", FaqsLive.Index, :index
     live "/register", AccountLive.Index, :new
     live "/team-formation", TeamFormationLive.Index, :index
+    live "/team-formation/join", TeamFormationLive.Index, :join
     live "/teams", TeamsLive.Index, :index
     live "/profile", ProfileLive.Index, :index
     live "/admin", AdminLive.Index, :index

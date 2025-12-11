@@ -23,20 +23,20 @@ user_hash = "$2b$12$3wC3kLpov3qN/oGsUjO1uu/Lw6dxzDmUGu0w3X5JRshSeVm85AVrS"
 users = [
   %User{
     name: "Admin",
-    email: "admin@cesium.pt",
+    email: "admin@bugsbyte.org",
     phone: "925000000",
     age: "25",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
     vegan: false,
     notes: "Administrator account",
-    cv_filename: nil,
+    cv: nil,
     is_admin: true,
     password_hash: admin_hash
   },
   %User{
     name: "João Silva",
-    email: "joao@cesium.pt",
+    email: "joao@bugsbyte.org",
     phone: "925123456",
     age: "21",
     university: "Universidade do Minho",
@@ -44,12 +44,12 @@ users = [
     team_code: "TEAM001",
     vegan: false,
     notes: "Interested in cybersecurity and backend development",
-    cv_filename: "joao_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Maria Costa",
-    email: "maria@cesium.pt",
+    email: "maria@bugsbyte.org",
     phone: "925234567",
     age: "20",
     university: "Universidade do Minho",
@@ -57,12 +57,12 @@ users = [
     team_code: "TEAM001",
     vegan: true,
     notes: "Passionate about frontend and UI/UX design",
-    cv_filename: "maria_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Pedro Oliveira",
-    email: "pedro@cesium.pt",
+    email: "pedro@bugsbyte.org",
     phone: "925345678",
     age: "22",
     university: "Universidade do Minho",
@@ -70,12 +70,12 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "Expert in machine learning and data science",
-    cv_filename: "pedro_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Ana Santos",
-    email: "ana@cesium.pt",
+    email: "ana@bugsbyte.org",
     phone: "925456789",
     age: "21",
     university: "Universidade do Minho",
@@ -83,12 +83,12 @@ users = [
     team_code: "TEAM002",
     vegan: false,
     notes: "DevOps and cloud infrastructure specialist",
-    cv_filename: "ana_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Rui Ferreira",
-    email: "rui@cesium.pt",
+    email: "rui@bugsbyte.org",
     phone: "925567890",
     age: "20",
     university: "Universidade do Minho",
@@ -96,25 +96,38 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "Full-stack developer with 2 years of experience",
-    cv_filename: "rui_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Sofia Martins",
-    email: "sofia@cesium.pt",
+    email: "sofia@bugsbyte.org",
     phone: "925678901",
     age: "19",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM005",
+    team_code: nil,
     vegan: false,
     notes: "Mobile app developer with focus on iOS",
-    cv_filename: "sofia_cv.pdf",
+    cv: nil,
+    password_hash: user_hash
+  },
+  %User{
+    name: "Jonas Johaness",
+    email: "jonas@bugsbyte.org",
+    phone: "925123456",
+    age: "21",
+    university: "Universidade do Minho",
+    course: "Engenharia Informática",
+    team_code: nil,
+    vegan: false,
+    notes: "Interested in cybersecurity and backend development",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Carlos Mendes",
-    email: "carlos@cesium.pt",
+    email: "carlos@bugsbyte.org",
     phone: "925789012",
     age: "23",
     university: "Universidade do Minho",
@@ -122,12 +135,12 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Game developer and graphics specialist",
-    cv_filename: "carlos_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Inês Rocha",
-    email: "ines@cesium.pt",
+    email: "ines@bugsbyte.org",
     phone: "925890123",
     age: "21",
     university: "Universidade do Minho",
@@ -135,12 +148,12 @@ users = [
     team_code: "TEAM005",
     vegan: true,
     notes: "Web security expert and ethical hacker",
-    cv_filename: "ines_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Tiago Gomes",
-    email: "tiago@cesium.pt",
+    email: "tiago@bugsbyte.org",
     phone: "925901234",
     age: "22",
     university: "Universidade do Minho",
@@ -148,25 +161,25 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Cloud architect and infrastructure expert",
-    cv_filename: "tiago_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Mariana Silva",
-    email: "mariana@cesium.pt",
+    email: "mariana@bugsbyte.org",
     phone: "925012345",
     age: "20",
     university: "Universidade do Minho",
     course: "Engenharia Informática",
-    team_code: "TEAM003",
+    team_code: nil,
     vegan: false,
     notes: "Database design specialist with PostgreSQL expertise",
-    cv_filename: "mariana_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Lucas Barbosa",
-    email: "lucas@cesium.pt",
+    email: "lucas@bugsbyte.org",
     phone: "925123467",
     age: "21",
     university: "Universidade do Minho",
@@ -174,12 +187,12 @@ users = [
     team_code: "TEAM003",
     vegan: false,
     notes: "AI and machine learning enthusiast",
-    cv_filename: "lucas_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Rafael Costa",
-    email: "rafael@cesium.pt",
+    email: "rafael@bugsbyte.org",
     phone: "925234578",
     age: "20",
     university: "Universidade do Minho",
@@ -187,12 +200,12 @@ users = [
     team_code: "TEAM005",
     vegan: false,
     notes: "Network engineer and systems administrator",
-    cv_filename: "rafael_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   },
   %User{
     name: "Bernardo Dias",
-    email: "bernardo@cesium.pt",
+    email: "bernardo@bugsbyte.org",
     phone: "925345689",
     age: "22",
     university: "Universidade do Minho",
@@ -200,7 +213,7 @@ users = [
     team_code: nil,
     vegan: false,
     notes: "Independent developer looking for a team",
-    cv_filename: "bernardo_cv.pdf",
+    cv: nil,
     password_hash: user_hash
   }
 ]
@@ -217,7 +230,8 @@ teams = [
     code: "TEAM001",
     skills_needed: "Security, Backend",
     experience_level: "intermediate",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Data Ninjas",
@@ -225,7 +239,8 @@ teams = [
     code: "TEAM002",
     skills_needed: "Python, ML, Data Science",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: false
   },
   %Team{
     name: "Code Masters",
@@ -233,7 +248,8 @@ teams = [
     code: "TEAM003",
     skills_needed: "Elixir, React, DevOps",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: false,
+    paid: true
   },
   %Team{
     name: "Innovation Lab",
@@ -241,7 +257,7 @@ teams = [
     code: "TEAM004",
     skills_needed: "Any skills welcome",
     experience_level: "beginner",
-    looking_for_members: true
+    paid: true
   },
   %Team{
     name: "Tech Titans",
@@ -249,7 +265,8 @@ teams = [
     code: "TEAM005",
     skills_needed: "Mobile, Games, Security, Cloud",
     experience_level: "advanced",
-    looking_for_members: false
+    looking_for_members: true,
+    paid: true
   }
 ]
 
