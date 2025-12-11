@@ -11,12 +11,6 @@
    The heroicons installation itself is managed by your mix.exs */
 @plugin "../vendor/heroicons";
 
-/* daisyUI Tailwind Plugin. You can update this file by fetching the latest version with:
-   curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js
-   Make sure to look at the daisyUI changelog: https://daisyui.com/docs/changelog/ */
-@plugin "../vendor/daisyui" {
-  themes: false;
-}
 
 /* Add variants based on LiveView classes */
 @custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);
@@ -45,6 +39,22 @@
   --color-background-offset: #1f2937;
   --color-border: rgba(249, 250, 251, 0.1);
 }
+
+.squiggle-slow {
+  filter: url(#melt-flow-slow);
+  -webkit-filter: url(#melt-flow-slow);
+}
+
+.squiggle-medium {
+  filter: url(#melt-flow-medium);
+  -webkit-filter: url(#melt-flow-medium);
+}
+
+.squiggle-fast {
+  filter: url(#melt-flow-fast);
+  -webkit-filter: url(#melt-flow-fast);
+}
+
 
 /* Custom CSS classes for the colors */
 

@@ -1,6 +1,6 @@
 <div class="h-[100vh] overflow-hidden bg-black z-10">
   <div
-    class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+    class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40 squiggle-slow"
     style="background-image: url('/images/background.jpg') ;"
   >
   </div>
@@ -14,13 +14,95 @@
         </div>
 
         <div class="">
-          <h1 class="text-white font-resegrg tracking-wider leading-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl tracking-tighter">
+          <svg width="0" height="0" class="absolute">
+            <defs>
+              <filter id="melt-flow-slow">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="4220s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+              <filter id="melt-flow-medium">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="1220s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+              <filter id="melt-flow-fast">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="720s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+            </defs>
+          </svg>
+          <h1 class="text-white font-resegrg tracking-wider leading-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl tracking-tighter squiggle-medium">
             {gettext("BUGSBYTE")}
           </h1>
         </div>
 
         <div class="mb-16">
-          <span class="text-white font-VT323 font-bold tracking-wide text-lg md:text-4xl font-light tracking-[0.4em]">
+          <span class="text-white font-VT323 font-bold tracking-wide text-lg md:text-4xl font-light tracking-[0.4em] ">
             {gettext("28 - 30 March")}
           </span>
         </div>
@@ -64,7 +146,7 @@
 
 <div class="min-h-screen bg-black py-8 sm:py-12 md:py-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 md:px-8">
-    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-center">
+    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 tracking-wider text-center tracking-wider">
       What is it?
     </h2>
 
@@ -74,7 +156,7 @@
         IS A NON-STOP COMPETITIVE PROGRAMMING EVENT THAT AIMS TO
         FOSTER COLLABORATION AND FUN AMONG ITS PARTICIPANTS WHILE PROVIDING THEM WITH
         CLOSER CONTACT WITH ATTENDING COMPANIES. THE EVENT LASTS APPROXIMATELY <span class="text-pink">48 HOURS</span>,
-        DURING WHICH EACH TEAM DEVELOPS A PROJECT BASED ON <span class="text-primary">THEMES PROPOSED BY THE
+        DURING WHICH EACH TEAM DEVELOPS A PROJECT BASED ON <span class="text-primary ">THEMES PROPOSED BY THE
                     SPONSORING COMPANIES</span>. AT THE END OF THE EVENT, THE BEST PROJECTS ARE REWARDED WITH <span class="text-pink">MONETARY PRIZES</span>.
       </p>
     </div>
@@ -89,7 +171,7 @@
           PROJECT SUCCESS. THROUGH TEAMWORK, TIME NEXT STEP IN THEIR PROFESSIONAL AND ACADEMIC
           MANAGEMENT, COMMUNICATION, CREATIVITY, AND JOURNEYS—ALL WHILE ENJOYING THE EXPERIENCE.
           CRITICAL THINKING, PARTICIPANTS WILL DEVELOP A
-          WELL-ROUNDED SKILL SET CRUCIAL FOR ACHIEVING A
+          WELL-ROUNDED SKILL SET CRUCIAL FOR ACHIEVING Awobble
           SUCCESSFUL PROJECT.
         </p>
       </div>
@@ -125,7 +207,7 @@
 
 <div class="min-h-screen bg-black py-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-8">
-    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left">
+    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left tracking-wider">
       Prizes
     </h2>
 
@@ -185,7 +267,7 @@
 
 <div class="min-h-screen bg-black py-8 sm:py-12 md:py-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 w-full">
-    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left">
+    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left tracking-wide">
       Sponsors
     </h2>
 
@@ -199,7 +281,7 @@
     <div class="mb-8 sm:mb-12 md:mb-16">
       <div class="border border-white rounded-lg p-4 sm:p-6 md:p-8 relative">
         <div class="absolute -top-3 sm:-top-4 left-4 sm:left-8 bg-black px-3 sm:px-4">
-          <span class="text-white text-sm sm:text-base md:text-lg font-medium uppercase">
+          <span class="text-white text-sm sm:text-base md:text-lg font-medium uppercase ">
             SPONSOR
           </span>
         </div>
@@ -221,7 +303,7 @@
     <div class="mb-8 sm:mb-12 md:mb-16">
       <div class="border border-white rounded-lg p-4 sm:p-6 md:p-8 relative">
         <div class="absolute -top-3 sm:-top-4 left-4 sm:left-8 bg-black px-3 sm:px-4">
-          <span class="text-white text-sm sm:text-base md:text-lg font-medium uppercase">
+          <span class="text-white text-sm sm:text-base md:text-lg font-medium uppercase ">
             SUPPORTERS
           </span>
         </div>
@@ -244,7 +326,7 @@
 
 <div class="min-h-screen bg-black py-8 sm:py-12 md:py-16">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 w-full">
-    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left font-display">
+    <h2 class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-8 sm:mb-12 md:mb-16 text-left font-display tracking-wider">
       Gallery
     </h2>
 
@@ -260,7 +342,7 @@
           <img
             src={image_path}
             alt="BugsByte 2025 Gallery Image"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 "
           />
         </div>
       <% end %>
