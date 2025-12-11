@@ -1,0 +1,74 @@
+<main class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 flex items-center justify-center px-4 py-8">
+  <div class="w-full max-w-md">
+    <div class="bg-gray-800 rounded-lg shadow-xl p-8">
+      <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
+      <p class="text-gray-400 mb-6">Join us for the hackathon</p>
+
+      <.form :let={f} for={@changeset} action={~p"/auth/register"} method="post" class="space-y-4">
+        <%= if @changeset.action do %>
+          <div class="rounded-md bg-red-50 p-4">
+            <div class="text-sm font-medium text-red-800">
+              Oops, something went wrong! Please check the errors below.
+            </div>
+          </div>
+        <% end %>
+
+        <div>
+          <.input field={f[:name]} type="text" label="Full Name" required />
+        </div>
+
+        <div>
+          <.input field={f[:email]} type="email" label="Email" required />
+        </div>
+
+        <div>
+          <.input field={f[:phone]} type="tel" label="Phone" />
+        </div>
+
+        <div>
+          <.input field={f[:password]} type="password" label="Password" required />
+        </div>
+
+        <div>
+          <.input field={f[:age]} type="text" label="Age" />
+        </div>
+
+        <div>
+          <.input field={f[:university]} type="text" label="University" />
+        </div>
+
+        <div>
+          <.input field={f[:course]} type="text" label="Course" />
+        </div>
+
+        <div>
+          <.input
+            field={f[:team_code]}
+            type="text"
+            label="Team Code (Optional)"
+            placeholder="XXXXX"
+          />
+          <p class="text-xs text-gray-400 mt-1">
+            Enter the team code if you've been invited to join a team
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+        >
+          Sign Up
+        </button>
+      </.form>
+
+      <div class="mt-6 text-center">
+        <p class="text-gray-400">
+          Already have an account?
+          <a href={~p"/auth/login"} class="text-purple-400 hover:text-purple-300 font-medium">
+            Sign in
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,11 +1,8 @@
-defmodule AresWeb.ImageUploader do
+defmodule AresWeb.Components.ImageUploader do
   @moduledoc """
   Image uploader component.
   """
-  use Phoenix.Component
-  use Gettext, backend: AresWeb.Gettext
-
-  import AresWeb.CoreComponents
+  use AresWeb, :component
 
   attr :upload, :any, required: true
   attr :class, :string, default: ""
@@ -14,6 +11,7 @@ defmodule AresWeb.ImageUploader do
   attr :icon, :string, default: "hero-photo"
   attr :preview_disabled, :boolean, default: false
   attr :rounded, :boolean, default: false
+  attr :show_errors, :boolean, default: true
 
   slot :placeholder, required: false, doc: "Slot for the placeholder content."
 
@@ -64,14 +62,8 @@ defmodule AresWeb.ImageUploader do
                 </div>
               <% end %>
             </figure>
-            <%= for err <- upload_errors(@upload, entry) do %>
-              <p class="alert alert-danger">{Phoenix.Naming.humanize(err)}</p>
-            <% end %>
           </article>
         <% end %>
-      <% end %>
-      <%= for err <- upload_errors(@upload) do %>
-        <p class="alert alert-danger">{Phoenix.Naming.humanize(err)}</p>
       <% end %>
     </section>
     """

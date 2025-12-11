@@ -66,8 +66,11 @@ defmodule Ares.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
+      {:bcrypt_elixir, "~> 3.0"},
       # dev/test tooling
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:waffle_ecto, "~> 0.0.12"},
+      {:waffle, "~> 1.1.9"}
     ]
   end
 

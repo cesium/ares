@@ -15,10 +15,13 @@ const MobileNavigationHook = {
     this.header = this.el;
     this.page = document.documentElement;
 
+    this.isInitiallyFixed = this.header.classList.contains("fixed-header");
+
     console.log("Navigation elements:", {
       openButton: this.openNavButton,
       closeButton: this.closeNavButton,
-      modal: this.menuModal
+      modal: this.menuModal,
+      isInitiallyFixed: this.isInitiallyFixed
     });
 
     if (!this.openNavButton || !this.closeNavButton || !this.menuModal) {
@@ -65,9 +68,8 @@ const MobileNavigationHook = {
       });
     }
 
-    // Scroll event for fixed header behavior
     this.handleScroll = () => {
-      if (this.header && this.page) {
+      if (!this.isInitiallyFixed && this.header && this.page) {
         const d = this.page.clientHeight - this.page.scrollTop - this.header.offsetHeight;
         this.header.classList.toggle("fixed-header", d < 0);
       }

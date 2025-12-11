@@ -18,6 +18,7 @@ defmodule Ares.Teams do
   """
   def list_teams do
     Repo.all(Team)
+    |> Repo.preload(:members)
   end
 
   @doc """
@@ -35,6 +36,26 @@ defmodule Ares.Teams do
 
   """
   def get_team!(id), do: Repo.get!(Team, id)
+
+  @doc """
+  Gets a single team by code.
+
+  Returns nil if the Team does not exist.
+
+  ## Examples
+
+      iex> get_team_by_code("ABC123")
+      %Team{}
+
+      iex> get_team_by_code("INVALID")
+      nil
+
+  """
+  def get_team_by_code(code) do
+    Team
+    |> Repo.get_by(code: code)
+    |> Repo.preload(:members)
+  end
 
   @doc """
   Creates a team.
@@ -99,5 +120,49 @@ defmodule Ares.Teams do
   """
   def change_team(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)
+  end
+
+  @doc """
+  Counts the number of members in a team by counting users with that team code.
+
+  ## Examples
+
+      iex> count_team_members(%Team{code: "TEAM001"})
+      3
+
+  """
+
+  def count_team_members(%Team{code: code}) do
+    from(u in "users", where: u.team_code == ^code)
+    |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
+  Counts the total number of teams.
+
+  ## Examples
+
+      iex> count_teams()
+      15
+
+  """
+  def count_teams do
+    Repo.aggregate(Team, :count, :id)
+  end
+
+  def close_team(%Team{} = team) do
+    update_team(team, %{looking_for_members: false})
+  end
+
+  def open_team(%Team{} = team) do
+    if team_is_full(team) do
+      {:error, "The team is full, you cannot open it"}
+    else
+      update_team(team, %{looking_for_members: true})
+    end
+  end
+
+  def team_is_full(%Team{} = team) do
+    Enum.count(team.members) == 5
   end
 end

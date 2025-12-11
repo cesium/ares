@@ -26,12 +26,13 @@ import {hooks as colocatedHooks} from "phoenix-colocated/ares"
 import topbar from "../vendor/topbar"
 import MobileNavigationHook from "./mobile_navigation_hook"
 import FaqToggleHook from "./faq_toggle_hook"
+import FlashHook from "./flash_hook"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks, MobileNavigation: MobileNavigationHook, FaqToggle: FaqToggleHook},
+  hooks: {...colocatedHooks, MobileNavigation: MobileNavigationHook, FaqToggle: FaqToggleHook, Flash: FlashHook},
 })
 
 // Show progress bar on live navigation and form submits
@@ -82,4 +83,3 @@ if (process.env.NODE_ENV === "development") {
     window.liveReloader = reloader
   })
 }
-
