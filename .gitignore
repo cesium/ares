@@ -25,6 +25,9 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 ares-*.tar
 
+# Ignore file uploads
+/priv/uploads/*
+
 # Ignore assets that are produced by build tools.
 /priv/static/assets/
 
