@@ -7,7 +7,7 @@ defmodule AresWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_ares_key",
-    signing_salt: "Cg50A944",
+    signing_salt: "bnIiPecd",
     same_site: "Lax"
   ]
 
@@ -25,11 +25,6 @@ defmodule AresWeb.Endpoint do
     from: :ares,
     gzip: not code_reloading?,
     only: AresWeb.static_paths()
-
-  plug Plug.Static,
-    at: "/uploads",
-    from: Path.expand("./uploads"),
-    gzip: false
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

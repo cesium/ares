@@ -38,49 +38,21 @@ defmodule AresWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller,
-        formats: [:html, :json],
-        layouts: [html: AresWeb.Layouts]
+      use Phoenix.Controller, formats: [:html, :json]
+
+      use Gettext, backend: AresWeb.Gettext
 
       import Plug.Conn
-      use Gettext, backend: AresWeb.Gettext
 
       unquote(verified_routes())
     end
   end
 
-  def view do
-    quote do
-      use Phoenix.View,
-        root: "lib/ares_web/templates",
-        namespace: AresWeb
-
-      import Phoenix.Controller,
-        only: [view_module: 1, view_template: 1]
-
-      unquote(html_helpers())
-    end
-  end
-
   def live_view do
     quote do
-      use Phoenix.LiveView,
-        layout: {AresWeb.Layouts, :root}
+      use Phoenix.LiveView
 
-      unquote(html_helpers())
-    end
-  end
-
-  def app_view do
-    quote do
-      use Phoenix.LiveView,
-        layout: {AresWeb.Layouts, :root}
-
-      import Phoenix.Controller,
-        only: [get_csrf_token: 0, view_module: 1, view_template: 1]
-
-      import AresWeb.NavComponent
-      import AresWeb.FooterComponent
+      import AresWeb.Components.Navbar
 
       unquote(html_helpers())
     end
@@ -89,13 +61,6 @@ defmodule AresWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
-      unquote(html_helpers())
-    end
-  end
-
-  def component do
-    quote do
-      use Phoenix.Component
 
       unquote(html_helpers())
     end
@@ -105,28 +70,28 @@ defmodule AresWeb do
     quote do
       use Phoenix.Component
 
+      # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
+      # Include general helpers for rendering HTML
       unquote(html_helpers())
     end
   end
 
   defp html_helpers do
     quote do
-      # HTML escaping functionality
-      import Phoenix.HTML
-      # Core UI components and translation
-      import AresWeb.CoreComponents
-      import AresWeb.NavComponent
-      import AresWeb.FooterComponent
+      # Translation
       use Gettext, backend: AresWeb.Gettext
 
-      # optional helpers module (remove or add if you have project-specific helpers)
-      # import AresWeb.Helpers
+      # HTML escaping functionality
+      import Phoenix.HTML
+      # Core UI components
+      import AresWeb.CoreComponents
 
-      # Shortcut for generating JS commands
+      # Common modules used in templates
       alias Phoenix.LiveView.JS
+      alias AresWeb.Layouts
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

@@ -16,9 +16,6 @@ defmodule Ares.DataCase do
 
   use ExUnit.CaseTemplate
 
-  # Alias nested module so Credo won't warn about nested modules
-  alias Ecto.Adapters.SQL.Sandbox
-
   using do
     quote do
       alias Ares.Repo
@@ -39,8 +36,8 @@ defmodule Ares.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Sandbox.start_owner!(Ares.Repo, shared: not tags[:async])
-    on_exit(fn -> Sandbox.stop_owner(pid) end)
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Ares.Repo, shared: not tags[:async])
+    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
   end
 
   @doc """

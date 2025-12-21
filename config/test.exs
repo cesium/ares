@@ -1,5 +1,8 @@
 import Config
 
+# Only in tests, remove the complexity from the password hashing algorithm
+config :bcrypt_elixir, :log_rounds, 1
+
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -17,7 +20,7 @@ config :ares, Ares.Repo,
 # you can enable the server option below.
 config :ares, AresWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "/jjzqZFw7b1SjOtcGkTrqEVAEj1Qcs9AeA0ZZG9PZAqFQs05LcZ133oYDYu+cCiF",
+  secret_key_base: "MqMBHZLoTGwOd5l4pMXBccNOjYL9T0HxtCg9Mre2i8bD3QBwmWaqD5Hq4nUstJpu",
   server: false
 
 # In test we don't send emails
