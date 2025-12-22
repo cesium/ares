@@ -183,11 +183,6 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 items-center justify-items-center py-6 sm:py-8">
           <%= for sponsor <- @sponsors do %>
             <a href={sponsor["url"]} target="_blank" class="transition-opacity hover:opacity-75">
-              <img
-                src={Ares.Companies.icon_path(sponsor["icon"])}
-                alt={sponsor["title"]}
-                class="h-12 sm:h-14 md:h-16 lg:h-20 object-contain"
-              />
             </a>
           <% end %>
         </div>
@@ -205,11 +200,6 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12 items-center justify-items-center py-6 sm:py-8">
           <%= for supporter <- @supporters do %>
             <a href={supporter["url"]} target="_blank" class="transition-opacity hover:opacity-75">
-              <img
-                src={Ares.Companies.icon_path(supporter["icon"])}
-                alt={supporter["title"]}
-                class="h-12 sm:h-14 md:h-32 lg:h-40 object-contain"
-              />
             </a>
           <% end %>
         </div>
