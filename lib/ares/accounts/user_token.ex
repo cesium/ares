@@ -1,4 +1,7 @@
 defmodule Ares.Accounts.UserToken do
+  @moduledoc """
+  A token schema used to verify actions related to users.
+  """
   use Ecto.Schema
   import Ecto.Query
   alias Ares.Accounts.UserToken

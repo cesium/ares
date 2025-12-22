@@ -37,5 +37,9 @@ defmodule Ares.Repo.Migrations.CreateUsersAuthTables do
 
     create index(:users_tokens, [:user_id])
     create unique_index(:users_tokens, [:context, :token])
+
+    alter table(:teams) do
+      add :leader_id, references(:users, type: :binary_id, on_delete: :nilify_all), null: false
+    end
   end
 end

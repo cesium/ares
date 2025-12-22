@@ -6,7 +6,7 @@ defmodule Ares.Accounts do
   import Ecto.Query, warn: false
   alias Ares.Repo
 
-  alias Ares.Accounts.{User, UserToken, UserNotifier}
+  alias Ares.Accounts.{User, UserNotifier, UserToken}
 
   ## Database getters
 

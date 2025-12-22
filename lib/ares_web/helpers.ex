@@ -1,4 +1,7 @@
 defmodule AresWeb.Helpers do
+  @moduledoc """
+  Helper functions for the web layer.
+  """
   def user_first_name(full_name) do
     full_name
     |> String.split(" ")

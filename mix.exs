@@ -69,7 +69,8 @@ defmodule Ares.MixProject do
       {:bandit, "~> 1.5"},
       {:waffle_ecto, "~> 0.0"},
       {:waffle, "~> 1.1.9"},
-      {:faker, "~> 0.18.0"}
+      {:faker, "~> 0.18.0"},
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end
 

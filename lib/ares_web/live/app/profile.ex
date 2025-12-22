@@ -54,7 +54,10 @@ defmodule AresWeb.AppLive.Profile do
                   <div class="bg-gray-900 rounded-lg p-4">
                     <div class="flex flex-row justify-between items-center">
                       <div>
-                        <p class="font-semibold text-white text-lg">{first_last_name(member.name)}</p>
+                        <p class="font-semibold text-white text-lg flex flex-row items-center gap-1">
+                          {first_last_name(member.name)}
+                          <.icon :if={@user.team.leader_id == member.id} name="hero-star" />
+                        </p>
                         <p class="text-gray-400">{member.email}</p>
                       </div>
                       <%= if member.id == @user.id do %>
