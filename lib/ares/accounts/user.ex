@@ -18,6 +18,8 @@ defmodule Ares.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
 
+    belongs_to :team, Ares.Teams.Team, type: :binary_id
+
     timestamps(type: :utc_datetime)
   end
 
@@ -25,17 +27,12 @@ defmodule Ares.Accounts.User do
     user
     |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin])
     |> validate_required([:name, :email])
-    |> validate_length(:name, max: 100)
-    |> validate_length(:phone, max: 20)
-    |> validate_length(:course, max: 100)
-    |> validate_length(:university, max: 150)
     |> email_changeset(attrs)
     |> password_changeset(attrs)
   end
 
   @doc """
   A user changeset for registration.
-
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
@@ -51,6 +48,18 @@ defmodule Ares.Accounts.User do
     )
     |> validate_number(:age, less_than_or_equal_to: 99, message: "must be a valid age")
     |> validate_email(opts)
+  end
+
+  @doc """
+  A user changeset for associating a team.
+  """
+  def team_changeset(user, attrs) do
+    if not user.is_admin do
+      user
+      |> cast(attrs, [:team_id])
+    else
+      add_error(%Ecto.Changeset{data: user}, :team_id, "admin users cannot join teams")
+    end
   end
 
   @doc """

@@ -21,6 +21,7 @@ defmodule AresWeb.Router do
     pipe_through :browser
 
     live "/", LandingLive.Home, :index
+    live "/faqs", LandingLive.Faqs, :index
   end
 
   # Other scopes may use custom stacks.
@@ -53,6 +54,7 @@ defmodule AresWeb.Router do
     live_session :require_authenticated_user,
       on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
       live "/app/profile", AppLive.Profile, :index
+      live "/app/team-formation", AppLive.TeamFormation, :index
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end

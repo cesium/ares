@@ -63,12 +63,12 @@ defmodule AresWeb.Components.Navbar do
                 </a>
               </li>
               <li>
-                <a
+                <.link
                   class="hover:text-primary transition-colors"
-                  href="/team-formation"
+                  navigate="/app/team-formation"
                 >
                   Teams
-                </a>
+                </.link>
               </li>
               <%= if @user && @user.is_admin do %>
                 <li>
@@ -233,12 +233,12 @@ defmodule AresWeb.Components.Navbar do
               </a>
             </li>
             <li>
-              <a
+              <.link
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
-                href="/team-formation"
+                navigate="/app/team-formation"
               >
                 Team formation
-              </a>
+              </.link>
             </li>
             <%= if @user && @user.is_admin do %>
               <li>

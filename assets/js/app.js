@@ -24,8 +24,10 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/ares"
 import topbar from "../vendor/topbar"
+import { FaqToggle } from './hooks';
 
 const hooks = { 
+  FaqToggle,
   ...colocatedHooks
 }
 

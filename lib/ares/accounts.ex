@@ -36,7 +36,9 @@ defmodule Ares.Accounts do
 
   """
   def get_user_by_email(email) when is_binary(email) do
-    Repo.get_by(User, email: email)
+    User
+    |> Repo.get_by(email: email)
+    |> Repo.preload(:team)
   end
 
   @doc """
@@ -53,7 +55,11 @@ defmodule Ares.Accounts do
   """
   def get_user_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
-    user = Repo.get_by(User, email: email)
+    user =
+      User
+      |> Repo.get_by(email: email)
+      |> Repo.preload(:team)
+
     if User.valid_password?(user, password), do: user
   end
 
@@ -209,6 +215,27 @@ defmodule Ares.Accounts do
     user
     |> User.password_changeset(attrs)
     |> update_user_and_delete_all_tokens()
+  end
+
+  @doc """
+  Updates the user's team.
+
+  ## Examples
+
+      iex> update_user_team(user, %{team_id: team.id})
+      {:ok, %User{}}
+
+      iex> update_user_team(user, %{team_id: nil})
+      {:ok, %User{}}
+
+      iex> update_user_team(admin_user, %{team_id: team.id})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_team(user, attrs) do
+    user
+    |> User.team_changeset(attrs)
+    |> Repo.update()
   end
 
   ## Session

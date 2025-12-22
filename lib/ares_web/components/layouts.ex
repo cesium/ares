@@ -5,7 +5,7 @@ defmodule AresWeb.Layouts do
   """
   use AresWeb, :html
 
-  import AresWeb.Components.Navbar
+  import AresWeb.Components.{Footer, Navbar}
 
   # Embed all files in layouts/* within this module.
   # The default root.html.heex file contains the HTML

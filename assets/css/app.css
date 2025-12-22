@@ -105,6 +105,10 @@
   @apply bg-white text-black text-sm;
 }
 
+.select {
+  @apply bg-white text-black text-sm;
+}
+
 .label {
   @apply text-white text-sm;
 }

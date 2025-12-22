@@ -22,12 +22,22 @@ defmodule AresWeb.UserLive.Registration do
           </p>
         </div>
 
+        <div class="alert alert-info">
+          <.icon name="hero-information-circle" class="size-6 shrink-0" />
+          <div>
+            <p>Event participation has a cost of <b class="font-semibold">5,00€</b>.</p>
+            <p>
+              This fee will be collected after team formation.
+            </p>
+          </div>
+        </div>
+
         <.form
           for={@form}
           id="registration_form"
           phx-submit="save"
           phx-change="validate"
-          class="font-inter"
+          class="font-inter mt-8"
         >
           <.input
             field={@form[:name]}

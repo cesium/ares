@@ -16,6 +16,7 @@ defmodule Ares.Repo.Migrations.CreateUsersAuthTables do
       add :is_admin, :boolean, default: false
       add :hashed_password, :string
       add :confirmed_at, :utc_datetime
+      add :team_id, references(:teams, type: :binary_id, on_delete: :nilify_all), null: true
 
       timestamps(type: :utc_datetime)
     end
