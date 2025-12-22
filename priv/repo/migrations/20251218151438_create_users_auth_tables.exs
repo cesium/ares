@@ -6,7 +6,14 @@ defmodule Ares.Repo.Migrations.CreateUsersAuthTables do
 
     create table(:users, primary_key: false) do
       add :id, :binary_id, primary_key: true
+      add :name, :string, null: false
       add :email, :citext, null: false
+      add :phone, :string
+      add :age, :integer
+      add :course, :string
+      add :university, :string
+      add :notes, :text
+      add :is_admin, :boolean, default: false
       add :hashed_password, :string
       add :confirmed_at, :utc_datetime
 

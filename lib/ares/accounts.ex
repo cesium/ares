@@ -11,6 +11,19 @@ defmodule Ares.Accounts do
   ## Database getters
 
   @doc """
+  Returns the list of users.
+
+  ## Examples
+
+      iex> list_users()
+      [%User{}, ...]
+
+  """
+  def list_users do
+    Repo.all(User)
+  end
+
+  @doc """
   Gets a user by email.
 
   ## Examples
@@ -76,7 +89,25 @@ defmodule Ares.Accounts do
   """
   def register_user(attrs) do
     %User{}
-    |> User.email_changeset(attrs)
+    |> User.registration_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Creates a user. (not to be confused with register_user/1)
+
+  ## Examples
+
+      iex> create_user(%{field: value})
+      {:ok, %User{}}
+
+      iex> create_user(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_user(attrs) do
+    %User{}
+    |> User.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -109,6 +140,19 @@ defmodule Ares.Accounts do
   """
   def change_user_email(user, attrs \\ %{}, opts \\ []) do
     User.email_changeset(user, attrs, opts)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing the user.
+
+  ## Examples
+
+      iex> change_user(user)
+      %Ecto.Changeset{data: %User{}}
+
+  """
+  def change_user(user, attrs \\ %{}, opts \\ []) do
+    User.registration_changeset(user, attrs, opts)
   end
 
   @doc """

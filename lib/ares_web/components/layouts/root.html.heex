@@ -31,26 +31,9 @@
     </script>
   </head>
   <body class="text-white font-vt323">
-    <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <%= if @current_scope do %>
-        <li>
-          {@current_scope.user.email}
-        </li>
-        <li>
-          <.link href={~p"/users/settings"}>Settings</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-out"} method="delete">Log out</.link>
-        </li>
-      <% else %>
-        <li>
-          <.link href={~p"/users/register"}>Register</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-in"}>Log in</.link>
-        </li>
-      <% end %>
-    </ul>
-    {@inner_content}
+    <.navbar user={if @current_scope, do: @current_scope.user} fixed />
+    <div class="mt-24">
+      {@inner_content}
+    </div>
   </body>
 </html>

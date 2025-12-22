@@ -4,6 +4,8 @@ defmodule AresWeb.Components.Navbar do
   """
   use Phoenix.Component
 
+  alias Phoenix.LiveView.JS
+
   @doc """
   Renders the navigation header with mobile menu support.
   """
@@ -15,47 +17,46 @@ defmodule AresWeb.Components.Navbar do
     <header
       id="page-header"
       class={[
-        "z-50 flex w-full items-center justify-between border-b border-transparent px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-white",
+        "z-50 flex w-full items-center justify-between border-b border-white/10 px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-white font-inter",
         if(@fixed,
-          do: "fixed-header fixed top-0 bg-black backdrop-blur-md shadow-lg",
+          do: "fixed-header fixed top-0 bg-black shadow-lg",
           else: "absolute bottom-0"
         )
       ]}
-      phx-hook="MobileNavigation"
     >
-      <a class="flex items-center gap-2 sm:gap-3 hover:text-pink" href="/">
-        <img src="/images/cesium.svg" alt="Cesium" class="object-fill w-7 h-7 sm:w-8 sm:h-8" />
-        <span class="sm:hidden text-white font-semibold text-base sm:text-lg">CeSIUM</span>
+      <a class="flex items-center gap-2 sm:gap-4 hover:text-primary" href="/">
+        <img src="/images/logo-cesium.svg" alt="Cesium" class="object-fill w-32" />
       </a>
       <div>
         <div class="flex items-center gap-4 sm:gap-6">
           <nav class="hidden sm:block">
             <ul class="flex items-center gap-4 lg:gap-6">
               <li>
-                <a
-                  class="text-sm hover:text-pink transition-colors"
+                <.link
+                  class="hover:text-primary transition-colors"
                   target="_blank"
-                  href="images/docs/SurvivalGuideBugsByte2025.pdf"
+                  href="/docs/survival-guide.pdf"
                 >
                   Survival Guide
-                </a>
+                </.link>
               </li>
               <li>
-                <a
-                  class="text-sm hover:text-pink transition-colors"
-                  href="images/docs/RegulamentoBugsByte2025.pdf"
+                <.link
+                  class="hover:text-primary transition-colors"
+                  target="_blank"
+                  href="/docs/regulation.pdf"
                 >
                   Regulation
-                </a>
+                </.link>
               </li>
               <li>
-                <a class="text-sm hover:text-pink transition-colors" href="/faqs">
+                <a class="hover:text-primary transition-colors" href="/faqs">
                   FAQs
                 </a>
               </li>
               <li>
                 <a
-                  class="text-sm hover:text-pink transition-colors"
+                  class="hover:text-primary transition-colors"
                   href="https://2024.bugsbyte.org/"
                 >
                   Previous edition
@@ -63,8 +64,7 @@ defmodule AresWeb.Components.Navbar do
               </li>
               <li>
                 <a
-                  class="text-sm hover:text-pink transition-colors"
-                  target="_black"
+                  class="hover:text-primary transition-colors"
                   href="/team-formation"
                 >
                   Teams
@@ -73,7 +73,7 @@ defmodule AresWeb.Components.Navbar do
               <%= if @user && @user.is_admin do %>
                 <li>
                   <a
-                    class="text-sm hover:text-pink transition-colors text-white"
+                    class="hover:text-primary transition-colors text-white"
                     href="/admin"
                   >
                     Admin
@@ -84,7 +84,7 @@ defmodule AresWeb.Components.Navbar do
                 <%= if @user do %>
                   <button
                     onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
-                    class="w-10 h-10 cursor-pointer rounded-full bg-gradient-to-br from-darkest-pink to-pink flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
+                    class="w-10 h-10 cursor-pointer rounded-full bg-primary flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
                     title={@user.name}
                   >
                     {String.first(@user.name)}
@@ -95,33 +95,25 @@ defmodule AresWeb.Components.Navbar do
                       "hidden absolute right-0 w-48 bg-gray-100 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
                     ]}
                   >
-                    <a
-                      href="/profile"
-                      class="block px-4 py-2 text-sm text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                    <.link
+                      navigate="/app/profile"
+                      class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
                     >
                       View Profile
-                    </a>
-                    <form
-                      action="/logout"
-                      method="post"
-                      class="border-t border-gray-700"
-                      onsubmit="return confirm('Are you sure you want to logout?');"
-                    >
-                      <button
-                        type="submit"
-                        class="w-full text-left px-4 py-2 text-sm text-black hover:text-pink rounded-b-lg transition-colors cursor-pointer"
-                      >
-                        Logout
-                      </button>
-                    </form>
+                    </.link>
+                    <.link href="/users/log-out" method="delete" class="border-t border-gray-700">
+                      <p class="w-full text-left px-4 py-2 text-black hover:bg-gray-300 rounded-b-lg transition-colors cursor-pointer">
+                        Log out
+                      </p>
+                    </.link>
                   </div>
                 <% else %>
-                  <a
-                    href="/register"
-                    class="rounded-full px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-pink"
+                  <.link
+                    navigate="/register"
+                    class="rounded-full px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-primary hover:text-primary transition-all"
                   >
                     Register
-                  </a>
+                  </.link>
                 <% end %>
               </li>
             </ul>
@@ -131,7 +123,7 @@ defmodule AresWeb.Components.Navbar do
             type="button"
             class="btn sm:hidden text-white bg-black bg-opacity-70 p-2 rounded hover:bg-opacity-90 border border-white border-opacity-30"
             aria-label="Navigation"
-            onclick="document.getElementById('menu-modal').classList.toggle('hidden'); console.log('Menu toggled');"
+            phx-click={JS.toggle(to: "#menu-modal")}
           >
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -148,8 +140,7 @@ defmodule AresWeb.Components.Navbar do
 
     <div
       id="menu-modal"
-      class="modal hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-[100]"
-      aria-hidden="true"
+      class="hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-[100] font-inter"
     >
       <div class="space-y-4 w-full h-full" role="dialog" aria-modal="true">
         <header class="text-right">
@@ -158,7 +149,7 @@ defmodule AresWeb.Components.Navbar do
             type="button"
             class="btn text-white bg-black bg-opacity-70 p-2 rounded hover:bg-opacity-90 border border-white border-opacity-30"
             aria-label="Close navigation"
-            onclick="document.getElementById('menu-modal').classList.add('hidden'); console.log('Menu closed');"
+            phx-click={JS.toggle(to: "#menu-modal")}
           >
             <svg
               class="w-6 h-6 sm:w-8 sm:h-8"
@@ -175,23 +166,23 @@ defmodule AresWeb.Components.Navbar do
             </svg>
           </button>
         </header>
-        <a href="/" class="flex justify-center py-4">
-          <img src="/images/cesium.svg" alt="Cesium" class="w-14 h-14 sm:w-16 sm:h-16" />
-        </a>
+        <.link navigate="/" class="flex justify-center py-4">
+          <img src="/images/cesium.svg" alt="CeSIUM" class="w-14 h-14 sm:w-16 sm:h-16" />
+        </.link>
         <nav>
           <ul class="flex flex-col space-y-2">
             <li>
               <%= if @user do %>
-                <a
-                  href="/profile"
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                <.link
+                  navigate="/app/profile"
+                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   title={@user.name}
                 >
                   Profile
-                </a>
+                </.link>
               <% else %>
                 <a
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   href="/register"
                 >
                   Register
@@ -200,31 +191,26 @@ defmodule AresWeb.Components.Navbar do
             </li>
             <%= if @user do %>
               <li>
-                <form
-                  action="/logout"
-                  method="post"
-                  onsubmit="return confirm('Are you sure you want to logout?');"
+                <.link
+                  href="/users/log-out"
+                  method="delete"
+                  class="block w-full py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 >
-                  <button
-                    type="submit"
-                    class="block w-full py-3 sm:py-4 text-center text-lg sm:text-xl text-red-400 hover:text-red-300 transition-colors"
-                  >
-                    Logout
-                  </button>
-                </form>
+                  Log out
+                </.link>
               </li>
             <% end %>
             <li>
-              <a
-                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
-                href="images/docs/SurvivalGuideBugsByte2025.pdf"
+              <.link
+                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                href="/docs/survival-guide.pdf"
               >
                 Survival Guide
-              </a>
+              </.link>
             </li>
             <li>
               <a
-                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 href="images/docs/RegulamentoBugsByte2025.pdf"
               >
                 Regulation
@@ -232,7 +218,7 @@ defmodule AresWeb.Components.Navbar do
             </li>
             <li>
               <a
-                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 href="/faqs"
               >
                 FAQs
@@ -240,7 +226,7 @@ defmodule AresWeb.Components.Navbar do
             </li>
             <li>
               <a
-                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 href="https://2024.bugsbyte.org/"
               >
                 Previous edition
@@ -248,7 +234,7 @@ defmodule AresWeb.Components.Navbar do
             </li>
             <li>
               <a
-                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-pink transition-colors"
+                class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 href="/team-formation"
               >
                 Team formation
@@ -257,7 +243,7 @@ defmodule AresWeb.Components.Navbar do
             <%= if @user && @user.is_admin do %>
               <li>
                 <a
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-pink font-bold hover:text-darkest-pink transition-colors"
+                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-primary font-bold hover:text-darkest-pink transition-colors"
                   href="/admin"
                 >
                   Admin Dashboard

@@ -20,7 +20,7 @@ defmodule AresWeb.UserLive.SettingsTest do
       assert {:error, redirect} = live(conn, ~p"/users/settings")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/users/log-in"
+      assert path == ~p"/log-in"
       assert %{"error" => "You must log in to access this page."} = flash
     end
 
@@ -31,7 +31,7 @@ defmodule AresWeb.UserLive.SettingsTest do
           token_authenticated_at: DateTime.add(DateTime.utc_now(:second), -11, :minute)
         )
         |> live(~p"/users/settings")
-        |> follow_redirect(conn, ~p"/users/log-in")
+        |> follow_redirect(conn, ~p"/log-in")
 
       assert conn.resp_body =~ "You must re-authenticate to access this page."
     end
@@ -204,7 +204,7 @@ defmodule AresWeb.UserLive.SettingsTest do
       conn = build_conn()
       {:error, redirect} = live(conn, ~p"/users/settings/confirm-email/#{token}")
       assert {:redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/users/log-in"
+      assert path == ~p"/log-in"
       assert %{"error" => message} = flash
       assert message == "You must log in to access this page."
     end

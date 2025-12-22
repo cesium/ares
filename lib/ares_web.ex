@@ -17,7 +17,7 @@ defmodule AresWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(assets fonts images docs favicon.ico robots.txt)
 
   def router do
     quote do
@@ -88,6 +88,8 @@ defmodule AresWeb do
       import Phoenix.HTML
       # Core UI components
       import AresWeb.CoreComponents
+      # Utils
+      import AresWeb.Helpers
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS

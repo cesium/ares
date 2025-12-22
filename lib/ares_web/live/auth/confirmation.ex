@@ -8,8 +8,8 @@ defmodule AresWeb.UserLive.Confirmation do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm">
-        <div class="text-center">
-          <.header>Welcome {@user.email}</.header>
+        <div class="text-center font-inter text-5xl">
+          <.header>Welcome {user_first_name(@user.name)}! 👋</.header>
         </div>
 
         <.form
@@ -18,8 +18,9 @@ defmodule AresWeb.UserLive.Confirmation do
           id="confirmation_form"
           phx-mounted={JS.focus_first()}
           phx-submit="submit"
-          action={~p"/users/log-in?_action=confirmed"}
+          action={~p"/log-in?_action=confirmed"}
           phx-trigger-action={@trigger_submit}
+          class="font-inter"
         >
           <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
           <.button
@@ -41,8 +42,9 @@ defmodule AresWeb.UserLive.Confirmation do
           id="login_form"
           phx-submit="submit"
           phx-mounted={JS.focus_first()}
-          action={~p"/users/log-in"}
+          action={~p"/log-in"}
           phx-trigger-action={@trigger_submit}
+          class="font-inter"
         >
           <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
           <%= if @current_scope do %>
@@ -64,7 +66,7 @@ defmodule AresWeb.UserLive.Confirmation do
           <% end %>
         </.form>
 
-        <p :if={!@user.confirmed_at} class="alert alert-outline mt-8">
+        <p :if={!@user.confirmed_at} class="alert alert-outline mt-8 font-inter">
           Tip: If you prefer passwords, you can enable them in the user settings.
         </p>
       </div>
@@ -83,7 +85,7 @@ defmodule AresWeb.UserLive.Confirmation do
       {:ok,
        socket
        |> put_flash(:error, "Magic link is invalid or it has expired.")
-       |> push_navigate(to: ~p"/users/log-in")}
+       |> push_navigate(to: ~p"/log-in")}
     end
   end
 

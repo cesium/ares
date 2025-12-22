@@ -5,7 +5,14 @@ defmodule Ares.Accounts.User do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
+    field :name, :string
     field :email, :string
+    field :phone, :string
+    field :age, :integer
+    field :course, :string
+    field :university, :string
+    field :notes, :string
+    field :is_admin, :boolean, default: false
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
@@ -14,8 +21,40 @@ defmodule Ares.Accounts.User do
     timestamps(type: :utc_datetime)
   end
 
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin])
+    |> validate_required([:name, :email])
+    |> validate_length(:name, max: 100)
+    |> validate_length(:phone, max: 20)
+    |> validate_length(:course, max: 100)
+    |> validate_length(:university, max: 150)
+    |> email_changeset(attrs)
+    |> password_changeset(attrs)
+  end
+
   @doc """
-  A user changeset for registering or changing the email.
+  A user changeset for registration.
+
+  """
+  def registration_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes])
+    |> validate_required([:name, :email, :phone, :age, :course, :university])
+    |> validate_length(:name, max: 100)
+    |> validate_phone()
+    |> validate_length(:course, max: 100)
+    |> validate_length(:university, max: 150)
+    |> validate_number(:age,
+      greater_than_or_equal_to: 18,
+      message: "must be at least 18 years old"
+    )
+    |> validate_number(:age, less_than_or_equal_to: 99, message: "must be a valid age")
+    |> validate_email(opts)
+  end
+
+  @doc """
+  A user changeset for changing the email.
 
   It requires the email to change otherwise an error is added.
 
@@ -130,5 +169,10 @@ defmodule Ares.Accounts.User do
   def valid_password?(_, _) do
     Bcrypt.no_user_verify()
     false
+  end
+
+  def validate_phone(changeset) do
+    changeset
+    |> validate_format(:phone, ~r/^\+?[1-9]\d{1,14}$/, message: "must be a valid phone number")
   end
 end

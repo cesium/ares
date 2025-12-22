@@ -7,22 +7,22 @@ defmodule AresWeb.UserLive.Login do
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="mx-auto max-w-sm space-y-4">
-        <div class="text-center">
-          <.header>
-            <p>Log in</p>
-            <:subtitle>
-              <%= if @current_scope do %>
-                You need to reauthenticate to perform sensitive actions on your account.
-              <% else %>
-                Don't have an account? <.link
-                  navigate={~p"/users/register"}
-                  class="font-semibold text-brand hover:underline"
-                  phx-no-format
-                >Sign up</.link> for an account now.
-              <% end %>
-            </:subtitle>
-          </.header>
+      <div class="mx-auto max-w-xl space-y-4">
+        <div class="flex flex-col gap-2 mb-8">
+          <h1 class="font-resegrg text-5xl">Log in</h1>
+          <%= if @current_scope do %>
+            <p class="text-2xl">
+              You need to reauthenticate to perform sensitive actions on your account.
+            </p>
+          <% else %>
+            <p class="text-2xl">
+              Don't have an account? <.link
+                navigate={~p"/register"}
+                class="font-semibold text-primary hover:underline"
+                phx-no-format
+              >Register</.link> to participate now.
+            </p>
+          <% end %>
         </div>
 
         <div :if={local_mail_adapter?()} class="alert alert-info">
@@ -39,8 +39,9 @@ defmodule AresWeb.UserLive.Login do
           :let={f}
           for={@form}
           id="login_form_magic"
-          action={~p"/users/log-in"}
+          action={~p"/log-in"}
           phx-submit="submit_magic"
+          class="font-inter"
         >
           <.input
             readonly={!!@current_scope}
@@ -56,15 +57,16 @@ defmodule AresWeb.UserLive.Login do
           </.button>
         </.form>
 
-        <div class="divider">or</div>
+        <div class="divider text-xl">or</div>
 
         <.form
           :let={f}
           for={@form}
           id="login_form_password"
-          action={~p"/users/log-in"}
+          action={~p"/log-in"}
           phx-submit="submit_password"
           phx-trigger-action={@trigger_submit}
+          class="font-inter"
         >
           <.input
             readonly={!!@current_scope}
@@ -112,7 +114,7 @@ defmodule AresWeb.UserLive.Login do
     if user = Accounts.get_user_by_email(email) do
       Accounts.deliver_login_instructions(
         user,
-        &url(~p"/users/log-in/#{&1}")
+        &url(~p"/log-in/#{&1}")
       )
     end
 
@@ -122,7 +124,7 @@ defmodule AresWeb.UserLive.Login do
     {:noreply,
      socket
      |> put_flash(:info, info)
-     |> push_navigate(to: ~p"/users/log-in")}
+     |> push_navigate(to: ~p"/log-in")}
   end
 
   defp local_mail_adapter? do

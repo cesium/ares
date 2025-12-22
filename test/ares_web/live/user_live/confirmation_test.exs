@@ -17,7 +17,7 @@ defmodule AresWeb.UserLive.ConfirmationTest do
           Accounts.deliver_login_instructions(user, url)
         end)
 
-      {:ok, _lv, html} = live(conn, ~p"/users/log-in/#{token}")
+      {:ok, _lv, html} = live(conn, ~p"/log-in/#{token}")
       assert html =~ "Confirm and stay logged in"
     end
 
@@ -27,7 +27,7 @@ defmodule AresWeb.UserLive.ConfirmationTest do
           Accounts.deliver_login_instructions(user, url)
         end)
 
-      {:ok, _lv, html} = live(conn, ~p"/users/log-in/#{token}")
+      {:ok, _lv, html} = live(conn, ~p"/log-in/#{token}")
       refute html =~ "Confirm my account"
       assert html =~ "Keep me logged in on this device"
     end
@@ -40,7 +40,7 @@ defmodule AresWeb.UserLive.ConfirmationTest do
           Accounts.deliver_login_instructions(user, url)
         end)
 
-      {:ok, _lv, html} = live(conn, ~p"/users/log-in/#{token}")
+      {:ok, _lv, html} = live(conn, ~p"/log-in/#{token}")
       refute html =~ "Confirm my account"
       assert html =~ "Log in"
     end
@@ -51,7 +51,7 @@ defmodule AresWeb.UserLive.ConfirmationTest do
           Accounts.deliver_login_instructions(user, url)
         end)
 
-      {:ok, lv, _html} = live(conn, ~p"/users/log-in/#{token}")
+      {:ok, lv, _html} = live(conn, ~p"/log-in/#{token}")
 
       form = form(lv, "#confirmation_form", %{"user" => %{"token" => token}})
       render_submit(form)
@@ -70,8 +70,8 @@ defmodule AresWeb.UserLive.ConfirmationTest do
       conn = build_conn()
 
       {:ok, _lv, html} =
-        live(conn, ~p"/users/log-in/#{token}")
-        |> follow_redirect(conn, ~p"/users/log-in")
+        live(conn, ~p"/log-in/#{token}")
+        |> follow_redirect(conn, ~p"/log-in")
 
       assert html =~ "Magic link is invalid or it has expired"
     end
@@ -85,7 +85,7 @@ defmodule AresWeb.UserLive.ConfirmationTest do
           Accounts.deliver_login_instructions(user, url)
         end)
 
-      {:ok, lv, _html} = live(conn, ~p"/users/log-in/#{token}")
+      {:ok, lv, _html} = live(conn, ~p"/log-in/#{token}")
 
       form = form(lv, "#login_form", %{"user" => %{"token" => token}})
       render_submit(form)
@@ -101,16 +101,16 @@ defmodule AresWeb.UserLive.ConfirmationTest do
       conn = build_conn()
 
       {:ok, _lv, html} =
-        live(conn, ~p"/users/log-in/#{token}")
-        |> follow_redirect(conn, ~p"/users/log-in")
+        live(conn, ~p"/log-in/#{token}")
+        |> follow_redirect(conn, ~p"/log-in")
 
       assert html =~ "Magic link is invalid or it has expired"
     end
 
     test "raises error for invalid token", %{conn: conn} do
       {:ok, _lv, html} =
-        live(conn, ~p"/users/log-in/invalid-token")
-        |> follow_redirect(conn, ~p"/users/log-in")
+        live(conn, ~p"/log-in/invalid-token")
+        |> follow_redirect(conn, ~p"/log-in")
 
       assert html =~ "Magic link is invalid or it has expired"
     end
