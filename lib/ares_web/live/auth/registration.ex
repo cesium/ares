@@ -10,7 +10,7 @@ defmodule AresWeb.UserLive.Registration do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-xl">
         <div class="flex flex-col gap-2 mb-8">
-          <h1 class="font-resegrg text-5xl">
+          <h1 class="font-resegrg text-4xl sm:text-5xl">
             Registration
           </h1>
           <p class="text-2xl">
