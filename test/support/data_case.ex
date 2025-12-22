@@ -15,6 +15,7 @@ defmodule Ares.DataCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   alias Ecto.Adapters.SQL.Sandbox
 

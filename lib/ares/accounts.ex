@@ -102,11 +102,15 @@ defmodule Ares.Accounts do
 
   @doc """
   Updates a user's CV.
+
   ## Examples
+
       iex> update_user_cv(user, %{cv: ...})
       {:ok, %User{}}
+
       iex> update_user_cv(user, %{cv: bad_value})
       {:error, %Ecto.Changeset{}}
+
   """
   def update_user_cv(user, attrs) do
     user
