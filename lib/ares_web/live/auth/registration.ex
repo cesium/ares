@@ -153,26 +153,22 @@ defmodule AresWeb.UserLive.Registration do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    case Accounts.register_user(user_params, &consume_image_data(socket, &1)) do
-      {:ok, user} ->
-        {:ok, _} =
-          Accounts.deliver_login_instructions(
-            user,
-            &url(~p"/log-in/#{&1}")
-          )
-
-        {:noreply,
-         socket
-         |> put_flash(
-           :info,
-           "An email was sent to #{user.email}, please access it to confirm your account."
-         )
-         |> push_navigate(to: ~p"/log-in")}
+    with false <- Enum.empty?(socket.assigns.uploads.cv.entries),
+        {:ok, user} <- Accounts.register_user(user_params, &consume_image_data(socket, &1)),
+        {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
+      {:noreply,
+      socket
+      |> put_flash(:info, "An email was sent to #{user.email}, please access it to confirm your account.")
+      |> push_navigate(to: ~p"/log-in")}
+    else
+      true ->
+        {:noreply, put_flash(socket, :error, "CV was not uploaded")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
   end
+
 
   def handle_progress(:cv, entry, socket) do
     if entry.done? do
