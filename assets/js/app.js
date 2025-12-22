@@ -31,6 +31,10 @@ const hooks = {
   ...colocatedHooks
 }
 
+const hooks = { 
+  ...colocatedHooks
+}
+
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
