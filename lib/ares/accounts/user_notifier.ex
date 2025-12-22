@@ -1,4 +1,7 @@
 defmodule Ares.Accounts.UserNotifier do
+  @moduledoc """
+  Module responsible for sending account-related emails to users.
+  """
   import Swoosh.Email
 
   alias Ares.Mailer

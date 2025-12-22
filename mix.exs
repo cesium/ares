@@ -67,7 +67,8 @@ defmodule Ares.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:faker, "~> 0.18.0"}
+      {:faker, "~> 0.18.0"},
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end
 

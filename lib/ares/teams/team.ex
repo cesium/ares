@@ -1,4 +1,7 @@
 defmodule Ares.Teams.Team do
+  @moduledoc """
+  The Team schema.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

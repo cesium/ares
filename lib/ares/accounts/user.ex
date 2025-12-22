@@ -1,4 +1,7 @@
 defmodule Ares.Accounts.User do
+  @moduledoc """
+  The User schema.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -54,11 +57,11 @@ defmodule Ares.Accounts.User do
   A user changeset for associating a team.
   """
   def team_changeset(user, attrs) do
-    if not user.is_admin do
+    if user.is_admin do
+      add_error(%Ecto.Changeset{data: user}, :team_id, "admin users cannot join teams")
+    else
       user
       |> cast(attrs, [:team_id])
-    else
-      add_error(%Ecto.Changeset{data: user}, :team_id, "admin users cannot join teams")
     end
   end
 

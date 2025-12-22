@@ -1,4 +1,7 @@
 defmodule AresWeb.UserAuth do
+  @moduledoc """
+  Handles user authentication and authorization.
+  """
   use AresWeb, :verified_routes
 
   import Plug.Conn
