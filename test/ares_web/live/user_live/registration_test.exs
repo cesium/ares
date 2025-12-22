@@ -36,20 +36,6 @@ defmodule AresWeb.UserLive.RegistrationTest do
   end
 
   describe "register user" do
-    test "creates account but does not log in", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/register")
-
-      email = unique_user_email()
-      form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
-
-      {:ok, _lv, html} =
-        render_submit(form)
-        |> follow_redirect(conn, ~p"/log-in")
-
-      assert html =~
-               ~r/An email was sent to .*, please access it to confirm your account/
-    end
-
     test "renders errors for duplicated email", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/register")
 

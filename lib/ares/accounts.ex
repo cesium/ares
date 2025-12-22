@@ -93,7 +93,7 @@ defmodule Ares.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def register_user(attrs, after_save \\ &{:ok, &1}) do
+  def register_user(attrs, after_save \\ & &1) do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
