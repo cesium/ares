@@ -1,8 +1,8 @@
 defmodule Ares.TeamsTest do
   use Ares.DataCase
 
-  alias Ares.Teams
   alias Ares.AccountsFixtures
+  alias Ares.Teams
 
   describe "teams" do
     alias Ares.Teams.Team

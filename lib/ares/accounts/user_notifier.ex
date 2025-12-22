@@ -4,8 +4,8 @@ defmodule Ares.Accounts.UserNotifier do
   """
   import Swoosh.Email
 
-  alias Ares.Mailer
   alias Ares.Accounts.User
+  alias Ares.Mailer
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do

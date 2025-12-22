@@ -92,8 +92,8 @@ defmodule AresWeb do
       import AresWeb.Helpers
 
       # Common modules used in templates
-      alias Phoenix.LiveView.JS
       alias AresWeb.Layouts
+      alias Phoenix.LiveView.JS
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())
