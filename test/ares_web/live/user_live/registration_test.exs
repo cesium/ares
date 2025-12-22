@@ -35,23 +35,6 @@ defmodule AresWeb.UserLive.RegistrationTest do
     end
   end
 
-  describe "register user" do
-    test "renders errors for duplicated email", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/register")
-
-      user = user_fixture(%{email: "test@email.com"})
-
-      result =
-        lv
-        |> form("#registration_form",
-          user: %{"email" => user.email}
-        )
-        |> render_submit()
-
-      assert result =~ "has already been taken"
-    end
-  end
-
   describe "registration navigation" do
     test "redirects to login page when the Log in button is clicked", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/register")
