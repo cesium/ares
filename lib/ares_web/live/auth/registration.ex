@@ -3,6 +3,7 @@ defmodule AresWeb.UserLive.Registration do
 
   alias Ares.Accounts
   alias Ares.Accounts.User
+  alias AresWeb.Components.CVUploader
 
   @impl true
   def render(assigns) do
@@ -91,6 +92,14 @@ defmodule AresWeb.UserLive.Registration do
             label="Notes"
             placeholder="If you have any special needs, requests or dietary restrictions, please let us know."
           />
+
+          <.live_component
+            module={CVUploader}
+            id="cv-uploader"
+            uploaders={@uploads}
+            target={%JS{}}
+          />
+
           <p class="flex flex-row">
             <.input
               name="consent"
@@ -119,12 +128,32 @@ defmodule AresWeb.UserLive.Registration do
   def mount(_params, _session, socket) do
     changeset = Accounts.change_user(%User{}, %{}, validate_unique: false)
 
-    {:ok, assign_form(socket, changeset), temporary_assigns: [form: nil]}
+    {:ok,
+     socket
+     |> assign_form(changeset)
+     |> allow_upload(:cv,
+       accept: ~w(.pdf .doc .docx .txt .md .rtf),
+       max_entries: 1,
+       max_file_size: 5_000_000,
+       auto_upload: true,
+       progress: &handle_progress/3
+     )}
+  end
+
+  @impl true
+  def handle_event("validate", %{"user" => user_params}, socket) do
+    changeset = Accounts.change_user(%User{}, user_params, validate_unique: false)
+    {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
+  end
+
+  @impl true
+  def handle_event("cancel-upload", %{"ref" => ref} = _params, socket) do
+    {:noreply, cancel_upload(socket, :cv, ref)}
   end
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    case Accounts.register_user(user_params) do
+    case Accounts.register_user(user_params, &consume_image_data(socket, &1)) do
       {:ok, user} ->
         {:ok, _} =
           Accounts.deliver_login_instructions(
@@ -145,9 +174,37 @@ defmodule AresWeb.UserLive.Registration do
     end
   end
 
-  def handle_event("validate", %{"user" => user_params}, socket) do
-    changeset = Accounts.change_user(%User{}, user_params, validate_unique: false)
-    {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
+  def handle_progress(:cv, entry, socket) do
+    if entry.done? do
+      {:noreply, socket}
+    else
+      {:noreply, socket}
+    end
+  end
+
+  defp consume_image_data(socket, {:ok, user}) do
+    result =
+      consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
+        Accounts.update_user_cv(user, %{
+          "cv" => %Plug.Upload{
+            content_type: entry.client_type,
+            filename: entry.client_name,
+            path: path
+          }
+        })
+      end)
+
+    case result do
+      [updated_curriculum] ->
+        {:ok, updated_curriculum}
+
+      _ ->
+        {:ok, socket}
+    end
+  end
+
+  defp consume_image_data(_socket, result) do
+    result
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do

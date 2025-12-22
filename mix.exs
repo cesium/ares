@@ -68,6 +68,8 @@ defmodule Ares.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.18.0"},
+      {:waffle_ecto, "~> 0.0"},
+      {:waffle, "~> 1.1.9"},
       {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end

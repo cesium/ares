@@ -44,6 +44,11 @@ config :ares, AresWeb.Endpoint,
 # at the `config/runtime.exs`.
 config :ares, Ares.Mailer, adapter: Swoosh.Adapters.Local
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv",
+  asset_host: {:system, "ASSET_HOST"}
+
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.25.4",
