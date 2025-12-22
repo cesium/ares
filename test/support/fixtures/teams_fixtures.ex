@@ -4,6 +4,8 @@ defmodule Ares.TeamsFixtures do
   entities via the `Ares.Teams` context.
   """
 
+  alias Ares.AccountsFixtures
+
   @doc """
   Generate a team.
   """
@@ -17,7 +19,8 @@ defmodule Ares.TeamsFixtures do
         name: "some name",
         paid: true,
         public: true,
-        skills_needed: "some skills_needed"
+        skills_needed: "some skills_needed",
+        leader_id: AccountsFixtures.user_fixture().id
       })
       |> Ares.Teams.create_team()
 

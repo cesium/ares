@@ -17,6 +17,8 @@ defmodule AresWeb.ConnCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ares.Accounts
+
   using do
     quote do
       # The default endpoint for testing
@@ -46,7 +48,7 @@ defmodule AresWeb.ConnCase do
   """
   def register_and_log_in_user(%{conn: conn} = context) do
     user = Ares.AccountsFixtures.user_fixture()
-    scope = Ares.Accounts.Scope.for_user(user)
+    scope = Accounts.Scope.for_user(user)
 
     opts =
       context

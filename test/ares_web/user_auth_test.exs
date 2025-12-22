@@ -1,10 +1,10 @@
 defmodule AresWeb.UserAuthTest do
   use AresWeb.ConnCase, async: true
 
-  alias Phoenix.LiveView
   alias Ares.Accounts
   alias Ares.Accounts.Scope
   alias AresWeb.UserAuth
+  alias Phoenix.LiveView
 
   import Ares.AccountsFixtures
 

@@ -14,7 +14,12 @@ defmodule Ares.AccountsFixtures do
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
-      email: unique_user_email()
+      name: "some name",
+      email: unique_user_email(),
+      phone: "912345678",
+      age: 21,
+      course: "some course",
+      university: "some university"
     })
   end
 
