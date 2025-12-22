@@ -40,6 +40,7 @@ defmodule Ares.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:phoenix, "~> 1.8.1"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
@@ -66,11 +67,8 @@ defmodule Ares.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:bcrypt_elixir, "~> 3.0"},
-      # dev/test tooling
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:waffle_ecto, "~> 0.0.12"},
-      {:waffle, "~> 1.1.9"}
+      {:faker, "~> 0.18.0"},
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -87,14 +85,12 @@ defmodule Ares.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind Ares", "esbuild Ares"],
+      "assets.build": ["compile", "tailwind ares", "esbuild ares"],
       "assets.deploy": [
-        "tailwind Ares --minify",
-        "esbuild Ares --minify",
+        "tailwind ares --minify",
+        "esbuild ares --minify",
         "phx.digest"
       ],
-      # lint alias to run credo in strict mode
-      lint: ["credo --all --strict"],
       precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
     ]
   end

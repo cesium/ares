@@ -7,16 +7,22 @@
 # General application configuration
 import Config
 
+config :ares, :scopes,
+  user: [
+    default: true,
+    module: Ares.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :binary_id,
+    schema_table: :users,
+    test_data_fixture: Ares.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :ares,
   ecto_repos: [Ares.Repo],
-  generators: [timestamp_type: :utc_datetime]
-
-config :waffle,
-  storage: Waffle.Storage.Local,
-  storage_dir_prefix: "priv/waffle"
-
-config :waffle,
-  asset_host: {:system, "ASSET_HOST"}
+  generators: [timestamp_type: :utc_datetime, binary_id: true]
 
 # Configures the endpoint
 config :ares, AresWeb.Endpoint,
@@ -27,7 +33,7 @@ config :ares, AresWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Ares.PubSub,
-  live_view: [signing_salt: "+ixLmJDz"]
+  live_view: [signing_salt: "Py9lsAaq"]
 
 # Configures the mailer
 #

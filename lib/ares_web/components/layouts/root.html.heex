@@ -30,7 +30,11 @@
       })();
     </script>
   </head>
-  <body class="bg-black">
-    {@inner_content}
+  <body class="text-white font-vt323">
+    <.navbar user={if @current_scope, do: @current_scope.user} fixed />
+    <div class="mt-24">
+      {@inner_content}
+    </div>
+    <.footer />
   </body>
 </html>

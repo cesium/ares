@@ -23,7 +23,7 @@ config :ares, AresWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "ejw/PSSoqRhrPqlwFKu8rrZ4FeregRunGVKr7QpVXuXR6aprq09HAV6sB0Chp/xU",
+  secret_key_base: "hmjgfCsaDJQ6S744IzVYOvmv6fWr+KlaVsxV66t2CK96wFok6Q+e2Ig5TNnAgypP",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:ares, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:ares, ~w(--watch)]}
@@ -62,11 +62,6 @@ config :ares, AresWeb.Endpoint,
       ~r"lib/ares_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
   ]
-
-config :waffle,
-  storage: Waffle.Storage.Local,
-  storage_dir_prefix: "priv/waffle",
-  asset_host: "http://localhost:4000"
 
 # Enable dev routes for dashboard and mailbox
 config :ares, dev_routes: true

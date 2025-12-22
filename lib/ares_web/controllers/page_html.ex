@@ -7,27 +7,4 @@ defmodule AresWeb.PageHTML do
   use AresWeb, :html
 
   embed_templates "page_html/*"
-
-  alias Ares.Teams
-
-  def count_team_members(team) do
-    Teams.count_team_members(team)
-  end
-
-  def count_teams_looking_for_members(teams) do
-    Enum.count(teams, & &1.looking_for_members)
-  end
-
-  def total_members(teams) do
-    Enum.reduce(teams, 0, fn team, acc ->
-      acc + count_team_members(team)
-    end)
-  end
-
-  def average_team_size([]), do: 0
-
-  def average_team_size(teams) do
-    total = total_members(teams)
-    (total / Enum.count(teams)) |> Float.round(1)
-  end
 end

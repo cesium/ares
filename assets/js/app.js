@@ -24,19 +24,22 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/ares"
 import topbar from "../vendor/topbar"
-import MobileNavigationHook from "./mobile_navigation_hook"
-import FaqToggleHook from "./faq_toggle_hook"
-import FlashHook from "./flash_hook"
+import { FaqToggle } from './hooks';
+
+const hooks = { 
+  FaqToggle,
+  ...colocatedHooks
+}
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
-  hooks: {...colocatedHooks, MobileNavigation: MobileNavigationHook, FaqToggle: FaqToggleHook, Flash: FlashHook},
+  hooks: hooks,
 })
 
 // Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
+topbar.config({barColors: {0: "#EB1A63"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
 
@@ -83,3 +86,4 @@ if (process.env.NODE_ENV === "development") {
     window.liveReloader = reloader
   })
 }
+

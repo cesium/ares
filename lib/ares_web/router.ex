@@ -1,48 +1,27 @@
 defmodule AresWeb.Router do
   use AresWeb, :router
 
+  import AresWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug AresWeb.SessionPlug
     plug :fetch_live_flash
     plug :put_root_layout, html: {AresWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_scope_for_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", AresWeb.App do
-    pipe_through :browser
-
-    live "/", HomeLive.Index, :index
-    live "/faqs", FaqsLive.Index, :index
-    live "/register", AccountLive.Index, :new
-    live "/team-formation", TeamFormationLive.Index, :index
-    live "/team-formation/join", TeamFormationLive.Index, :join
-    live "/teams", TeamsLive.Index, :index
-    live "/profile", ProfileLive.Index, :index
-    live "/admin", AdminLive.Index, :index
-  end
-
-  # Routes handled by top-level controllers (AresWeb.*)
   scope "/", AresWeb do
     pipe_through :browser
 
-    get "/auth/login", AuthController, :login
-    post "/auth/login", AuthController, :login_submit
-    get "/auth/register", AuthController, :register
-    post "/auth/register", AuthController, :register_submit
-    post "/auth/logout", AuthController, :logout
-
-    post "/register", AccountController, :create
-    post "/login", AccountController, :login
-    post "/logout", AccountController, :logout
-    post "/team-formation", PageController, :create_team
-    post "/team-join", PageController, :join_team
+    live "/", LandingLive.Home, :index
+    live "/faqs", LandingLive.Faqs, :index
   end
 
   # Other scopes may use custom stacks.
@@ -65,5 +44,35 @@ defmodule AresWeb.Router do
       live_dashboard "/dashboard", metrics: AresWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  ## Authentication routes
+
+  scope "/", AresWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
+      live "/app/profile", AppLive.Profile, :index
+      live "/app/team-formation", AppLive.TeamFormation, :index
+      live "/users/settings", UserLive.Settings, :edit
+      live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
+    end
+
+    post "/users/update-password", UserSessionController, :update_password
+  end
+
+  scope "/", AresWeb do
+    pipe_through [:browser]
+
+    live_session :current_user,
+      on_mount: [{AresWeb.UserAuth, :mount_current_scope}] do
+      live "/register", UserLive.Registration, :new
+      live "/log-in", UserLive.Login, :new
+      live "/log-in/:token", UserLive.Confirmation, :new
+    end
+
+    post "/log-in", UserSessionController, :create
+    delete "/users/log-out", UserSessionController, :delete
   end
 end

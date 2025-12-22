@@ -16,7 +16,6 @@ defmodule Ares.DataCase do
 
   use ExUnit.CaseTemplate
 
-  # Alias nested module so Credo won't warn about nested modules
   alias Ecto.Adapters.SQL.Sandbox
 
   using do

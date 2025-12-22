@@ -1,7 +1,5 @@
-# ![BugsByte banner](priv/static/images/assets/cesium.png)
+# ![BugsByte Banner](.github/brand/ares-banner.png)
 
-
-</div>
 
 ## 🤝 Contributing
 

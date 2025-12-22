@@ -1,10 +1,12 @@
 defmodule Ares.Teams do
   @moduledoc """
-  Context for managing teams and team formation.
+  The Teams context.
   """
 
   import Ecto.Query, warn: false
   alias Ares.Repo
+
+  alias Ares.Accounts
   alias Ares.Teams.Team
 
   @doc """
@@ -18,7 +20,26 @@ defmodule Ares.Teams do
   """
   def list_teams do
     Repo.all(Team)
-    |> Repo.preload(:members)
+  end
+
+  @doc """
+  Returns the list of public teams that aren't full or have already paid.
+
+  ## Examples
+
+      iex> list_available_teams()
+      [%Team{}, ...]
+
+  """
+  def list_available_teams do
+    Team
+    |> where([t], t.public == true)
+    |> where([t], t.paid == false)
+    |> join(:left, [t], m in assoc(t, :members))
+    |> group_by([t, _m], t.id)
+    |> having([_t, m], count(m.id) < 5)
+    |> preload(:members)
+    |> Repo.all()
   end
 
   @doc """
@@ -35,25 +56,9 @@ defmodule Ares.Teams do
       ** (Ecto.NoResultsError)
 
   """
-  def get_team!(id), do: Repo.get!(Team, id)
-
-  @doc """
-  Gets a single team by code.
-
-  Returns nil if the Team does not exist.
-
-  ## Examples
-
-      iex> get_team_by_code("ABC123")
-      %Team{}
-
-      iex> get_team_by_code("INVALID")
-      nil
-
-  """
-  def get_team_by_code(code) do
+  def get_team!(id) do
     Team
-    |> Repo.get_by(code: code)
+    |> Repo.get!(id)
     |> Repo.preload(:members)
   end
 
@@ -69,9 +74,27 @@ defmodule Ares.Teams do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_team(attrs \\ %{}) do
+  def create_team(attrs) do
     %Team{}
     |> Team.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Registers a team.
+
+  ## Examples
+
+      iex> register_team(%{field: value})
+      {:ok, %Team{}}
+
+      iex> register_team(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def register_team(attrs) do
+    %Team{}
+    |> Team.registration_changeset(attrs)
     |> Repo.insert()
   end
 
@@ -119,50 +142,40 @@ defmodule Ares.Teams do
 
   """
   def change_team(%Team{} = team, attrs \\ %{}) do
-    Team.changeset(team, attrs)
+    Team.registration_changeset(team, attrs)
   end
 
-  @doc """
-  Counts the number of members in a team by counting users with that team code.
+  def create_and_join_team(user, team_params) do
+    code = generate_random_code()
 
-  ## Examples
-
-      iex> count_team_members(%Team{code: "TEAM001"})
-      3
-
-  """
-
-  def count_team_members(%Team{code: code}) do
-    from(u in "users", where: u.team_code == ^code)
-    |> Repo.aggregate(:count, :id)
+    Repo.transaction(fn ->
+      with {:ok, team} <-
+             register_team(Map.put(team_params, "code", code) |> Map.put("leader_id", user.id)),
+           {:ok, _user} <- Accounts.update_user_team(user, %{team_id: team.id}) do
+        {:ok, team}
+      else
+        error -> Repo.rollback(error)
+      end
+    end)
   end
 
-  @doc """
-  Counts the total number of teams.
-
-  ## Examples
-
-      iex> count_teams()
-      15
-
-  """
-  def count_teams do
-    Repo.aggregate(Team, :count, :id)
+  defp generate_random_code do
+    :crypto.strong_rand_bytes(4)
+    |> Base.encode32(padding: false)
+    |> binary_part(0, 6)
   end
 
-  def close_team(%Team{} = team) do
-    update_team(team, %{looking_for_members: false})
-  end
+  def add_user_to_team_by_code(user, code) do
+    case Repo.get_by(Team, code: code) |> Repo.preload(:members) do
+      nil ->
+        {:error, :not_found}
 
-  def open_team(%Team{} = team) do
-    if team_is_full(team) do
-      {:error, "The team is full, you cannot open it"}
-    else
-      update_team(team, %{looking_for_members: true})
+      team ->
+        if length(team.members) < 5 and not team.paid do
+          Accounts.update_user_team(user, %{team_id: team.id})
+        else
+          {:error, :unavailable}
+        end
     end
-  end
-
-  def team_is_full(%Team{} = team) do
-    Enum.count(team.members) == 5
   end
 end

@@ -1,0 +1,62 @@
+defmodule AresWeb.LandingLive.Faqs do
+  use AresWeb, :live_view
+
+  @faqs [
+    %{
+      question:
+        "I'm not a student from Universidade do Minho, can I still participate in the event?",
+      answer: "Yes, all higher education students over 18 can participate in the event."
+    },
+    %{
+      question: "What is the cost to participate in the BugsByte Hackathon?",
+      answer:
+        "The participation fee is just €5 per person, but don't worry—we've got you covered! Each participant will receive a special kit with goodies, and we'll provide all the food throughout the event."
+    },
+    %{
+      question: "Do I need to register to be able to participate in the event?",
+      answer:
+        "Yes, it is necessary to register to be able to participate in the event. Very soon we'll make a link available on our website to do so."
+    },
+    %{
+      question: "Do I need to register as a team?",
+      answer:
+        "No, only individual registration is required. Once registered, you can form a team with other participants at your convenience."
+    },
+    %{
+      question: "How many people can a team contain?",
+      answer: "The sizes of the teams may vary between 2 to 5 elements."
+    },
+    %{
+      question: "Can I leave the space of the event during the weekend?",
+      answer:
+        "Yes, you're completely free to enter and exit the premisses of the event during the weekend."
+    },
+    %{
+      question: "Which technology/tools are we gonna work with?",
+      answer:
+        "You're going to be totally free to choose the stack you'll work on, but we recommend using the frameworks and technologies suggested by the company that proposed your chosen theme."
+    },
+    %{
+      question: "Where am I going to sleep?",
+      answer:
+        "If you intend to sleep during the event, we will have a dedicated place for you to rest. Only bring what you find essential such as pillows, sleeping bags, blankets, etc."
+    },
+    %{
+      question: "What am I going to eat during the event?",
+      answer:
+        "All food is provided by the BugsByte organization, including breakfast, lunch, an afternoon snack, and dinner. You're welcome to bring your own snacks for the day and night, but ordering food from services like Uber Eats or Glovo is not allowed."
+    }
+  ]
+
+  @impl true
+  def mount(_params, _session, socket) do
+    socket =
+      socket
+      |> assign(
+        :faqs,
+        @faqs |> Enum.map(&(Map.put(&1, :expanded, false) |> Map.put(:id, Ecto.UUID.generate())))
+      )
+
+    {:ok, socket}
+  end
+end
