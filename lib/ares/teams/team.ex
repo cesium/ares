@@ -14,6 +14,7 @@ defmodule Ares.Teams.Team do
     field :paid, :boolean, default: false
 
     has_many :members, Ares.Accounts.User, foreign_key: :team_id
+    belongs_to :leader, Ares.Accounts.User, foreign_key: :leader_id, type: :binary_id
 
     timestamps(type: :utc_datetime)
   end
@@ -21,7 +22,16 @@ defmodule Ares.Teams.Team do
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:name, :description, :code, :skills_needed, :experience_level, :public, :paid])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :code,
+      :skills_needed,
+      :experience_level,
+      :public,
+      :paid,
+      :leader_id
+    ])
     |> validate_required([
       :name,
       :description,
@@ -29,13 +39,22 @@ defmodule Ares.Teams.Team do
       :skills_needed,
       :experience_level,
       :public,
-      :paid
+      :paid,
+      :leader_id
     ])
   end
 
   def registration_changeset(team, attrs) do
     team
-    |> cast(attrs, [:name, :description, :code, :skills_needed, :experience_level, :public])
-    |> validate_required([:name, :code])
+    |> cast(attrs, [
+      :name,
+      :description,
+      :code,
+      :skills_needed,
+      :experience_level,
+      :public,
+      :leader_id
+    ])
+    |> validate_required([:name, :code, :leader_id])
   end
 end

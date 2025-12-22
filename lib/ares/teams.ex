@@ -149,7 +149,8 @@ defmodule Ares.Teams do
     code = generate_random_code()
 
     Repo.transaction(fn ->
-      with {:ok, team} <- register_team(Map.put(team_params, "code", code)),
+      with {:ok, team} <-
+             register_team(Map.put(team_params, "code", code) |> Map.put("leader_id", user.id)),
            {:ok, _user} <- Accounts.update_user_team(user, %{team_id: team.id}) do
         {:ok, team}
       else

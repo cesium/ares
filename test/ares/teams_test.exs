@@ -2,6 +2,7 @@ defmodule Ares.TeamsTest do
   use Ares.DataCase
 
   alias Ares.Teams
+  alias Ares.AccountsFixtures
 
   describe "teams" do
     alias Ares.Teams.Team
@@ -24,7 +25,7 @@ defmodule Ares.TeamsTest do
     end
 
     test "get_team!/1 returns the team with given id" do
-      team = team_fixture()
+      team = team_fixture() |> Map.put(:members, [])
       assert Teams.get_team!(team.id) == team
     end
 
@@ -36,6 +37,7 @@ defmodule Ares.TeamsTest do
         description: "some description",
         skills_needed: "some skills_needed",
         experience_level: "some experience_level",
+        leader_id: AccountsFixtures.user_fixture().id,
         paid: true
       }
 
@@ -77,7 +79,7 @@ defmodule Ares.TeamsTest do
     end
 
     test "update_team/2 with invalid data returns error changeset" do
-      team = team_fixture()
+      team = team_fixture() |> Map.put(:members, [])
       assert {:error, %Ecto.Changeset{}} = Teams.update_team(team, @invalid_attrs)
       assert team == Teams.get_team!(team.id)
     end

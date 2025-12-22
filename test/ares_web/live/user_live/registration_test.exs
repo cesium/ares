@@ -8,7 +8,7 @@ defmodule AresWeb.UserLive.RegistrationTest do
     test "renders registration page", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/register")
 
-      assert html =~ "Register"
+      assert html =~ "Registration"
       assert html =~ "Log in"
     end
 
@@ -30,7 +30,7 @@ defmodule AresWeb.UserLive.RegistrationTest do
         |> element("#registration_form")
         |> render_change(user: %{"email" => "with spaces"})
 
-      assert result =~ "Register"
+      assert result =~ "Registration"
       assert result =~ "must have the @ sign and no spaces"
     end
   end
