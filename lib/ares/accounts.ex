@@ -93,10 +93,25 @@ defmodule Ares.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def register_user(attrs) do
+  def register_user(attrs, after_save \\ &{:ok, &1}) do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
+    |> then(after_save)
+  end
+
+  @doc """
+  Updates a user's CV.
+  ## Examples
+      iex> update_user_cv(user, %{cv: ...})
+      {:ok, %User{}}
+      iex> update_user_cv(user, %{cv: bad_value})
+      {:error, %Ecto.Changeset{}}
+  """
+  def update_user_cv(user, attrs) do
+    user
+    |> User.cv_changeset(attrs)
+    |> Repo.update()
   end
 
   @doc """
