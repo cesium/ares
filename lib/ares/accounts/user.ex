@@ -1,9 +1,11 @@
 defmodule Ares.Accounts.User do
   use Ecto.Schema
+  use Waffle.Ecto.Schema
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
+
   schema "users" do
     field :name, :string
     field :email, :string
@@ -18,6 +20,7 @@ defmodule Ares.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :authenticated_at, :utc_datetime, virtual: true
 
+    field :cv, Ares.Uploaders.CV.Type
     belongs_to :team, Ares.Teams.Team, type: :binary_id
 
     timestamps(type: :utc_datetime)
@@ -25,7 +28,7 @@ defmodule Ares.Accounts.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin])
+    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin, :cv])
     |> validate_required([:name, :email])
     |> email_changeset(attrs)
     |> password_changeset(attrs)
@@ -36,7 +39,7 @@ defmodule Ares.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes])
+    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :cv])
     |> validate_required([:name, :email, :phone, :age, :course, :university])
     |> validate_length(:name, max: 100)
     |> validate_phone()
@@ -60,6 +63,11 @@ defmodule Ares.Accounts.User do
     else
       add_error(%Ecto.Changeset{data: user}, :team_id, "admin users cannot join teams")
     end
+  end
+
+  def cv_changeset(user, attrs) do
+    user
+    |> cast_attachments(attrs, [:cv])
   end
 
   @doc """
