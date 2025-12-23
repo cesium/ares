@@ -68,11 +68,13 @@ defmodule Ares.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.18.0"},
-      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false},
       {:gen_smtp, "~> 1.0"},
       {:ex_aws, "~> 2.1"},
       {:sweet_xml, "~> 0.6"},
-      {:phoenix_swoosh, "~> 1.0"}
+      {:phoenix_swoosh, "~> 1.0"},
+      {:waffle_ecto, "~> 0.0"},
+      {:waffle, "~> 1.1.9"},
+      {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end
 

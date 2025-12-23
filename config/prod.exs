@@ -7,6 +7,11 @@ import Config
 # before starting your production server.
 config :ares, AresWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :waffle,
+  storage: Waffle.Storage.S3,
+  bucket: {:system, "AWS_S3_BUCKET"},
+  asset_host: {:system, "ASSET_HOST"}
+
 config :ex_aws,
   json_codec: Jason,
   access_key_id: {:system, "AWS_ACCESS_KEY_ID"},

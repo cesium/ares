@@ -42,6 +42,13 @@ defmodule AresWeb.UserLive.RegistrationTest do
       email = unique_user_email()
       form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
 
+      fi =
+        file_input(lv, "#registration_form", :cv, [
+          %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+        ])
+
+      render_upload(fi, "cv.pdf")
+
       {:ok, _lv, html} =
         render_submit(form)
         |> follow_redirect(conn, ~p"/log-in")
@@ -60,6 +67,15 @@ defmodule AresWeb.UserLive.RegistrationTest do
         |> form("#registration_form",
           user: %{"email" => user.email}
         )
+        |> then(fn form ->
+          fi =
+            file_input(lv, "#registration_form", :cv, [
+              %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+            ])
+
+          render_upload(fi, "cv.pdf")
+          form
+        end)
         |> render_submit()
 
       assert result =~ "has already been taken"
