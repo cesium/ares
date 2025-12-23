@@ -12,7 +12,7 @@ defmodule Ares.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"Ares", "contact@example.com"})
+      |> from({Mailer.get_sender_name(), Mailer.get_sender_address()})
       |> subject(subject)
       |> text_body(body)
 

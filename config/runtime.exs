@@ -106,11 +106,18 @@ if config_env() == :prod do
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
-  # ExAwsAmazonSES requires AWS credentials.
-
-  config :ares, Ares.Mailer,
-    adapter: Swoosh.Adapters.ExAwsAmazonSES,
-    region: System.get_env("AWS_SES_REGION") || "us-east-1",
-    access_key: System.get_env("AWS_SES_ACCESS_KEY_ID"),
-    secret_key: System.get_env("AWS_SES_SECRET_ACCESS_KEY")
+  # Also, you may need to configure the Swoosh API client of your choice if you
+  # are not using SMTP. Here is an example of the configuration:
+  #
+  #     config :safira, Safira.Mailer,
+  #       adapter: Swoosh.Adapters.Mailgun,
+  #       api_key: System.get_env("MAILGUN_API_KEY"),
+  #       domain: System.get_env("MAILGUN_DOMAIN")
+  #
+  # For this example you need include a HTTP client required by Swoosh API client.
+  # Swoosh supports Hackney and Finch out of the box:
+  #
+  #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
+  #
+  # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
