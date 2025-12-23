@@ -42,7 +42,6 @@ defmodule AresWeb.UserLive.RegistrationTest do
       email = unique_user_email()
       form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
 
-      # Upload a CV to satisfy the registration requirement
       fi =
         file_input(lv, "#registration_form", :cv, [
           %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
@@ -69,7 +68,6 @@ defmodule AresWeb.UserLive.RegistrationTest do
           user: %{"email" => user.email}
         )
         |> then(fn form ->
-          # Upload a CV so the server runs validations and shows errors
           fi =
             file_input(lv, "#registration_form", :cv, [
               %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
