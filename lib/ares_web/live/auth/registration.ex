@@ -172,12 +172,8 @@ defmodule AresWeb.UserLive.Registration do
     end
   end
 
-  def handle_progress(:cv, entry, socket) do
-    if entry.done? do
-      {:noreply, socket}
-    else
-      {:noreply, socket}
-    end
+  def handle_progress(:cv, _entry, socket) do
+    {:noreply, socket}
   end
 
   defp consume_image_data(socket, {:ok, user}) do

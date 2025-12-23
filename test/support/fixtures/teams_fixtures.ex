@@ -5,8 +5,6 @@ defmodule Ares.TeamsFixtures do
   """
   alias Ares.AccountsFixtures
 
-  alias Ares.AccountsFixtures
-
   @doc """
   Generate a team.
   """

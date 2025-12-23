@@ -7,11 +7,11 @@ defmodule AresWeb.Components.CVUploader do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="w-full">
+    <div class="my-8 w-full">
       <.live_file_input upload={@uploaders.cv} class="hidden" />
       <div
         :if={length(@uploaders.cv.entries) == 0}
-        class="group relative overflow-hidden rounded-lg border-2 border-gray-300 bg-white"
+        class="group relative overflow-hidden rounded-sm border-2 bg-white"
         phx-drop-target={@uploaders.cv.ref}
       >
         <div class="px-4 py-6 text-center">
@@ -40,7 +40,7 @@ defmodule AresWeb.Components.CVUploader do
       <div class="mt-3 space-y-2">
         <%= for entry <- @uploaders.cv.entries do %>
           <%= for err <- upload_errors(@uploaders.cv, entry) do %>
-            <div class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
+            <div class="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
               <div class="flex items-center gap-2">
                 <.icon name="hero-exclamation-circle" class="h-4 w-4 flex-shrink-0" />
                 <span>{Phoenix.Naming.humanize(err)}</span>
@@ -48,7 +48,7 @@ defmodule AresWeb.Components.CVUploader do
             </div>
           <% end %>
           <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-            <div class="rounded-lg border border-gray-200 bg-white shadow-sm">
+            <div class="rounded-sm border border-gray-200 bg-white shadow-sm">
               <div class="flex items-center gap-3 p-3">
                 <div class="min-w-0 flex-1">
                   <p class="truncate text-sm font-medium text-gray-900">
@@ -76,7 +76,7 @@ defmodule AresWeb.Components.CVUploader do
                   phx-click="cancel-upload"
                   phx-value-ref={entry.ref}
                   aria-label="Remove file"
-                  class="flex-shrink-0 rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                  class="flex-shrink-0 rounded-sm p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
                 >
                   <.icon name="hero-x-mark" class="h-4 w-4" />
                 </button>
