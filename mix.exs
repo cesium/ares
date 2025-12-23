@@ -71,7 +71,8 @@ defmodule Ares.MixProject do
       {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false},
       {:gen_smtp, "~> 1.0"},
       {:ex_aws, "~> 2.1"},
-      {:sweet_xml, "~> 0.6"}
+      {:sweet_xml, "~> 0.6"},
+      {:phoenix_swoosh, "~> 1.0"}
     ]
   end
 

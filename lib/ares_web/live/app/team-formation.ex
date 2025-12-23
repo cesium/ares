@@ -128,9 +128,9 @@ defmodule AresWeb.AppLive.TeamFormation do
                   Browse available teams and find your perfect match
                 </p>
               </div>
-                <.button phx-click="use-code" class="btn btn-primary w-full sm:w-auto text-xl uppercase">
-                  <.icon name="hero-key" class="w-5 h-5 mr-2" /> Use code
-                </.button>
+              <.button phx-click="use-code" class="btn btn-primary w-full sm:w-auto text-xl uppercase">
+                <.icon name="hero-key" class="w-5 h-5 mr-2" /> Use code
+              </.button>
             </div>
 
             <%= if Enum.empty?(@available_teams) do %>
