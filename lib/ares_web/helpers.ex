@@ -12,6 +12,11 @@ defmodule AresWeb.Helpers do
     names = String.split(full_name, " ")
     first = List.first(names)
     last = List.last(names)
-    "#{first} #{last}"
+
+    if first == last do
+      first
+    else
+      "#{first} #{last}"
+    end
   end
 end

@@ -16,7 +16,7 @@ defmodule Ares.TeamsTest do
       description: nil,
       skills_needed: nil,
       experience_level: nil,
-      paid: nil
+      payment_status: nil
     }
 
     test "list_teams/0 returns all teams" do
@@ -38,7 +38,7 @@ defmodule Ares.TeamsTest do
         skills_needed: "some skills_needed",
         experience_level: "some experience_level",
         leader_id: AccountsFixtures.user_fixture().id,
-        paid: true
+        payment_status: :none
       }
 
       assert {:ok, %Team{} = team} = Teams.create_team(valid_attrs)
@@ -48,7 +48,7 @@ defmodule Ares.TeamsTest do
       assert team.description == "some description"
       assert team.skills_needed == "some skills_needed"
       assert team.experience_level == "some experience_level"
-      assert team.paid == true
+      assert team.payment_status == :none
     end
 
     test "create_team/1 with invalid data returns error changeset" do
@@ -65,7 +65,7 @@ defmodule Ares.TeamsTest do
         description: "some updated description",
         skills_needed: "some updated skills_needed",
         experience_level: "some updated experience_level",
-        paid: false
+        payment_status: :none
       }
 
       assert {:ok, %Team{} = team} = Teams.update_team(team, update_attrs)
@@ -75,7 +75,7 @@ defmodule Ares.TeamsTest do
       assert team.description == "some updated description"
       assert team.skills_needed == "some updated skills_needed"
       assert team.experience_level == "some updated experience_level"
-      assert team.paid == false
+      assert team.payment_status == :none
     end
 
     test "update_team/2 with invalid data returns error changeset" do

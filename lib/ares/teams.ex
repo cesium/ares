@@ -34,7 +34,7 @@ defmodule Ares.Teams do
   def list_available_teams do
     Team
     |> where([t], t.public == true)
-    |> where([t], t.paid == false)
+    |> where([t], t.payment_status == :none)
     |> join(:left, [t], m in assoc(t, :members))
     |> group_by([t, _m], t.id)
     |> having([_t, m], count(m.id) < 5)
@@ -171,7 +171,7 @@ defmodule Ares.Teams do
         {:error, :not_found}
 
       team ->
-        if length(team.members) < 5 and not team.paid do
+        if length(team.members) < 5 and team.payment_status == :none do
           Accounts.update_user_team(user, %{team_id: team.id})
         else
           {:error, :unavailable}
