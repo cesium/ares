@@ -8,6 +8,7 @@ defmodule Ares.Repo.Migrations.CreateUsersAuthTables do
       add :id, :binary_id, primary_key: true
       add :name, :string, null: false
       add :email, :citext, null: false
+      add :cv, :string
       add :phone, :string
       add :age, :integer
       add :course, :string
