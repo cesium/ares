@@ -7,11 +7,26 @@ import Config
 # before starting your production server.
 config :ares, AresWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :ex_aws,
+  json_codec: Jason,
+  access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+  secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"},
+  region: {:system, "AWS_REGION"},
+  s3: [
+    scheme: "https://",
+    host: {:system, "ASSET_HOST"},
+    region: {:system, "AWS_S3_REGION"},
+    access_key_id: {:system, "AWS_S3_ACCESS_KEY_ID"},
+    secret_access_key: {:system, "AWS_S3_SECRET_ACCESS_KEY"}
+  ]
+
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Req
 
 # Disable Swoosh Local Memory Storage
 config :swoosh, local: false
+
+config :ares, Ares.Mailer, adapter: Swoosh.Adapters.ExAwsAmazonSES
 
 # Do not print debug messages in production
 config :logger, level: :info

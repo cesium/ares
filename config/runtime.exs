@@ -20,6 +20,10 @@ if System.get_env("PHX_SERVER") do
   config :ares, AresWeb.Endpoint, server: true
 end
 
+config :ares,
+  from_email_name: System.get_env("FROM_EMAIL_NAME") || "BugsByte",
+  from_email_address: System.get_env("FROM_EMAIL_ADDRESS") || "no-reply@bugsbyte.org"
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||
@@ -102,18 +106,11 @@ if config_env() == :prod do
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
-  # Here is an example configuration for Mailgun:
-  #
-  #     config :ares, Ares.Mailer,
-  #       adapter: Swoosh.Adapters.Mailgun,
-  #       api_key: System.get_env("MAILGUN_API_KEY"),
-  #       domain: System.get_env("MAILGUN_DOMAIN")
-  #
-  # Most non-SMTP adapters require an API client. Swoosh supports Req, Hackney,
-  # and Finch out-of-the-box. This configuration is typically done at
-  # compile-time in your config/prod.exs:
-  #
-  #     config :swoosh, :api_client, Swoosh.ApiClient.Req
-  #
-  # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+  # ExAwsAmazonSES requires AWS credentials.
+
+  config :ares, Ares.Mailer,
+    adapter: Swoosh.Adapters.ExAwsAmazonSES,
+    region: System.get_env("AWS_SES_REGION") || "us-east-1",
+    access_key: System.get_env("AWS_SES_ACCESS_KEY_ID"),
+    secret_key: System.get_env("AWS_SES_SECRET_ACCESS_KEY")
 end
