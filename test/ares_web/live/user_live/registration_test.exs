@@ -35,6 +35,55 @@ defmodule AresWeb.UserLive.RegistrationTest do
     end
   end
 
+  describe "register user" do
+    test "creates account but does not log in", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
+
+      email = unique_user_email()
+      form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
+
+      # Upload a CV to satisfy the registration requirement
+      fi =
+        file_input(lv, "#registration_form", :cv, [
+          %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+        ])
+
+      render_upload(fi, "cv.pdf")
+
+      {:ok, _lv, html} =
+        render_submit(form)
+        |> follow_redirect(conn, ~p"/log-in")
+
+      assert html =~
+               ~r/An email was sent to .*, please access it to confirm your account/
+    end
+
+    test "renders errors for duplicated email", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
+
+      user = user_fixture(%{email: "test@email.com"})
+
+      result =
+        lv
+        |> form("#registration_form",
+          user: %{"email" => user.email}
+        )
+        |> then(fn form ->
+          # Upload a CV so the server runs validations and shows errors
+          fi =
+            file_input(lv, "#registration_form", :cv, [
+              %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+            ])
+
+          render_upload(fi, "cv.pdf")
+          form
+        end)
+        |> render_submit()
+
+      assert result =~ "has already been taken"
+    end
+  end
+
   describe "registration navigation" do
     test "redirects to login page when the Log in button is clicked", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/register")
