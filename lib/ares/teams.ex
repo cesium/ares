@@ -178,4 +178,20 @@ defmodule Ares.Teams do
         end
     end
   end
+
+  @doc """
+  Marks a team as paid.
+
+  ## Examples
+
+      iex> mark_team_as_paid(team_id)
+      {:ok, %Team{}}
+
+      iex> mark_team_as_paid(invalid_team_id)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def mark_team_as_paid(team_id) do
+    update_team(get_team!(team_id), %{payment_status: :paid})
+  end
 end

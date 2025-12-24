@@ -1,9 +1,8 @@
 defmodule AresWeb.AppLive.Payment do
   use AresWeb, :live_view
 
+  alias Ares.{Billing, Teams}
   alias Ecto.Changeset
-  alias Ares.Billing
-  alias Ares.Teams
 
   @impl true
   def render(assigns) do
@@ -225,12 +224,10 @@ defmodule AresWeb.AppLive.Payment do
       }
 
       case Billing.start_payment(:mbway, socket.assigns.team.id, order_data) do
-        {:ok, _response} ->
-          {:noreply, push_navigate(socket, to: ~p"/app/payment/waiting")}
+        {:ok, {:ok, payment}} ->
+          {:noreply, push_navigate(socket, to: ~p"/app/payment/#{payment.order_id}")}
 
-        {:error, reason} ->
-          IO.inspect(reason, label: "Payment start error")
-
+        {:error, _reason} ->
           {:noreply,
            socket
            |> put_flash(:error, "Failed to start payment. Please try again later.")

@@ -91,7 +91,8 @@ defmodule Ares.MixProject do
         "esbuild ares --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"],
+      lint: ["credo --all --strict"]
     ]
   end
 end

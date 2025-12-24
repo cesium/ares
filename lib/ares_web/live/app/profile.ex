@@ -20,7 +20,7 @@ defmodule AresWeb.AppLive.Profile do
 
         <%= if @user.team && @user.team.leader_id == @user.id && length(@user.team.members) >= 2 do %>
           <div
-            :if={@user.team.payment_status == :none}
+            :if={@user.team.payment_status in [:none, :started]}
             class="mb-8 p-4 bg-green-900 border border-green-700 rounded-lg text-green-100 flex flex-row items-center justify-center gap-4 font-inter"
           >
             <.icon name="hero-banknotes" class="w-12 text-green-300" />
@@ -43,6 +43,14 @@ defmodule AresWeb.AppLive.Profile do
                 <div class="mb-4 md:mb-0">
                   <h3 class="text-3xl font-resegrg mb-2">{@user.team.name}</h3>
                   <p class="text-lg text-white">{@user.team.description}</p>
+                </div>
+                <div :if={@user.team.payment_status == :paid}>
+                  <div class="font-inter text-green-400 flex flex-row items-center gap-2 text-xl">
+                    <.icon name="hero-check-circle" class="w-6 h-6" />
+                    <span class="font-bold">
+                      {String.capitalize(to_string(@user.team.payment_status))}
+                    </span>
+                  </div>
                 </div>
               </div>
 

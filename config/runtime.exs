@@ -21,6 +21,7 @@ if System.get_env("PHX_SERVER") do
 end
 
 config :ares, Ares.Billing,
+  ares_api_key: System.get_env("ARES_API_KEY") || "",
   midas_api_url: System.get_env("MIDAS_API_URL") || "https://midas.caos.cesium.pt/api/v1",
   midas_api_key: System.get_env("MIDAS_API_KEY") || "",
   ticket_product_id: System.get_env("MIDAS_TICKET_PRODUCT_ID") || ""
