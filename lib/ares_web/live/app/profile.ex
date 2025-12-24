@@ -18,7 +18,7 @@ defmodule AresWeb.AppLive.Profile do
           <p class="text-2xl text-gray-300">{@user.email}</p>
         </div>
 
-        <%= if @user.team && @user.team.leader_id == @user.id && Enum.count(@user.team.members) >= 2 do %>
+        <%= if @user.team && @user.team.leader_id == @user.id && length(@user.team.members) >= 2 do %>
           <div
             :if={@user.team.payment_status == :none}
             class="mb-8 p-4 bg-green-900 border border-green-700 rounded-lg text-green-100 flex flex-row items-center justify-center gap-4 font-inter"
@@ -60,9 +60,9 @@ defmodule AresWeb.AppLive.Profile do
               <div>
                 <p class="text-sm text-gray-400 mb-1">Members</p>
                 <p class="font-bold text-white text-lg flex flex-row gap-4">
-                  {Enum.count(@user.team.members)}/5
+                  {length(@user.team.members)}/5
                   <span
-                    :if={Enum.count(@user.team.members) < 2}
+                    :if={length(@user.team.members) < 2}
                     class="text-xs flex flex-row items-center gap-2"
                   >
                     <.icon name="hero-exclamation-triangle" class="w-8" />

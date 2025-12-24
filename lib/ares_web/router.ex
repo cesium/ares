@@ -56,6 +56,7 @@ defmodule AresWeb.Router do
       live "/app/profile", AppLive.Profile, :index
       live "/app/team-formation", AppLive.TeamFormation, :index
       live "/app/payment", AppLive.Payment, :index
+      live "/app/payment/waiting", AppLive.PaymentWaiting, :index
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end

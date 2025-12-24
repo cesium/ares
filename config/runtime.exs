@@ -20,6 +20,11 @@ if System.get_env("PHX_SERVER") do
   config :ares, AresWeb.Endpoint, server: true
 end
 
+config :ares, Ares.Billing,
+  midas_api_url: System.get_env("MIDAS_API_URL") || "https://midas.caos.cesium.pt/api/v1",
+  midas_api_key: System.get_env("MIDAS_API_KEY") || "",
+  ticket_product_id: System.get_env("MIDAS_TICKET_PRODUCT_ID") || ""
+
 if config_env() == :prod do
   database_url =
     System.get_env("DATABASE_URL") ||

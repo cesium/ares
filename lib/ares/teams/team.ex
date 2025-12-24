@@ -37,12 +37,7 @@ defmodule Ares.Teams.Team do
     ])
     |> validate_required([
       :name,
-      :description,
       :code,
-      :skills_needed,
-      :experience_level,
-      :public,
-      :payment_status,
       :leader_id
     ])
   end
