@@ -57,6 +57,7 @@ defmodule AresWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
+      live "/app/dashboard", AppLive.Dashboard, :index
       live "/app/profile", AppLive.Profile, :index
       live "/app/team-formation", AppLive.TeamFormation, :index
       live "/app/payment", AppLive.Payment, :index

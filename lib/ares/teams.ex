@@ -23,6 +23,22 @@ defmodule Ares.Teams do
   end
 
   @doc """
+  Returns the list of teams with their members preloaded.
+
+  ## Examples
+
+      iex> list_teams_with_members()
+      [%Team{}, ...]
+
+  """
+  def list_teams_with_members do
+    Team
+    |> order_by([t], asc: t.name)
+    |> Repo.all()
+    |> Repo.preload(:members)
+  end
+
+  @doc """
   Returns the list of public teams that aren't full or have already paid.
 
   ## Examples

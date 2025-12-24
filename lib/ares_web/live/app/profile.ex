@@ -105,7 +105,10 @@ defmodule AresWeb.AppLive.Profile do
             </div>
           </div>
         <% else %>
-          <div class="bg-gray rounded-lg p-8 border border-gray-800 text-center font-inter">
+          <div
+            :if={!@user.is_admin}
+            class="bg-gray rounded-lg p-8 border border-gray-800 text-center font-inter"
+          >
             <div class="py-8">
               <.icon name="hero-users" class="w-16 h-16 mx-auto mb-4 text-gray-600" />
               <p class="text-lg text-gray-400 mb-6">

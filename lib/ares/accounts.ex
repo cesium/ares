@@ -24,6 +24,22 @@ defmodule Ares.Accounts do
   end
 
   @doc """
+  Returns the list of users with their teams preloaded.
+
+  ## Examples
+
+      iex> list_users_with_teams()
+      [%User{}, ...]
+
+  """
+  def list_users_with_teams do
+    User
+    |> order_by([u], asc: u.name)
+    |> Repo.all()
+    |> Repo.preload(:team)
+  end
+
+  @doc """
   Gets a user by email.
 
   ## Examples
