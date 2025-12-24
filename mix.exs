@@ -70,6 +70,7 @@ defmodule Ares.MixProject do
       {:faker, "~> 0.18.0"},
       {:gen_smtp, "~> 1.0"},
       {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
       {:phoenix_swoosh, "~> 1.0"},
       {:waffle_ecto, "~> 0.0"},
