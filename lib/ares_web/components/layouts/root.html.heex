@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="Ares" suffix=" · Phoenix Framework">
+    <.live_title default="Ares" suffix="">
       {assigns[:page_title]}
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
@@ -30,8 +30,8 @@
       })();
     </script>
   </head>
-  <body class="text-white font-vt323">
-    <.navbar user={if @current_scope, do: @current_scope.user} fixed />
+  <body class="text-white font-vt323 flex flex-col justify-between min-h-dvh">
+    <.navbar user={if @current_scope, do: @current_scope.user} />
     <div class="mt-24">
       {@inner_content}
     </div>
