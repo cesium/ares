@@ -9,8 +9,8 @@ defmodule AresWeb.AppLive.TeamFormation do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-4xl space-y-4">
         <div class="flex flex-col gap-2 mb-8">
-          <h1 class="font-resegrg text-5xl">Team Formation</h1>
-          <p class="text-2xl">
+          <h1 class="font-resegrg px-1 sm:px-2 text-4xl sm:text-5xl md:text-6xl">Team Formation</h1>
+          <p class="text-xl md:text-2xl">
             Create your dream team or join forces with other participants!
           </p>
         </div>
