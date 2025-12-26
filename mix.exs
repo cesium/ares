@@ -68,6 +68,13 @@ defmodule Ares.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
       {:faker, "~> 0.18.0"},
+      {:gen_smtp, "~> 1.0"},
+      {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:sweet_xml, "~> 0.6"},
+      {:phoenix_swoosh, "~> 1.0"},
+      {:waffle_ecto, "~> 0.0"},
+      {:waffle, "~> 1.1.9"},
       {:credo, "~> 1.7.12", only: [:dev, :test], runtime: false}
     ]
   end
@@ -91,8 +98,8 @@ defmodule Ares.MixProject do
         "esbuild ares --minify",
         "phx.digest"
       ],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"],
-      lint: ["credo --all --strict"]
+      lint: ["credo --all --strict"],
+      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
     ]
   end
 end

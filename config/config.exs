@@ -22,6 +22,11 @@ config :ares, :scopes,
     test_setup_helper: :register_and_log_in_user
   ]
 
+config :waffle,
+  storage: Waffle.Storage.Local,
+  storage_dir_prefix: "priv",
+  asset_host: {:system, "ASSET_HOST"}
+
 config :ares,
   ecto_repos: [Ares.Repo],
   generators: [timestamp_type: :utc_datetime, binary_id: true]

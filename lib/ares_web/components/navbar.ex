@@ -9,24 +9,17 @@ defmodule AresWeb.Components.Navbar do
   @doc """
   Renders the navigation header with mobile menu support.
   """
-  attr :fixed, :boolean, default: false
   attr :user, :map, default: nil
 
   def navbar(assigns) do
     ~H"""
     <header
       id="page-header"
-      class={[
-        "z-50 flex w-full items-center justify-between border-b border-white/10 px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-white font-inter",
-        if(@fixed,
-          do: "fixed-header fixed top-0 bg-black shadow-lg",
-          else: "absolute bottom-0"
-        )
-      ]}
+      class="z-60 flex w-full h-24 items-center justify-between px-4 sm:px-6 md:px-8 py-3 sm:py-4 text-white font-inter fixed top-0 backdrop-blur bg-linear-to-b from-black/90 to-black/30"
     >
-      <a class="flex items-center gap-2 sm:gap-4 hover:text-primary" href="/">
+      <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary" navigate="/">
         <img src="/images/logo-cesium.svg" alt="Cesium" class="object-fill w-32" />
-      </a>
+      </.link>
       <div>
         <div class="flex items-center gap-4 sm:gap-6">
           <nav class="hidden sm:block">
@@ -50,17 +43,17 @@ defmodule AresWeb.Components.Navbar do
                 </.link>
               </li>
               <li>
-                <a class="hover:text-primary transition-colors" href="/faqs">
+                <.link class="hover:text-primary transition-colors" navigate="/faqs">
                   FAQs
-                </a>
+                </.link>
               </li>
               <li>
-                <a
+                <.link
                   class="hover:text-primary transition-colors"
-                  href="https://2024.bugsbyte.org/"
+                  href="https://2025.bugsbyte.org/"
                 >
                   Previous edition
-                </a>
+                </.link>
               </li>
               <li>
                 <.link
@@ -121,9 +114,12 @@ defmodule AresWeb.Components.Navbar do
           <button
             id="open-nav-button"
             type="button"
-            class="btn sm:hidden text-white bg-black bg-opacity-70 p-2 rounded hover:bg-opacity-90 border border-white border-opacity-30"
+            class="sm:hidden text-white p-2 rounded hover:bg-opacity-90"
             aria-label="Navigation"
-            phx-click={JS.toggle(to: "#menu-modal")}
+            phx-click={
+              JS.toggle(to: "#menu-modal")
+              |> JS.add_class("overflow-hidden", to: "body")
+            }
           >
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -140,16 +136,16 @@ defmodule AresWeb.Components.Navbar do
 
     <div
       id="menu-modal"
-      class="hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-[100] font-inter"
+      class="hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-100 font-inter"
     >
       <div class="space-y-4 w-full h-full" role="dialog" aria-modal="true">
         <header class="text-right">
           <button
             id="close-nav-button"
             type="button"
-            class="btn text-white bg-black bg-opacity-70 p-2 rounded hover:bg-opacity-90 border border-white border-opacity-30"
+            class="text-white p-2 rounded hover:bg-opacity-90"
             aria-label="Close navigation"
-            phx-click={JS.toggle(to: "#menu-modal")}
+            phx-click={JS.toggle(to: "#menu-modal") |> JS.remove_class("overflow-hidden", to: "body")}
           >
             <svg
               class="w-6 h-6 sm:w-8 sm:h-8"
@@ -235,12 +231,12 @@ defmodule AresWeb.Components.Navbar do
               </a>
             </li>
             <li>
-              <a
+              <.link
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
-                href="https://2024.bugsbyte.org/"
+                href="https://2025.bugsbyte.org/"
               >
                 Previous edition
-              </a>
+              </.link>
             </li>
             <li>
               <.link
