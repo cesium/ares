@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :ares, Ares.Billing, ticket_price: 5
+
 config :ares, :scopes,
   user: [
     default: true,

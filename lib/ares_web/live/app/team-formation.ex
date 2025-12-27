@@ -316,6 +316,14 @@ defmodule AresWeb.AppLive.TeamFormation do
   end
 
   @impl true
+  def mount(_params, _session, %{assigns: %{current_scope: %{user: %{is_admin: true}}}} = socket) do
+    {:ok,
+     socket
+     |> put_flash(:error, "Admins cannot join teams.")
+     |> redirect(to: ~p"/app/profile")}
+  end
+
+  @impl true
   def mount(
         _params,
         _session,

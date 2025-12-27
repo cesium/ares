@@ -14,7 +14,7 @@ defmodule Ares.Teams.Team do
     field :skills_needed, :string
     field :experience_level, :string
     field :public, :boolean, default: false
-    field :paid, :boolean, default: false
+    field :payment_status, Ecto.Enum, values: [:none, :started, :paid], default: :none
 
     has_many :members, Ares.Accounts.User, foreign_key: :team_id
     belongs_to :leader, Ares.Accounts.User, foreign_key: :leader_id, type: :binary_id
@@ -32,17 +32,12 @@ defmodule Ares.Teams.Team do
       :skills_needed,
       :experience_level,
       :public,
-      :paid,
+      :payment_status,
       :leader_id
     ])
     |> validate_required([
       :name,
-      :description,
       :code,
-      :skills_needed,
-      :experience_level,
-      :public,
-      :paid,
       :leader_id
     ])
   end

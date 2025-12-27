@@ -20,9 +20,9 @@ config :ex_aws,
   s3: [
     scheme: "https://",
     host: {:system, "ASSET_HOST"},
-    region: {:system, "AWS_S3_REGION"},
-    access_key_id: {:system, "AWS_S3_ACCESS_KEY_ID"},
-    secret_access_key: {:system, "AWS_S3_SECRET_ACCESS_KEY"}
+    region: {:system, "AWS_REGION"},
+    access_key_id: {:system, "AWS_ACCESS_KEY_ID"},
+    secret_access_key: {:system, "AWS_SECRET_ACCESS_KEY"}
   ]
 
 # Configures Swoosh API Client
