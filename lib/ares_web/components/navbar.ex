@@ -24,7 +24,7 @@ defmodule AresWeb.Components.Navbar do
         <div class="flex items-center gap-4 sm:gap-6">
           <nav class="hidden sm:block">
             <ul class="flex items-center gap-4 lg:gap-6">
-              <li>
+              <!--<li>
                 <.link
                   class="hover:text-primary transition-colors"
                   target="_blank"
@@ -32,7 +32,7 @@ defmodule AresWeb.Components.Navbar do
                 >
                   Survival Guide
                 </.link>
-              </li>
+              </li> -->
               <li>
                 <.link
                   class="hover:text-primary transition-colors"
@@ -220,14 +220,14 @@ defmodule AresWeb.Components.Navbar do
                 </.link>
               </li>
             <% end %>
-            <li>
+            <!--<li>
               <.link
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 href="/docs/survival-guide.pdf"
               >
                 Survival Guide
               </.link>
-            </li>
+            </li> -->
             <li>
               <a
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
