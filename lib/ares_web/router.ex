@@ -60,6 +60,7 @@ defmodule AresWeb.Router do
       live "/app/dashboard", AppLive.Dashboard, :index
       live "/app/profile", AppLive.Profile, :index
       live "/app/team-formation", AppLive.TeamFormation, :index
+      live "/app/team-formation/join", AppLive.TeamFormation, :join
       live "/app/payment", AppLive.Payment, :index
       live "/app/payment/:id", AppLive.PaymentStatus, :index
       live "/users/settings", UserLive.Settings, :edit
@@ -74,7 +75,7 @@ defmodule AresWeb.Router do
 
     live_session :current_user,
       on_mount: [{AresWeb.UserAuth, :mount_current_scope}] do
-      live "/register", UserLive.Registration, :new
+      # live "/register", UserLive.Registration, :new
       live "/log-in", UserLive.Login, :new
       live "/log-in/:token", UserLive.Confirmation, :new
     end

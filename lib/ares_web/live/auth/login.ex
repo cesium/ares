@@ -17,7 +17,7 @@ defmodule AresWeb.UserLive.Login do
           <% else %>
             <p class="text-2xl">
               Don't have an account? <.link
-                navigate={~p"/register"}
+                navigate="/register"
                 class="font-semibold text-primary hover:underline"
                 phx-no-format
               >Register</.link> to participate now.

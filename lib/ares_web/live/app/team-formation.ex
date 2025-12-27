@@ -186,10 +186,9 @@ defmodule AresWeb.AppLive.TeamFormation do
 
                       <div class="flex items-center font-inter">
                         <.button
-                          phx-click="join-team"
+                          phx-click="open-join-modal"
                           class="btn btn-primary flex items-center"
                           phx-value-team_code={team.code}
-                          data-confirm={"Are you sure you want to join #{team.name}?"}
                         >
                           <.icon name="hero-user-plus" class="w-5 h-5 mr-2" /> Join
                         </.button>
@@ -276,6 +275,42 @@ defmodule AresWeb.AppLive.TeamFormation do
           </div>
         </div>
       </div>
+
+      <.modal
+        :if={@live_action == :join}
+        id="join-team-modal"
+        show
+        on_cancel={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+      >
+        <div class="space-y-8 flex flex-col items-center">
+          <div class="p-4 rounded-full border-2 border-primary">
+            <span class="hero-users text-primary size-6" />
+          </div>
+          <div class="space-y-2 text-center">
+            <h2 class="text-2xl font-resegrg">Join Team?</h2>
+            <p class="text-xl">
+              You are about to join <span class="text-primary font-bold">{@selected_team.name}</span>. Confirm that this is the team you want to participate with.
+            </p>
+          </div>
+          <div class="flex flex-col gap-4 sm:flex-row w-full">
+            <button
+              type="button"
+              phx-click="join-team"
+              phx-value-team_code={@selected_team.code}
+              class="cursor-pointer bg-primary w-full sm:w-1/2 text-white py-2 px-6 rounded-lg hover:bg-primary/50 transition-colors"
+            >
+              Join Team
+            </button>
+            <button
+              type="button"
+              phx-click={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+              class="cursor-pointer bg-gray-600 w-full sm:w-1/2 text-white py-2 px-6 rounded-lg hover:bg-gray-500 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </.modal>
     </Layouts.app>
     """
   end
@@ -315,6 +350,25 @@ defmodule AresWeb.AppLive.TeamFormation do
   end
 
   @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :index, params) do
+    tab = Map.get(params, "tab", "create")
+
+    socket
+    |> assign(:tab, tab)
+  end
+
+  defp apply_action(socket, :join, params) do
+    tab = Map.get(params, "tab", "join")
+
+    socket
+    |> assign(:tab, tab)
+  end
+
+  @impl true
   def handle_event("save", %{"team" => team_params}, socket) do
     case Teams.create_and_join_team(socket.assigns.user, team_params) do
       {:ok, _team} ->
@@ -351,6 +405,16 @@ defmodule AresWeb.AppLive.TeamFormation do
          |> put_flash(:error, "Failed to join team. " <> team_join_error(reason))
          |> assign(:tab, "code")}
     end
+  end
+
+  @impl true
+  def handle_event("open-join-modal", %{"team_code" => team_code}, socket) do
+    selected_team = Enum.find(socket.assigns.available_teams, &(&1.code == team_code))
+
+    {:noreply,
+     socket
+     |> assign(:selected_team, selected_team)
+     |> push_patch(to: ~p"/app/team-formation/join?#{[tab: socket.assigns.tab]}")}
   end
 
   @impl true

@@ -55,14 +55,14 @@ defmodule AresWeb.Components.Navbar do
                   Previous edition
                 </.link>
               </li>
-              <li>
+              <%!-- <li>
                 <.link
                   class="hover:text-primary transition-colors"
                   navigate="/app/team-formation"
                 >
                   Teams
                 </.link>
-              </li>
+              </li> --%>
               <%= if @user && @user.is_admin do %>
                 <li>
                   <.link
@@ -94,6 +94,12 @@ defmodule AresWeb.Components.Navbar do
                     >
                       View Profile
                     </.link>
+                    <.link
+                      navigate="/users/settings"
+                      class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                    >
+                      Settings
+                    </.link>
                     <.link href="/users/log-out" method="delete" class="border-t border-gray-700">
                       <p class="w-full text-left px-4 py-2 text-black hover:bg-gray-300 rounded-b-lg transition-colors cursor-pointer">
                         Log out
@@ -101,12 +107,12 @@ defmodule AresWeb.Components.Navbar do
                     </.link>
                   </div>
                 <% else %>
-                  <.link
+                  <%!-- <.link
                     navigate="/register"
                     class="rounded-full px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-primary hover:text-primary transition-all"
                   >
                     Register
-                  </.link>
+                  </.link> --%>
                 <% end %>
               </li>
             </ul>
@@ -177,12 +183,12 @@ defmodule AresWeb.Components.Navbar do
                   Profile
                 </.link>
               <% else %>
-                <a
+                <%!-- <.link
                   class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   href="/register"
                 >
                   Register
-                </a>
+                </.link>  --%>
               <% end %>
             </li>
             <%= if @user do %>
@@ -196,6 +202,14 @@ defmodule AresWeb.Components.Navbar do
                   </.link>
                 </li>
               <% end %>
+              <li>
+                <.link
+                  navigate="/users/settings"
+                  class="block w-full py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                >
+                  Settings
+                </.link>
+              </li>
               <li>
                 <.link
                   href="/users/log-out"
@@ -238,14 +252,14 @@ defmodule AresWeb.Components.Navbar do
                 Previous edition
               </.link>
             </li>
-            <li>
+            <%!-- <li>
               <.link
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 navigate="/app/team-formation"
               >
                 Team formation
               </.link>
-            </li>
+            </li> --%>
           </ul>
         </nav>
       </div>
