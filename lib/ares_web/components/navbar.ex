@@ -189,7 +189,6 @@ defmodule AresWeb.Components.Navbar do
                 >
                   Register
                 </.link>
-                --%>
               <% end %>
             </li>
             <%= if @user do %>
