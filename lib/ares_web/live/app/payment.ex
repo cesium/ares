@@ -155,7 +155,7 @@ defmodule AresWeb.AppLive.Payment do
       team.payment_status == :paid ->
         info(socket, "Your team has already completed the payment.")
 
-      is_payment_in_progress?(team) ->
+      payment_in_progress?(team) ->
         info(
           socket,
           "A payment is already in progress for your team. Please complete it or contact support."
@@ -342,7 +342,7 @@ defmodule AresWeb.AppLive.Payment do
      |> redirect(to: ~p"/app/profile")}
   end
 
-  defp is_payment_in_progress?(team) do
+  defp payment_in_progress?(team) do
     Billing.list_payments_by_team(team.id)
     |> Enum.any?(fn payment -> payment.status == :pending end)
   end
