@@ -11,12 +11,18 @@ defmodule AresWeb.UserLive.Settings do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="text-center">
         <.header>
-          Account Settings
-          <:subtitle>Manage your account email address and password settings</:subtitle>
+          <h2 class="text-6xl">Account Settings</h2>
+          <p class="text-xl">Manage your account email address and password settings</p>
         </.header>
       </div>
 
-      <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
+      <.form
+        for={@email_form}
+        id="email_form"
+        phx-submit="update_email"
+        phx-change="validate_email"
+        class="font-inter"
+      >
         <.input
           field={@email_form[:email]}
           type="email"
@@ -37,6 +43,7 @@ defmodule AresWeb.UserLive.Settings do
         phx-change="validate_password"
         phx-submit="update_password"
         phx-trigger-action={@trigger_submit}
+        class="font-inter"
       >
         <input
           name={@password_form[:email].name}

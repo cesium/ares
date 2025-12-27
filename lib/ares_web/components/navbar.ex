@@ -94,6 +94,12 @@ defmodule AresWeb.Components.Navbar do
                     >
                       View Profile
                     </.link>
+                    <.link
+                      navigate="/users/settings"
+                      class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                    >
+                      Settings
+                    </.link>
                     <.link href="/users/log-out" method="delete" class="border-t border-gray-700">
                       <p class="w-full text-left px-4 py-2 text-black hover:bg-gray-300 rounded-b-lg transition-colors cursor-pointer">
                         Log out
@@ -186,6 +192,14 @@ defmodule AresWeb.Components.Navbar do
               <% end %>
             </li>
             <%= if @user do %>
+              <li>
+                <.link
+                  navigate="/users/settings"
+                  class="block w-full py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                >
+                  Settings
+                </.link>
+              </li>
               <li>
                 <.link
                   href="/users/log-out"
