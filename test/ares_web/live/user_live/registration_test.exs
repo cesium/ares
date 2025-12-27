@@ -1,98 +1,98 @@
 defmodule AresWeb.UserLive.RegistrationTest do
   use AresWeb.ConnCase, async: true
 
-  # import Phoenix.LiveViewTest
-  # import Ares.AccountsFixtures
+  import Phoenix.LiveViewTest
+  import Ares.AccountsFixtures
 
-  # describe "Registration page" do
-  #   test "renders registration page", %{conn: conn} do
-  #     {:ok, _lv, html} = live(conn, ~p"/register")
+  describe "Registration page" do
+    test "renders registration page", %{conn: conn} do
+      {:ok, _lv, html} = live(conn, ~p"/register")
 
-  #     assert html =~ "Registration"
-  #     assert html =~ "Log in"
-  #   end
+      assert html =~ "Registration"
+      assert html =~ "Log in"
+    end
 
-  #   test "redirects if already logged in", %{conn: conn} do
-  #     result =
-  #       conn
-  #       |> log_in_user(user_fixture())
-  #       |> live(~p"/register")
-  #       |> follow_redirect(conn, ~p"/")
+    test "redirects if already logged in", %{conn: conn} do
+      result =
+        conn
+        |> log_in_user(user_fixture())
+        |> live(~p"/register")
+        |> follow_redirect(conn, ~p"/")
 
-  #     assert {:ok, _conn} = result
-  #   end
+      assert {:ok, _conn} = result
+    end
 
-  #   test "renders errors for invalid data", %{conn: conn} do
-  #     {:ok, lv, _html} = live(conn, ~p"/register")
+    test "renders errors for invalid data", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
 
-  #     result =
-  #       lv
-  #       |> element("#registration_form")
-  #       |> render_change(user: %{"email" => "with spaces"})
+      result =
+        lv
+        |> element("#registration_form")
+        |> render_change(user: %{"email" => "with spaces"})
 
-  #     assert result =~ "Registration"
-  #     assert result =~ "must have the @ sign and no spaces"
-  #   end
-  # end
+      assert result =~ "Registration"
+      assert result =~ "must have the @ sign and no spaces"
+    end
+  end
 
-  # describe "register user" do
-  #   test "creates account but does not log in", %{conn: conn} do
-  #     {:ok, lv, _html} = live(conn, ~p"/register")
+  describe "register user" do
+    test "creates account but does not log in", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
 
-  #     email = unique_user_email()
-  #     form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
+      email = unique_user_email()
+      form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
 
-  #     fi =
-  #       file_input(lv, "#registration_form", :cv, [
-  #         %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
-  #       ])
+      fi =
+        file_input(lv, "#registration_form", :cv, [
+          %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+        ])
 
-  #     render_upload(fi, "cv.pdf")
+      render_upload(fi, "cv.pdf")
 
-  #     {:ok, _lv, html} =
-  #       render_submit(form)
-  #       |> follow_redirect(conn, ~p"/log-in")
+      {:ok, _lv, html} =
+        render_submit(form)
+        |> follow_redirect(conn, ~p"/log-in")
 
-  #     assert html =~
-  #              ~r/An email was sent to .*, please access it to confirm your account/
-  #   end
+      assert html =~
+               ~r/An email was sent to .*, please access it to confirm your account/
+    end
 
-  #   test "renders errors for duplicated email", %{conn: conn} do
-  #     {:ok, lv, _html} = live(conn, ~p"/register")
+    test "renders errors for duplicated email", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
 
-  #     user = user_fixture(%{email: "test@email.com"})
+      user = user_fixture(%{email: "test@email.com"})
 
-  #     result =
-  #       lv
-  #       |> form("#registration_form",
-  #         user: %{"email" => user.email}
-  #       )
-  #       |> then(fn form ->
-  #         fi =
-  #           file_input(lv, "#registration_form", :cv, [
-  #             %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
-  #           ])
+      result =
+        lv
+        |> form("#registration_form",
+          user: %{"email" => user.email}
+        )
+        |> then(fn form ->
+          fi =
+            file_input(lv, "#registration_form", :cv, [
+              %{name: "cv.pdf", content: "dummy", type: "application/pdf"}
+            ])
 
-  #         render_upload(fi, "cv.pdf")
-  #         form
-  #       end)
-  #       |> render_submit()
+          render_upload(fi, "cv.pdf")
+          form
+        end)
+        |> render_submit()
 
-  #     assert result =~ "has already been taken"
-  #   end
-  # end
+      assert result =~ "has already been taken"
+    end
+  end
 
-  # describe "registration navigation" do
-  #   test "redirects to login page when the Log in button is clicked", %{conn: conn} do
-  #     {:ok, lv, _html} = live(conn, ~p"/register")
+  describe "registration navigation" do
+    test "redirects to login page when the Log in button is clicked", %{conn: conn} do
+      {:ok, lv, _html} = live(conn, ~p"/register")
 
-  #     {:ok, _login_live, login_html} =
-  #       lv
-  #       |> element("main a", "Log in")
-  #       |> render_click()
-  #       |> follow_redirect(conn, ~p"/log-in")
+      {:ok, _login_live, login_html} =
+        lv
+        |> element("main a", "Log in")
+        |> render_click()
+        |> follow_redirect(conn, ~p"/log-in")
 
-  #     assert login_html =~ "Log in"
-  #   end
-  # end
+      assert login_html =~ "Log in"
+    end
+  end
 end
