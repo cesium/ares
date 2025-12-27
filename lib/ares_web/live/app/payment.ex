@@ -156,7 +156,10 @@ defmodule AresWeb.AppLive.Payment do
         info(socket, "Your team has already completed the payment.")
 
       is_payment_in_progress?(team) ->
-        info(socket, "A payment is already in progress for your team. Please complete it or contact support.")
+        info(
+          socket,
+          "A payment is already in progress for your team. Please complete it or contact support."
+        )
 
       true ->
         {:ok,
