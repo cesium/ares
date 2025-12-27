@@ -118,6 +118,19 @@ defmodule Ares.Billing do
   end
 
   @doc """
+  Returns the list of payments for a specific team.
+
+  ## Examples
+
+      iex> list_payments_by_team(team_id)
+      [%Payment{}, ...]
+
+  """
+  def list_payments_by_team(team_id) do
+    Repo.all(from p in Payment, where: p.team_id == ^team_id)
+  end
+
+  @doc """
   Gets a single payment.
 
   Raises `Ecto.NoResultsError` if the Payment does not exist.
