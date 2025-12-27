@@ -10,7 +10,7 @@ defmodule Ares.Repo.Migrations.CreateTeams do
       add :skills_needed, :string
       add :experience_level, :string
       add :public, :boolean, default: false, null: false
-      add :paid, :boolean, default: false, null: false
+      add :payment_status, :string, default: false, null: false
 
       timestamps(type: :utc_datetime)
     end

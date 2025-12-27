@@ -18,6 +18,22 @@ defmodule AresWeb.AppLive.Profile do
           <p class="text-2xl text-gray-300">{@user.email}</p>
         </div>
 
+        <%= if @user.team && @user.team.leader_id == @user.id && length(@user.team.members) >= 2 do %>
+          <div
+            :if={@user.team.payment_status in [:none, :started]}
+            class="mb-8 p-4 bg-green-900 border border-green-700 rounded-lg text-green-100 flex flex-row items-center justify-center gap-4 font-inter"
+          >
+            <.icon name="hero-banknotes" class="w-12 text-green-300" />
+            <span class="text-sm">
+              As the team leader, you may proceed to payment <b>only once your team is fully assembled</b>. Complete the payment for your team <.link
+                patch={~p"/app/payment"}
+                class="underline font-bold"
+              >here</.link>.
+              Teams that do not complete payment by the deadline will lose their spot.
+            </span>
+          </div>
+        <% end %>
+
         <%= if @user.team do %>
           <div class="bg-gray rounded-lg p-8 border border-gray-800 font-inter">
             <h2 class="text-3xl font-vt323 uppercase">Member of</h2>
@@ -27,6 +43,14 @@ defmodule AresWeb.AppLive.Profile do
                 <div class="mb-4 md:mb-0">
                   <h3 class="text-3xl font-resegrg mb-2">{@user.team.name}</h3>
                   <p class="text-lg text-white">{@user.team.description}</p>
+                </div>
+                <div :if={@user.team.payment_status == :paid}>
+                  <div class="font-inter text-green-400 flex flex-row items-center gap-2 text-xl">
+                    <.icon name="hero-check-circle" class="w-6 h-6" />
+                    <span class="font-bold">
+                      {String.capitalize(to_string(@user.team.payment_status))}
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -43,7 +67,16 @@ defmodule AresWeb.AppLive.Profile do
               </div>
               <div>
                 <p class="text-sm text-gray-400 mb-1">Members</p>
-                <p class="font-bold text-white text-lg">{Enum.count(@user.team.members)}/5</p>
+                <p class="font-bold text-white text-lg flex flex-row gap-4">
+                  {length(@user.team.members)}/5
+                  <span
+                    :if={length(@user.team.members) < 2}
+                    class="text-xs flex flex-row items-center gap-2"
+                  >
+                    <.icon name="hero-exclamation-triangle" class="w-8" />
+                    For your team to be valid, 2 or more members are required.
+                  </span>
+                </p>
               </div>
             </div>
 
@@ -54,7 +87,7 @@ defmodule AresWeb.AppLive.Profile do
                   <div class="bg-gray-900 rounded-lg p-4">
                     <div class="flex flex-row justify-between items-center">
                       <div>
-                        <p class="font-semibold text-white text-lg flex flex-row items-center gap-1">
+                        <p class="font-semibold text-white text-lg flex flex-row items-center gap-2">
                           {first_last_name(member.name)}
                           <.icon :if={@user.team.leader_id == member.id} name="hero-star" />
                         </p>
@@ -72,7 +105,10 @@ defmodule AresWeb.AppLive.Profile do
             </div>
           </div>
         <% else %>
-          <div class="bg-gray rounded-lg p-8 border border-gray-800 text-center font-inter">
+          <div
+            :if={!@user.is_admin}
+            class="bg-gray rounded-lg p-8 border border-gray-800 text-center font-inter"
+          >
             <div class="py-8">
               <.icon name="hero-users" class="w-16 h-16 mx-auto mb-4 text-gray-600" />
               <p class="text-lg text-gray-400 mb-6">

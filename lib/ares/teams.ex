@@ -23,6 +23,22 @@ defmodule Ares.Teams do
   end
 
   @doc """
+  Returns the list of teams with their members preloaded.
+
+  ## Examples
+
+      iex> list_teams_with_members()
+      [%Team{}, ...]
+
+  """
+  def list_teams_with_members do
+    Team
+    |> order_by([t], asc: t.name)
+    |> Repo.all()
+    |> Repo.preload(:members)
+  end
+
+  @doc """
   Returns the list of public teams that aren't full or have already paid.
 
   ## Examples
@@ -34,7 +50,7 @@ defmodule Ares.Teams do
   def list_available_teams do
     Team
     |> where([t], t.public == true)
-    |> where([t], t.paid == false)
+    |> where([t], t.payment_status == :none)
     |> join(:left, [t], m in assoc(t, :members))
     |> group_by([t, _m], t.id)
     |> having([_t, m], count(m.id) < 5)
@@ -171,11 +187,27 @@ defmodule Ares.Teams do
         {:error, :not_found}
 
       team ->
-        if length(team.members) < 5 and not team.paid do
+        if length(team.members) < 5 and team.payment_status == :none do
           Accounts.update_user_team(user, %{team_id: team.id})
         else
           {:error, :unavailable}
         end
     end
+  end
+
+  @doc """
+  Marks a team as paid.
+
+  ## Examples
+
+      iex> mark_team_as_paid(team_id)
+      {:ok, %Team{}}
+
+      iex> mark_team_as_paid(invalid_team_id)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def mark_team_as_paid(team_id) do
+    update_team(get_team!(team_id), %{payment_status: :paid})
   end
 end

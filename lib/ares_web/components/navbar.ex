@@ -67,9 +67,9 @@ defmodule AresWeb.Components.Navbar do
                 <li>
                   <.link
                     class="hover:text-primary transition-colors text-white"
-                    navigate="/admin"
+                    navigate="/app/dashboard"
                   >
-                    Admin
+                    Dashboard
                   </.link>
                 </li>
               <% end %>
@@ -186,6 +186,16 @@ defmodule AresWeb.Components.Navbar do
               <% end %>
             </li>
             <%= if @user do %>
+              <%= if @user.is_admin do %>
+                <li>
+                  <.link
+                    navigate="/app/dashboard"
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                  >
+                    Dashboard
+                  </.link>
+                </li>
+              <% end %>
               <li>
                 <.link
                   href="/users/log-out"
@@ -236,16 +246,6 @@ defmodule AresWeb.Components.Navbar do
                 Team formation
               </.link>
             </li>
-            <%= if @user && @user.is_admin do %>
-              <li>
-                <a
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl text-primary font-bold hover:text-darkest-pink transition-colors"
-                  href="/admin"
-                >
-                  Admin Dashboard
-                </a>
-              </li>
-            <% end %>
           </ul>
         </nav>
       </div>
