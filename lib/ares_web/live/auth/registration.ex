@@ -11,7 +11,7 @@ defmodule AresWeb.UserLive.Registration do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-xl">
         <div class="flex flex-col gap-2 mb-8">
-          <h1 class="font-resegrg text-5xl">
+          <h1 class="font-resegrg text-4xl sm:text-5xl">
             Registration
           </h1>
           <p class="text-2xl">
@@ -153,22 +153,25 @@ defmodule AresWeb.UserLive.Registration do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    with false <- Enum.empty?(socket.assigns.uploads.cv.entries),
-         {:ok, user} <- Accounts.register_user(user_params, &consume_image_data(socket, &1)),
-         {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
+    if Enum.empty?(socket.assigns.uploads.cv.entries) do
       {:noreply,
        socket
-       |> put_flash(
-         :info,
-         "An email was sent to #{user.email}, please access it to confirm your account."
-       )
-       |> push_navigate(to: ~p"/log-in")}
+       |> put_flash(:error, "Please upload your CV to proceed.")
+       |> assign_form(Accounts.change_user(%User{}, user_params))}
     else
-      true ->
-        {:noreply, put_flash(socket, :error, "CV was not uploaded")}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
+      with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
+           {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
+        {:noreply,
+         socket
+         |> put_flash(
+           :info,
+           "An email was sent to #{user.email}, please access it to confirm your account."
+         )
+         |> push_navigate(to: ~p"/log-in")}
+      else
+        {:error, %Ecto.Changeset{} = changeset} ->
+          {:noreply, assign_form(socket, changeset)}
+      end
     end
   end
 
@@ -176,7 +179,7 @@ defmodule AresWeb.UserLive.Registration do
     {:noreply, socket}
   end
 
-  defp consume_image_data(socket, {:ok, user}) do
+  defp consume_pdf_data(socket, {:ok, user}) do
     result =
       consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
         Accounts.update_user_cv(user, %{
@@ -189,15 +192,21 @@ defmodule AresWeb.UserLive.Registration do
       end)
 
     case result do
-      [updated_curriculum] ->
-        {:ok, updated_curriculum}
+      [] ->
+        {:error, :no_cv_uploaded}
+
+      [error: reason] ->
+        {:error, reason}
+
+      [updated_user] ->
+        {:ok, updated_user}
 
       _ ->
         {:ok, socket}
     end
   end
 
-  defp consume_image_data(_socket, result) do
+  defp consume_pdf_data(_socket, result) do
     result
   end
 

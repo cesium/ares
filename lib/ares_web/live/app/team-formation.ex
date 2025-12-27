@@ -9,8 +9,8 @@ defmodule AresWeb.AppLive.TeamFormation do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-4xl space-y-4">
         <div class="flex flex-col gap-2 mb-8">
-          <h1 class="font-resegrg text-5xl">Team Formation</h1>
-          <p class="text-2xl">
+          <h1 class="font-resegrg px-1 sm:px-2 text-4xl sm:text-5xl md:text-6xl">Team Formation</h1>
+          <p class="text-xl md:text-2xl">
             Create your dream team or join forces with other participants!
           </p>
         </div>
@@ -121,18 +121,16 @@ defmodule AresWeb.AppLive.TeamFormation do
         <% end %>
         <%= if @tab == "join" do %>
           <div class="mb-12">
-            <div class="mb-8 flex flex-row justify-between items-center">
+            <div class="mb-8 flex flex-col sm:flex-row gap-6 justify-between items-center">
               <div>
                 <h2 class="text-3xl font-resegrg mb-2">Join a Team</h2>
                 <p class="text-xl text-gray-400">
                   Browse available teams and find your perfect match
                 </p>
               </div>
-              <div class="">
-                <.button phx-click="use-code" class="btn btn-primary text-xl uppercase">
-                  <.icon name="hero-key" class="w-5 h-5 mr-2" /> Use code
-                </.button>
-              </div>
+              <.button phx-click="use-code" class="btn btn-primary w-full sm:w-auto text-xl uppercase">
+                <.icon name="hero-key" class="w-5 h-5 mr-2" /> Use code
+              </.button>
             </div>
 
             <%= if Enum.empty?(@available_teams) do %>
@@ -236,13 +234,13 @@ defmodule AresWeb.AppLive.TeamFormation do
         <% end %>
         <div class="bg-gray rounded-lg p-8 border border-gray-800">
           <div class="flex items-center gap-3 mb-6">
-            <.icon name="hero-information-circle" class="w-8 h-8 text-pink" />
+            <.icon name="hero-information-circle" class="w-8 h-8 text-primary" />
             <h3 class="text-2xl uppercase">Important Information</h3>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-inter text-sm">
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+              <div class="shrink-0 w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <.icon name="hero-users" class="w-5 h-5 text-white" />
               </div>
               <div>
@@ -252,7 +250,7 @@ defmodule AresWeb.AppLive.TeamFormation do
             </div>
 
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+              <div class="shrink-0 w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <.icon name="hero-clipboard-document-check" class="w-5 h-5 text-white" />
               </div>
               <div>
@@ -264,7 +262,7 @@ defmodule AresWeb.AppLive.TeamFormation do
             </div>
 
             <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-10 h-10 bg-pink rounded-lg flex items-center justify-center">
+              <div class="shrink-0 w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <.icon name="hero-magnifying-glass" class="w-5 h-5 text-white" />
               </div>
               <div>

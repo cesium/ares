@@ -7,38 +7,39 @@ defmodule Ares.Accounts.UserNotifier do
   alias Ares.Accounts.User
   alias Ares.Mailer
 
-  # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, body) do
-    email =
-      new()
-      |> to(recipient)
-      |> from({"Ares", "contact@example.com"})
-      |> subject(subject)
-      |> text_body(body)
+  use Phoenix.Swoosh, view: AresWeb.EmailView
 
-    with {:ok, _metadata} <- Mailer.deliver(email) do
-      {:ok, email}
-    end
+  defp base_html_email(recipient, subject) do
+    sender = {Mailer.get_sender_name(), Mailer.get_sender_address()}
+
+    phx_host =
+      if System.get_env("PHX_HOST") != nil do
+        "https://" <> System.get_env("PHX_HOST")
+      else
+        ""
+      end
+
+    new()
+    |> to(recipient)
+    |> from(sender)
+    |> subject("[#{elem(sender, 0)}] #{subject}")
+    |> assign(:phx_host, phx_host)
   end
 
   @doc """
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Update email instructions", """
+    email =
+      base_html_email(user.email, "Update your email address")
+      |> assign(:user_name, user.name)
+      |> assign(:confirm_email_link, url)
+      |> render_body("confirm_email.html")
 
-    ==============================
-
-    Hi #{user.email},
-
-    You can change your email by visiting the URL below:
-
-    #{url}
-
-    If you didn't request this change, please ignore this.
-
-    ==============================
-    """)
+    case Mailer.deliver(email) do
+      {:ok, _metadata} -> {:ok, email}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   @doc """
@@ -52,36 +53,28 @@ defmodule Ares.Accounts.UserNotifier do
   end
 
   defp deliver_magic_link_instructions(user, url) do
-    deliver(user.email, "Log in instructions", """
+    email =
+      base_html_email(user.email, "Log in to your account")
+      |> assign(:user_name, user.name)
+      |> assign(:magic_link, url)
+      |> render_body("magic_link.html")
 
-    ==============================
-
-    Hi #{user.email},
-
-    You can log into your account by visiting the URL below:
-
-    #{url}
-
-    If you didn't request this email, please ignore this.
-
-    ==============================
-    """)
+    case Mailer.deliver(email) do
+      {:ok, _metadata} -> {:ok, email}
+      {:error, reason} -> {:error, reason}
+    end
   end
 
   defp deliver_confirmation_instructions(user, url) do
-    deliver(user.email, "Confirmation instructions", """
+    email =
+      base_html_email(user.email, "Confirm your email")
+      |> assign(:user_name, user.name)
+      |> assign(:confirm_email_link, url)
+      |> render_body("confirm_email.html")
 
-    ==============================
-
-    Hi #{user.email},
-
-    You can confirm your account by visiting the URL below:
-
-    #{url}
-
-    If you didn't create an account with us, please ignore this.
-
-    ==============================
-    """)
+    case Mailer.deliver(email) do
+      {:ok, _metadata} -> {:ok, email}
+      {:error, reason} -> {:error, reason}
+    end
   end
 end
