@@ -55,14 +55,14 @@ defmodule AresWeb.Components.Navbar do
                   Previous edition
                 </.link>
               </li>
-              <li>
+              <%!-- <li>
                 <.link
                   class="hover:text-primary transition-colors"
                   navigate="/app/team-formation"
                 >
                   Teams
                 </.link>
-              </li>
+              </li> --%>
               <%= if @user && @user.is_admin do %>
                 <li>
                   <.link
@@ -107,12 +107,12 @@ defmodule AresWeb.Components.Navbar do
                     </.link>
                   </div>
                 <% else %>
-                  <.link
+                  <%!-- <.link
                     navigate="/register"
                     class="rounded-full px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-primary hover:text-primary transition-all"
                   >
                     Register
-                  </.link>
+                  </.link> --%>
                 <% end %>
               </li>
             </ul>
@@ -183,12 +183,12 @@ defmodule AresWeb.Components.Navbar do
                   Profile
                 </.link>
               <% else %>
-                <a
+                <%!-- <.link
                   class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   href="/register"
                 >
                   Register
-                </a>
+                </.link>  --%>
               <% end %>
             </li>
             <%= if @user do %>
@@ -252,14 +252,14 @@ defmodule AresWeb.Components.Navbar do
                 Previous edition
               </.link>
             </li>
-            <li>
+            <%!-- <li>
               <.link
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                 navigate="/app/team-formation"
               >
                 Team formation
               </.link>
-            </li>
+            </li> --%>
           </ul>
         </nav>
       </div>

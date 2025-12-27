@@ -75,7 +75,7 @@ defmodule AresWeb.Router do
 
     live_session :current_user,
       on_mount: [{AresWeb.UserAuth, :mount_current_scope}] do
-      live "/register", UserLive.Registration, :new
+      # live "/register", UserLive.Registration, :new
       live "/log-in", UserLive.Login, :new
       live "/log-in/:token", UserLive.Confirmation, :new
     end
