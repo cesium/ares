@@ -34,6 +34,7 @@ defmodule Ares.Accounts do
   """
   def list_users_with_teams do
     User
+    |> where([u], not u.is_admin)
     |> order_by([u], asc: u.name)
     |> Repo.all()
     |> Repo.preload(:team)
