@@ -98,6 +98,7 @@ defmodule AresWeb.UserLive.Registration do
             id="cv-uploader"
             uploaders={@uploads}
             target={%JS{}}
+            is_optional
           />
 
           <p class="flex flex-row">
@@ -153,25 +154,18 @@ defmodule AresWeb.UserLive.Registration do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    if Enum.empty?(socket.assigns.uploads.cv.entries) do
+    with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
+         {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
       {:noreply,
        socket
-       |> put_flash(:error, "Please upload your CV to proceed.")
-       |> assign_form(Accounts.change_user(%User{}, user_params))}
+       |> put_flash(
+         :info,
+         "An email was sent to #{user.email}, please access it to confirm your account."
+       )
+       |> push_navigate(to: ~p"/log-in")}
     else
-      with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
-           {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
-        {:noreply,
-         socket
-         |> put_flash(
-           :info,
-           "An email was sent to #{user.email}, please access it to confirm your account."
-         )
-         |> push_navigate(to: ~p"/log-in")}
-      else
-        {:error, %Ecto.Changeset{} = changeset} ->
-          {:noreply, assign_form(socket, changeset)}
-      end
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign_form(socket, changeset)}
     end
   end
 
@@ -180,29 +174,30 @@ defmodule AresWeb.UserLive.Registration do
   end
 
   defp consume_pdf_data(socket, {:ok, user}) do
-    result =
-      consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
-        Accounts.update_user_cv(user, %{
-          "cv" => %Plug.Upload{
-            content_type: entry.client_type,
-            filename: entry.client_name,
-            path: path
-          }
-        })
-      end)
+    if Enum.empty?(socket.assigns.uploads.cv.entries) do
+      {:ok, user}
+    else
+      result =
+        consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
+          Accounts.update_user_cv(user, %{
+            "cv" => %Plug.Upload{
+              content_type: entry.client_type,
+              filename: entry.client_name,
+              path: path
+            }
+          })
+        end)
 
-    case result do
-      [] ->
-        {:error, :no_cv_uploaded}
+      case result do
+        [error: reason] ->
+          {:error, reason}
 
-      [error: reason] ->
-        {:error, reason}
+        [updated_user] ->
+          {:ok, updated_user}
 
-      [updated_user] ->
-        {:ok, updated_user}
-
-      _ ->
-        {:ok, socket}
+        _ ->
+          {:ok, socket}
+      end
     end
   end
 
