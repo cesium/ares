@@ -35,6 +35,11 @@ defmodule AresWeb.Components.CVUploader do
           <p class="mt-1 text-xs text-gray-500">
             PDF, DOC, DOCX, TXT, MD, RTF (max 10MB)
           </p>
+          <%= if @is_optional do %>
+            <p class="mt-1 text-xs text-primary">
+              * Uploading a CV is <span class="underline">optional</span>.
+            </p>
+          <% end %>
         </div>
       </div>
       <div class="mt-3 space-y-2">
@@ -42,7 +47,7 @@ defmodule AresWeb.Components.CVUploader do
           <%= for err <- upload_errors(@uploaders.cv, entry) do %>
             <div class="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
               <div class="flex items-center gap-2">
-                <.icon name="hero-exclamation-circle" class="h-4 w-4 flex-shrink-0" />
+                <.icon name="hero-exclamation-circle" class="h-4 w-4 shrink-0" />
                 <span>{Phoenix.Naming.humanize(err)}</span>
               </div>
             </div>
@@ -76,7 +81,7 @@ defmodule AresWeb.Components.CVUploader do
                   phx-click="cancel-upload"
                   phx-value-ref={entry.ref}
                   aria-label="Remove file"
-                  class="flex-shrink-0 rounded-sm p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                  class="shrink-0 rounded-sm p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
                 >
                   <.icon name="hero-x-mark" class="h-4 w-4" />
                 </button>
@@ -96,6 +101,6 @@ defmodule AresWeb.Components.CVUploader do
 
   @impl true
   def update(assigns, socket) do
-    {:ok, assign(socket, assigns)}
+    {:ok, socket |> assign(Map.put_new(assigns, :is_optional, false))}
   end
 end
