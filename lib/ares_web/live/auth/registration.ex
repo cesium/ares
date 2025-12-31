@@ -174,30 +174,29 @@ defmodule AresWeb.UserLive.Registration do
   end
 
   defp consume_pdf_data(socket, {:ok, user}) do
-    if Enum.empty?(socket.assigns.uploads.cv.entries) do
-      {:ok, user}
-    else
-      result =
-        consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
-          Accounts.update_user_cv(user, %{
-            "cv" => %Plug.Upload{
-              content_type: entry.client_type,
-              filename: entry.client_name,
-              path: path
-            }
-          })
-        end)
+    result =
+      consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
+        Accounts.update_user_cv(user, %{
+          "cv" => %Plug.Upload{
+            content_type: entry.client_type,
+            filename: entry.client_name,
+            path: path
+          }
+        })
+      end)
 
-      case result do
-        [error: reason] ->
-          {:error, reason}
+    case result do
+      [] ->
+        {:ok, user}
 
-        [updated_user] ->
-          {:ok, updated_user}
+      [error: reason] ->
+        {:error, reason}
 
-        _ ->
-          {:ok, socket}
-      end
+      [updated_user] ->
+        {:ok, updated_user}
+
+      _ ->
+        {:ok, socket}
     end
   end
 
