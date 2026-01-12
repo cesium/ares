@@ -41,7 +41,16 @@ defmodule AresWeb.AppLive.Profile do
             <div class="mb-6 pb-6 border-b border-gray-800">
               <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                 <div class="mb-4 md:mb-0">
-                  <h3 class="text-3xl font-resegrg mb-2">{@user.team.name}</h3>
+                  <div class="flex items-center gap-2 mb-2">
+                    <h3 class="text-3xl font-resegrg">{@user.team.name}</h3>
+                    <button
+                      :if={@user.team.leader_id == @user.id}
+                      phx-click="edit-team"
+                      class="text-gray-400 hover:text-white transition-colors"
+                    >
+                      <.icon name="hero-pencil-square" class="w-5 h-5" />
+                    </button>
+                  </div>
                   <p class="text-lg text-white">{@user.team.description}</p>
                 </div>
                 <div :if={@user.team.payment_status == :paid}>
@@ -121,6 +130,34 @@ defmodule AresWeb.AppLive.Profile do
           </div>
         <% end %>
       </div>
+
+      <.modal
+        :if={@show_edit_modal}
+        id="edit-team-modal"
+        show
+        on_cancel={JS.push("close-edit-modal")}
+      >
+        <h2 class="text-2xl font-resegrg mb-4">Edit Team</h2>
+        <.form
+          for={@form}
+          phx-change="validate-team"
+          phx-submit="update-team"
+          class="space-y-4 font-inter"
+        >
+          <.input field={@form[:name]} label="Team Name" />
+          <.input field={@form[:description]} label="Description" type="textarea" />
+          <div class="flex justify-end gap-2 pt-4">
+            <button
+              type="button"
+              phx-click="close-edit-modal"
+              class="btn bg-gray-600 hover:bg-gray-500 text-white"
+            >
+              Cancel
+            </button>
+            <.button type="submit" class="btn btn-primary">Save</.button>
+          </div>
+        </.form>
+      </.modal>
     </Layouts.app>
     """
   end
@@ -135,6 +172,53 @@ defmodule AresWeb.AppLive.Profile do
         nil
       end
 
-    {:ok, assign(socket, user: Map.put(user, :team, team))}
+    socket = assign(socket, user: Map.put(user, :team, team), show_edit_modal: false)
+
+    socket =
+      if team && team.leader_id == user.id do
+        assign(socket, form: to_form(Teams.change_team(team)))
+      else
+        socket
+      end
+
+    {:ok, socket}
+  end
+
+  @impl true
+  def handle_event("edit-team", _params, socket) do
+    {:noreply, assign(socket, show_edit_modal: true)}
+  end
+
+  @impl true
+  def handle_event("close-edit-modal", _params, socket) do
+    {:noreply, assign(socket, show_edit_modal: false)}
+  end
+
+  @impl true
+  def handle_event("validate-team", %{"team" => team_params}, socket) do
+    changeset =
+      socket.assigns.user.team
+      |> Teams.change_team(team_params)
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign(socket, form: to_form(changeset))}
+  end
+
+  @impl true
+  def handle_event("update-team", %{"team" => team_params}, socket) do
+    case Teams.update_team(socket.assigns.user.team, team_params) do
+      {:ok, _updated_team} ->
+        # Reload team to ensure we have the latest state and members preloaded
+        team = Teams.get_team!(socket.assigns.user.team_id)
+        user = Map.put(socket.assigns.user, :team, team)
+
+        {:noreply,
+         socket
+         |> assign(user: user, show_edit_modal: false)
+         |> put_flash(:info, "Team updated successfully")}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, form: to_form(changeset))}
+    end
   end
 end
