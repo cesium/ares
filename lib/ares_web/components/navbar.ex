@@ -231,7 +231,8 @@ defmodule AresWeb.Components.Navbar do
             <li>
               <a
                 class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
-                href="images/docs/RegulamentoBugsByte2025.pdf"
+                target="_blank"
+                href="/docs/regulation.pdf"
               >
                 Regulation
               </a>
