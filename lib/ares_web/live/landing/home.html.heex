@@ -8,13 +8,95 @@
     <div class="flex flex-col lg:flex-row items-center justify-center lg:gap-8 xl:gap-16 max-w-7xl w-full lg:ml-32">
       <div class="text-center lg:text-left">
         <div class="mb-2">
+          <svg width="0" height="0" class="absolute">
+            <defs>
+              <filter id="melt-flow-slow">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="4220s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+              <filter id="melt-flow-medium">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="1220s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+              <filter id="melt-flow-fast">
+                <feTurbulence
+                  type="fractalNoise"
+                  baseFrequency="0.008 0.012"
+                  numOctaves="5"
+                  result="turbulence"
+                >
+                  <animate
+                    attributeName="seed"
+                    from="1"
+                    to="6000"
+                    dur="720s"
+                    repeatCount="indefinite"
+                  />
+                </feTurbulence>
+
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="turbulence"
+                  scale="18"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+
+                <feGaussianBlur stdDeviation="0.4" />
+              </filter>
+            </defs>
+          </svg>
           <span class="tracking-wider text-lg md:text-5xl font-medium uppercase">
             {gettext("Hackathon")}
           </span>
         </div>
 
         <div class="">
-          <h1 class="font-resegrg tracking-wider leading-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase">
+          <h1 class="font-resegrg tracking-wider leading-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase squiggle-fast">
             {gettext("BugsByte")}
           </h1>
         </div>
