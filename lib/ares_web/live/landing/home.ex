@@ -1,5 +1,6 @@
 defmodule AresWeb.LandingLive.Home do
   use AresWeb, :live_view
+  import AresWeb.Components.SquigglyEffect
 
   @impl true
   def mount(_params, _session, socket) do

@@ -128,3 +128,18 @@
 .alert-info {
   @apply bg-[#67b22e] text-[#0a0a0a] border-transparent;
 }
+
+.squiggle-slow {
+  filter: url(#melt-flow-slow);
+  -webkit-filter: url(#melt-flow-slow);
+}
+
+.squiggle-medium {
+  filter: url(#melt-flow-medium);
+  -webkit-filter: url(#melt-flow-medium);
+}
+
+.squiggle-fast {
+  filter: url(#melt-flow-fast);
+  -webkit-filter: url(#melt-flow-fast);
+}
