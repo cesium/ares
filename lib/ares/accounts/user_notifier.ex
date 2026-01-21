@@ -77,4 +77,16 @@ defmodule Ares.Accounts.UserNotifier do
       {:error, reason} -> {:error, reason}
     end
   end
+
+  def deliver_team_reminder(%User{} = user) do
+    email =
+      base_html_email(user.email, "Reminder to join a team!")
+      |> assign(:user_name, user.name)
+      |> render_body("team_reminder_email.html")
+
+    case Mailer.deliver(email) do
+      {:ok, _metadata} -> {:ok, email}
+      {:error, reason} -> {:error, reason}
+    end
+  end
 end

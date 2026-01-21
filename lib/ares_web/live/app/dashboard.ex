@@ -149,7 +149,7 @@ defmodule AresWeb.AppLive.Dashboard do
   @impl true
   def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
     if user.is_admin do
-      attendees = Accounts.list_users_with_teams()
+      attendees = Accounts.list_attendees()
       teams = Teams.list_teams_with_members()
 
       {:ok,
