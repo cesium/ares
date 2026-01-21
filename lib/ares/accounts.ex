@@ -28,16 +28,31 @@ defmodule Ares.Accounts do
 
   ## Examples
 
-      iex> list_users_with_teams()
+      iex> list_attendees()
       [%User{}, ...]
 
   """
-  def list_users_with_teams do
+  def list_attendees do
     User
     |> where([u], not u.is_admin)
     |> order_by([u], asc: u.name)
     |> Repo.all()
     |> Repo.preload(:team)
+  end
+
+  @doc """
+  Returns the list of users without team and are attendees.
+
+  ## Examples
+
+      iex> list_attendees()
+      [%User{}, ...]
+
+  """
+  def list_attendees_without_team do
+    User
+    |> where([u], not u.is_admin and is_nil(u.team_id))
+    |> Repo.all()
   end
 
   @doc """
@@ -399,6 +414,14 @@ defmodule Ares.Accounts do
 
         {:ok, {user, tokens_to_expire}}
       end
+    end)
+  end
+
+  def notify_users_with_no_team do
+    attendees = list_attendees_without_team()
+
+    Enum.each(attendees, fn attendee ->
+      UserNotifier.deliver_team_reminder(attendee)
     end)
   end
 end
