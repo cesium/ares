@@ -5,7 +5,7 @@ defmodule Ares.Repo.Migrations.CreateTeams do
     create table(:teams, primary_key: false) do
       add :id, :binary_id, primary_key: true
       add :name, :string
-      add :description, :string
+      add :description, :text
       add :code, :string
       add :skills_needed, :string
       add :experience_level, :string
