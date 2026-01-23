@@ -36,4 +36,4 @@ defmodule Ares.Event do
   def change_attendees_limit(limit) when is_integer(limit) and limit > 0 do
     Constants.set("attendees_limit", Integer.to_string(limit))
   end
-  end
+end

@@ -69,14 +69,15 @@ defmodule AresWeb.Router do
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end
+
     post "/users/update-password", UserSessionController, :update_password
 
     scope "/backoffice" do
       pipe_through [:browser_backoffice]
 
       live_session :require_authenticated_user_backoffice,
-      on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
-         scope "/", BackofficeLive do
+        on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
+        scope "/", BackofficeLive do
           live "/event_settings", EventSettings, :index
           live "/dashboard", Dashboard, :index
         end

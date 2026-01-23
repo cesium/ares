@@ -23,15 +23,17 @@ defmodule AresWeb.BackofficeLive.EventSettingsFormComponent do
     """
   end
 
- @impl true
+  @impl true
   def handle_event("save", %{"limit" => limit_str}, socket) do
     case Integer.parse(limit_str) do
       {limit, ""} when limit > 0 ->
         Event.change_attendees_limit(limit)
+
         {:noreply,
          socket
          |> put_flash(:info, "Limit updated")
          |> push_patch(to: "/backoffice/event_settings")}
+
       _ ->
         {:noreply, socket |> put_flash(:error, "Invalid limit")}
     end

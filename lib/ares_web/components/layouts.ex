@@ -126,5 +126,4 @@ defmodule AresWeb.Layouts do
   # skeleton of your application, namely HTML headers
   # and other static content.
   embed_templates "layouts/*"
-
 end

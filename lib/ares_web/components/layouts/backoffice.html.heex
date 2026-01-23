@@ -32,10 +32,10 @@
   </head>
   <body class="text-white flex flex-col justify-between min-h-dvh">
     <div class="h-screen flex flex-col sm:flex-row">
-        <.sidebar user={if @current_scope, do: @current_scope.user} />
-        <div class="w-full p-12 sm:pl-60 h-fit">
-            {@inner_content}
-        </div>
+      <.sidebar user={if @current_scope, do: @current_scope.user} />
+      <div class="w-full p-12 sm:pl-60 h-fit">
+        {@inner_content}
+      </div>
     </div>
   </body>
 </html>

@@ -33,7 +33,10 @@ defmodule AresWeb.Components.Sidebar do
                 </.link>
               </li>
               <li class="w-full">
-                <.link class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded" navigate="/backoffice/event_settings">
+                <.link
+                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                  navigate="/backoffice/event_settings"
+                >
                   Event Settings
                 </.link>
               </li>
@@ -93,22 +96,25 @@ defmodule AresWeb.Components.Sidebar do
         <.link navigate="/" class="flex justify-center py-4">
           <img src="/images/cesium.svg" alt="CeSIUM" class="w-14 h-14 sm:w-16 sm:h-16" />
         </.link>
-          <nav>
-            <ul class="w-full flex flex-col sm:items-start text-zinc-400">
-              <li class="w-full">
-                <.link
-                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150"
-                  navigate="/backoffice/dashboard"
-                >
-                  Dashboard
-                </.link>
-              </li>
-              <li class="w-full">
-                <.link class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded" navigate="/backoffice/event_settings">
-                  Event Settings
-                </.link>
-              </li>
-            </ul>
+        <nav>
+          <ul class="w-full flex flex-col sm:items-start text-zinc-400">
+            <li class="w-full">
+              <.link
+                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150"
+                navigate="/backoffice/dashboard"
+              >
+                Dashboard
+              </.link>
+            </li>
+            <li class="w-full">
+              <.link
+                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                navigate="/backoffice/event_settings"
+              >
+                Event Settings
+              </.link>
+            </li>
+          </ul>
         </nav>
       </div>
     </div>
