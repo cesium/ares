@@ -56,6 +56,18 @@ defmodule Ares.Accounts do
   end
 
   @doc """
+  Returns the count of attendees.
+
+  ## Examples
+
+  """
+  def count_attendees do
+    User
+    |> where([u], not u.is_admin)
+    |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
   Gets a user by email.
 
   ## Examples

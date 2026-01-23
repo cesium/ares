@@ -1,4 +1,4 @@
-defmodule AresWeb.AppLive.Dashboard do
+defmodule AresWeb.BackofficeLive.Dashboard do
   use AresWeb, :live_view
 
   alias Ares.{Accounts, Teams}
@@ -6,7 +6,6 @@ defmodule AresWeb.AppLive.Dashboard do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto font-inter">
         <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 via-black to-gray-900 p-8 sm:p-10 mb-10">
           <div class="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl"></div>
@@ -142,7 +141,6 @@ defmodule AresWeb.AppLive.Dashboard do
           </div>
         </section>
       </div>
-    </Layouts.app>
     """
   end
 

@@ -3,6 +3,7 @@ defmodule AresWeb.UserLive.Registration do
 
   alias Ares.Accounts
   alias Ares.Accounts.User
+  alias Ares.Event
   alias AresWeb.Components.CVUploader
 
   @impl true
@@ -154,18 +155,26 @@ defmodule AresWeb.UserLive.Registration do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
-         {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
+    attendee_count = Accounts.count_attendees()
+    if Event.attendees_limit_reached?(attendee_count) do
       {:noreply,
-       socket
-       |> put_flash(
-         :info,
-         "An email was sent to #{user.email}, please access it to confirm your account."
-       )
-       |> push_navigate(to: ~p"/log-in")}
+        socket
+        |> put_flash(:error, "Registration is closed: attendee limit reached.")
+        |> assign_form(Accounts.change_user(%User{}, user_params))}
     else
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
+      with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
+      {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
+        {:noreply,
+        socket
+        |> put_flash(
+          :info,
+          "An email was sent to #{user.email}, please access it to confirm your account."
+          )
+          |> push_navigate(to: ~p"/log-in")}
+        else
+          {:error, %Ecto.Changeset{} = changeset} ->
+            {:noreply, assign_form(socket, changeset)}
+        end
     end
   end
 

@@ -63,16 +63,6 @@ defmodule AresWeb.Components.Navbar do
                   Teams
                 </.link>
               </li>
-              <%= if @user && @user.is_admin do %>
-                <li>
-                  <.link
-                    class="hover:text-primary transition-colors text-white"
-                    navigate="/app/dashboard"
-                  >
-                    Dashboard
-                  </.link>
-                </li>
-              <% end %>
               <li class="relative">
                 <%= if @user do %>
                   <button
@@ -94,6 +84,14 @@ defmodule AresWeb.Components.Navbar do
                     >
                       View Profile
                     </.link>
+                    <%= if @user && @user.is_admin do %>
+                      <.link
+                        navigate="/backoffice/dashboard"
+                        class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                      >
+                        Backoffice
+                      </.link>
+                    <% end %>
                     <.link
                       navigate="/users/settings"
                       class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
@@ -195,7 +193,7 @@ defmodule AresWeb.Components.Navbar do
               <%= if @user.is_admin do %>
                 <li>
                   <.link
-                    navigate="/app/dashboard"
+                    navigate="/backoffice/dashboard"
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   >
                     Dashboard

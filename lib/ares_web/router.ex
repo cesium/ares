@@ -13,6 +13,10 @@ defmodule AresWeb.Router do
     plug :fetch_current_scope_for_user
   end
 
+  pipeline :browser_backoffice do
+    plug :put_root_layout, html: {AresWeb.Layouts, :backoffice}
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
 
@@ -57,7 +61,6 @@ defmodule AresWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
-      live "/app/dashboard", AppLive.Dashboard, :index
       live "/app/profile", AppLive.Profile, :index
       live "/app/team-formation", AppLive.TeamFormation, :index
       live "/app/team-formation/join", AppLive.TeamFormation, :join
@@ -66,8 +69,19 @@ defmodule AresWeb.Router do
       live "/users/settings", UserLive.Settings, :edit
       live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
     end
-
     post "/users/update-password", UserSessionController, :update_password
+
+    scope "/backoffice" do
+      pipe_through [:browser_backoffice]
+
+      live_session :require_authenticated_user_backoffice,
+      on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
+         scope "/", BackofficeLive do
+          live "/event_settings", EventSettings, :index
+          live "/dashboard", Dashboard, :index
+        end
+      end
+    end
   end
 
   scope "/", AresWeb do
