@@ -4,6 +4,11 @@ defmodule AresWeb.UserLive.LoginTest do
   import Phoenix.LiveViewTest
   import Ares.AccountsFixtures
 
+  setup do
+    Ares.Constants.set("registrations_open", "true")
+    :ok
+  end
+
   describe "login page" do
     test "renders login page", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/log-in")
