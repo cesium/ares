@@ -6,6 +6,8 @@ defmodule AresWeb.Components.Navbar do
 
   alias Phoenix.LiveView.JS
 
+  alias Ares.Event
+
   @doc """
   Renders the navigation header with mobile menu support.
   """
@@ -63,16 +65,6 @@ defmodule AresWeb.Components.Navbar do
                   Teams
                 </.link>
               </li>
-              <%= if @user && @user.is_admin do %>
-                <li>
-                  <.link
-                    class="hover:text-primary transition-colors text-white"
-                    navigate="/app/dashboard"
-                  >
-                    Dashboard
-                  </.link>
-                </li>
-              <% end %>
               <li class="relative">
                 <%= if @user do %>
                   <button
@@ -94,6 +86,14 @@ defmodule AresWeb.Components.Navbar do
                     >
                       View Profile
                     </.link>
+                    <%= if @user && @user.is_admin do %>
+                      <.link
+                        navigate="/backoffice/dashboard"
+                        class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                      >
+                        Backoffice
+                      </.link>
+                    <% end %>
                     <.link
                       navigate="/users/settings"
                       class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
@@ -107,12 +107,21 @@ defmodule AresWeb.Components.Navbar do
                     </.link>
                   </div>
                 <% else %>
-                  <.link
-                    navigate="/register"
-                    class="rounded-full px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-primary hover:text-primary transition-all"
-                  >
-                    Register
-                  </.link>
+                  <%= if not Event.registrations_open?() do %>
+                    <.link
+                      class="hover:text-primary transition-colors"
+                      href="/log-in"
+                    >
+                      Login
+                    </.link>
+                  <% else %>
+                    <.link
+                      class="hover:text-primary transition-colors"
+                      href="/register"
+                    >
+                      Register
+                    </.link>
+                  <% end %>
                 <% end %>
               </li>
             </ul>
@@ -183,19 +192,28 @@ defmodule AresWeb.Components.Navbar do
                   Profile
                 </.link>
               <% else %>
-                <.link
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
-                  href="/register"
-                >
-                  Register
-                </.link>
+                <%= if not Event.registrations_open?() do %>
+                  <.link
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                    href="/log-in"
+                  >
+                    Login
+                  </.link>
+                <% else %>
+                  <.link
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                    href="/register"
+                  >
+                    Register
+                  </.link>
+                <% end %>
               <% end %>
             </li>
             <%= if @user do %>
               <%= if @user.is_admin do %>
                 <li>
                   <.link
-                    navigate="/app/dashboard"
+                    navigate="/backoffice/dashboard"
                     class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
                   >
                     Dashboard

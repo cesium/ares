@@ -1,7 +1,7 @@
 defmodule AresWeb.UserLive.Login do
   use AresWeb, :live_view
 
-  alias Ares.Accounts
+  alias Ares.{Accounts, Event}
 
   @impl true
   def render(assigns) do
@@ -15,13 +15,15 @@ defmodule AresWeb.UserLive.Login do
               You need to reauthenticate to perform sensitive actions on your account.
             </p>
           <% else %>
-            <p class="text-2xl">
-              Don't have an account? <.link
-                navigate="/register"
-                class="font-semibold text-primary hover:underline"
-                phx-no-format
-              >Register</.link> to participate now.
-            </p>
+            <%= if Event.registrations_open?() do %>
+              <p class="text-2xl">
+                Don't have an account? <.link
+                  navigate="/register"
+                  class="font-semibold text-primary hover:underline"
+                  phx-no-format
+                >Register</.link> to participate now.
+              </p>
+            <% end %>
           <% end %>
         </div>
 
@@ -101,8 +103,10 @@ defmodule AresWeb.UserLive.Login do
         get_in(socket.assigns, [:current_scope, Access.key(:user), Access.key(:email)])
 
     form = to_form(%{"email" => email}, as: "user")
+    attendee_count = Accounts.count_attendees_with_team()
 
-    {:ok, assign(socket, form: form, trigger_submit: false)}
+    {:ok,
+     socket |> assign(form: form, trigger_submit: false) |> assign(attendee_count: attendee_count)}
   end
 
   @impl true
