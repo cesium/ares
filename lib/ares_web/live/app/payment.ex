@@ -31,7 +31,7 @@ defmodule AresWeb.AppLive.Payment do
               </div>
             </div>
             <%= if reaches_limit_with_current_team?(@team.members) do %>
-              <div class="alert alert-error">
+              <div class="alert alert-error mb-8">
                 <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
                 <div>
                   <p>
@@ -66,7 +66,7 @@ defmodule AresWeb.AppLive.Payment do
         <% end %>
         <%= if @step == :started do %>
           <%= if reaches_limit_with_current_team?(@team.members) do %>
-            <div class="alert alert-error">
+            <div class="alert alert-error mb-8">
               <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
               <div>
                 <p>
@@ -240,48 +240,66 @@ defmodule AresWeb.AppLive.Payment do
 
   @impl true
   def handle_event("submit-payment", %{"payment" => payment_params}, socket) do
-    phone = Map.get(payment_params, "mb_way_phone", "")
-    iva_number = Map.get(payment_params, "iva_number", "")
-
-    changeset =
-      payment_changeset(
-        %{mb_way_phone: phone, iva_number: iva_number},
-        socket.assigns.include_invoice_info
-      )
-      |> Map.put(:action, :validate)
-
-    if changeset.valid? do
-      order_data = %{
-        "phone_number" => phone,
-        "tax_id" => if(socket.assigns.include_invoice_info, do: iva_number, else: "")
-      }
-
-      case Billing.start_payment(:mbway, socket.assigns.team.id, order_data) do
-        {:ok, {:ok, payment}} ->
-          {:noreply, push_navigate(socket, to: ~p"/app/payment/#{payment.order_id}")}
-
-        {:error, _reason} ->
-          {:noreply,
-           socket
-           |> put_flash(:error, "Failed to start payment. Please try again later.")
-           |> assign_payment_form(changeset)}
-      end
+    if reaches_limit_with_current_team?(socket.assigns.team.members) do
+      {:noreply,
+       socket
+       |> put_flash(
+         :error,
+         "Your team exceeds the total capacity for the event. You cannot complete the payment."
+       )}
     else
-      {:noreply, assign_payment_form(socket, changeset)}
+      phone = Map.get(payment_params, "mb_way_phone", "")
+      iva_number = Map.get(payment_params, "iva_number", "")
+
+      changeset =
+        payment_changeset(
+          %{mb_way_phone: phone, iva_number: iva_number},
+          socket.assigns.include_invoice_info
+        )
+        |> Map.put(:action, :validate)
+
+      if changeset.valid? do
+        order_data = %{
+          "phone_number" => phone,
+          "tax_id" => if(socket.assigns.include_invoice_info, do: iva_number, else: "")
+        }
+
+        case Billing.start_payment(:mbway, socket.assigns.team.id, order_data) do
+          {:ok, {:ok, payment}} ->
+            {:noreply, push_navigate(socket, to: ~p"/app/payment/#{payment.order_id}")}
+
+          {:error, _reason} ->
+            {:noreply,
+             socket
+             |> put_flash(:error, "Failed to start payment. Please try again later.")
+             |> assign_payment_form(changeset)}
+        end
+      else
+        {:noreply, assign_payment_form(socket, changeset)}
+      end
     end
   end
 
   @impl true
   def handle_event("start-payment", _params, %{assigns: %{step: :none, team: team}} = socket) do
-    case Teams.update_team(team, %{payment_status: :started}) do
-      {:ok, _team} ->
-        {:noreply, assign(socket, :step, :started)}
+    if reaches_limit_with_current_team?(socket.assigns.team.members) do
+      {:noreply,
+       socket
+       |> put_flash(
+         :error,
+         "Your team exceeds the total capacity for the event. You cannot proceed to payment."
+       )}
+    else
+      case Teams.update_team(team, %{payment_status: :started}) do
+        {:ok, _team} ->
+          {:noreply, assign(socket, :step, :started)}
 
-      {:error, _changeset} ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "Failed to start confirm team data. Please try again later.")
-         |> redirect(to: ~p"/app/profile")}
+        {:error, _changeset} ->
+          {:noreply,
+           socket
+           |> put_flash(:error, "Failed to start confirm team data. Please try again later.")
+           |> redirect(to: ~p"/app/profile")}
+      end
     end
   end
 
