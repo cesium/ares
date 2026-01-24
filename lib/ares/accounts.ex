@@ -28,16 +28,62 @@ defmodule Ares.Accounts do
 
   ## Examples
 
-      iex> list_users_with_teams()
+      iex> list_attendees()
       [%User{}, ...]
 
   """
-  def list_users_with_teams do
+  def list_attendees do
     User
     |> where([u], not u.is_admin)
     |> order_by([u], asc: u.name)
     |> Repo.all()
     |> Repo.preload(:team)
+  end
+
+  @doc """
+  Returns the list of users without team and are attendees.
+
+  ## Examples
+
+      iex> list_attendees_without_team()
+      [%User{}, ...]
+
+  """
+  def list_attendees_without_team do
+    User
+    |> where([u], not u.is_admin and is_nil(u.team_id))
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the count of attendees that have a team.
+
+  ## Examples
+
+    iex> count_attendees_with_team()
+    32
+
+  """
+  def count_attendees_with_team do
+    User
+    |> where([u], not u.is_admin and not is_nil(u.team_id))
+    |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
+  Returns the count of attendees that have a paid team.
+
+  ## Examples
+
+    iex> count_attendees_with_paid_team()
+    67
+
+  """
+  def count_attendees_with_paid_team do
+    User
+    |> join(:inner, [u], t in assoc(u, :team))
+    |> where([u, t], not u.is_admin and not is_nil(u.team_id) and t.payment_status == ^:paid)
+    |> Repo.aggregate(:count, :id)
   end
 
   @doc """
@@ -277,7 +323,8 @@ defmodule Ares.Accounts do
   ## Session
 
   @doc """
-  Generates a session token.
+  Generates a s      iex> list_attendees()
+      [%User{}, ...]ession token.
   """
   def generate_user_session_token(user) do
     {token, user_token} = UserToken.build_session_token(user)
@@ -399,6 +446,14 @@ defmodule Ares.Accounts do
 
         {:ok, {user, tokens_to_expire}}
       end
+    end)
+  end
+
+  def notify_users_with_no_team do
+    attendees = list_attendees_without_team()
+
+    Enum.each(attendees, fn attendee ->
+      UserNotifier.deliver_team_reminder(attendee)
     end)
   end
 end

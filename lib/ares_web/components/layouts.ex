@@ -5,13 +5,7 @@ defmodule AresWeb.Layouts do
   """
   use AresWeb, :html
 
-  import AresWeb.Components.{Footer, Navbar}
-
-  # Embed all files in layouts/* within this module.
-  # The default root.html.heex file contains the HTML
-  # skeleton of your application, namely HTML headers
-  # and other static content.
-  embed_templates "layouts/*"
+  import AresWeb.Components.{Footer, Navbar, Sidebar}
 
   @doc """
   Renders your app layout.
@@ -126,4 +120,10 @@ defmodule AresWeb.Layouts do
     </div>
     """
   end
+
+  # Embed all files in layouts/* within this module.
+  # The default root.html.heex file contains the HTML
+  # skeleton of your application, namely HTML headers
+  # and other static content.
+  embed_templates "layouts/*"
 end

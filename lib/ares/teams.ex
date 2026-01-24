@@ -59,6 +59,23 @@ defmodule Ares.Teams do
   end
 
   @doc """
+  Returns the count of team members
+
+  ## Examples
+
+      iex> count_team_members(id)
+      4
+
+  """
+  def count_team_members(id) do
+    Team
+    |> where([t], t.id == ^id)
+    |> join(:left, [t], m in assoc(t, :members))
+    |> select([_t, m], count(m.id))
+    |> Repo.one()
+  end
+
+  @doc """
   Gets a single team.
 
   Raises `Ecto.NoResultsError` if the Team does not exist.
