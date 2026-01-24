@@ -45,7 +45,7 @@ defmodule Ares.Accounts do
 
   ## Examples
 
-      iex> list_attendees()
+      iex> list_attendees_without_team()
       [%User{}, ...]
 
   """
@@ -56,14 +56,33 @@ defmodule Ares.Accounts do
   end
 
   @doc """
-  Returns the count of attendees.
+  Returns the count of attendees that have a team.
 
   ## Examples
 
+    iex> count_attendees_with_team()
+    32
+
   """
-  def count_attendees do
+  def count_attendees_with_team do
     User
-    |> where([u], not u.is_admin)
+    |> where([u], not u.is_admin and not is_nil(u.team_id))
+    |> Repo.aggregate(:count, :id)
+  end
+
+  @doc """
+  Returns the count of attendees that have a paid team.
+
+  ## Examples
+
+    iex> count_attendees_with_paid_team()
+    67
+
+  """
+  def count_attendees_with_paid_team do
+    User
+    |> join(:inner, [u], t in assoc(u, :team))
+    |> where([u, t], not u.is_admin and not is_nil(u.team_id) and t.payment_status == ^:paid)
     |> Repo.aggregate(:count, :id)
   end
 
@@ -304,7 +323,8 @@ defmodule Ares.Accounts do
   ## Session
 
   @doc """
-  Generates a session token.
+  Generates a s      iex> list_attendees()
+      [%User{}, ...]ession token.
   """
   def generate_user_session_token(user) do
     {token, user_token} = UserToken.build_session_token(user)

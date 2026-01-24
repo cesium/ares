@@ -128,18 +128,22 @@ defmodule AresWeb.UserLive.Registration do
   end
 
   def mount(_params, _session, socket) do
-    changeset = Accounts.change_user(%User{}, %{}, validate_unique: false)
+    if Event.registrations_open?() do
+      changeset = Accounts.change_user(%User{}, %{}, validate_unique: false)
 
-    {:ok,
-     socket
-     |> assign_form(changeset)
-     |> allow_upload(:cv,
-       accept: ~w(.pdf .doc .docx .txt .md .rtf),
-       max_entries: 1,
-       max_file_size: 5_000_000,
-       auto_upload: true,
-       progress: &handle_progress/3
-     )}
+      {:ok,
+       socket
+       |> assign_form(changeset)
+       |> allow_upload(:cv,
+         accept: ~w(.pdf .doc .docx .txt .md .rtf),
+         max_entries: 1,
+         max_file_size: 5_000_000,
+         auto_upload: true,
+         progress: &handle_progress/3
+       )}
+    else
+      {:ok, redirect(socket, to: "/log-in")}
+    end
   end
 
   @impl true
@@ -155,14 +159,7 @@ defmodule AresWeb.UserLive.Registration do
 
   @impl true
   def handle_event("save", %{"user" => user_params}, socket) do
-    attendee_count = Accounts.count_attendees()
-
-    if Event.attendees_limit_reached?(attendee_count) do
-      {:noreply,
-       socket
-       |> put_flash(:error, "Registration is closed: attendee limit reached.")
-       |> assign_form(Accounts.change_user(%User{}, user_params))}
-    else
+    if Event.registrations_open?() do
       with {:ok, user} <- Accounts.register_user(user_params, &consume_pdf_data(socket, &1)),
            {:ok, _} <- Accounts.deliver_login_instructions(user, &url(~p"/log-in/#{&1}")) do
         {:noreply,
@@ -176,6 +173,11 @@ defmodule AresWeb.UserLive.Registration do
         {:error, %Ecto.Changeset{} = changeset} ->
           {:noreply, assign_form(socket, changeset)}
       end
+    else
+      {:noreply,
+       socket
+       |> put_flash(:error, "Registration is closed.")
+       |> assign_form(Accounts.change_user(%User{}, user_params))}
     end
   end
 

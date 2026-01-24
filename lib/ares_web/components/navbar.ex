@@ -6,6 +6,8 @@ defmodule AresWeb.Components.Navbar do
 
   alias Phoenix.LiveView.JS
 
+  alias Ares.Event
+
   @doc """
   Renders the navigation header with mobile menu support.
   """
@@ -105,12 +107,21 @@ defmodule AresWeb.Components.Navbar do
                     </.link>
                   </div>
                 <% else %>
-                  <.link
-                    navigate="/register"
-                    class="rounded-full px-3 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-white hover:ring-primary hover:text-primary transition-all"
-                  >
-                    Register
-                  </.link>
+                  <%= if not Event.registrations_open?() do %>
+                    <.link
+                      class="hover:text-primary transition-colors"
+                      href="/log-in"
+                    >
+                      Login
+                    </.link>
+                  <% else %>
+                    <.link
+                      class="hover:text-primary transition-colors"
+                      href="/register"
+                    >
+                      Register
+                    </.link>
+                  <% end %>
                 <% end %>
               </li>
             </ul>
@@ -181,12 +192,21 @@ defmodule AresWeb.Components.Navbar do
                   Profile
                 </.link>
               <% else %>
-                <.link
-                  class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
-                  href="/register"
-                >
-                  Register
-                </.link>
+                <%= if not Event.registrations_open?() do %>
+                  <.link
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                    href="/log-in"
+                  >
+                    Login
+                  </.link>
+                <% else %>
+                  <.link
+                    class="block py-3 sm:py-4 text-center text-lg sm:text-xl hover:text-primary transition-colors"
+                    href="/register"
+                  >
+                    Register
+                  </.link>
+                <% end %>
               <% end %>
             </li>
             <%= if @user do %>

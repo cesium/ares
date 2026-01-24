@@ -1,6 +1,6 @@
 defmodule AresWeb.BackofficeLive.EventSettings do
   use AresWeb, :live_view
-  alias Ares.Constants
+  alias Ares.{Constants, Event}
 
   import AresWeb.CoreComponents
 
@@ -12,7 +12,12 @@ defmodule AresWeb.BackofficeLive.EventSettings do
         <h2>Attendees Limit: {@attendees_limit || "Not set"}</h2>
         <.button phx-click="open_modal"><.icon name="hero-pencil" /></.button>
       </div>
-
+      <div class="flex items-center gap-4 mt-4">
+        <h2>Registrations: {(@registrations_open == "true" and "Open") || "Closed"}</h2>
+        <.button phx-click="toggle_registrations">
+          <.icon name={(@registrations_open == "true" and "hero-lock-open") || "hero-lock-closed"} />
+        </.button>
+      </div>
       <.modal :if={@show_modal} id="attendees-limit-modal" show on_cancel={JS.push("close_modal")}>
         <.live_component
           module={AresWeb.BackofficeLive.EventSettingsFormComponent}
@@ -33,14 +38,19 @@ defmodule AresWeb.BackofficeLive.EventSettings do
           _ -> nil
         end
 
+      registrations_open =
+        case Constants.get("registrations_open") do
+          {:ok, value} -> value
+          _ -> "false"
+        end
+
       {:ok,
        socket
        |> assign(:attendees_limit, limit)
+       |> assign(:registrations_open, registrations_open)
        |> assign(:show_modal, false)}
     else
-      {:ok,
-       socket
-       |> redirect(to: ~p"/app/profile")}
+      {:ok, socket |> redirect(to: ~p"/app/profile")}
     end
   end
 
@@ -66,5 +76,19 @@ defmodule AresWeb.BackofficeLive.EventSettings do
   @impl true
   def handle_event("close_modal", _params, socket) do
     {:noreply, assign(socket, :show_modal, false)}
+  end
+
+  @impl true
+  def handle_event("toggle_registrations", _params, socket) do
+    value =
+      if socket.assigns.registrations_open == "true" do
+        "false"
+      else
+        "true"
+      end
+
+    Event.change_registrations_open(value)
+
+    {:noreply, assign(socket, :registrations_open, value)}
   end
 end

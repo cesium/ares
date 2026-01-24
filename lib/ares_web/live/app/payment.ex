@@ -1,7 +1,7 @@
 defmodule AresWeb.AppLive.Payment do
   use AresWeb, :live_view
 
-  alias Ares.{Billing, Teams}
+  alias Ares.{Accounts, Billing, Event, Teams}
   alias Ecto.Changeset
 
   @impl true
@@ -30,12 +30,23 @@ defmodule AresWeb.AppLive.Payment do
                 <% end %>
               </div>
             </div>
-            <div class="alert alert-error">
-              <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
-              <div>
-                <p>After confirmation, this list <b>cannot be changed</b>.</p>
+            <%= if reaches_limit_with_current_team?(@team.members) do %>
+              <div class="alert alert-error">
+                <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
+                <div>
+                  <p>
+                    Your team exceeds the total capacity for the event. You cannot proceed to payment.
+                  </p>
+                </div>
               </div>
-            </div>
+            <% else %>
+              <div class="alert alert-error">
+                <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
+                <div>
+                  <p>After confirmation, this list <b>cannot be changed</b>.</p>
+                </div>
+              </div>
+            <% end %>
             <div class="flex flex-row justify-between mt-8 gap-4">
               <.button
                 patch={~p"/app/profile"}
@@ -46,6 +57,7 @@ defmodule AresWeb.AppLive.Payment do
               <.button
                 class="btn btn-primary w-2/5"
                 phx-click="start-payment"
+                disabled={reaches_limit_with_current_team?(@team.members)}
               >
                 Confirm <.icon name="hero-arrow-right" class="ml-2" />
               </.button>
@@ -53,6 +65,16 @@ defmodule AresWeb.AppLive.Payment do
           </div>
         <% end %>
         <%= if @step == :started do %>
+          <%= if reaches_limit_with_current_team?(@team.members) do %>
+            <div class="alert alert-error">
+              <.icon name="hero-exclamation-triangle" class="size-6 shrink-0" />
+              <div>
+                <p>
+                  Your team exceeds the total capacity for the event. You cannot complete the payment.
+                </p>
+              </div>
+            </div>
+          <% end %>
           <.form for={@payment_form} phx-change="validate-payment" phx-submit="submit-payment">
             <div class="flex flex-col sm:flex-row gap-8 min-h-[650px]">
               <div class="w-full">
@@ -126,7 +148,12 @@ defmodule AresWeb.AppLive.Payment do
                     <p>€{@checkout_information.total}</p>
                   </div>
                 </div>
-                <.button class="btn btn-primary w-full mt-6" disabled={!@payment_changeset.valid?}>
+                <.button
+                  class="btn btn-primary w-full mt-6"
+                  disabled={
+                    !@payment_changeset.valid? || reaches_limit_with_current_team?(@team.members)
+                  }
+                >
                   Complete payment
                 </.button>
               </div>
@@ -345,5 +372,10 @@ defmodule AresWeb.AppLive.Payment do
   defp payment_in_progress?(team) do
     Billing.list_payments_by_team(team.id)
     |> Enum.any?(fn payment -> payment.status == :pending end)
+  end
+
+  defp reaches_limit_with_current_team?(team_members) do
+    attendees_with_paid_team = Accounts.count_attendees_with_paid_team()
+    Event.attendees_limit_reached?(attendees_with_paid_team + Enum.count(team_members))
   end
 end
