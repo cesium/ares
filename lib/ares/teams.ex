@@ -58,6 +58,13 @@ defmodule Ares.Teams do
     |> Repo.all()
   end
 
+  def list_teams_pending_payment do
+    Team
+    |> where([t], t.payment_status in [:none, :started])
+    |> preload(:leader)
+    |> Repo.all()
+  end
+
   @doc """
   Returns the count of team members
 

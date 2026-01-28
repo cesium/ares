@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <link
+      rel="preload"
+      as="image"
+      href=<%= "#{@phx_host}/images/email/bugsbyte-logo.png" %>
+    />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <!--$-->
+    <style>
+      u + .body .gmail-blend-screen { background:#000; mix-blend-mode:screen; }
+      u + .body .gmail-blend-difference { background:#000; mix-blend-mode:difference; }
+    </style>
+  </head>
+  <div
+    style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0"
+  >
+    Payment required - Don&#x27;t lose your team&#x27;s spot!
+    <div>
+       ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+    </div>
+  </div>
+  <body
+    style='background-color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
+  >
+    <head></head>
+    <table
+      align="center"
+      width="100%"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="max-width:37.5em;background-color:#ffffff;margin:0 auto;padding:0 0 48px"
+    >
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <div
+              style="padding-top:1.25rem;padding-bottom:1.25rem;background-color:#000000;background-image:linear-gradient(#000000, #000000)"
+            >
+              <div class="gmail-blend-difference">
+                <div
+                  class="gmail-blend-screen"
+                  style="padding-left:2.5rem;padding-right:2.5rem"
+                >
+                  <img
+                    alt="BugsByte Logo"
+                    src=<%= "#{@phx_host}/images/email/bugsbyte-logo.png" %>
+                    style="margin-left:auto;margin-right:auto;width:100%;display:block;outline:none;border:none;text-decoration:none;filter:invert(0%)"
+                  />
+                </div>
+              </div>
+            </div>
+            <p
+              style="font-size:1.25rem;line-height:1.75rem;font-weight:700;text-align:center;margin:16px 0"
+            >
+              O tempo está a esgotar-se,
+              <%= @user_name %>!
+            </p>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              A tua equipa está inscrita, mas ainda falta algo crucial:
+              <b>o pagamento</b>. Neste momento, a inscrição da tua equipa não
+              está confirmada e, se não efetuares o pagamento em breve, a tua
+              equipa vai perder o lugar na BugsByte.<!-- -->
+            </p>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              Queremos a tua equipa lá! Efetua o pagamento agora antes que seja
+              tarde demais.
+            </p>
+            <table
+              align="center"
+              width="100%"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              style="margin-left:auto;margin-right:auto;text-align:center"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <a
+                      href=<%= "#{@phx_host}/app/payment" %>
+                      style="border-radius:9999px;font-weight:700;color:rgb(255,255,255);padding-left:1rem;padding-right:1rem;margin-top:1.5rem;margin-bottom:1.5rem;line-height:100%;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;background-color:#EB1A63;background-image:linear-gradient(#EB1A63, #EB1A63);font-size:16px;padding:12px 16px 12px 16px"
+                      target="_blank"
+                      ><span
+                        ><!--[if mso
+                          ]><i
+                            style="mso-font-width:400%;mso-text-raise:18"
+                            hidden
+                            >&#8202;&#8202;</i
+                          ><!
+                        [endif]--></span
+                      ><span
+                        style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px"
+                        ><div class="gmail-blend-difference">
+                          <div class="gmail-blend-screen">
+                            Efetuar pagamento
+                          </div>
+                        </div></span
+                      ><span
+                        ><!--[if mso
+                          ]><i style="mso-font-width:400%" hidden
+                            >&#8202;&#8202;&#8203;</i
+                          ><!
+                        [endif]--></span
+                      ></a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              Até breve,<br /><span style="color:rgb(100,116,139)"
+                >Equipa da BugsByte</span
+              >
+            </p>
+            <hr
+              style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0"
+            />
+            <p
+              style="color:rgb(148,163,184);font-size:0.75rem;line-height:1rem;margin:16px 0"
+            >
+              Caso o botão acima não funcione, também podes clicar no seguinte link:<!-- -->
+              <a
+                href=<%= "#{@phx_host}/app/payment" %>
+                style="color:rgb(51,65,85)"
+                ><%= "#{@phx_host}/app/payment" %></a
+              >
+            </p>
+            <hr
+              style="margin-top:16px;margin-bottom:16px;border-color:rgb(209,213,219);border-top-width:2px;width:100%;border:none;border-top:1px solid #eaeaea"
+            />
+            <p
+              style="font-size:1.25rem;line-height:1.75rem;font-weight:700;text-align:center;margin:16px 0"
+            >
+              Time is running out,
+              <%= @user_name %>!
+            </p>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              Your team is registered, but there&#x27;s one crucial thing
+              missing: <b>payment</b>. Right now, your team&#x27;s registration
+              isn&#x27;t confirmed, and if you don&#x27;t complete the payment
+              soon, your team will lose its spot at BugsByte.<!-- -->
+            </p>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              We want your team there! Complete the payment now before it&#x27;s
+              too late.
+            </p>
+            <table
+              align="center"
+              width="100%"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              style="margin-left:auto;margin-right:auto;text-align:center"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <a
+                      href="PLACEHOLDER_PAYMENT_LINK"
+                      style="border-radius:9999px;font-weight:700;color:rgb(255,255,255);padding-left:1rem;padding-right:1rem;margin-top:1.5rem;margin-bottom:1.5rem;line-height:100%;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;background-color:#EB1A63;background-image:linear-gradient(#EB1A63, #EB1A63);font-size:16px;padding:12px 16px 12px 16px"
+                      target="_blank"
+                      ><span
+                        ><!--[if mso
+                          ]><i
+                            style="mso-font-width:400%;mso-text-raise:18"
+                            hidden
+                            >&#8202;&#8202;</i
+                          ><!
+                        [endif]--></span
+                      ><span
+                        style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px"
+                        ><div class="gmail-blend-difference">
+                          <div class="gmail-blend-screen">Complete payment</div>
+                        </div></span
+                      ><span
+                        ><!--[if mso
+                          ]><i style="mso-font-width:400%" hidden
+                            >&#8202;&#8202;&#8203;</i
+                          ><!
+                        [endif]--></span
+                      ></a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p
+              style="font-size:16px;line-height:26px;margin:16px 0;padding:0 16px"
+            >
+              See you soon,<br /><span style="color:rgb(100,116,139)"
+                >BugsByte Team</span
+              >
+            </p>
+            <hr
+              style="width:100%;border:none;border-top:1px solid #eaeaea;border-color:#cccccc;margin:20px 0"
+            />
+            <p
+              style="color:rgb(148,163,184);font-size:0.75rem;line-height:1rem;margin:16px 0"
+            >
+              If the button above doesn&#x27;t work, you can also click on the
+              following link:<!-- -->
+              <a
+                href=<%= "#{@phx_host}/app/payment" %>
+                style="color:rgb(51,65,85)"
+                ><%= "#{@phx_host}/app/payment" %></a
+              >
+            </p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--/$-->
+  </body>
+</html>

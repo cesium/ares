@@ -6,6 +6,7 @@ defmodule Ares.Accounts.UserNotifier do
 
   alias Ares.Accounts.User
   alias Ares.Mailer
+  alias Ares.Teams.Team
 
   use Phoenix.Swoosh, view: AresWeb.EmailView
 
@@ -83,6 +84,18 @@ defmodule Ares.Accounts.UserNotifier do
       base_html_email(user.email, "Reminder to join a team!")
       |> assign(:user_name, user.name)
       |> render_body("team_reminder_email.html")
+
+    case Mailer.deliver(email) do
+      {:ok, _metadata} -> {:ok, email}
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  def deliver_team_payment_reminder(%Team{} = team) do
+    email =
+      base_html_email(team.leader.email, "Payment Reminder")
+      |> assign(:user_name, team.leader.name)
+      |> render_body("payment_reminder_email.html")
 
     case Mailer.deliver(email) do
       {:ok, _metadata} -> {:ok, email}
