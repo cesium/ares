@@ -7,6 +7,7 @@ defmodule Ares.Repo.Migrations.CreateCompanies do
       add :name, :string
       add :url, :string
       add :logo, :string
+      add :type, :string
 
       timestamps(type: :utc_datetime)
     end

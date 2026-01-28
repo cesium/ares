@@ -7,7 +7,7 @@ defmodule Ares.Companies.Company do
   import Ecto.Changeset
 
   @required_fields ~w(name)a
-  @optional_fields ~w(url)a
+  @optional_fields ~w(url type)a
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -15,6 +15,7 @@ defmodule Ares.Companies.Company do
     field :name, :string
     field :url, :string
     field :logo, Ares.Uploaders.Company.Type
+    field :type, Ecto.Enum, values: [:sponsor, :partner], default: :sponsor
 
     timestamps(type: :utc_datetime)
   end

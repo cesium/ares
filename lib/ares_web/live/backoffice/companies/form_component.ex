@@ -28,11 +28,22 @@ defmodule AresWeb.Backoffice.CompaniesFormComponent do
         phx-change="validate"
         phx-submit="save"
         autocomplete="off"
+        class="flex flex-col gap-8"
       >
         <div>
-          <div class="grid grid-cols-2">
+          <div class="grid grid-cols-2 gap-5">
             <.input field={@form[:name]} type="text" label="Name" required />
             <.input field={@form[:url]} type="text" label="URL" />
+            <.input
+              field={@form[:type]}
+              type="select"
+              label="Type"
+              required
+              options={[
+                Sponsor: :sponsor,
+                Partner: :partner
+              ]}
+            />
           </div>
           <div class="w-full">
             <label>Logo</label>
@@ -48,7 +59,9 @@ defmodule AresWeb.Backoffice.CompaniesFormComponent do
             />
           </div>
         </div>
-        <button phx-disable-with="Saving...">Save Company</button>
+        <.button class="btn btn-primary btn-soft self-end" phx-disable-with="Saving...">
+          Save Company
+        </.button>
       </.form>
     </div>
     """

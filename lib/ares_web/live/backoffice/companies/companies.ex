@@ -67,6 +67,16 @@ defmodule AresWeb.BackofficeLive.Companies do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  @impl true
+  def handle_event("delete", %{"id" => id}, socket) do
+    company = Companies.get_company!(id)
+    {:ok, _} = Companies.delete_company(company)
+
+    companies = Ares.Companies.list_companies() |> Enum.map(&{&1.id, &1})
+
+    {:noreply, assign(socket, :companies, companies)}
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Company")
