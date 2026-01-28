@@ -456,4 +456,13 @@ defmodule Ares.Accounts do
       UserNotifier.deliver_team_reminder(attendee)
     end)
   end
+
+  def notify_team_with_no_payment do
+    teams =
+      Ares.Teams.list_teams_pending_payment()
+
+    Enum.each(teams, fn team ->
+      UserNotifier.deliver_team_payment_reminder(team)
+    end)
+  end
 end
