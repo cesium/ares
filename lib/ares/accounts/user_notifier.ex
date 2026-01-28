@@ -5,8 +5,8 @@ defmodule Ares.Accounts.UserNotifier do
   import Swoosh.Email
 
   alias Ares.Accounts.User
-  alias Ares.Teams.Team
   alias Ares.Mailer
+  alias Ares.Teams.Team
 
   use Phoenix.Swoosh, view: AresWeb.EmailView
 
