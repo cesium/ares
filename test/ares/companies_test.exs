@@ -37,7 +37,7 @@ defmodule Ares.CompaniesTest do
 
       update_attrs = %{
         name: "some updated name",
-        url: "some updated url",
+        url: "some updated url"
       }
 
       assert {:ok, %Company{} = company} = Companies.update_company(company, update_attrs)

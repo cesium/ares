@@ -74,6 +74,42 @@ defmodule Ares.Companies do
   end
 
   @doc """
+  Updates a company logo.
+
+  ## Examples
+
+      iex> update_company_logo(company, %{logo: image})
+      {:ok, %Company{}}
+
+      iex> update_company_logo(company, %{logo: bad_image})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_company_logo(%Company{} = company, attrs) do
+    company
+    |> Company.image_changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Creates or updates a company.
+
+  ## Examples
+
+      iex> create_or_update_company(%Company{}, %{field: value})
+      {:ok, %Company{}}
+
+      iex> create_or_update_company(%Company{}, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_or_update_company(%Company{} = company, attrs) do
+    company
+    |> Company.changeset(attrs)
+    |> Repo.insert_or_update()
+  end
+
+  @doc """
   Deletes a company.
 
   ## Examples
