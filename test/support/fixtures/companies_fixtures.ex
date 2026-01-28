@@ -13,7 +13,8 @@ defmodule Ares.CompaniesFixtures do
       |> Enum.into(%{
         logo: "some logo",
         name: "some name",
-        url: "some url"
+        url: "some url",
+        type: :sponsor
       })
       |> Ares.Companies.create_company()
 
