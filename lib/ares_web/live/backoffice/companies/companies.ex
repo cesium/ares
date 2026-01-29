@@ -19,6 +19,9 @@ defmodule AresWeb.BackofficeLive.Companies do
         <:col :let={{_id, company}} label="Url">
           {company.url}
         </:col>
+        <:col :let={{_id, company}} label="Type">
+          {String.capitalize(to_string(company.type), :default)}
+        </:col>
         <:action :let={{id, company}}>
           <div class="flex flex-row gap-2">
             <.link patch={~p"/backoffice/companies/#{company.id}/edit"}>
