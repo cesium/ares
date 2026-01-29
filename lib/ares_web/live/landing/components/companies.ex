@@ -11,13 +11,13 @@ defmodule AresWeb.Components.Companies do
   def companies(assigns) do
     ~H"""
     <div class="w-full space-y-16 font-inter">
-      <div :if={@sponsors != []} class="relative border border-white px-6 pb-8 pt-8 w-full">
+      <div :if={@sponsors != []} class="relative border border-white px-6 py-12 sm:py-8 w-full">
         <h3 class="absolute left-4 top-0 -translate-y-1/2 rounded-full border border-current bg-black px-4 py-1 uppercase tracking-tight">
           Sponsors
         </h3>
         <ul
           id="companies-listing"
-          class="flex flex-row justify-evenly items-center gap-16 sm:gap-8 sm:h-32"
+          class="flex flex-col md:flex-row justify-evenly items-center gap-24 md:gap-8 md:h-32"
         >
           <li :for={company <- @sponsors}>
             <a href={company.url} target="_blank" rel="noopener noreferrer">
@@ -38,7 +38,7 @@ defmodule AresWeb.Components.Companies do
         </h3>
         <ul
           id="companies-listing"
-          class="flex flex-row justify-evenly items-center gap-16 sm:gap-8 sm:h-32"
+          class="flex flex-col md:flex-row justify-evenly items-center gap-24 md:gap-8 md:h-32"
         >
           <li :for={company <- @partners}>
             <a href={company.url} target="_blank" rel="noopener noreferrer">
