@@ -80,6 +80,9 @@ defmodule AresWeb.Router do
         scope "/", BackofficeLive do
           live "/event_settings", EventSettings, :index
           live "/dashboard", Dashboard, :index
+          live "/companies", Companies, :index
+          live "/companies/new", Companies, :new
+          live "/companies/:id/edit", Companies, :edit
         end
       end
     end

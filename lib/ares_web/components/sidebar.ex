@@ -40,6 +40,14 @@ defmodule AresWeb.Components.Sidebar do
                   Event Settings
                 </.link>
               </li>
+              <li class="w-full">
+                <.link
+                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                  navigate="/backoffice/companies"
+                >
+                  Companies
+                </.link>
+              </li>
             </ul>
           </nav>
           <button
@@ -112,6 +120,14 @@ defmodule AresWeb.Components.Sidebar do
                 navigate="/backoffice/event_settings"
               >
                 Event Settings
+              </.link>
+            </li>
+            <li class="w-full">
+              <.link
+                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                navigate="/backoffice/companies"
+              >
+                Companies
               </.link>
             </li>
           </ul>

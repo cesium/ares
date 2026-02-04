@@ -8,7 +8,8 @@ defmodule Ares.Repo.Seeds do
 
   def run do
     [
-      "users.exs"
+      "users.exs",
+      "companies.exs"
     ]
     |> Enum.each(fn file ->
       Code.require_file("#{@seeds_dir}/#{file}")
