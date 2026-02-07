@@ -24,7 +24,7 @@ defmodule AresWeb.Components.Companies do
               <p :if={!company.logo} class="font-semibold text-2xl">{company.name}</p>
               <img
                 :if={company.logo}
-                src={Uploaders.Company.url({company.logo, company}, :original)}
+                src={Uploaders.Company.url({company.logo, company}, :original, signed: true)}
                 alt={company.name}
                 class="h-16 sm:h-12 object-contain"
               />
