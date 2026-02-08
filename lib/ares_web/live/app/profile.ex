@@ -1,7 +1,10 @@
 defmodule AresWeb.AppLive.Profile do
   use AresWeb, :live_view
 
+  alias Ares.Accounts
+  alias Ares.Accounts.User
   alias Ares.Teams
+  alias AresWeb.Components.CVUploader
 
   @impl true
   def render(assigns) do
@@ -35,7 +38,7 @@ defmodule AresWeb.AppLive.Profile do
         <% end %>
 
         <%= if @user.team do %>
-          <div class="bg-gray rounded-lg p-8 border border-gray-800 font-inter">
+          <div class="bg-gray rounded-lg p-8 border border-gray-800 font-inter mb-8">
             <h2 class="text-3xl font-vt323 uppercase">Member of</h2>
 
             <div class="mb-6 pb-6 border-b border-gray-800">
@@ -120,6 +123,51 @@ defmodule AresWeb.AppLive.Profile do
             </div>
           </div>
         <% end %>
+
+        <div class="bg-gray rounded-lg p-8 border border-gray-800 font-inter">
+          <h2 class="text-3xl font-vt323 uppercase">Upload your CV</h2>
+          <%= if @user.cv do %>
+            <div class="flex items-center gap-4 mt-2">
+              <p class="text-sm text-gray-400">Current: {@user.cv.file_name}</p>
+              <button
+                type="button"
+                class="text-sm text-primary underline cursor-pointer"
+                phx-click="remove-cv"
+                onclick="return confirm('Remove current CV?');"
+              >
+                Remove
+              </button>
+            </div>
+          <% end %>
+
+          <.form
+            for={@form}
+            id="profile_info_form"
+            phx-submit="save"
+            phx-change="validate"
+            class="font-inter mt-8"
+          >
+            <.live_component
+              module={CVUploader}
+              id="cv-uploader"
+              uploaders={@uploads}
+            />
+
+            <.button
+              phx-disable-with="Saving..."
+              class="btn btn-primary w-full mt-6"
+              disabled={@cv_uploading || @cv_upload_error}
+            >
+              Save
+            </.button>
+
+            <%= if @cv_upload_error do %>
+              <p class="text-sm text-primary mt-2">
+                There was a problem with the uploaded CV. Please remove and re-upload or try a different file.
+              </p>
+            <% end %>
+          </.form>
+        </div>
       </div>
     </Layouts.app>
     """
@@ -135,6 +183,114 @@ defmodule AresWeb.AppLive.Profile do
         nil
       end
 
-    {:ok, assign(socket, user: Map.put(user, :team, team))}
+    changeset = Accounts.change_user(%User{}, %{}, validate_unique: false)
+
+    {:ok,
+     socket
+     |> assign(user: Map.put(user, :team, team))
+     |> assign_form(changeset)
+     |> assign(:cv_uploading, false)
+     |> assign(:cv_upload_error, nil)
+     |> allow_upload(:cv,
+       accept: ~w(.pdf .doc .docx .txt .md .rtf),
+       max_entries: 1,
+       max_file_size: 5_000_000,
+       auto_upload: true,
+       progress: &handle_progress/3
+     )}
+  end
+
+  def handle_event("remove-cv", _params, socket) do
+    user = socket.assigns.user
+
+    case Accounts.update_user_cv(user, %{"cv" => nil}) do
+      {:ok, %Accounts.User{} = updated_user} ->
+        {:noreply,
+         socket
+         |> assign(user: updated_user)
+         |> put_flash(:info, "CV removed.")}
+
+      {:error, _reason} ->
+        {:noreply, put_flash(socket, :error, "Could not remove CV.")}
+    end
+  end
+
+  @impl true
+  def handle_event("cancel-upload", %{"ref" => ref} = _params, socket) do
+    {:noreply, socket |> cancel_upload(:cv, ref) |> assign(:cv_upload_error, nil)}
+  end
+
+  @impl true
+  def handle_event("validate", %{"_target" => _} = _params, socket) do
+    upload_errors = upload_errors(socket.assigns.uploads.cv) || []
+    {:noreply, socket |> assign(:cv_upload_error, upload_errors)}
+  end
+
+  def handle_event("save", _params, socket) do
+    user = socket.assigns.user
+
+    if socket.assigns.cv_uploading do
+      {:noreply, socket |> put_flash(:error, "CV upload still in progress. Please wait.")}
+    else
+      case consume_pdf_data(socket, {:ok, user}) do
+        {:ok, %Accounts.User{} = updated_user} ->
+          {:noreply,
+           socket
+           |> assign(user: updated_user)
+           |> put_flash(:info, "CV uploaded successfully.")}
+
+        {:ok, _} ->
+          {:noreply, put_flash(socket, :info, "Nothing to upload.")}
+
+        {:error, reason} ->
+          {:noreply, put_flash(socket, :error, "CV upload failed: #{inspect(reason)}")}
+      end
+    end
+  end
+
+  defp consume_pdf_data(socket, {:ok, user}) do
+    result =
+      consume_uploaded_entries(socket, :cv, fn %{path: path}, entry ->
+        Accounts.update_user_cv(user, %{
+          "cv" => %Plug.Upload{
+            content_type: entry.client_type,
+            filename: entry.client_name,
+            path: path
+          }
+        })
+      end)
+
+    case result do
+      [] ->
+        {:ok, user}
+
+      [error: reason] ->
+        {:error, reason}
+
+      [updated_user] ->
+        {:ok, updated_user}
+
+      _ ->
+        {:ok, socket}
+    end
+  end
+
+  defp consume_pdf_data(_socket, result) do
+    result
+  end
+
+  def handle_progress(:cv, entry, socket) do
+    uploading = entry.progress < 100
+    errors = upload_errors(socket.assigns.uploads.cv) || []
+
+    {:noreply,
+     socket
+     |> assign(:cv_uploading, uploading)
+     |> assign(:cv_upload_error, if(errors == [], do: nil, else: errors))}
+  end
+
+  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
+    form = to_form(changeset, as: "user")
+    assign(socket, form: form)
   end
 end
