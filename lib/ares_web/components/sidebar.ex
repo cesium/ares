@@ -18,7 +18,7 @@ defmodule AresWeb.Components.Sidebar do
       class="sm:fixed min-h-24 sm:w-48 flex sm:flex-col sm:h-full items-center gap-2 text-white font-inter backdrop-blur bg-linear-to-b from-black/90 to-black/30 border-r border-zinc-900"
     >
       <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary p-4" navigate="/">
-        <img src="/images/logo-cesium.svg" alt="Cesium" class="object-fill min-w-32" />
+        <img src="/images/brand/logo-cesium.svg" alt="Cesium" class="object-fill min-w-32" />
       </.link>
       <div class="w-full flex">
         <div class="w-full flex gap-4 sm:gap-6 justify-end px-4 sm:px-0">
@@ -55,10 +55,7 @@ defmodule AresWeb.Components.Sidebar do
             type="button"
             class="sm:hidden text-white p-2 rounded hover:bg-opacity-90"
             aria-label="Navigation"
-            phx-click={
-              JS.toggle(to: "#menu-modal")
-              |> JS.add_class("overflow-hidden", to: "body")
-            }
+            phx-click={show_mobile_sidebar()}
           >
             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -74,24 +71,33 @@ defmodule AresWeb.Components.Sidebar do
     </section>
 
     <div
-      id="menu-modal"
-      class="hidden fixed inset-0 bg-black px-4 sm:px-8 py-4 text-white z-100 font-inter"
+      id="mobile-sidebar-container"
+      class="fixed inset-0 z-100 flex sm:hidden"
+      aria-modal="true"
+      style="display: none;"
     >
-      <div class="space-y-4 w-full h-full" role="dialog" aria-modal="true">
-        <header class="text-right">
+      <div
+        id="sidebar-overlay"
+        class="fixed inset-0 h-full min-h-screen bg-black/60 backdrop-blur-sm"
+        phx-click={hide_mobile_sidebar()}
+      >
+      </div>
+      <div
+        id="mobile-sidebar"
+        class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 text-white font-inter backdrop-blur bg-linear-to-b from-black/90 to-black/30 border-r border-zinc-900 rounded-r-lg h-dvh"
+      >
+        <header class="flex items-center justify-between px-4">
+          <.link navigate="/" class="flex items-center py-2">
+            <img src="/images/brand/cesium.svg" alt="CeSIUM" class="w-12 h-12" />
+          </.link>
           <button
             id="close-nav-button"
             type="button"
             class="text-white p-2 rounded hover:bg-opacity-90"
             aria-label="Close navigation"
-            phx-click={JS.toggle(to: "#menu-modal") |> JS.remove_class("overflow-hidden", to: "body")}
+            phx-click={hide_mobile_sidebar()}
           >
-            <svg
-              class="w-6 h-6 sm:w-8 sm:h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -101,11 +107,8 @@ defmodule AresWeb.Components.Sidebar do
             </svg>
           </button>
         </header>
-        <.link navigate="/" class="flex justify-center py-4">
-          <img src="/images/cesium.svg" alt="CeSIUM" class="w-14 h-14 sm:w-16 sm:h-16" />
-        </.link>
-        <nav>
-          <ul class="w-full flex flex-col sm:items-start text-zinc-400">
+        <nav class="mt-8">
+          <ul class="w-full flex flex-col items-start text-zinc-400">
             <li class="w-full">
               <.link
                 class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150"
@@ -135,5 +138,37 @@ defmodule AresWeb.Components.Sidebar do
       </div>
     </div>
     """
+  end
+
+  defp show_mobile_sidebar(js \\ %JS{}) do
+    js
+    |> JS.add_class("overflow-hidden", to: "body")
+    |> JS.show(
+      to: "#mobile-sidebar-container",
+      display: "flex",
+      transition: {"transition fade-in duration-200", "opacity-0", "opacity-100"}
+    )
+    |> JS.show(
+      to: "#mobile-sidebar",
+      display: "flex",
+      time: 300,
+      transition:
+        {"transition ease-in-out duration-300 transform", "-translate-x-full", "translate-x-0"}
+    )
+  end
+
+  defp hide_mobile_sidebar(js \\ %JS{}) do
+    js
+    |> JS.remove_class("overflow-hidden", to: "body")
+    |> JS.hide(
+      to: "#mobile-sidebar-container",
+      transition: {"transition fade-out duration-200", "opacity-100", "opacity-0"}
+    )
+    |> JS.hide(
+      to: "#mobile-sidebar",
+      time: 300,
+      transition:
+        {"transition ease-in-out duration-300 transform", "translate-x-0", "-translate-x-full"}
+    )
   end
 end

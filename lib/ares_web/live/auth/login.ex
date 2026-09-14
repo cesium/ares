@@ -9,7 +9,7 @@ defmodule AresWeb.UserLive.Login do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-xl space-y-4">
         <div class="flex flex-col gap-2 mb-8">
-          <h1 class="font-resegrg text-5xl">Log in</h1>
+          <h1 class="font-vt323 text-5xl md:text-6xl lg:text-7xl">Log in</h1>
           <%= if @current_scope do %>
             <p class="text-2xl">
               You need to reauthenticate to perform sensitive actions on your account.

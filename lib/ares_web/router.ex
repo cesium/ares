@@ -30,6 +30,7 @@ defmodule AresWeb.Router do
 
     live "/", LandingLive.Home, :index
     live "/faqs", LandingLive.Faqs, :index
+    live "/gallery", LandingLive.Gallery, :index
   end
 
   # Other scopes may use custom stacks.

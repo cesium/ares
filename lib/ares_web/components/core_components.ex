@@ -161,28 +161,64 @@ defmodule AresWeb.CoreComponents do
       <.button navigate={~p"/"}>Home</.button>
   """
   attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
-  attr :class, :string
-  attr :variant, :string, values: ~w(primary)
+  attr :class, :string, default: nil
+  attr :variant, :string, values: ~w(primary secondary)
+  attr :arrow, :boolean, default: false
   slot :inner_block, required: true
 
   def button(%{rest: rest} = assigns) do
-    variants = %{"primary" => "btn-primary", nil => "btn-primary btn-soft"}
+    variants = %{
+      "primary" => "btn-primary",
+      "secondary" => "btn-secondary",
+      nil => "btn-primary btn-soft"
+    }
 
-    assigns =
-      assign_new(assigns, :class, fn ->
-        ["btn", Map.fetch!(variants, assigns[:variant])]
-      end)
+    # Only derive a variant class when a variant was explicitly given, or when
+    # no class was passed at all — this keeps every existing call site that
+    # already hardcodes a full `class="btn btn-primary ..."` string unchanged.
+    variant_class =
+      cond do
+        assigns[:variant] -> variants[assigns[:variant]]
+        is_nil(assigns[:class]) -> variants[nil]
+        true -> nil
+      end
+
+    assigns = assign(assigns, :variant_class, variant_class)
 
     if rest[:href] || rest[:navigate] || rest[:patch] do
       ~H"""
-      <.link class={@class} {@rest}>
+      <.link
+        class={[
+          "btn group rounded-none transition-all duration-200 hover:scale-105",
+          @variant_class,
+          @class
+        ]}
+        {@rest}
+      >
         {render_slot(@inner_block)}
+        <.icon
+          :if={@arrow}
+          name="hero-arrow-right"
+          class="size-4 transition-transform duration-200 ease-out group-hover:translate-x-2"
+        />
       </.link>
       """
     else
       ~H"""
-      <button class={@class} {@rest}>
+      <button
+        class={[
+          "btn group rounded-none transition-all duration-200 hover:scale-105",
+          @variant_class,
+          @class
+        ]}
+        {@rest}
+      >
         {render_slot(@inner_block)}
+        <.icon
+          :if={@arrow}
+          name="hero-arrow-right"
+          class="size-4 transition-transform duration-200 ease-out group-hover:translate-x-2"
+        />
       </button>
       """
     end
@@ -281,11 +317,14 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">{@label}</span>
         <select
           id={@id}
           name={@name}
-          class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
+          class={[
+            @class || "w-full select rounded-none h-16 text-2xl border-2",
+            @errors != [] && (@error_class || "select-error")
+          ]}
           multiple={@multiple}
           {@rest}
         >
@@ -302,12 +341,12 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">{@label}</span>
         <textarea
           id={@id}
           name={@name}
           class={[
-            @class || "w-full textarea",
+            @class || "w-full textarea rounded-none text-2xl border-2",
             @errors != [] && (@error_class || "textarea-error")
           ]}
           {@rest}
@@ -323,14 +362,14 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">{@label}</span>
         <input
           type={@type}
           name={@name}
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
-            @class || "w-full input",
+            @class || "w-full input rounded-none h-16 text-2xl border-2",
             @errors != [] && (@error_class || "input-error")
           ]}
           {@rest}

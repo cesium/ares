@@ -1,195 +1,138 @@
-<div class="h-screen overflow-hidden bg-black z-10">
+<div class="h-svh overflow-hidden bg-black z-10 -mt-24">
   <.squiggly_effect />
   <div
     class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
-    style="background-image: url('/images/background.jpg') ;"
   >
   </div>
-  <div class="relative z-10 flex items-center justify-center h-full px-8 md:px-16">
-    <div class="flex flex-col lg:flex-row items-center justify-center lg:gap-8 xl:gap-16 max-w-7xl w-full lg:ml-32">
-      <div class="text-center lg:text-left">
-        <div class="mb-2">
-          <span class="tracking-wider text-lg md:text-5xl font-medium uppercase">
-            {gettext("Hackathon")}
-          </span>
-        </div>
-
-        <div class="">
-          <h1 class="font-resegrg tracking-wider leading-none text-4xl sm:text-5xl md:text-6xl lg:text-7xl uppercase squiggle-fast">
-            {gettext("BugsByte")}
-          </h1>
-        </div>
-
-        <div class="sm:mb-16">
-          <span class="tracking-wider text-xl md:text-4xl font-light uppercase">
-            {gettext("13 - 15 February")}
-          </span>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-center">
-        <img
-          src="/images/gub.png"
-          class="w-76 h-auto xl:w-360 opacity-90 drop-shadow-2xl"
-        />
-      </div>
-    </div>
+  <div class="relative z-10 flex flex-col items-center justify-center h-full page-px">
+    <h1 class="glitch-text-hero font-resegrg tracking-wide leading-none text-3xl sm:text-6xl md:text-8xl uppercase text-center">
+      {gettext("BugsByte")}
+    </h1>
+    <p class="text-white uppercase text-xl sm:text-4xl md:text-2xl leading-tight">
+      13<span class="text-lg sm:text-xl md:text-2xl">th</span>
+      to 15<span class="text-lg sm:text-xl md:text-2xl">th</span> February 2026
+    </p>
   </div>
 </div>
 
-<div class="bg-black py-8 sm:py-12 md:py-16 px-8 sm:px-24">
-  <div class="mx-auto">
-    <h2 class="font-resegrg px-1 sm:px-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 sm:mb-12 md:mb-16">
-      What is it?
-    </h2>
+<.stat_band items={[
+  {"4", "Editions"},
+  {"48h", "Non-stop"},
+  {"1", "Epic weekend"}
+]} />
 
-    <div class="text-left mb-8 sm:mb-12 md:mb-16">
-      <p class="uppercase text-xl lg:text-2xl xl:text-3xl leading-relaxed mx-auto">
-        The <span class="text-primary">BugsByte Hackathon</span>
-        is a non-stop competitive programming event that aims to foster
-        collaboration and fun among its participants while providing them
-        with closer contact with attending companies. The event lasts
-        approximately <span class="text-primary">48 hours</span>,
-        during which each team can either develop a project on a <span class="text-primary">theme
-        proposed by the sponsoring companies or choose a completely free theme</span>. At the end
-        of the event, the best projects are rewarded with <span class="text-primary">monetary prizes</span>.
+<.landing_section title="What is it?">
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
+    The BugsByte
+    <a
+      href="https://en.wikipedia.org/wiki/Hackathon"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-primary underline hover:text-primary/80"
+    >Hackathon</a>
+    is a non-stop competitive programming event where teams spend
+    <span class="text-primary">48 hours</span>
+    building a project — on a theme from a sponsoring company or one entirely
+    their own — and the best ones walk away with
+    <span class="text-primary">monetary prizes</span>.
+  </p>
+
+  <:media>
+    <.photo_stack images={["/images/gallery/DSC07779.JPG", "/images/gallery/DSC08098.JPG", "/images/gallery/DSC08517.JPG"]} />
+  </:media>
+</.landing_section>
+
+<.landing_section title="Where?">
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
+    The fourth edition of BugsByte happens at the
+    <a
+      href="https://maps.google.com/?q=Complexo Desportivo da Universidade do Minho, Braga"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-primary underline hover:text-primary/80"
+    >Sports Complex of the University of Minho</a>.
+  </p>
+
+  <iframe
+    src="https://www.google.com/maps?q=Complexo+Desportivo+da+Universidade+do+Minho,+Braga&output=embed"
+    class="w-full h-96 mt-8 border-0"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  >
+  </iframe>
+</.landing_section>
+
+<%!-- <.landing_section title="Prizes">
+  <:intro>
+    THE TOP 3 TEAMS WILL RECEIVE <span class="text-primary">CASH PRIZES</span>.
+    THE PRIZE POOL WILL BE DISTRIBUTED AS FOLLOWS:
+  </:intro>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 mb-12 sm:mb-16 uppercase">
+    <div class="text-center">
+      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+        1st place
       </p>
+      <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">800€</p>
     </div>
 
-    <div class="mx-auto mt-6 sm:mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 text-base md:text-lg lg:text-xl xl:text-2xl leading-relaxed text-justify uppercase">
-      <div>
-        <p class="uppercase">
-          This competition aims to not only sharpen participants' technical expertise but also cultivates
-          <span class="text-primary">essential soft skills</span>
-          that drive project success. Through teamwork, time management, communication, creativity, and critical
-          thinking, participants will develop a well-rounded skill set crucial for achieving a successful project.
-        </p>
-      </div>
-      <div>
-        <p class="uppercase">
-          An environment of active learning, mentorship, and networking will be nurtured, providing all
-          participants with the opportunity to take the next step in their professional and academic
-          journeys—all while enjoying the experience.
-        </p>
-      </div>
+    <div class="text-center">
+      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+        2nd place
+      </p>
+      <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">600€</p>
     </div>
 
-    <div class="w-full text-left text-lg sm:text-lg md:text-xl lg:text-3xl tracking-wide uppercase mt-8 sm:mt-12 md:mt-16 mx-auto">
-      <p class="mb-3 sm:mb-4">The fourth edition will be happening from</p>
-      <p class="text-2xl sm:text-3xl md:text-5xl text-primary uppercase mb-6 sm:mb-8 md:mb-10">
-        13<span class="text-lg sm:text-xl md:text-2xl">TH</span> TO 15<span class="text-lg sm:text-xl md:text-2xl">TH</span> FEBRUARY 2026
+    <div class="text-center">
+      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+        3rd place
       </p>
-
-      <p class="mb-3 sm:mb-4">WHERE IS HAPPENING</p>
-      <p class="text-2xl sm:text-3xl md:text-5xl text-primary uppercase">
-        Sports Complex of the University of Minho
-      </p>
+      <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">400€</p>
     </div>
   </div>
-</div>
 
-<%!-- <div class="min-h-screen bg-black py-16 px-8 sm:px-24">
-  <div class="mx-auto">
-    <h2 class="font-resegrg px-1 sm:px-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 sm:mb-12 md:mb-16 text-left">
-      Prizes
-    </h2>
+  <div class="text-center mt-12 sm:mt-16 md:mt-20">
+    <h3 class="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 uppercase">
+      Theme prizes
+    </h3>
 
-    <div class="text-left mb-8 sm:mb-12 md:mb-16">
-      <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl leading-relaxed mx-auto">
-        THE TOP 3 TEAMS WILL RECEIVE <span class="text-primary">CASH PRIZES</span>. THE PRIZE POOL WILL BE DISTRIBUTED AS
-        FOLLOWS:
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 mb-12 sm:mb-16 uppercase">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 max-w-4xl mx-auto">
       <div class="text-center">
-        <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
-          1st place
+        <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
+          BYTE
         </p>
-        <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">800€</p>
+        <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">250€</p>
       </div>
 
       <div class="text-center">
-        <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
-          2nd place
+        <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
+          BIT
         </p>
-        <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">600€</p>
-      </div>
-
-      <div class="text-center">
-        <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
-          3rd place
-        </p>
-        <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">400€</p>
-      </div>
-    </div>
-
-    <div class="text-center mt-12 sm:mt-16 md:mt-20">
-      <h3 class="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 uppercase">
-        Theme prizes
-      </h3>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 max-w-4xl mx-auto">
-        <div class="text-center">
-          <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
-            BYTE
-          </p>
-          <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">250€</p>
-        </div>
-
-        <div class="text-center">
-          <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
-            BIT
-          </p>
-          <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">150€</p>
-        </div>
+        <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">150€</p>
       </div>
     </div>
   </div>
-</div> --%>
+</.landing_section> --%>
 
-<div
-  :if={@sponsors != [] or @partners != []}
-  class="min-h-screen bg-black py-8 sm:py-12 md:py-16 px-8 sm:px-24"
->
-  <div class="mx-auto w-full">
-    <h2 class="font-resegrg px-1 sm:px-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 sm:mb-12 md:mb-16 text-left">
-      Sponsors
-    </h2>
+<.landing_section :if={@sponsors != []} title="Sponsors">
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
+    Take a look at the <span class="text-primary">sponsors</span>
+    who made this event possible.
+  </p>
 
-    <div class="text-left mb-8 sm:mb-12 md:mb-16">
-      <p class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed uppercase">
-        Take a look at the <span class="text-primary">sponsors and partners</span>
-        who made this event possible.
-      </p>
-    </div>
+  <.companies id="sponsors-listing" companies={@sponsors} />
+</.landing_section>
 
-    <.companies sponsors={@sponsors} partners={@partners} />
-  </div>
-</div>
+<.landing_section :if={@partners != []} title="Partners">
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
+    Take a look at the <span class="text-primary">partners</span>
+    who made this event possible.
+  </p>
 
-<%!-- <div class="min-h-screen bg-black py-8 sm:py-12 md:py-16 px-4 sm:px-60">
-  <div class="mx-auto w-full">
-    <h2 class="font-resegrg text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 sm:mb-12 md:mb-16 text-left font-display">
-      Gallery
-    </h2>
+  <.companies id="partners-listing" companies={@partners} />
+</.landing_section>
 
-    <div class="text-left mb-8 sm:mb-12 md:mb-16">
-      <p class="uppercase text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl leading-relaxed">
-        Checkout some of the best moments from last year's event:
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-      <%= for image_path <- @gallery_images do %>
-        <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden group cursor-pointer">
-          <img
-            src={image_path}
-            alt="BugsByte 2025 Gallery Image"
-            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-          />
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div> --%>
+<.stat_band items={[
+  {"4", "Editions"},
+  {"1", "Epic weekend"}
+]} />

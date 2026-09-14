@@ -21,14 +21,14 @@ export const FaqToggle = {
       
       if (isExpanded) {
         // Collapse
-        content.classList.remove('max-h-screen', 'opacity-100', 'pb-4', 'sm:pb-5', 'md:pb-6');
-        content.classList.add('max-h-0', 'opacity-0');
+        content.classList.remove('grid-rows-[1fr]', 'opacity-100');
+        content.classList.add('grid-rows-[0fr]', 'opacity-0');
         icon.classList.remove('rotate-180');
         button.setAttribute('aria-expanded', 'false');
       } else {
         // Expand
-        content.classList.remove('max-h-0', 'opacity-0');
-        content.classList.add('max-h-screen', 'opacity-100', 'pb-4', 'sm:pb-5', 'md:pb-6');
+        content.classList.remove('grid-rows-[0fr]', 'opacity-0');
+        content.classList.add('grid-rows-[1fr]', 'opacity-100');
         icon.classList.add('rotate-180');
         button.setAttribute('aria-expanded', 'true');
       }

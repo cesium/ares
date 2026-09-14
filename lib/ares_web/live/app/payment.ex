@@ -121,7 +121,7 @@ defmodule AresWeb.AppLive.Payment do
                     checked={@payment_method == "mb_way"}
                   />
                   <label for="payment-method-mb-way" class="text-sm">
-                    <img src="/images/mbway.svg" alt="Mb Way" class="inline h-8 ml-1 mr-2 mb-1" />
+                    <img src="/images/payments/mbway.svg" alt="Mb Way" class="inline h-8 ml-1 mr-2 mb-1" />
                   </label>
                 </div>
                 <div class="mt-4">

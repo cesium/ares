@@ -9,7 +9,7 @@ defmodule AresWeb.BackofficeLive.Dashboard do
     <div class="mx-auto font-inter">
       <section class="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 via-black to-gray-900 p-8 sm:p-10 mb-10">
         <div class="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl"></div>
-        <div class="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-pink-500/10 blur-3xl">
+        <div class="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl">
         </div>
         <div class="relative">
           <p class="text-xs uppercase tracking-[0.4em] text-gray-400">Operations</p>
@@ -182,7 +182,7 @@ defmodule AresWeb.BackofficeLive.Dashboard do
 
   defp payment_badge_class(:none),
     do:
-      "inline-flex items-center rounded-full bg-rose-500/15 px-3 py-1 text-xs uppercase tracking-widest text-rose-300"
+      "inline-flex items-center rounded-full bg-red-500/15 px-3 py-1 text-xs uppercase tracking-widest text-red-300"
 
   defp leader_name(team) do
     team.members
