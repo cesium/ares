@@ -1,11 +1,16 @@
-<div class="h-svh overflow-hidden bg-black z-10 -mt-24">
+<div id="hero" class="h-svh overflow-hidden bg-black z-10 -mt-24">
   <.squiggly_effect />
-  <div
-    class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+  <video
+    class="absolute inset-0 w-full h-full object-cover opacity-40"
+    autoplay
+    muted
+    loop
+    playsinline
+    src="/images/backgrounds/video-hero.mp4"
   >
-  </div>
+  </video>
   <div class="relative z-10 flex flex-col items-center justify-center h-full page-px">
-    <h1 class="glitch-text-hero font-resegrg tracking-wide leading-none text-3xl sm:text-6xl md:text-8xl uppercase text-center">
+    <h1 class="glitch-text-hero font-vt323 tracking-wide leading-none text-6xl sm:text-9xl md:text-[10rem] uppercase text-center">
       {gettext("BugsByte")}
     </h1>
     <p class="text-white uppercase text-xl sm:text-4xl md:text-2xl leading-tight">
@@ -15,11 +20,7 @@
   </div>
 </div>
 
-<.stat_band items={[
-  {"4", "Editions"},
-  {"48h", "Non-stop"},
-  {"1", "Epic weekend"}
-]} />
+<.glitch_divider />
 
 <.landing_section title="What is it?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
@@ -132,7 +133,5 @@
   <.companies id="partners-listing" companies={@partners} />
 </.landing_section>
 
-<.stat_band items={[
-  {"4", "Editions"},
-  {"1", "Epic weekend"}
-]} />
+<.glitch_divider />
+

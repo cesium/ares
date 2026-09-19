@@ -32,7 +32,7 @@
   --color-base-content: oklch(97.807% 0.029 256.847);
   --color-primary: #66B22E;
   --color-primary-content: oklch(98% 0.003 247.858);
-  --color-secondary: #8811AA;
+  --color-secondary: #2C0640;
   --color-secondary-content: oklch(94% 0.028 342.258);
   --color-accent: oklch(77% 0.152 181.912);
   --color-accent-content: oklch(38% 0.063 188.416);
@@ -139,10 +139,29 @@
   97% { text-shadow: 2px 0 var(--glitch-color-a, var(--color-primary)), -2px 0 var(--glitch-color-b, var(--color-secondary)); transform: translate(-1px, 0); }
 }
 
-@media (min-width: 768px) {
-  .stat-band {
-    grid-template-columns: repeat(var(--stat-cols, 1), minmax(0, 1fr));
-  }
+/* Thin animated glitch scanline, used as a section divider instead of a
+   static colored band. Reuses the same tear pattern as .glitch-panel::after. */
+.glitch-divider {
+  position: relative;
+  height: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.glitch-divider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-primary) 0 7px,
+    var(--color-secondary) 7px 12px,
+    #ffffff 12px 15px,
+    transparent 15px 26px
+  );
+  animation: glitch-tear 6s steps(1) infinite;
 }
 
 .glitch-panel {

@@ -19,10 +19,11 @@ defmodule AresWeb.Components.Navbar do
     ~H"""
     <header
       id="page-header"
-      class="z-60 flex w-full max-w-[1600px] h-24 items-center justify-between page-px py-3 sm:py-4 text-white font-inter fixed top-0 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm"
+      phx-hook="HeaderScroll"
+      class="z-60 flex w-full max-w-[1600px] h-24 items-center justify-between page-px py-3 sm:py-4 text-white font-inter fixed top-0 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm transition-colors duration-300"
     >
       <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary" navigate="/">
-        <img src="/images/brand/logo-cesium.svg" alt="Cesium" class="object-fill w-32 -ml-5" />
+        <img src="/images/brand/gub-logo-white.png" alt="BugsByte" class="h-14 w-auto" />
       </.link>
       <div>
         <div class="flex items-center gap-4 sm:gap-6">
@@ -153,7 +154,7 @@ defmodule AresWeb.Components.Navbar do
       </div>
       <div
         id="mobile-menu"
-        class="relative w-full h-dvh flex flex-col page-px py-6 text-white font-inter bg-black/70 backdrop-blur-md rounded-b-lg"
+        class="relative w-full h-dvh flex flex-col page-px pt-10 pb-6 text-white font-inter bg-black/70 backdrop-blur-md rounded-b-lg"
       >
         <header class="flex items-center gap-3 pb-6">
           <.link navigate="/" class="flex items-center">

@@ -9,12 +9,12 @@ defmodule AresWeb.Components.Footer do
   """
   def footer(assigns) do
     ~H"""
-    <footer class="flex flex-col gap-8 bg-black page-px py-8">
-      <div class="flex flex-col">
-        <span class="uppercase font-vt323 text-sm text-white">hackathon</span>
-        <span class="uppercase font-resegrg tracking-wide leading-none text-3xl">bugsbyte</span>
-      </div>
-      <div class="flex justify-between items-center">
+    <footer class="flex flex-col gap-6 bg-black page-px py-8">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+        <div class="flex flex-col">
+          <span class="uppercase font-vt323 text-sm text-white">hackathon</span>
+          <span class="uppercase font-vt323 tracking-wide leading-none text-3xl">bugsbyte</span>
+        </div>
         <div class="flex items-center gap-4">
           <a
             href="https://www.instagram.com/bugs.byte/"
@@ -37,9 +37,10 @@ defmodule AresWeb.Components.Footer do
             <img src="/images/brand/cesium.svg" alt="CeSIUM" class="w-6 h-6" />
           </a>
         </div>
-        <div class="text-2xl">
-          2026
-        </div>
+      </div>
+
+      <div class="pt-6 border-t border-white/10 text-sm text-zinc-400 text-right">
+        2026
       </div>
     </footer>
     """

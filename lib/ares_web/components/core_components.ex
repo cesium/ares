@@ -322,7 +322,7 @@ defmodule AresWeb.CoreComponents do
           id={@id}
           name={@name}
           class={[
-            @class || "w-full select rounded-none h-16 text-2xl border-2",
+            @class || "w-full select rounded-none h-14 text-2xl border-2",
             @errors != [] && (@error_class || "select-error")
           ]}
           multiple={@multiple}
@@ -369,7 +369,7 @@ defmodule AresWeb.CoreComponents do
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
-            @class || "w-full input rounded-none h-16 text-2xl border-2",
+            @class || "w-full input rounded-none h-14 text-2xl border-2",
             @errors != [] && (@error_class || "input-error")
           ]}
           {@rest}

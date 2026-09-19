@@ -21,27 +21,13 @@ defmodule AresWeb.LandingLive.Home do
   end
 
   @doc """
-  Full-bleed "by the numbers" band: one green panel per stat, filling the viewport.
+  Thin animated glitch scanline used to divide full-bleed sections.
   """
-  attr :items, :list, required: true
-
-  def stat_band(assigns) do
+  def glitch_divider(assigns) do
     ~H"""
-    <section
-      class="stat-band grid grid-cols-1 text-white font-inter"
-      style={"--stat-cols: #{length(@items)}"}
-    >
-      <div
-        :for={{{_value, _label}, i} <- Enum.with_index(@items)}
-        class="glitch-panel flex flex-col items-center justify-center gap-2 px-8 py-3 text-center"
-        style={"background-color: #{stat_bg(i)}"}
-      >
-      </div>
-    </section>
+    <div class="glitch-divider"></div>
     """
   end
-
-  defp stat_bg(i), do: Enum.at(~w(#66B22E #4C8A22 #35631A), rem(i, 3))
 
   @doc """
   A small stack of overlapping, rotated photos. Hover/focus brings one to the front.
