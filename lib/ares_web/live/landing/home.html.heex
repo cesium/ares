@@ -1,14 +1,5 @@
 <div id="hero" class="h-svh overflow-hidden bg-black z-10 -mt-24">
   <.squiggly_effect />
-  <video
-    class="absolute inset-0 w-full h-full object-cover opacity-40"
-    autoplay
-    muted
-    loop
-    playsinline
-    src="/images/backgrounds/video-hero.mp4"
-  >
-  </video>
   <div class="relative z-10 flex flex-col items-center justify-center h-full page-px">
     <h1 class="glitch-text-hero font-vt323 tracking-wide leading-none text-6xl sm:text-9xl md:text-[10rem] uppercase text-center">
       {gettext("BugsByte")}
@@ -19,8 +10,6 @@
     </p>
   </div>
 </div>
-
-<.glitch_divider />
 
 <.landing_section title="What is it?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
@@ -132,6 +121,3 @@
 
   <.companies id="partners-listing" companies={@partners} />
 </.landing_section>
-
-<.glitch_divider />
-

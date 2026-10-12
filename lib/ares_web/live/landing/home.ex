@@ -21,13 +21,42 @@ defmodule AresWeb.LandingLive.Home do
   end
 
   @doc """
-  Thin animated glitch scanline used to divide full-bleed sections.
+  Full-bleed "by the numbers" band: one green panel per stat, filling the viewport.
   """
-  def glitch_divider(assigns) do
+  attr :items, :list, required: true
+
+  def stat_band(assigns) do
+    gradient =
+      assigns.items
+      |> Enum.with_index()
+      |> Enum.map(fn {_item, i} -> stat_bg(i) end)
+      |> Enum.reverse()
+      |> Enum.join(", ")
+
+    assigns = assign(assigns, :gradient, gradient)
+
     ~H"""
-    <div class="glitch-divider"></div>
+    <div class="relative">
+      <div
+        class="stat-band-glow absolute -inset-8 blur-2xl opacity-80"
+        style={"--stat-gradient: #{@gradient}"}
+      >
+      </div>
+      <section
+        class="stat-band relative grid grid-cols-1 text-white font-inter"
+        style={"--stat-cols: #{length(@items)}; --stat-gradient: #{@gradient}"}
+      >
+        <div
+          :for={{_value, _label} <- @items}
+          class="flex flex-col items-center justify-center gap-2 px-8 py-3 text-center"
+        >
+        </div>
+      </section>
+    </div>
     """
   end
+
+  defp stat_bg(i), do: Enum.at(~w(#66B22E #4C8A22 #35631A), rem(i, 3))
 
   @doc """
   A small stack of overlapping, rotated photos. Hover/focus brings one to the front.
