@@ -35,7 +35,18 @@ defmodule Ares.Accounts.User do
 
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin, :type, :cv])
+    |> cast(attrs, [
+      :name,
+      :email,
+      :phone,
+      :age,
+      :course,
+      :university,
+      :notes,
+      :is_admin,
+      :type,
+      :cv
+    ])
     |> validate_required([:name, :email])
     |> email_changeset(attrs)
     |> password_changeset(attrs)
