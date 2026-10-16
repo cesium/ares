@@ -1,5 +1,7 @@
 defmodule AresWeb.BackofficeLive.EventSettings do
   use AresWeb, :live_view
+
+  alias Ares.Accounts.User
   alias Ares.{Constants, Event}
 
   import AresWeb.CoreComponents
@@ -31,7 +33,7 @@ defmodule AresWeb.BackofficeLive.EventSettings do
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
-    if user.is_admin do
+    if User.admin?(user) do
       limit =
         case Constants.get("attendees_limit") do
           {:ok, value} -> value

@@ -2,6 +2,7 @@ defmodule AresWeb.BackofficeLive.Dashboard do
   use AresWeb, :live_view
 
   alias Ares.{Accounts, Teams}
+  alias Ares.Accounts.User
 
   @impl true
   def render(assigns) do
@@ -146,7 +147,7 @@ defmodule AresWeb.BackofficeLive.Dashboard do
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
-    if user.is_admin do
+    if User.admin?(user) do
       attendees = Accounts.list_attendees()
       teams = Teams.list_teams_with_members()
 
