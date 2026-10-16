@@ -17,7 +17,6 @@ defmodule Ares.Accounts.User do
     field :course, :string
     field :university, :string
     field :notes, :string
-    field :is_admin, :boolean, default: false
     field :type, Ecto.Enum, values: [:attendee, :staff, :admin, :judge], default: :attendee
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
@@ -43,7 +42,6 @@ defmodule Ares.Accounts.User do
       :course,
       :university,
       :notes,
-      :is_admin,
       :type,
       :cv
     ])
