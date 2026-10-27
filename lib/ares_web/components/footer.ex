@@ -40,7 +40,7 @@ defmodule AresWeb.Components.Footer do
       </div>
 
       <div class="pt-6 border-t border-white/10 text-sm text-zinc-400 text-right">
-        2026
+        2027
       </div>
     </footer>
     """
