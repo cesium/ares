@@ -1,0 +1,262 @@
+<.page title="Team Formation">
+  <:subtitle>
+    Create your dream team or join forces with other participants!
+  </:subtitle>
+
+  <div class="space-y-4">
+    <nav
+      class="inline-flex mb-10 border border-line font-vt323 text-2xl uppercase"
+      role="tablist"
+      aria-label="Team tabs"
+    >
+      <.link
+        :for={{tab, label} <- [{"create", "Create a team"}, {"join", "Join a team"}]}
+        patch={"?tab=#{tab}"}
+        role="tab"
+        aria-selected={@tab == tab}
+        class={[
+          "px-6 py-2 transition-colors",
+          if(@tab == tab,
+            do: "bg-primary text-foreground",
+            else: "text-muted hover:text-foreground"
+          )
+        ]}
+      >
+        {label}
+      </.link>
+    </nav>
+
+    <%= if @tab == "create" do %>
+      <div class="mb-12">
+        <.form
+          for={@form}
+          phx-submit="save"
+          phx-change="validate"
+          class="space-y-8 font-inter"
+        >
+          <div class="space-y-6">
+            <div>
+              <.input
+                field={@form[:name]}
+                type="text"
+                label="Name"
+                placeholder="e.g. Code Ninjas, Bug Hunters..."
+                required
+              />
+            </div>
+
+            <div>
+              <.input
+                field={@form[:description]}
+                type="textarea"
+                label="Description"
+                placeholder="Describe your team's goals, what you want to achieve, and what makes your team unique..."
+                rows="4"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <.input
+                  field={@form[:experience_level]}
+                  type="select"
+                  label="Team Experience Level"
+                  options={[
+                    {"Mostly here for the free food", "beginner"},
+                    {"We vaguely know what we're doing", "intermediate"},
+                    {"Actually read the documentation", "advanced"},
+                    {"Some can code, others are moral support", "mixed"}
+                  ]}
+                />
+              </div>
+
+              <div>
+                <.input
+                  field={@form[:skills_needed]}
+                  type="text"
+                  label="Skills Needed"
+                  placeholder="e.g., Pyrotechnics, Running, Songwriting..."
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[auto_1fr] items-center gap-x-4">
+              <input type="hidden" name={@form[:public].name} value="false" />
+              <input
+                type="checkbox"
+                id={@form[:public].id}
+                name={@form[:public].name}
+                value="true"
+                checked={Phoenix.HTML.Form.normalize_value("checkbox", @form[:public].value)}
+                class="checkbox checkbox-sm"
+              />
+              <label
+                for={@form[:public].id}
+                class="text-foreground font-bold text-lg cursor-pointer"
+              >
+                Looking for team members?
+              </label>
+              <p class="col-start-2 text-sm text-muted mt-1">
+                Enable this if you want your team to be visible to other participants who are looking to join a team.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex justify-center pt-4">
+            <.button variant="primary" class="w-full" text="Create Team" icon="hero-user-group" />
+          </div>
+        </.form>
+      </div>
+    <% end %>
+    <%= if @tab == "join" do %>
+      <div class="mb-12">
+        <div class="mb-8">
+          <.button
+            variant="primary"
+            patch={~p"/app/team-formation/code?#{[tab: @tab]}"}
+            class="w-full sm:w-auto"
+            text="Use code"
+            icon="hero-key"
+          />
+        </div>
+
+        <%= if Enum.empty?(@available_teams) do %>
+          <p class="font-inter text-lg text-muted">
+            No teams are looking for members right now.
+            <.link patch="?tab=create" class="text-primary underline hover:text-primary/80">
+              Create your own team
+            </.link>
+            instead.
+          </p>
+        <% else %>
+          <ul class="divide-y divide-line border-y border-line">
+            <li
+              :for={team <- @available_teams}
+              class="py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8"
+            >
+              <div class="flex-1 min-w-0 space-y-3">
+                <h3 class="font-vt323 text-3xl leading-none">{team.name}</h3>
+                <p :if={team.description not in [nil, ""]} class="text-muted">
+                  {team.description}
+                </p>
+                <dl class="flex flex-wrap gap-x-10 gap-y-3 text-sm">
+                  <div>
+                    <dt class="text-subtle">Experience</dt>
+                    <dd class="capitalize">{team.experience_level}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-subtle">Members</dt>
+                    <dd>
+                      {length(team.members)}/5
+                      <span class="text-primary">
+                        · {5 - length(team.members)} spot{if 5 - length(team.members) != 1,
+                          do: "s"} left
+                      </span>
+                    </dd>
+                  </div>
+                  <div :if={team.skills_needed not in [nil, ""]}>
+                    <dt class="text-subtle">Looking for</dt>
+                    <dd>{team.skills_needed}</dd>
+                  </div>
+                </dl>
+              </div>
+              <.button
+                variant="primary"
+                phx-click="open-join-modal"
+                phx-value-team_code={team.code}
+                class="w-full sm:w-auto shrink-0"
+                text="Join"
+                icon="hero-user-plus"
+              />
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+    <div>
+      <div class="flex items-center gap-3 mb-6">
+        <h3 class="text-2xl uppercase font-vt323">Important Information</h3>
+      </div>
+
+      <ul class="list-disc pl-5 space-y-2 font-inter text-muted">
+        <li>Teams have 2 to 5 members.</li>
+        <li>You can register your team before all members confirm.</li>
+        <li>Tick "Looking for team members?" to make your team public.</li>
+      </ul>
+    </div>
+  </div>
+</.page>
+
+<.modal
+  :if={@live_action == :join}
+  id="join-team-modal"
+  show
+  on_cancel={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+>
+  <div class="space-y-8 flex flex-col items-center">
+    <div class="space-y-2 text-center">
+      <h2 class="text-2xl font-vt323">Join Team?</h2>
+      <p class="text-xl">
+        You are about to join <span class="text-primary font-bold">{@selected_team.name}</span>. Confirm that this is the team you want to participate with.
+      </p>
+    </div>
+    <div class="flex flex-col gap-4 sm:flex-row w-full">
+      <.button
+        variant="primary"
+        type="button"
+        phx-click="join-team"
+        phx-value-team_code={@selected_team.code}
+        class="w-full sm:w-1/2"
+        text="Join Team"
+      />
+      <.button
+        variant="secondary"
+        type="button"
+        phx-click={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+        class="w-full sm:w-1/2"
+        text="Cancel"
+      />
+    </div>
+  </div>
+</.modal>
+
+<.modal
+  :if={@live_action == :code}
+  id="join-by-code-modal"
+  show
+  on_cancel={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+>
+  <div class="space-y-8">
+    <div class="space-y-2">
+      <h2 class="text-2xl font-vt323">Join with a code</h2>
+      <p class="text-xl">Ask your team leader for the team code and enter it below.</p>
+    </div>
+    <.form for={@code_form} id="join-by-code-form" phx-submit="submit_code" class="font-inter">
+      <.input
+        field={@code_form[:code]}
+        type="text"
+        label="Team code"
+        placeholder="e.g. K7QMZX"
+        autocomplete="off"
+        phx-mounted={JS.focus()}
+        required
+      />
+      <div class="flex flex-col gap-4 sm:flex-row w-full mt-6">
+        <.button
+          variant="primary"
+          type="submit"
+          phx-disable-with="Joining..."
+          class="w-full sm:w-1/2"
+          text="Join Team"
+        />
+        <.button
+          variant="secondary"
+          type="button"
+          phx-click={JS.patch(~p"/app/team-formation?#{[tab: @tab]}")}
+          class="w-full sm:w-1/2"
+          text="Cancel"
+        />
+      </div>
+    </.form>
+  </div>
+</.modal>

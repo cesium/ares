@@ -15,7 +15,7 @@ defmodule AresWeb.Components.Sidebar do
     ~H"""
     <section
       id="page-sidebar"
-      class="sm:fixed min-h-24 sm:w-48 flex sm:flex-col sm:h-full items-center gap-2 text-white font-inter backdrop-blur bg-linear-to-b from-black/90 to-black/30 border-r border-zinc-900"
+      class="sm:fixed min-h-24 sm:w-48 flex sm:flex-col sm:h-full items-center gap-2 text-foreground font-inter backdrop-blur bg-glass border-r border-line"
     >
       <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary p-4" navigate="/">
         <img src="/images/brand/logo-cesium.svg" alt="Cesium" class="object-fill min-w-32" />
@@ -23,10 +23,10 @@ defmodule AresWeb.Components.Sidebar do
       <div class="w-full flex">
         <div class="w-full flex gap-4 sm:gap-6 justify-end px-4 sm:px-0">
           <nav class="w-full hidden sm:block">
-            <ul class="w-full flex flex-col items-start text-zinc-400">
+            <ul class="w-full flex flex-col items-start text-muted">
               <li class="w-full">
                 <.link
-                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150"
+                  class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150"
                   navigate="/backoffice/dashboard"
                 >
                   Dashboard
@@ -34,7 +34,7 @@ defmodule AresWeb.Components.Sidebar do
               </li>
               <li class="w-full">
                 <.link
-                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                  class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150 rounded"
                   navigate="/backoffice/event_settings"
                 >
                   Event Settings
@@ -42,7 +42,7 @@ defmodule AresWeb.Components.Sidebar do
               </li>
               <li class="w-full">
                 <.link
-                  class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                  class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150 rounded"
                   navigate="/backoffice/companies"
                 >
                   Companies
@@ -53,7 +53,7 @@ defmodule AresWeb.Components.Sidebar do
           <button
             id="open-nav-button"
             type="button"
-            class="sm:hidden text-white p-2 rounded hover:bg-opacity-90"
+            class="sm:hidden text-foreground p-2 rounded hover:bg-opacity-90"
             aria-label="Navigation"
             phx-click={show_mobile_sidebar()}
           >
@@ -78,13 +78,13 @@ defmodule AresWeb.Components.Sidebar do
     >
       <div
         id="sidebar-overlay"
-        class="fixed inset-0 h-full min-h-screen bg-black/60 backdrop-blur-sm"
+        class="fixed inset-0 h-full min-h-screen bg-overlay backdrop-blur-sm"
         phx-click={hide_mobile_sidebar()}
       >
       </div>
       <div
         id="mobile-sidebar"
-        class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 text-white font-inter backdrop-blur bg-linear-to-b from-black/90 to-black/30 border-r border-zinc-900 rounded-r-lg h-dvh"
+        class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 text-foreground font-inter backdrop-blur bg-glass border-r border-line rounded-r-lg h-dvh"
       >
         <header class="flex items-center justify-between px-4">
           <.link navigate="/" class="flex items-center py-2">
@@ -93,7 +93,7 @@ defmodule AresWeb.Components.Sidebar do
           <button
             id="close-nav-button"
             type="button"
-            class="text-white p-2 rounded hover:bg-opacity-90"
+            class="text-foreground p-2 rounded hover:bg-opacity-90"
             aria-label="Close navigation"
             phx-click={hide_mobile_sidebar()}
           >
@@ -108,10 +108,10 @@ defmodule AresWeb.Components.Sidebar do
           </button>
         </header>
         <nav class="mt-8">
-          <ul class="w-full flex flex-col items-start text-zinc-400">
+          <ul class="w-full flex flex-col items-start text-muted">
             <li class="w-full">
               <.link
-                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150"
+                class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150"
                 navigate="/backoffice/dashboard"
               >
                 Dashboard
@@ -119,7 +119,7 @@ defmodule AresWeb.Components.Sidebar do
             </li>
             <li class="w-full">
               <.link
-                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150 rounded"
                 navigate="/backoffice/event_settings"
               >
                 Event Settings
@@ -127,7 +127,7 @@ defmodule AresWeb.Components.Sidebar do
             </li>
             <li class="w-full">
               <.link
-                class="block w-full text-left py-3 px-6 hover:bg-white/10 hover:text-white transition-colors duration-150 rounded"
+                class="block w-full text-left py-3 px-6 hover:bg-surface-hover hover:text-foreground transition-colors duration-150 rounded"
                 navigate="/backoffice/companies"
               >
                 Companies

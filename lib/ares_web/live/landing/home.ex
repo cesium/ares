@@ -1,5 +1,5 @@
 defmodule AresWeb.LandingLive.Home do
-  use AresWeb, :live_view
+  use AresWeb, :landing_view
 
   alias Ares.Companies
   import AresWeb.Components.{Companies, SquigglyEffect, LandingSection}
@@ -43,7 +43,7 @@ defmodule AresWeb.LandingLive.Home do
       >
       </div>
       <section
-        class="stat-band relative grid grid-cols-1 text-white font-inter"
+        class="stat-band relative grid grid-cols-1 text-foreground font-inter"
         style={"--stat-cols: #{length(@items)}; --stat-gradient: #{@gradient}"}
       >
         <div
@@ -72,7 +72,7 @@ defmodule AresWeb.LandingLive.Home do
         alt=""
         tabindex="0"
         class={[
-          "absolute w-2/3 aspect-[4/3] object-cover shadow-2xl border-4 border-black cursor-pointer outline-none transition-transform duration-300 ease-out hover:z-10 hover:scale-105 focus:z-10 focus:scale-105",
+          "absolute w-2/3 aspect-[4/3] object-cover shadow-2xl border-4 border-background cursor-pointer outline-none transition-transform duration-300 ease-out hover:z-10 hover:scale-105 focus:z-10 focus:scale-105",
           photo_position(i)
         ]}
       />

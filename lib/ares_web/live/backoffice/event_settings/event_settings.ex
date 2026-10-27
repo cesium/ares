@@ -1,33 +1,10 @@
 defmodule AresWeb.BackofficeLive.EventSettings do
-  use AresWeb, :live_view
+  use AresWeb, :backoffice_view
+
+  on_mount {AresWeb.UserAuth, :require_authenticated}
   alias Ares.{Constants, Event}
 
   import AresWeb.CoreComponents
-
-  @impl true
-  def render(assigns) do
-    ~H"""
-    <div>
-      <div class="flex items-center gap-4">
-        <h2>Attendees Limit: {@attendees_limit || "Not set"}</h2>
-        <.button phx-click="open_modal"><.icon name="hero-pencil" /></.button>
-      </div>
-      <div class="flex items-center gap-4 mt-4">
-        <h2>Registrations: {(@registrations_open == "true" and "Open") || "Closed"}</h2>
-        <.button phx-click="toggle_registrations">
-          <.icon name={(@registrations_open == "true" and "hero-lock-open") || "hero-lock-closed"} />
-        </.button>
-      </div>
-      <.modal :if={@show_modal} id="attendees-limit-modal" show on_cancel={JS.push("close_modal")}>
-        <.live_component
-          module={AresWeb.BackofficeLive.EventSettingsFormComponent}
-          id="attendees-limit-form"
-          attendees_limit={@attendees_limit}
-        />
-      </.modal>
-    </div>
-    """
-  end
 
   @impl true
   def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do

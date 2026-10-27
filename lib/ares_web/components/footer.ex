@@ -9,10 +9,10 @@ defmodule AresWeb.Components.Footer do
   """
   def footer(assigns) do
     ~H"""
-    <footer class="flex flex-col gap-6 bg-black page-px py-8">
+    <footer class="flex flex-col gap-6 bg-background page-px py-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
         <div class="flex flex-col">
-          <span class="uppercase font-vt323 text-sm text-white">hackathon</span>
+          <span class="uppercase font-vt323 text-sm text-foreground">hackathon</span>
           <span class="uppercase font-vt323 tracking-wide leading-none text-3xl">bugsbyte</span>
         </div>
         <div class="flex items-center gap-4">
@@ -39,7 +39,7 @@ defmodule AresWeb.Components.Footer do
         </div>
       </div>
 
-      <div class="pt-6 border-t border-white/10 text-sm text-zinc-400 text-right">
+      <div class="pt-6 border-t border-line text-sm text-muted text-right">
         2027
       </div>
     </footer>

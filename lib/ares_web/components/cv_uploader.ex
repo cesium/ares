@@ -11,14 +11,14 @@ defmodule AresWeb.Components.CVUploader do
       <.live_file_input upload={@uploaders.cv} class="hidden" />
       <div
         :if={length(@uploaders.cv.entries) == 0}
-        class="group relative overflow-hidden rounded-sm border-2 bg-white"
+        class="group relative overflow-hidden rounded-sm border-2 border-line bg-surface"
         phx-drop-target={@uploaders.cv.ref}
       >
         <div class="px-4 py-6 text-center">
           <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg">
             <.icon
               name="hero-cloud-arrow-up"
-              class="h-8 w-8 text-gray-400 transition-colors duration-200"
+              class="h-8 w-8 text-subtle transition-colors duration-200"
             />
           </div>
           <div class="mt-3">
@@ -30,9 +30,9 @@ defmodule AresWeb.Components.CVUploader do
                 <span>Upload CV</span>
               </a>
             </label>
-            <span class="text-sm text-gray-600"> or drag and drop</span>
+            <span class="text-sm text-muted"> or drag and drop</span>
           </div>
-          <p class="mt-1 text-xs text-gray-500">
+          <p class="mt-1 text-xs text-subtle">
             PDF, DOC, DOCX, TXT, MD, RTF (max 10MB)
           </p>
           <%= if @is_optional do %>
@@ -53,10 +53,10 @@ defmodule AresWeb.Components.CVUploader do
             </div>
           <% end %>
           <div class="animate-in fade-in slide-in-from-top-2 duration-300">
-            <div class="rounded-sm border border-gray-200 bg-white shadow-sm">
+            <div class="rounded-sm border border-line bg-surface shadow-sm">
               <div class="flex items-center gap-3 p-3">
                 <div class="min-w-0 flex-1">
-                  <p class="truncate text-sm font-medium text-gray-900">
+                  <p class="truncate text-sm font-medium text-foreground">
                     <%= if String.length(entry.client_name) < 40 do %>
                       {entry.client_name}
                     <% else %>
@@ -64,14 +64,14 @@ defmodule AresWeb.Components.CVUploader do
                     <% end %>
                   </p>
                   <div class="mt-1.5">
-                    <div class="h-1 w-full overflow-hidden rounded-full bg-gray-200">
+                    <div class="h-1 w-full overflow-hidden rounded-full bg-line">
                       <div
                         class="h-full rounded-full bg-primary transition-all duration-300"
                         style={"width: #{entry.progress}%"}
                       >
                       </div>
                     </div>
-                    <p class="mt-0.5 text-xs text-gray-500">
+                    <p class="mt-0.5 text-xs text-subtle">
                       {entry.progress}%
                     </p>
                   </div>
@@ -81,7 +81,7 @@ defmodule AresWeb.Components.CVUploader do
                   phx-click="cancel-upload"
                   phx-value-ref={entry.ref}
                   aria-label="Remove file"
-                  class="shrink-0 rounded-sm p-1.5 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                  class="shrink-0 rounded-sm p-1.5 text-subtle transition-colors hover:bg-surface-hover hover:text-error"
                 >
                   <.icon name="hero-x-mark" class="h-4 w-4" />
                 </button>

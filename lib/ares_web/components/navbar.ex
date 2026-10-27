@@ -20,7 +20,7 @@ defmodule AresWeb.Components.Navbar do
     <header
       id="page-header"
       phx-hook="HeaderScroll"
-      class="z-60 flex w-full max-w-[1600px] h-24 items-center justify-between page-px py-3 sm:py-4 text-white font-inter fixed top-0 left-1/2 -translate-x-1/2 bg-black/40 backdrop-blur-sm transition-colors duration-300"
+      class="z-60 flex w-full max-w-[1600px] h-24 items-center justify-between page-px py-3 sm:py-4 text-foreground font-inter fixed top-0 left-1/2 -translate-x-1/2 bg-glass backdrop-blur-sm transition-colors duration-300"
     >
       <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary" navigate="/">
         <img src="/images/brand/gub-logo-white.png" alt="BugsByte" class="h-14 w-auto" />
@@ -39,15 +39,6 @@ defmodule AresWeb.Components.Navbar do
                 </.link>
               </li> -->
               <li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  target="_blank"
-                  href="/docs/regulation.pdf"
-                >
-                  Regulation
-                </.link>
-              </li>
-              <li>
                 <.link class="hover:text-primary transition-colors" navigate="/faqs">
                   FAQs
                 </.link>
@@ -60,24 +51,33 @@ defmodule AresWeb.Components.Navbar do
               <li>
                 <.link
                   class="hover:text-primary transition-colors"
-                  href="https://2025.bugsbyte.org/"
+                  navigate="/app/team-formation"
                 >
-                  Previous edition
+                  Teams
                 </.link>
               </li>
               <li>
                 <.link
                   class="hover:text-primary transition-colors"
-                  navigate="/app/team-formation"
+                  target="_blank"
+                  href="/docs/regulation.pdf"
                 >
-                  Teams
+                  Regulation
+                </.link>
+              </li>
+              <li>
+                <.link
+                  class="hover:text-primary transition-colors"
+                  href="https://2025.bugsbyte.org/"
+                >
+                  Previous edition
                 </.link>
               </li>
               <li class="relative">
                 <%= if @user do %>
                   <button
                     onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
-                    class="w-10 h-10 cursor-pointer rounded-full bg-primary flex items-center justify-center text-white font-semibold hover:shadow-lg transition-all"
+                    class="w-10 h-10 cursor-pointer rounded-full bg-primary flex items-center justify-center text-foreground font-semibold hover:shadow-lg transition-all"
                     title={@user.name}
                   >
                     {String.first(@user.name)}
@@ -85,40 +85,54 @@ defmodule AresWeb.Components.Navbar do
                   <div
                     id="profile-menu"
                     class={[
-                      "hidden absolute right-0 w-48 bg-gray-100 rounded-lg shadow-xl ring-1 ring-gray-800 z-50 profile-menu-dropdown"
+                      "hidden absolute right-0 w-48 bg-surface rounded-lg shadow-xl ring-1 ring-line z-50 profile-menu-dropdown"
                     ]}
                   >
                     <.link
                       navigate="/app/profile"
-                      class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                      class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
                     >
                       View Profile
                     </.link>
                     <%= if @user && @user.is_admin do %>
                       <.link
                         navigate="/backoffice/dashboard"
-                        class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                        class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
                       >
                         Backoffice
                       </.link>
                     <% end %>
                     <.link
                       navigate="/users/settings"
-                      class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
+                      class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
                     >
                       Settings
                     </.link>
-                    <.link href="/users/log-out" method="delete" class="border-t border-gray-700">
-                      <p class="w-full text-left px-4 py-2 text-black hover:bg-gray-300 rounded-b-lg transition-colors cursor-pointer">
+                    <.link href="/users/log-out" method="delete" class="border-t border-line">
+                      <p class="w-full text-left px-4 py-2 text-foreground hover:bg-surface-hover rounded-b-lg transition-colors cursor-pointer">
                         Log out
                       </p>
                     </.link>
                   </div>
                 <% else %>
                   <%= if not Event.registrations_open?() do %>
-                    <.button variant="primary" class="btn-sm" arrow href="/log-in">Login</.button>
+                    <.button
+                      variant="primary"
+                      class="btn-sm"
+                      href="/log-in"
+                      text="Login"
+                      icon="hero-arrow-right"
+                      icon_position="right"
+                    />
                   <% else %>
-                    <.button variant="primary" class="btn-sm" arrow href="/register">Register</.button>
+                    <.button
+                      variant="primary"
+                      class="btn-sm"
+                      href="/register"
+                      text="Register"
+                      icon="hero-arrow-right"
+                      icon_position="right"
+                    />
                   <% end %>
                 <% end %>
               </li>
@@ -127,7 +141,7 @@ defmodule AresWeb.Components.Navbar do
           <button
             id="open-nav-button"
             type="button"
-            class="sm:hidden text-white p-2 rounded hover:bg-opacity-90"
+            class="sm:hidden text-foreground p-2 rounded hover:bg-opacity-90"
             aria-label="Navigation"
             phx-click={show_mobile_menu()}
           >
@@ -150,18 +164,22 @@ defmodule AresWeb.Components.Navbar do
       aria-modal="true"
       style="display: none;"
     >
-      <div id="menu-overlay" class="fixed inset-0 h-full min-h-screen bg-black/60 backdrop-blur-sm" phx-click={hide_mobile_menu()}>
+      <div
+        id="menu-overlay"
+        class="fixed inset-0 h-full min-h-screen bg-overlay backdrop-blur-sm"
+        phx-click={hide_mobile_menu()}
+      >
       </div>
       <div
         id="mobile-menu"
-        class="relative w-full h-dvh flex flex-col page-px pt-10 pb-6 text-white font-inter bg-black/70 backdrop-blur-md rounded-b-lg"
+        class="relative w-full h-dvh flex flex-col page-px pt-10 pb-6 text-foreground font-inter bg-overlay backdrop-blur-md rounded-b-lg"
       >
         <header class="flex items-center gap-3 pb-6">
           <.link navigate="/" class="flex items-center">
             <img src="/images/brand/cesium.svg" alt="CeSIUM" class="w-10 h-10" />
           </.link>
           <div class="flex flex-col leading-none">
-            <span class="uppercase font-vt323 text-xs text-white">hackathon</span>
+            <span class="uppercase font-vt323 text-xs text-foreground">hackathon</span>
             <span class="uppercase font-resegrg tracking-wide text-lg">bugsbyte</span>
           </div>
         </header>
@@ -227,7 +245,7 @@ defmodule AresWeb.Components.Navbar do
           <%= if @user do %>
             <.link
               navigate="/app/profile"
-              class="flex items-center gap-2 text-zinc-300 hover:text-primary transition-colors"
+              class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
               title={@user.name}
             >
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -244,7 +262,7 @@ defmodule AresWeb.Components.Navbar do
             <%= if not Event.registrations_open?() do %>
               <.link
                 href="/log-in"
-                class="flex items-center gap-2 text-zinc-300 hover:text-primary transition-colors"
+                class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -259,7 +277,7 @@ defmodule AresWeb.Components.Navbar do
             <% else %>
               <.link
                 href="/register"
-                class="flex items-center gap-2 text-zinc-300 hover:text-primary transition-colors"
+                class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -274,11 +292,15 @@ defmodule AresWeb.Components.Navbar do
             <% end %>
           <% end %>
           <%= if @user do %>
-            <div class="flex items-center gap-4 text-sm text-zinc-400">
+            <div class="flex items-center gap-4 text-sm text-muted">
               <.link navigate="/users/settings" class="hover:text-primary transition-colors">
                 Settings
               </.link>
-              <.link href="/users/log-out" method="delete" class="hover:text-primary transition-colors">
+              <.link
+                href="/users/log-out"
+                method="delete"
+                class="hover:text-primary transition-colors"
+              >
                 Log out
               </.link>
             </div>
@@ -289,7 +311,7 @@ defmodule AresWeb.Components.Navbar do
           <button
             id="close-nav-button"
             type="button"
-            class="w-14 h-14 flex items-center justify-center rounded-none bg-primary text-white hover:bg-primary/80 transition-colors"
+            class="w-14 h-14 flex items-center justify-center rounded-none bg-primary text-foreground hover:bg-primary/80 transition-colors"
             aria-label="Close navigation"
             phx-click={hide_mobile_menu()}
           >

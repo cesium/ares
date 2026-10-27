@@ -1,12 +1,11 @@
-<div id="hero" class="h-svh overflow-hidden bg-black z-10 -mt-24">
+<div id="hero" class="h-svh overflow-hidden bg-background z-10 -mt-24">
   <.squiggly_effect />
   <div class="relative z-10 flex flex-col items-center justify-center h-full page-px">
     <h1 class="glitch-text-hero font-vt323 tracking-wide leading-none text-6xl sm:text-9xl md:text-[10rem] uppercase text-center">
       {gettext("BugsByte")}
     </h1>
-    <p class="text-white uppercase text-xl sm:text-4xl md:text-2xl leading-tight">
-      13<span class="text-lg sm:text-xl md:text-2xl">th</span>
-      to 15<span class="text-lg sm:text-xl md:text-2xl">th</span> February 2026
+    <p class="text-foreground uppercase text-xl sm:text-4xl md:text-2xl leading-tight">
+      13<span class="text-lg sm:text-xl md:text-2xl">th</span> to 15<span class="text-lg sm:text-xl md:text-2xl">th</span> February 2026
     </p>
   </div>
 </div>
@@ -19,23 +18,27 @@
       target="_blank"
       rel="noopener noreferrer"
       class="text-primary underline hover:text-primary/80"
-    >Hackathon</a>
+    >
+      Hackathon
+    </a>
     is a non-stop competitive programming event where teams spend
     <span class="text-primary">48 hours</span>
     building a project — on a theme from a sponsoring company or one entirely
-    their own — and the best ones walk away with
-    <span class="text-primary">monetary prizes</span>.
+    their own — and the best ones walk away with <span class="text-primary">monetary prizes</span>.
   </p>
 
   <:media>
-    <.photo_stack images={["/images/gallery/DSC07779.JPG", "/images/gallery/DSC08098.JPG", "/images/gallery/DSC08517.JPG"]} />
+    <.photo_stack images={[
+      "/images/gallery/DSC07779.JPG",
+      "/images/gallery/DSC08098.JPG",
+      "/images/gallery/DSC08517.JPG"
+    ]} />
   </:media>
 </.landing_section>
 
 <.landing_section title="Where?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
-    The fourth edition of BugsByte happens at the
-    <a
+    The fourth edition of BugsByte happens at the <a
       href="https://maps.google.com/?q=Complexo Desportivo da Universidade do Minho, Braga"
       target="_blank"
       rel="noopener noreferrer"
@@ -106,8 +109,7 @@
 
 <.landing_section :if={@sponsors != []} title="Sponsors">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
-    Take a look at the <span class="text-primary">sponsors</span>
-    who made this event possible.
+    Take a look at the <span class="text-primary">sponsors</span> who made this event possible.
   </p>
 
   <.companies id="sponsors-listing" companies={@sponsors} />
@@ -115,8 +117,7 @@
 
 <.landing_section :if={@partners != []} title="Partners">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
-    Take a look at the <span class="text-primary">partners</span>
-    who made this event possible.
+    Take a look at the <span class="text-primary">partners</span> who made this event possible.
   </p>
 
   <.companies id="partners-listing" companies={@partners} />

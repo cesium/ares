@@ -58,6 +58,36 @@ defmodule AresWeb do
     end
   end
 
+  def landing_view do
+    quote do
+      use Phoenix.LiveView, layout: {AresWeb.Layouts, :landing}
+
+      import AresWeb.Components.Navbar
+
+      unquote(html_helpers())
+    end
+  end
+
+  def app_view do
+    quote do
+      use Phoenix.LiveView, layout: {AresWeb.Layouts, :app}
+
+      import AresWeb.Components.Navbar
+
+      unquote(html_helpers())
+    end
+  end
+
+  def backoffice_view do
+    quote do
+      use Phoenix.LiveView, layout: {AresWeb.Layouts, :backoffice}
+
+      import AresWeb.Components.Navbar
+
+      unquote(html_helpers())
+    end
+  end
+
   def view do
     quote do
       use Phoenix.View,

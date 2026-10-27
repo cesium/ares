@@ -99,6 +99,21 @@
 
 @theme {
   --color-primary: #66B22E;
+
+  /* Neutrals, tinted towards the primary hue. Use these instead of
+     black/white/gray shades so every surface stays consistent. */
+  --color-background: oklch(0% 0 0);
+  --color-foreground: oklch(98% 0.005 135);
+  --color-surface: oklch(14% 0 0);
+  --color-surface-hover: oklch(20% 0 0);
+  --color-line: oklch(30% 0 0);
+  --color-muted: oklch(78% 0.02 135);
+  --color-subtle: oklch(60% 0.02 135);
+  --color-overlay: oklch(0% 0 0 / 0.85);
+  --color-glass: oklch(0% 0 0 / 0.5);
+  --color-field: oklch(98% 0.005 135);
+  --color-field-content: oklch(0% 0 0);
+
   --font-resegrg: "Resegrg", sans-serif;
   --font-vt323: "Jersey 10", monospace;
   --font-inter: "Inter", sans-serif;
@@ -114,7 +129,7 @@
 
 ::selection {
   background-color: var(--color-primary);
-  color: #000;
+  color: var(--color-background);
 }
 
 /* --- glitch / TV-static treatment for the stat band panels --- */
@@ -145,7 +160,7 @@
   position: relative;
   height: 3px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.05);
+  background: color-mix(in oklab, var(--color-foreground) 5%, transparent);
 }
 
 .glitch-divider::after {
@@ -158,7 +173,7 @@
     90deg,
     var(--color-primary) 0 7px,
     var(--color-secondary) 7px 12px,
-    #ffffff 12px 15px,
+    var(--color-foreground) 12px 15px,
     transparent 15px 26px
   );
   animation: glitch-tear 6s steps(1) infinite;
@@ -176,8 +191,8 @@
   pointer-events: none;
   mix-blend-mode: overlay;
   background-image:
-    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 11px);
+    repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-background) 22%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-foreground) 7%, transparent) 0 2px, transparent 2px 11px);
   background-size: 100% 120px, 100% 44px;
   animation: glitch-scan 3s linear infinite;
 }
@@ -195,7 +210,7 @@
     90deg,
     var(--glitch-color-a, var(--color-primary)) 0 7px,
     var(--glitch-color-b, var(--color-secondary)) 7px 12px,
-    #ffffff 12px 15px,
+    var(--color-foreground) 12px 15px,
     transparent 15px 26px
   );
   animation: glitch-tear 6s steps(1) infinite;
@@ -236,27 +251,27 @@
 }
 
 .input {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .textarea {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .select {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .label {
-  @apply text-white text-sm;
+  @apply text-foreground text-sm;
 }
 
 .checkbox {
-  @apply w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary;
+  @apply w-4 h-4 border border-line text-primary rounded bg-field focus:ring-3 focus:ring-primary;
 }
 
 .checkbox:checked {
-  @apply bg-primary border-transparent text-white;
+  @apply bg-primary border-transparent text-foreground;
 }
 
 .alert {
@@ -264,7 +279,7 @@
 }
 
 .alert-info {
-  @apply bg-[#67b22e] text-[#0a0a0a] border-transparent;
+  @apply bg-primary text-background border-transparent;
 }
 
 .squiggle-slow {

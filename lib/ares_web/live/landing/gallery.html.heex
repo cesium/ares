@@ -1,12 +1,12 @@
-<.landing_section title="Gallery">
-  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
+<.page title="Gallery">
+  <:subtitle>
     Checkout some of the best moments from <span class="text-primary">BugsByte</span>.
-  </p>
+  </:subtitle>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
     <div
       :for={image_path <- @images}
-      class="aspect-video bg-gray-800 rounded-none overflow-hidden group cursor-pointer"
+      class="aspect-video bg-surface rounded-none overflow-hidden group cursor-pointer"
     >
       <img
         src={image_path}
@@ -15,4 +15,4 @@
       />
     </div>
   </div>
-</.landing_section>
+</.page>

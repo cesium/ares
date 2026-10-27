@@ -1,7 +1,7 @@
 defmodule AresWeb.LandingLive.Gallery do
-  use AresWeb, :live_view
+  use AresWeb, :landing_view
 
-  import AresWeb.Components.LandingSection
+  import AresWeb.Components.Page
 
   @impl true
   def mount(_params, _session, socket) do
