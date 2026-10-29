@@ -1,6 +1,8 @@
 defmodule AresWeb.UserLive.Login do
   use AresWeb, :app_view
 
+  import AresWeb.Components.Page
+
   alias Ares.{Accounts, Event}
 
   @impl true

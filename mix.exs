@@ -99,7 +99,13 @@ defmodule Ares.MixProject do
         "phx.digest"
       ],
       lint: ["credo --all --strict"],
-      precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
+      precommit: [
+        "compile --all-warnings --warnings-as-errors",
+        "deps.unlock --unused",
+        "format",
+        "credo --all --strict",
+        "test --warnings-as-errors"
+      ]
     ]
   end
 end

@@ -1,12 +1,14 @@
-<div class="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-  <div class="text-center mb-12">
-    <div class="w-32 h-32 rounded-full bg-gradient-to-bl from-primary to-darkest-pink mx-auto mb-6 flex items-center justify-center shadow-2xl">
-      <span class="text-6xl font-bold">
+<div class="max-w-5xl mx-auto page-px pt-8 pb-8 sm:pb-12 md:pb-16">
+  <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 mt-16 mb-12 text-center sm:text-left">
+    <div class="size-24 sm:size-32 shrink-0 rounded-full bg-gradient-to-bl from-primary to-darkest-pink flex items-center justify-center shadow-2xl">
+      <span class="text-5xl sm:text-6xl font-bold">
         {String.first(@user.name)}
       </span>
     </div>
-    <h1 class="text-5xl sm:text-7xl font-vt323 mb-2">{@user.name}</h1>
-    <p class="text-2xl text-muted">{@user.email}</p>
+    <div class="min-w-0">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-vt323 mb-2 break-words">{@user.name}</h1>
+      <p class="text-xl sm:text-2xl text-muted break-all">{@user.email}</p>
+    </div>
   </div>
 
   <%= if @user.team && @user.team.leader_id == @user.id && length(@user.team.members) >= 2 do %>
@@ -78,13 +80,13 @@
         <div class="space-y-3">
           <%= for member <- @user.team.members do %>
             <div class="bg-surface rounded-lg p-4">
-              <div class="flex flex-row justify-between items-center">
-                <div>
+              <div class="flex flex-row justify-between items-center gap-4">
+                <div class="min-w-0">
                   <p class="font-semibold text-foreground text-lg flex flex-row items-center gap-2">
                     {first_last_name(member.name)}
                     <.icon :if={@user.team.leader_id == member.id} name="hero-star" />
                   </p>
-                  <p class="text-muted">{member.email}</p>
+                  <p class="text-muted break-all">{member.email}</p>
                 </div>
                 <%= if member.id == @user.id do %>
                   <span class="bg-primary text-background text-xl font-bold px-3 py-1 rounded font-vt323 uppercase">

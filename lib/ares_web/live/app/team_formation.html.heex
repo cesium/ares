@@ -149,8 +149,8 @@
                     <dd>
                       {length(team.members)}/5
                       <span class="text-primary">
-                        · {5 - length(team.members)} spot{if 5 - length(team.members) != 1,
-                          do: "s"} left
+                        ({5 - length(team.members)} spot{if 5 - length(team.members) != 1,
+                          do: "s"} left)
                       </span>
                     </dd>
                   </div>
@@ -162,8 +162,7 @@
               </div>
               <.button
                 variant="primary"
-                phx-click="open-join-modal"
-                phx-value-team_code={team.code}
+                patch={~p"/app/team-formation/join?#{[tab: @tab, team: team.id]}"}
                 class="w-full sm:w-auto shrink-0"
                 text="Join"
                 icon="hero-user-plus"

@@ -1,29 +1,21 @@
 defmodule AresWeb.BackofficeLive.Dashboard do
   use AresWeb, :backoffice_view
 
-  on_mount {AresWeb.UserAuth, :require_authenticated}
-
   alias Ares.{Accounts, Teams}
 
   @impl true
-  def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
-    if user.is_admin do
-      attendees = Accounts.list_attendees()
-      teams = Teams.list_teams_with_members()
+  def mount(_params, _session, socket) do
+    attendees = Accounts.list_attendees()
+    teams = Teams.list_teams_with_members()
 
-      {:ok,
-       socket
-       |> assign(:attendees, attendees)
-       |> assign(:teams, teams)
-       |> assign(:attendee_count, length(attendees))
-       |> assign(:team_count, length(teams))
-       |> assign(:paid_teams, Enum.count(teams, &(&1.payment_status == :paid)))
-       |> assign(:pending_teams, Enum.count(teams, &(&1.payment_status in [:none, :started])))}
-    else
-      {:ok,
-       socket
-       |> redirect(to: ~p"/app/profile")}
-    end
+    {:ok,
+     socket
+     |> assign(:attendees, attendees)
+     |> assign(:teams, teams)
+     |> assign(:attendee_count, length(attendees))
+     |> assign(:team_count, length(teams))
+     |> assign(:paid_teams, Enum.count(teams, &(&1.payment_status == :paid)))
+     |> assign(:pending_teams, Enum.count(teams, &(&1.payment_status in [:none, :started])))}
   end
 
   defp format_status(status) do

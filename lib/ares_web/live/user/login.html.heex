@@ -1,93 +1,87 @@
-<div class="py-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-xl space-y-4">
-  <div class="flex flex-col gap-2 mb-8">
-    <h1 class="font-vt323 text-5xl md:text-6xl lg:text-7xl">Log in</h1>
-    <%= if @current_scope do %>
-      <p class="text-2xl">
-        You need to reauthenticate to perform sensitive actions on your account.
-      </p>
-    <% else %>
-      <%= if Event.registrations_open?() do %>
-        <p class="text-2xl">
-          Don't have an account? <.link
-            navigate="/register"
-            class="font-semibold text-primary hover:underline"
-            phx-no-format
-          >Register</.link> to participate now.
+<.page title="Log in">
+  <:subtitle :if={@current_scope}>
+    You need to reauthenticate to perform sensitive actions on your account.
+  </:subtitle>
+  <:subtitle :if={!@current_scope && Event.registrations_open?()}>
+    Don't have an account? <.link
+      navigate="/register"
+      class="font-semibold text-primary hover:underline"
+      phx-no-format
+    >Register</.link> to participate now.
+  </:subtitle>
+
+  <div class="max-w-xl mx-auto space-y-4">
+    <div :if={local_mail_adapter?()} class="alert alert-info">
+      <.icon name="hero-information-circle" class="size-6 shrink-0" />
+      <div>
+        <p>You are running the local mail adapter.</p>
+        <p>
+          To see sent emails, visit <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
         </p>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div :if={local_mail_adapter?()} class="alert alert-info">
-    <.icon name="hero-information-circle" class="size-6 shrink-0" />
-    <div>
-      <p>You are running the local mail adapter.</p>
-      <p>
-        To see sent emails, visit <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
-      </p>
+      </div>
     </div>
+
+    <.form
+      :let={f}
+      for={@form}
+      id="login_form_magic"
+      action={~p"/log-in"}
+      phx-submit="submit_magic"
+      class="font-inter"
+    >
+      <.input
+        readonly={!!@current_scope}
+        field={f[:email]}
+        type="email"
+        label="Email"
+        autocomplete="email"
+        required
+        phx-mounted={JS.focus()}
+      />
+      <.button
+        variant="primary"
+        class="w-full"
+        text="Log in with email"
+        icon="hero-arrow-right"
+        icon_position="right"
+      />
+    </.form>
+
+    <div class="divider text-xl">or</div>
+
+    <.form
+      :let={f}
+      for={@form}
+      id="login_form_password"
+      action={~p"/log-in"}
+      phx-submit="submit_password"
+      phx-trigger-action={@trigger_submit}
+      class="font-inter"
+    >
+      <.input
+        readonly={!!@current_scope}
+        field={f[:email]}
+        type="email"
+        label="Email"
+        autocomplete="email"
+        required
+      />
+      <.input
+        field={@form[:password]}
+        type="password"
+        label="Password"
+        autocomplete="current-password"
+      />
+      <.button
+        variant="primary"
+        class="w-full"
+        name={@form[:remember_me].name}
+        value="true"
+        text="Log in and stay logged in"
+        icon="hero-arrow-right"
+        icon_position="right"
+      />
+      <.button variant="secondary" class="w-full mt-2" text="Log in only this time" />
+    </.form>
   </div>
-
-  <.form
-    :let={f}
-    for={@form}
-    id="login_form_magic"
-    action={~p"/log-in"}
-    phx-submit="submit_magic"
-    class="font-inter"
-  >
-    <.input
-      readonly={!!@current_scope}
-      field={f[:email]}
-      type="email"
-      label="Email"
-      autocomplete="email"
-      required
-      phx-mounted={JS.focus()}
-    />
-    <.button
-      variant="primary"
-      class="w-full"
-      text="Log in with email"
-      icon="hero-arrow-right"
-      icon_position="right"
-    />
-  </.form>
-
-  <div class="divider text-xl">or</div>
-
-  <.form
-    :let={f}
-    for={@form}
-    id="login_form_password"
-    action={~p"/log-in"}
-    phx-submit="submit_password"
-    phx-trigger-action={@trigger_submit}
-    class="font-inter"
-  >
-    <.input
-      readonly={!!@current_scope}
-      field={f[:email]}
-      type="email"
-      label="Email"
-      autocomplete="email"
-      required
-    />
-    <.input
-      field={@form[:password]}
-      type="password"
-      label="Password"
-      autocomplete="current-password"
-    />
-    <.button
-      variant="primary"
-      class="w-full"
-      name={@form[:remember_me].name}
-      value="true"
-      text="Log in and stay logged in"
-      icon="hero-arrow-right"
-      icon_position="right"
-    />
-    <.button variant="secondary" class="w-full mt-2" text="Log in only this time" />
-  </.form>
-</div>
+</.page>

@@ -233,6 +233,24 @@ defmodule AresWeb.UserAuth do
     end
   end
 
+  def on_mount(:require_admin, params, session, socket) do
+    case on_mount(:require_authenticated, params, session, socket) do
+      {:cont, %{assigns: %{current_scope: %{user: %{is_admin: true}}}} = socket} ->
+        {:cont, socket}
+
+      {:cont, socket} ->
+        socket =
+          socket
+          |> Phoenix.LiveView.put_flash(:error, "You don't have access to this page.")
+          |> Phoenix.LiveView.redirect(to: ~p"/app/profile")
+
+        {:halt, socket}
+
+      halt ->
+        halt
+    end
+  end
+
   def on_mount(:require_sudo_mode, _params, session, socket) do
     socket = mount_current_scope(socket, session)
 

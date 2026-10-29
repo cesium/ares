@@ -56,8 +56,17 @@ defmodule AresWeb.AppLive.TeamFormation do
   defp apply_action(socket, :join, params) do
     tab = Map.get(params, "tab", "join")
 
-    socket
-    |> assign(:tab, tab)
+    case Enum.find(socket.assigns.available_teams, &(&1.id == params["team"])) do
+      nil ->
+        socket
+        |> put_flash(:error, "This team is no longer available.")
+        |> push_patch(to: ~p"/app/team-formation?#{[tab: tab]}")
+
+      team ->
+        socket
+        |> assign(:tab, tab)
+        |> assign(:selected_team, team)
+    end
   end
 
   defp apply_action(socket, :code, params) do
@@ -100,16 +109,6 @@ defmodule AresWeb.AppLive.TeamFormation do
 
         {:noreply, assign(socket, :code_form, code_form)}
     end
-  end
-
-  @impl true
-  def handle_event("open-join-modal", %{"team_code" => team_code}, socket) do
-    selected_team = Enum.find(socket.assigns.available_teams, &(&1.code == team_code))
-
-    {:noreply,
-     socket
-     |> assign(:selected_team, selected_team)
-     |> push_patch(to: ~p"/app/team-formation/join?#{[tab: socket.assigns.tab]}")}
   end
 
   @impl true

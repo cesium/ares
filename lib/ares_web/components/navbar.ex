@@ -51,7 +51,8 @@ defmodule AresWeb.Components.Navbar do
               <li>
                 <.link
                   class="hover:text-primary transition-colors"
-                  navigate="/app/team-formation"
+                  navigate={@user && "/app/team-formation"}
+                  href="/app/team-formation"
                 >
                   Teams
                 </.link>
@@ -221,7 +222,8 @@ defmodule AresWeb.Components.Navbar do
             <li>
               <.link
                 class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                navigate="/app/team-formation"
+                navigate={@user && "/app/team-formation"}
+                href="/app/team-formation"
               >
                 Team formation
               </.link>

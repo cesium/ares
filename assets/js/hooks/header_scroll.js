@@ -1,4 +1,4 @@
-const SOLID_CLASSES = ['bg-black/40', 'backdrop-blur-sm'];
+const SOLID_CLASSES = ['bg-glass', 'backdrop-blur-sm'];
 
 export const HeaderScroll = {
   mounted() {

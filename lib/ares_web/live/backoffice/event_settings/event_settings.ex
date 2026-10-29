@@ -1,34 +1,29 @@
 defmodule AresWeb.BackofficeLive.EventSettings do
   use AresWeb, :backoffice_view
 
-  on_mount {AresWeb.UserAuth, :require_authenticated}
   alias Ares.{Constants, Event}
 
   import AresWeb.CoreComponents
 
   @impl true
-  def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
-    if user.is_admin do
-      limit =
-        case Constants.get("attendees_limit") do
-          {:ok, value} -> value
-          _ -> nil
-        end
+  def mount(_params, _session, socket) do
+    limit =
+      case Constants.get("attendees_limit") do
+        {:ok, value} -> value
+        _ -> nil
+      end
 
-      registrations_open =
-        case Constants.get("registrations_open") do
-          {:ok, value} -> value
-          _ -> "false"
-        end
+    registrations_open =
+      case Constants.get("registrations_open") do
+        {:ok, value} -> value
+        _ -> "false"
+      end
 
-      {:ok,
-       socket
-       |> assign(:attendees_limit, limit)
-       |> assign(:registrations_open, registrations_open)
-       |> assign(:show_modal, false)}
-    else
-      {:ok, socket |> redirect(to: ~p"/app/profile")}
-    end
+    {:ok,
+     socket
+     |> assign(:attendees_limit, limit)
+     |> assign(:registrations_open, registrations_open)
+     |> assign(:show_modal, false)}
   end
 
   @impl true

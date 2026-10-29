@@ -1,8 +1,6 @@
 defmodule AresWeb.BackofficeLive.Companies do
   use AresWeb, :backoffice_view
 
-  on_mount {AresWeb.UserAuth, :require_authenticated}
-
   alias Ares.Companies
   alias Phoenix.LiveView.JS
 
