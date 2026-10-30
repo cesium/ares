@@ -235,7 +235,7 @@ defmodule AresWeb.UserAuth do
 
   def on_mount(:require_admin, params, session, socket) do
     case on_mount(:require_authenticated, params, session, socket) do
-      {:cont, %{assigns: %{current_scope: %{user: %{is_admin: true}}}} = socket} ->
+      {:cont, %{assigns: %{current_scope: %{user: %{type: :admin}}}} = socket} ->
         {:cont, socket}
 
       {:cont, socket} ->

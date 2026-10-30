@@ -23,6 +23,8 @@ defmodule Ares.Accounts do
     Repo.all(User)
   end
 
+  defp attendees, do: where(User, [u], u.type not in ^[:admin, :staff, :judge])
+
   @doc """
   Returns the list of users with their teams preloaded.
 
@@ -33,8 +35,7 @@ defmodule Ares.Accounts do
 
   """
   def list_attendees do
-    User
-    |> where([u], not u.is_admin)
+    attendees()
     |> order_by([u], asc: u.name)
     |> Repo.all()
     |> Repo.preload(:team)
@@ -50,8 +51,8 @@ defmodule Ares.Accounts do
 
   """
   def list_attendees_without_team do
-    User
-    |> where([u], not u.is_admin and is_nil(u.team_id))
+    attendees()
+    |> where([u], is_nil(u.team_id))
     |> Repo.all()
   end
 
@@ -65,8 +66,8 @@ defmodule Ares.Accounts do
 
   """
   def count_attendees_with_team do
-    User
-    |> where([u], not u.is_admin and not is_nil(u.team_id))
+    attendees()
+    |> where([u], not is_nil(u.team_id))
     |> Repo.aggregate(:count, :id)
   end
 
@@ -80,9 +81,9 @@ defmodule Ares.Accounts do
 
   """
   def count_attendees_with_paid_team do
-    User
+    attendees()
     |> join(:inner, [u], t in assoc(u, :team))
-    |> where([u, t], not u.is_admin and not is_nil(u.team_id) and t.payment_status == ^:paid)
+    |> where([_u, t], t.payment_status == :paid)
     |> Repo.aggregate(:count, :id)
   end
 

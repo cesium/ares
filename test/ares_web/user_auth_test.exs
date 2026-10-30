@@ -293,7 +293,7 @@ defmodule AresWeb.UserAuthTest do
     end
 
     test "allows admins", %{conn: conn, user: user, socket: socket} do
-      admin = user |> Ecto.Changeset.change(is_admin: true) |> Ares.Repo.update!()
+      admin = user |> Ecto.Changeset.change(type: :admin) |> Ares.Repo.update!()
 
       session =
         conn

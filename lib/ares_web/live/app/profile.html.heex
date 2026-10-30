@@ -101,7 +101,7 @@
     </div>
   <% else %>
     <div
-      :if={!@user.is_admin}
+      :if={!Ares.Accounts.User.admin?(@user)}
       class="text-center font-inter"
     >
       <div class="py-8">
