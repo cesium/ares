@@ -1,0 +1,87 @@
+<.page title="Log in">
+  <:subtitle :if={@current_scope}>
+    You need to reauthenticate to perform sensitive actions on your account.
+  </:subtitle>
+  <:subtitle :if={!@current_scope && Event.registrations_open?()}>
+    Don't have an account? <.link
+      navigate="/register"
+      class="font-semibold text-primary hover:underline"
+      phx-no-format
+    >Register</.link> to participate now.
+  </:subtitle>
+
+  <div class="max-w-xl mx-auto space-y-4">
+    <div :if={local_mail_adapter?()} class="alert alert-info">
+      <.icon name="hero-information-circle" class="size-6 shrink-0" />
+      <div>
+        <p>You are running the local mail adapter.</p>
+        <p>
+          To see sent emails, visit <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
+        </p>
+      </div>
+    </div>
+
+    <.form
+      :let={f}
+      for={@form}
+      id="login_form_magic"
+      action={~p"/log-in"}
+      phx-submit="submit_magic"
+      class="font-inter"
+    >
+      <.input
+        readonly={!!@current_scope}
+        field={f[:email]}
+        type="email"
+        label="Email"
+        autocomplete="email"
+        required
+        phx-mounted={JS.focus()}
+      />
+      <.button
+        variant="primary"
+        class="w-full"
+        text="Log in with email"
+        icon="hero-arrow-right"
+        icon_position="right"
+      />
+    </.form>
+
+    <div class="divider text-xl">or</div>
+
+    <.form
+      :let={f}
+      for={@form}
+      id="login_form_password"
+      action={~p"/log-in"}
+      phx-submit="submit_password"
+      phx-trigger-action={@trigger_submit}
+      class="font-inter"
+    >
+      <.input
+        readonly={!!@current_scope}
+        field={f[:email]}
+        type="email"
+        label="Email"
+        autocomplete="email"
+        required
+      />
+      <.input
+        field={@form[:password]}
+        type="password"
+        label="Password"
+        autocomplete="current-password"
+      />
+      <.button
+        variant="primary"
+        class="w-full"
+        name={@form[:remember_me].name}
+        value="true"
+        text="Log in and stay logged in"
+        icon="hero-arrow-right"
+        icon_position="right"
+      />
+      <.button variant="secondary" class="w-full mt-2" text="Log in only this time" />
+    </.form>
+  </div>
+</.page>

@@ -1,0 +1,18 @@
+<.page title="Gallery">
+  <:subtitle>
+    Checkout some of the best moments from <span class="text-primary">BugsByte</span>.
+  </:subtitle>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+    <div
+      :for={image_path <- @images}
+      class="aspect-video bg-surface rounded-none overflow-hidden group cursor-pointer"
+    >
+      <img
+        src={image_path}
+        alt="BugsByte Gallery"
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+      />
+    </div>
+  </div>
+</.page>

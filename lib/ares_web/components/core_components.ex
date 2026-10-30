@@ -64,7 +64,7 @@ defmodule AresWeb.CoreComponents do
       data-cancel={JS.exec(@on_cancel, "phx-remove")}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="bg-black/90 fixed inset-0 transition-opacity" aria-hidden="true" />
+      <div id={"#{@id}-bg"} class="bg-overlay fixed inset-0 transition-opacity" aria-hidden="true" />
       <div
         class={"fixed inset-0 overflow-y-auto #{@wrapper_class}"}
         aria-labelledby={"#{@id}-title"}
@@ -80,13 +80,13 @@ defmodule AresWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="p-6 bg-[#0A0A0A] border border-zinc-800 text-white shadow-2xl shadow-primary/10 relative rounded-2xl transition"
+              class="p-6 bg-surface border border-line text-foreground shadow-2xl shadow-primary/10 relative rounded-2xl transition"
             >
               <div class="absolute top-6 right-5">
                 <button
                   phx-click={JS.exec("data-cancel", to: "##{@id}")}
                   type="button"
-                  class="-m-3 flex-none p-3 opacity-20 text-white black:text-black cursor-pointer hover:opacity-40"
+                  class="-m-3 flex-none p-3 text-subtle cursor-pointer hover:text-foreground transition-colors"
                   aria-label={gettext("close")}
                 >
                   <.icon name="hero-x-mark-solid" class="h-5 w-5" />
@@ -156,36 +156,57 @@ defmodule AresWeb.CoreComponents do
 
   ## Examples
 
-      <.button>Send!</.button>
-      <.button phx-click="go" variant="primary">Send!</.button>
-      <.button navigate={~p"/"}>Home</.button>
+      <.button text="Send!" />
+      <.button phx-click="go" variant="secondary" text="Cancel" />
+      <.button navigate={~p"/"} text="Home" icon="hero-home" />
+      <.button text="Next" icon="hero-arrow-right" icon_position="right" />
+      <.button icon="hero-pencil" phx-click="edit" />
   """
   attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
-  attr :class, :string
-  attr :variant, :string, values: ~w(primary)
-  slot :inner_block, required: true
+  attr :class, :string, default: nil
+  attr :variant, :string, values: ~w(primary secondary), default: "primary"
+  attr :text, :string, default: nil
+  attr :icon, :string, default: nil, doc: "a heroicon name, e.g. hero-arrow-right"
+  attr :icon_position, :string, values: ~w(left right), default: "left"
 
   def button(%{rest: rest} = assigns) do
-    variants = %{"primary" => "btn-primary", nil => "btn-primary btn-soft"}
+    variants = %{
+      "primary" => "btn-primary",
+      "secondary" => "btn-primary btn-soft"
+    }
 
     assigns =
-      assign_new(assigns, :class, fn ->
-        ["btn", Map.fetch!(variants, assigns[:variant])]
-      end)
+      assign(assigns, :classes, [
+        "btn group rounded-none transition-all duration-200 hover:scale-105",
+        variants[assigns.variant],
+        assigns.class
+      ])
 
     if rest[:href] || rest[:navigate] || rest[:patch] do
       ~H"""
-      <.link class={@class} {@rest}>
-        {render_slot(@inner_block)}
+      <.link class={@classes} {@rest}>
+        <.button_content text={@text} icon={@icon} icon_position={@icon_position} />
       </.link>
       """
     else
       ~H"""
-      <button class={@class} {@rest}>
-        {render_slot(@inner_block)}
+      <button class={@classes} {@rest}>
+        <.button_content text={@text} icon={@icon} icon_position={@icon_position} />
       </button>
       """
     end
+  end
+
+  defp button_content(assigns) do
+    ~H"""
+    <.icon :if={@icon && @icon_position == "left"} name={@icon} class="size-5" />
+    {@text}
+    <.icon
+      :if={@icon && @icon_position == "right"}
+      name={@icon}
+      class="size-5 transition-transform duration-200 ease-out group-hover:translate-x-2"
+    />
+    """
   end
 
   @doc """
@@ -281,11 +302,16 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+          {@label}
+        </span>
         <select
           id={@id}
           name={@name}
-          class={[@class || "w-full select", @errors != [] && (@error_class || "select-error")]}
+          class={[
+            @class || "w-full select rounded-none h-14 text-2xl border-2",
+            @errors != [] && (@error_class || "select-error")
+          ]}
           multiple={@multiple}
           {@rest}
         >
@@ -302,12 +328,14 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+          {@label}
+        </span>
         <textarea
           id={@id}
           name={@name}
           class={[
-            @class || "w-full textarea",
+            @class || "w-full textarea rounded-none text-2xl border-2",
             @errors != [] && (@error_class || "textarea-error")
           ]}
           {@rest}
@@ -323,14 +351,16 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-1">{@label}</span>
+        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+          {@label}
+        </span>
         <input
           type={@type}
           name={@name}
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
-            @class || "w-full input",
+            @class || "w-full input rounded-none h-14 text-2xl border-2",
             @errors != [] && (@error_class || "input-error")
           ]}
           {@rest}

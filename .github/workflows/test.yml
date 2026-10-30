@@ -21,6 +21,7 @@ jobs:
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
     env:
       MIX_ENV: test
+      DB_PORT: 5432
 
     strategy:
       matrix:

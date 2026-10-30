@@ -59,9 +59,12 @@ defmodule AresWeb.Backoffice.CompaniesFormComponent do
             />
           </div>
         </div>
-        <.button class="btn btn-primary btn-soft self-end" phx-disable-with="Saving...">
-          Save Company
-        </.button>
+        <.button
+          variant="secondary"
+          class="self-end"
+          phx-disable-with="Saving..."
+          text="Save Company"
+        />
       </.form>
     </div>
     """

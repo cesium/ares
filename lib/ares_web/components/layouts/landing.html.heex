@@ -1,0 +1,16 @@
+<div class="font-vt323 flex flex-col justify-between min-h-dvh bg-background">
+  <div class="pointer-events-none fixed inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[1600px]">
+    <div class="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-transparent via-line to-transparent">
+    </div>
+    <div class="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-line to-transparent">
+    </div>
+  </div>
+  <.navbar user={if @current_scope, do: @current_scope.user} />
+  <div class="mt-24 max-w-[1600px] mx-auto w-full">
+    <.flash_group flash={@flash} />
+    {@inner_content}
+  </div>
+  <div class="max-w-[1600px] mx-auto w-full">
+    <.footer />
+  </div>
+</div>

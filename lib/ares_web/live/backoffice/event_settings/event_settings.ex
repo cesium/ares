@@ -1,59 +1,29 @@
 defmodule AresWeb.BackofficeLive.EventSettings do
-  use AresWeb, :live_view
+  use AresWeb, :backoffice_view
 
-  alias Ares.Accounts.User
   alias Ares.{Constants, Event}
 
   import AresWeb.CoreComponents
 
   @impl true
-  def render(assigns) do
-    ~H"""
-    <div>
-      <div class="flex items-center gap-4">
-        <h2>Attendees Limit: {@attendees_limit || "Not set"}</h2>
-        <.button phx-click="open_modal"><.icon name="hero-pencil" /></.button>
-      </div>
-      <div class="flex items-center gap-4 mt-4">
-        <h2>Registrations: {(@registrations_open == "true" and "Open") || "Closed"}</h2>
-        <.button phx-click="toggle_registrations">
-          <.icon name={(@registrations_open == "true" and "hero-lock-open") || "hero-lock-closed"} />
-        </.button>
-      </div>
-      <.modal :if={@show_modal} id="attendees-limit-modal" show on_cancel={JS.push("close_modal")}>
-        <.live_component
-          module={AresWeb.BackofficeLive.EventSettingsFormComponent}
-          id="attendees-limit-form"
-          attendees_limit={@attendees_limit}
-        />
-      </.modal>
-    </div>
-    """
-  end
+  def mount(_params, _session, socket) do
+    limit =
+      case Constants.get("attendees_limit") do
+        {:ok, value} -> value
+        _ -> nil
+      end
 
-  @impl true
-  def mount(_params, _session, %{assigns: %{current_scope: %{user: user}}} = socket) do
-    if User.admin?(user) do
-      limit =
-        case Constants.get("attendees_limit") do
-          {:ok, value} -> value
-          _ -> nil
-        end
+    registrations_open =
+      case Constants.get("registrations_open") do
+        {:ok, value} -> value
+        _ -> "false"
+      end
 
-      registrations_open =
-        case Constants.get("registrations_open") do
-          {:ok, value} -> value
-          _ -> "false"
-        end
-
-      {:ok,
-       socket
-       |> assign(:attendees_limit, limit)
-       |> assign(:registrations_open, registrations_open)
-       |> assign(:show_modal, false)}
-    else
-      {:ok, socket |> redirect(to: ~p"/app/profile")}
-    end
+    {:ok,
+     socket
+     |> assign(:attendees_limit, limit)
+     |> assign(:registrations_open, registrations_open)
+     |> assign(:show_modal, false)}
   end
 
   @impl true

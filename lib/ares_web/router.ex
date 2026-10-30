@@ -13,23 +13,12 @@ defmodule AresWeb.Router do
     plug :fetch_current_scope_for_user
   end
 
-  pipeline :browser_backoffice do
-    plug :put_root_layout, html: {AresWeb.Layouts, :backoffice}
-  end
-
   pipeline :api do
     plug :accepts, ["json"]
 
     scope "/api", AresWeb do
       post "/midas/:ares_api_key/webhook", MidasController, :handle_webhook
     end
-  end
-
-  scope "/", AresWeb do
-    pipe_through :browser
-
-    live "/", LandingLive.Home, :index
-    live "/faqs", LandingLive.Faqs, :index
   end
 
   # Other scopes may use custom stacks.
@@ -54,30 +43,35 @@ defmodule AresWeb.Router do
     end
   end
 
-  ## Authentication routes
-
   scope "/", AresWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through :browser
 
-    live_session :require_authenticated_user,
-      on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
-      live "/app/profile", AppLive.Profile, :index
-      live "/app/team-formation", AppLive.TeamFormation, :index
-      live "/app/team-formation/join", AppLive.TeamFormation, :join
-      live "/app/payment", AppLive.Payment, :index
-      live "/app/payment/:id", AppLive.PaymentStatus, :index
-      live "/users/settings", UserLive.Settings, :edit
-      live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
-    end
+    # One live_session so navigation between any pages stays live. Since live
+    # navigation skips the plugs, protected LiveViews also enforce
+    # authentication in their own on_mount.
+    live_session :default,
+      on_mount: [{AresWeb.UserAuth, :mount_current_scope}] do
+      live "/", LandingLive.Home, :index
+      live "/faqs", LandingLive.Faqs, :index
+      live "/gallery", LandingLive.Gallery, :index
 
-    post "/users/update-password", UserSessionController, :update_password
+      live "/register", UserLive.Registration, :new
+      live "/log-in", UserLive.Login, :new
+      live "/log-in/:token", UserLive.Confirmation, :new
 
-    scope "/backoffice" do
-      pipe_through [:browser_backoffice]
+      scope "/" do
+        pipe_through :require_authenticated_user
 
-      live_session :require_authenticated_user_backoffice,
-        on_mount: [{AresWeb.UserAuth, :require_authenticated}] do
-        scope "/", BackofficeLive do
+        live "/app/profile", AppLive.Profile, :index
+        live "/app/team-formation", AppLive.TeamFormation, :index
+        live "/app/team-formation/join", AppLive.TeamFormation, :join
+        live "/app/team-formation/code", AppLive.TeamFormation, :code
+        live "/app/payment", AppLive.Payment, :index
+        live "/app/payment/:id", AppLive.PaymentStatus, :index
+        live "/users/settings", UserLive.Settings, :edit
+        live "/users/settings/confirm-email/:token", UserLive.Settings, :confirm_email
+
+        scope "/backoffice", BackofficeLive do
           live "/event_settings", EventSettings, :index
           live "/dashboard", Dashboard, :index
           live "/companies", Companies, :index
@@ -86,19 +80,14 @@ defmodule AresWeb.Router do
         end
       end
     end
-  end
-
-  scope "/", AresWeb do
-    pipe_through [:browser]
-
-    live_session :current_user,
-      on_mount: [{AresWeb.UserAuth, :mount_current_scope}] do
-      live "/register", UserLive.Registration, :new
-      live "/log-in", UserLive.Login, :new
-      live "/log-in/:token", UserLive.Confirmation, :new
-    end
 
     post "/log-in", UserSessionController, :create
     delete "/users/log-out", UserSessionController, :delete
+
+    scope "/" do
+      pipe_through :require_authenticated_user
+
+      post "/users/update-password", UserSessionController, :update_password
+    end
   end
 end
