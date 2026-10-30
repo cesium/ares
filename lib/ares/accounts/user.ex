@@ -17,7 +17,7 @@ defmodule Ares.Accounts.User do
     field :course, :string
     field :university, :string
     field :notes, :string
-    field :is_admin, :boolean, default: false
+    field :type, Ecto.Enum, values: [:attendee, :staff, :admin, :judge], default: :attendee
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :utc_datetime
@@ -29,9 +29,22 @@ defmodule Ares.Accounts.User do
     timestamps(type: :utc_datetime)
   end
 
+  def admin?(%{type: :admin}), do: true
+  def admin?(_), do: false
+
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:name, :email, :phone, :age, :course, :university, :notes, :is_admin, :cv])
+    |> cast(attrs, [
+      :name,
+      :email,
+      :phone,
+      :age,
+      :course,
+      :university,
+      :notes,
+      :type,
+      :cv
+    ])
     |> validate_required([:name, :email])
     |> email_changeset(attrs)
     |> password_changeset(attrs)
@@ -60,7 +73,7 @@ defmodule Ares.Accounts.User do
   A user changeset for associating a team.
   """
   def team_changeset(user, attrs) do
-    if user.is_admin do
+    if admin?(user) do
       add_error(%Ecto.Changeset{data: user}, :team_id, "admin users cannot join teams")
     else
       user

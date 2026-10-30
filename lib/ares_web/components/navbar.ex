@@ -4,9 +4,9 @@ defmodule AresWeb.Components.Navbar do
   """
   use Phoenix.Component
 
-  alias Phoenix.LiveView.JS
-
+  alias Ares.Accounts.User
   alias Ares.Event
+  alias Phoenix.LiveView.JS
 
   @doc """
   Renders the navigation header with mobile menu support.
@@ -86,7 +86,7 @@ defmodule AresWeb.Components.Navbar do
                     >
                       View Profile
                     </.link>
-                    <%= if @user && @user.is_admin do %>
+                    <%= if User.admin?(@user) do %>
                       <.link
                         navigate="/backoffice/dashboard"
                         class="block px-4 py-2 text-black hover:bg-gray-300 rounded-t-lg transition-colors"
@@ -210,7 +210,7 @@ defmodule AresWeb.Components.Navbar do
               <% end %>
             </li>
             <%= if @user do %>
-              <%= if @user.is_admin do %>
+              <%= if User.admin?(@user) do %>
                 <li>
                   <.link
                     navigate="/backoffice/dashboard"

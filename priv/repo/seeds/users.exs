@@ -15,9 +15,11 @@ defmodule Ares.Repo.Seeds.Users do
     end
   end
 
-  def seed_users(attendees \\ 40, admins \\ 15) do
+  def seed_users(attendees \\ 40, admins \\ 15, staff \\ 10, judges \\ 10) do
     seed_attendees(attendees)
     seed_admins(admins)
+    seed_staff(staff)
+    seed_judges(judges)
   end
 
   defp seed_attendees(count) do
@@ -37,16 +39,42 @@ defmodule Ares.Repo.Seeds.Users do
     end
   end
 
+  defp seed_staff(count) do
+    for i <- 0..count do
+      staff = %{
+        name: "#{Enum.random(@first_names)} #{Enum.random(@last_names)}",
+        email: "staff#{i}@bugsbyte.org",
+        password: "password1234",
+        type: :staff
+      }
+
+      create_user(staff, :staff, i)
+    end
+  end
+
   defp seed_admins(count) do
     for i <- 0..count do
       student = %{
         name: "#{Enum.random(@first_names)} #{Enum.random(@last_names)}",
-        email: "staff#{i}@bugsbyte.org",
+        email: "admin#{i}@bugsbyte.org",
         password: "password1234",
-        is_admin: true
+        type: :admin
       }
 
-      create_user(student, :staff, i)
+      create_user(student, :admin, i)
+    end
+  end
+
+  defp seed_judges(count) do
+    for i <- 0..count do
+      student = %{
+        name: "#{Enum.random(@first_names)} #{Enum.random(@last_names)}",
+        email: "judge#{i}@bugsbyte.org",
+        password: "password1234",
+        type: :judge
+      }
+
+      create_user(student, :judge, i)
     end
   end
 

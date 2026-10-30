@@ -109,7 +109,7 @@ defmodule AresWeb.AppLive.Profile do
           </div>
         <% else %>
           <div
-            :if={!@user.is_admin}
+            :if={!User.admin?(@user)}
             class="bg-gray rounded-lg p-8 border border-gray-800 text-center font-inter"
           >
             <div class="py-8">
