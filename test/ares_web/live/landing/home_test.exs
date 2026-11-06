@@ -1,4 +1,4 @@
-defmodule AresWeb.PageControllerTest do
+defmodule AresWeb.LandingLive.HomeTest do
   use AresWeb.ConnCase
 
   test "GET /", %{conn: conn} do

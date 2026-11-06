@@ -12,10 +12,11 @@ defmodule Ares.Repo.Seeds.Companies do
   end
 
   defp seed_companies do
-    for _ <- 1..4 do
+    for type <- [:sponsor, :sponsor, :sponsor, :partner, :partner] do
       attrs = %{
         name: Faker.Company.name(),
-        url: Faker.Internet.url()
+        url: Faker.Internet.url(),
+        type: type
       }
 
       case Companies.create_company(attrs) do

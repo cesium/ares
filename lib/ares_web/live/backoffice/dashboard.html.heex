@@ -1,0 +1,134 @@
+<div class="mx-auto font-inter">
+  <section class="relative overflow-hidden rounded-3xl border border-line bg-surface p-8 sm:p-10 mb-10">
+    <div class="absolute -top-24 -right-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl"></div>
+    <div class="relative">
+      <p class="text-xs uppercase tracking-[0.4em] text-muted">Operations</p>
+      <h1 class="text-4xl sm:text-5xl font-resegrg mt-3">BUGSBYTE 2026</h1>
+    </div>
+
+    <div class="relative mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="rounded-2xl border border-line bg-surface p-4">
+        <p class="text-xs uppercase tracking-widest text-muted">Attendees</p>
+        <p class="text-3xl font-vt323 text-foreground mt-2">{@attendee_count}</p>
+      </div>
+      <div class="rounded-2xl border border-line bg-surface p-4">
+        <p class="text-xs uppercase tracking-widest text-muted">Teams</p>
+        <p class="text-3xl font-vt323 text-foreground mt-2">{@team_count}</p>
+      </div>
+      <div class="rounded-2xl border border-line bg-surface p-4">
+        <p class="text-xs uppercase tracking-widest text-muted">Paid</p>
+        <p class="text-3xl font-vt323 text-emerald-300 mt-2">{@paid_teams}</p>
+      </div>
+      <div class="rounded-2xl border border-line bg-surface p-4">
+        <p class="text-xs uppercase tracking-widest text-muted">Pending</p>
+        <p class="text-3xl font-vt323 text-amber-300 mt-2">{@pending_teams}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+    <div class="rounded-3xl border border-line bg-surface p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-resegrg">Attendees</h2>
+          <p class="text-sm text-muted">All registered participants.</p>
+        </div>
+        <span class="text-xs uppercase tracking-[0.3em] text-subtle">
+          {length(@attendees)} total
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+          <thead class="text-xs uppercase tracking-widest text-subtle border-b border-line">
+            <tr>
+              <th class="py-3 pr-4">Name</th>
+              <th class="py-3 pr-4">Email</th>
+              <th class="py-3 pr-4">Phone</th>
+              <th class="py-3 pr-4">University</th>
+              <th class="py-3 pr-4">Team</th>
+              <th class="py-3">Payment</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line text-foreground">
+            <%= for attendee <- @attendees do %>
+              <tr class="hover:bg-surface-hover">
+                <td class="py-3 pr-4 font-semibold">{attendee.name}</td>
+                <td class="py-3 pr-4 text-muted">{attendee.email}</td>
+                <td class="py-3 pr-4 text-muted">{attendee.phone || "-"}</td>
+                <td class="py-3 pr-4">{attendee.university || "-"}</td>
+                <td class="py-3 pr-4">
+                  <%= if attendee.team do %>
+                    <div class="font-medium">{attendee.team.name}</div>
+                    <div class="text-xs text-subtle uppercase tracking-widest">
+                      {attendee.team.code}
+                    </div>
+                  <% else %>
+                    <span class="text-subtle">No team</span>
+                  <% end %>
+                </td>
+                <td class="py-3">
+                  <%= if attendee.team do %>
+                    <span class={payment_badge_class(attendee.team.payment_status)}>
+                      {format_status(attendee.team.payment_status)}
+                    </span>
+                  <% else %>
+                    <span class="text-xs uppercase tracking-widest text-subtle">
+                      N/A
+                    </span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-line bg-surface p-6">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-3xl font-resegrg">Teams</h2>
+          <p class="text-sm text-muted">Payment progress and membership.</p>
+        </div>
+        <span class="text-xs uppercase tracking-[0.3em] text-subtle">
+          {length(@teams)} total
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-left text-sm">
+          <thead class="text-xs uppercase tracking-widest text-subtle border-b border-line">
+            <tr>
+              <th class="py-3 pr-4">Team</th>
+              <th class="py-3 pr-4">Leader</th>
+              <th class="py-3 pr-4">Members</th>
+              <th class="py-3 pr-4">Code</th>
+              <th class="py-3">Payment</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line text-foreground">
+            <%= for team <- @teams do %>
+              <tr class="hover:bg-surface-hover">
+                <td class="py-3 pr-4 font-semibold">{team.name}</td>
+                <td class="py-3 pr-4 text-muted">{leader_name(team)}</td>
+                <td class="py-3 pr-4">
+                  <span class="font-medium">{length(team.members)}</span>/5
+                </td>
+                <td class="py-3 pr-4 text-muted uppercase tracking-widest text-xs">
+                  {team.code}
+                </td>
+                <td class="py-3">
+                  <span class={payment_badge_class(team.payment_status)}>
+                    {format_status(team.payment_status)}
+                  </span>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

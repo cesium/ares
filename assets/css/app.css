@@ -30,9 +30,9 @@
   --color-base-200: oklch(23.26% 0.014 253.1);
   --color-base-300: oklch(21.15% 0.012 254.09);
   --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: #EB1A63;
+  --color-primary: #66B22E;
   --color-primary-content: oklch(98% 0.003 247.858);
-  --color-secondary: oklch(65% 0.241 354.308);
+  --color-secondary: #2C0640;
   --color-secondary-content: oklch(94% 0.028 342.258);
   --color-accent: oklch(77% 0.152 181.912);
   --color-accent-content: oklch(38% 0.063 188.416);
@@ -77,8 +77,8 @@
 }
 
 @font-face {
-  font-family: "VT323";
-  src: url("/fonts/VT323-Regular.woff") format("woff");
+  font-family: "Jersey 10";
+  src: url("/fonts/Jersey10-Regular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -90,35 +90,188 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Google Sans Code";
+  src: url("/fonts/GoogleSansCode-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
 @theme {
-  --color-primary: #EB1A63;
+  --color-primary: #66B22E;
+
+  /* Neutrals, tinted towards the primary hue. Use these instead of
+     black/white/gray shades so every surface stays consistent. */
+  --color-background: oklch(0% 0 0);
+  --color-foreground: oklch(98% 0.005 135);
+  --color-surface: oklch(14% 0 0);
+  --color-surface-hover: oklch(20% 0 0);
+  --color-line: oklch(30% 0 0);
+  --color-muted: oklch(78% 0.02 135);
+  --color-subtle: oklch(60% 0.02 135);
+  --color-overlay: oklch(0% 0 0 / 0.85);
+  --color-glass: oklch(0% 0 0 / 0.5);
+  --color-field: oklch(98% 0.005 135);
+  --color-field-content: oklch(0% 0 0);
+
   --font-resegrg: "Resegrg", sans-serif;
-  --font-vt323: "VT323", monospace;
+  --font-vt323: "Jersey 10", monospace;
   --font-inter: "Inter", sans-serif;
+  --font-google-sans-code: "Google Sans Code", sans-serif;
+}
+
+/* Canonical horizontal page padding. Every full-width page element
+   (navbar, footer, hero, sections) should use this and nothing else,
+   so the whole landing page lines up on one gutter. */
+.page-px {
+  @apply px-12 md:px-24;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+/* --- glitch / TV-static treatment for the stat band panels --- */
+@keyframes glitch-scan {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 0 -120px, 0 60px; }
+}
+
+@keyframes glitch-tear {
+  0%, 88%, 100% { opacity: 0; transform: translateX(0) scaleY(1); }
+  89% { opacity: 0.6; transform: translateX(-3%) scaleY(2.4); }
+  92% { opacity: 0.35; transform: translateX(4%) scaleY(1); }
+  95% { opacity: 0.5; transform: translateX(-2%) scaleY(3); }
+  97% { opacity: 0.25; transform: translateX(2%) scaleY(1); }
+}
+
+@keyframes glitch-text {
+  0%, 90%, 100% { text-shadow: none; transform: translate(0); }
+  91% { text-shadow: -3px 0 var(--glitch-color-b, var(--color-secondary)), 3px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(2px, -1px); }
+  93% { text-shadow: 3px 0 var(--glitch-color-b, var(--color-secondary)), -3px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(-2px, 1px); }
+  95% { text-shadow: -2px 0 var(--glitch-color-b, var(--color-secondary)), 2px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(1px, 0); }
+  97% { text-shadow: 2px 0 var(--glitch-color-a, var(--color-primary)), -2px 0 var(--glitch-color-b, var(--color-secondary)); transform: translate(-1px, 0); }
+}
+
+/* Thin animated glitch scanline, used as a section divider instead of a
+   static colored band. Reuses the same tear pattern as .glitch-panel::after. */
+.glitch-divider {
+  position: relative;
+  height: 3px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-foreground) 5%, transparent);
+}
+
+.glitch-divider::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-primary) 0 7px,
+    var(--color-secondary) 7px 12px,
+    var(--color-foreground) 12px 15px,
+    transparent 15px 26px
+  );
+  animation: glitch-tear 6s steps(1) infinite;
+}
+
+.glitch-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.glitch-panel::before {
+  content: "";
+  position: absolute;
+  inset: -20% 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background-image:
+    repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-background) 22%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-foreground) 7%, transparent) 0 2px, transparent 2px 11px);
+  background-size: 100% 120px, 100% 44px;
+  animation: glitch-scan 3s linear infinite;
+}
+
+.glitch-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38%;
+  height: 10%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--glitch-color-a, var(--color-primary)) 0 7px,
+    var(--glitch-color-b, var(--color-secondary)) 7px 12px,
+    var(--color-foreground) 12px 15px,
+    transparent 15px 26px
+  );
+  animation: glitch-tear 6s steps(1) infinite;
+}
+
+.glitch-text {
+  animation: glitch-text 6s steps(1) infinite;
+}
+
+/* Hero title: glitches more often and for longer. */
+@keyframes glitch-text-hero {
+  0%, 60%, 100% { text-shadow: none; transform: translate(0); }
+  63% { text-shadow: -8px 0 var(--glitch-color-b, var(--color-secondary)), 8px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(6px, -2px); }
+  67% { text-shadow: 9px 0 var(--glitch-color-b, var(--color-secondary)), -9px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(-7px, 3px); }
+  71% { text-shadow: none; transform: translate(0); }
+  75% { text-shadow: -6px 0 var(--glitch-color-a, var(--color-primary)), 6px 0 var(--glitch-color-b, var(--color-secondary)); transform: translate(4px, 0); }
+  80% { text-shadow: 10px 0 var(--glitch-color-b, var(--color-secondary)), -10px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(-8px, -3px); }
+  85% { text-shadow: -7px 0 var(--glitch-color-b, var(--color-secondary)), 7px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(6px, 2px); }
+  89% { text-shadow: none; transform: translate(0); }
+  93% { text-shadow: 8px 0 var(--glitch-color-a, var(--color-primary)), -8px 0 var(--glitch-color-b, var(--color-secondary)); transform: translate(-5px, 2px); }
+  97% { text-shadow: -9px 0 var(--glitch-color-b, var(--color-secondary)), 9px 0 var(--glitch-color-a, var(--color-primary)); transform: translate(6px, -2px); }
+}
+
+.glitch-text-hero {
+  animation: glitch-text-hero 2.2s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch-panel::before,
+  .glitch-panel::after,
+  .glitch-text,
+  .glitch-text-hero {
+    animation: none;
+  }
+  .glitch-panel::after {
+    opacity: 0;
+  }
 }
 
 .input {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .textarea {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .select {
-  @apply bg-white text-black text-sm;
+  @apply bg-field text-field-content text-sm;
 }
 
 .label {
-  @apply text-white text-sm;
+  @apply text-foreground text-sm;
 }
 
 .checkbox {
-  @apply w-4 h-4 border border-gray-300 text-primary rounded bg-gray-50 focus:ring-3 focus:ring-primary;
+  @apply w-4 h-4 border border-line text-primary rounded bg-field focus:ring-3 focus:ring-primary;
 }
 
 .checkbox:checked {
-  @apply bg-primary border-transparent text-white;
+  @apply bg-primary border-transparent text-foreground;
 }
 
 .alert {
@@ -126,7 +279,7 @@
 }
 
 .alert-info {
-  @apply bg-[#67b22e] text-[#0a0a0a] border-transparent;
+  @apply bg-primary text-background border-transparent;
 }
 
 .squiggle-slow {

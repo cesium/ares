@@ -17,7 +17,7 @@ defmodule AresWeb.BackofficeLive.EventSettingsFormComponent do
           min="1"
           required
         />
-        <.button type="submit">Save</.button>
+        <.button variant="secondary" type="submit" text="Save" />
       </form>
     </div>
     """

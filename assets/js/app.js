@@ -24,10 +24,11 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/ares"
 import topbar from "../vendor/topbar"
-import { FaqToggle } from './hooks';
+import { FaqToggle, HeaderScroll } from './hooks';
 
-const hooks = { 
+const hooks = {
   FaqToggle,
+  HeaderScroll,
   ...colocatedHooks
 }
 
@@ -39,9 +40,15 @@ const liveSocket = new LiveSocket("/live", Socket, {
 })
 
 // Show progress bar on live navigation and form submits
-topbar.config({barColors: {0: "#EB1A63"}, shadowColor: "rgba(0, 0, 0, .3)"})
+const themeColor = name => getComputedStyle(document.documentElement).getPropertyValue(`--color-${name}`).trim()
+topbar.config({barColors: {0: themeColor("primary")}, shadowColor: themeColor("overlay")})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
-window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
+window.addEventListener("phx:page-loading-stop", ({detail}) => {
+  topbar.hide()
+  // The mobile menus lock scrolling on <body>, which survives live navigation
+  // to another LiveView, so unlock it whenever a new page is mounted.
+  if (detail.kind === "redirect") document.body.classList.remove("overflow-hidden")
+})
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()

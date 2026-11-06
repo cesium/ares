@@ -1,0 +1,29 @@
+<div class="py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto font-inter my-16">
+  <.icon :if={@payment.status == :pending} name="hero-clock" class="text-muted mb-4 size-20" />
+  <.icon
+    :if={@payment.status == :completed}
+    name="hero-check"
+    class="text-muted mb-4 size-20"
+  />
+  <h3 class="mb-3 text-lg">Order #{@payment.order_id}</h3>
+  <%= if @payment.status == :pending do %>
+    <h2 class="text-2xl font-resegrg mb-2">Waiting for payment</h2>
+    <p class="text-lg text-muted">
+      We are waiting for your MB Way payment confirmation. This page will update once the payment is completed.
+    </p>
+  <% end %>
+  <%= if @payment.status == :completed do %>
+    <h2 class="text-2xl font-resegrg mb-2">Payment completed</h2>
+    <p class="text-lg text-muted">
+      Thank you for your payment. Your transaction has been successfully processed.
+    </p>
+    <p class="text-lg text-muted">We look forward to seeing you at the event!</p>
+    <.button
+      variant="primary"
+      patch={~p"/app/profile"}
+      class="mt-6"
+      text="Return to Profile"
+      icon="hero-arrow-left"
+    />
+  <% end %>
+</div>

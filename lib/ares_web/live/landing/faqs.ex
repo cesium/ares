@@ -1,5 +1,7 @@
 defmodule AresWeb.LandingLive.Faqs do
-  use AresWeb, :live_view
+  use AresWeb, :landing_view
+
+  import AresWeb.Components.Page
 
   @faqs [
     %{
