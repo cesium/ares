@@ -5,7 +5,7 @@
 
   <div class="space-y-4">
     <nav
-      class="inline-flex mb-10 border border-line font-vt323 text-2xl uppercase"
+      class="inline-flex mb-10 border border-line font-jersey10 text-2xl uppercase"
       role="tablist"
       aria-label="Team tabs"
     >
@@ -135,7 +135,7 @@
               class="py-6 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8"
             >
               <div class="flex-1 min-w-0 space-y-3">
-                <h3 class="font-vt323 text-3xl leading-none">{team.name}</h3>
+                <h3 class="font-jersey10 text-3xl leading-none">{team.name}</h3>
                 <p :if={team.description not in [nil, ""]} class="text-muted">
                   {team.description}
                 </p>
@@ -174,7 +174,7 @@
     <% end %>
     <div>
       <div class="flex items-center gap-3 mb-6">
-        <h3 class="text-2xl uppercase font-vt323">Important Information</h3>
+        <h3 class="text-2xl uppercase font-jersey10">Important Information</h3>
       </div>
 
       <ul class="list-disc pl-5 space-y-2 font-inter text-muted">
@@ -194,7 +194,7 @@
 >
   <div class="space-y-8 flex flex-col items-center">
     <div class="space-y-2 text-center">
-      <h2 class="text-2xl font-vt323">Join Team?</h2>
+      <h2 class="text-2xl font-jersey10">Join Team?</h2>
       <p class="text-xl">
         You are about to join <span class="text-primary font-bold">{@selected_team.name}</span>. Confirm that this is the team you want to participate with.
       </p>
@@ -227,7 +227,7 @@
 >
   <div class="space-y-8">
     <div class="space-y-2">
-      <h2 class="text-2xl font-vt323">Join with a code</h2>
+      <h2 class="text-2xl font-jersey10">Join with a code</h2>
       <p class="text-xl">Ask your team leader for the team code and enter it below.</p>
     </div>
     <.form for={@code_form} id="join-by-code-form" phx-submit="submit_code" class="font-inter">

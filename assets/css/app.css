@@ -115,7 +115,7 @@
   --color-field-content: oklch(0% 0 0);
 
   --font-resegrg: "Resegrg", sans-serif;
-  --font-vt323: "Jersey 10", monospace;
+  --font-jersey10: "Jersey 10", monospace;
   --font-inter: "Inter", sans-serif;
   --font-google-sans-code: "Google Sans Code", sans-serif;
 }

@@ -13,7 +13,7 @@ defmodule AresWeb.Components.Page do
     ~H"""
     <div class="max-w-5xl mx-auto page-px pt-8 pb-8 sm:pb-12 md:pb-16">
       <div class="mb-8 sm:mb-12 md:mb-16">
-        <h1 class="text-foreground text-5xl md:text-6xl lg:text-7xl font-vt323 mb-6 sm:mb-8 mt-16">
+        <h1 class="text-foreground text-5xl md:text-6xl lg:text-7xl font-jersey10 mb-6 sm:mb-8 mt-16">
           {@title}
         </h1>
         <div :if={@subtitle != []} class="mb-6 sm:mb-8">

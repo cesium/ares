@@ -14,7 +14,7 @@ defmodule AresWeb.Components.LandingSection do
     <section class="page-px bg-background pt-16 sm:pt-12 md:pt-16 pb-16 sm:pb-12 md:pb-16">
       <div class={["grid gap-8", @media != [] && "lg:grid-cols-2 lg:items-center"]}>
         <div>
-          <h2 class="font-vt323 text-foreground text-5xl md:text-6xl lg:text-7xl mb-2">
+          <h2 class="font-jersey10 text-foreground text-5xl md:text-6xl lg:text-7xl mb-2">
             {@title}
           </h2>
 

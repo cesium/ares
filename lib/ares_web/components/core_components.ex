@@ -302,14 +302,14 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+        <span :if={@label} class="label mb-2 uppercase tracking-wide font-jersey10">
           {@label}
         </span>
         <select
           id={@id}
           name={@name}
           class={[
-            @class || "w-full select rounded-none h-14 text-2xl border-2",
+            @class || "w-full select rounded-none h-1 border-2",
             @errors != [] && (@error_class || "select-error")
           ]}
           multiple={@multiple}
@@ -328,14 +328,14 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+        <span :if={@label} class="label mb-2 uppercase tracking-wide font-jersey10">
           {@label}
         </span>
         <textarea
           id={@id}
           name={@name}
           class={[
-            @class || "w-full textarea rounded-none text-2xl border-2",
+            @class || "w-full textarea rounded-none border-2",
             @errors != [] && (@error_class || "textarea-error")
           ]}
           {@rest}
@@ -351,7 +351,7 @@ defmodule AresWeb.CoreComponents do
     ~H"""
     <div class="fieldset mb-2">
       <label>
-        <span :if={@label} class="label mb-2 text-lg uppercase tracking-wide font-vt323">
+        <span :if={@label} class="label mb-2 uppercase tracking-wide font-jersey10">
           {@label}
         </span>
         <input
@@ -360,7 +360,7 @@ defmodule AresWeb.CoreComponents do
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
-            @class || "w-full input rounded-none h-14 text-2xl border-2",
+            @class || "w-full input rounded-none h-14 border-2",
             @errors != [] && (@error_class || "input-error")
           ]}
           {@rest}

@@ -8,10 +8,11 @@ defmodule AresWeb.LandingLive.Gallery do
     images =
       :ares
       |> Application.app_dir("priv/static/images/gallery")
-      |> Path.join("*.JPG")
+      |> Path.join("*")
       |> Path.wildcard()
-      # phx.digest writes fingerprinted copies (NAME-<md5>.JPG) next to the originals
-      |> Enum.reject(&Regex.match?(~r/-[0-9a-f]{32}\.JPG$/, &1))
+      |> Enum.filter(&(String.downcase(Path.extname(&1)) in ~w(.jpg .jpeg .png .webp)))
+      # phx.digest writes fingerprinted copies (NAME-<md5>.ext) next to the originals
+      |> Enum.reject(&Regex.match?(~r/-[0-9a-f]{32}\.\w+$/, &1))
       |> Enum.sort()
       |> Enum.map(&Path.join("/images/gallery", Path.basename(&1)))
 

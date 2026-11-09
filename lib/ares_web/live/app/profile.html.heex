@@ -6,7 +6,9 @@
       </span>
     </div>
     <div class="min-w-0">
-      <h1 class="text-5xl md:text-6xl lg:text-7xl font-vt323 mb-2 break-words">{@user.name}</h1>
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-jersey10 mb-2 break-words">
+        {@user.name}
+      </h1>
       <p class="text-xl sm:text-2xl text-muted break-all">{@user.email}</p>
     </div>
   </div>
@@ -29,12 +31,12 @@
 
   <%= if @user.team do %>
     <div class="font-inter mb-8">
-      <h2 class="text-3xl font-vt323 uppercase">Member of</h2>
+      <h2 class="text-3xl font-jersey10 uppercase">Member of</h2>
 
       <div class="mb-6 pb-6 border-b border-line">
         <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
           <div class="mb-4 md:mb-0">
-            <h3 class="text-3xl font-vt323 mb-2">{@user.team.name}</h3>
+            <h3 class="text-3xl font-jersey10 mb-2">{@user.team.name}</h3>
             <p class="text-lg text-foreground">{@user.team.description}</p>
           </div>
           <div :if={@user.team.payment_status == :paid}>
@@ -47,7 +49,7 @@
           </div>
         </div>
 
-        <div class="bg-surface rounded px-4 py-2 inline-block text-xl font-vt323">
+        <div class="bg-surface rounded px-4 py-2 inline-block text-xl font-jersey10">
           <span class="text-muted uppercase">Team Code: </span>
           <span class="text-foreground">{@user.team.code}</span>
         </div>
@@ -76,7 +78,7 @@
       </div>
 
       <div>
-        <h4 class="text-2xl mb-4 font-vt323 uppercase">Team Members:</h4>
+        <h4 class="text-2xl mb-4 font-jersey10 uppercase">Team Members:</h4>
         <div class="space-y-3">
           <%= for member <- @user.team.members do %>
             <div class="bg-surface rounded-lg p-4">
@@ -89,7 +91,7 @@
                   <p class="text-muted break-all">{member.email}</p>
                 </div>
                 <%= if member.id == @user.id do %>
-                  <span class="bg-primary text-background text-xl font-bold px-3 py-1 rounded font-vt323 uppercase">
+                  <span class="bg-primary text-background text-xl font-bold px-3 py-1 rounded font-jersey10 uppercase">
                     You!
                   </span>
                 <% end %>
@@ -120,7 +122,7 @@
   <% end %>
 
   <div class="font-inter">
-    <h2 class="text-3xl font-vt323 uppercase">Upload your CV</h2>
+    <h2 class="text-3xl font-jersey10 uppercase">Upload your CV</h2>
     <%= if @user.cv do %>
       <div class="flex items-center gap-4 mt-2">
         <p class="text-sm text-muted">Current: {@user.cv.file_name}</p>

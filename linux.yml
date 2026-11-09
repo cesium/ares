@@ -1,7 +1,5 @@
 services:
   db:
-    ports:
-      - ${DB_PORT:-5555}:5432
+    network_mode: "host"
   web:
-    ports:
-      - ${PORT:-4000}:4000
+    network_mode: "host"

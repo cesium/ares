@@ -180,11 +180,11 @@ defmodule AresWeb.Components.Navbar do
             <img src="/images/brand/cesium.svg" alt="CeSIUM" class="w-10 h-10" />
           </.link>
           <div class="flex flex-col leading-none">
-            <span class="uppercase font-vt323 text-xs text-foreground">hackathon</span>
+            <span class="uppercase font-jersey10 text-xs text-foreground">hackathon</span>
             <span class="uppercase font-resegrg tracking-wide text-lg">bugsbyte</span>
           </div>
         </header>
-        <nav class="font-vt323">
+        <nav class="font-jersey10">
           <ul class="flex flex-col">
             <li>
               <a
