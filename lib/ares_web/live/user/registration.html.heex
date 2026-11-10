@@ -1,0 +1,110 @@
+<div class="py-20 px-4 sm:px-6 lg:px-8 mx-auto max-w-xl">
+  <div class="flex flex-col gap-2 mb-8">
+    <h1 class="font-resegrg text-4xl sm:text-5xl">
+      Registration
+    </h1>
+    <p class="text-2xl">
+      Already registered? <.link
+        navigate={~p"/log-in"}
+        class="font-semibold text-primary hover:underline"
+        phx-no-format
+      >Log in</.link> to your account now.
+    </p>
+  </div>
+
+  <div class="alert alert-info">
+    <.icon name="hero-information-circle" class="size-6 shrink-0" />
+    <div>
+      <p>Event participation has a cost of <b class="font-semibold">5,00€</b>.</p>
+      <p>
+        This fee will be collected after team formation.
+      </p>
+    </div>
+  </div>
+
+  <.form
+    for={@form}
+    id="registration_form"
+    phx-submit="save"
+    phx-change="validate"
+    class="font-inter mt-8"
+  >
+    <.input
+      field={@form[:name]}
+      type="text"
+      label="Full Name"
+      autocomplete="name"
+      placeholder="John Doe"
+      required
+      phx-mounted={JS.focus()}
+    />
+    <.input
+      field={@form[:email]}
+      type="email"
+      label="Email"
+      autocomplete="username"
+      placeholder="john.doe@example.com"
+      required
+    />
+    <.input
+      field={@form[:phone]}
+      type="text"
+      label="Phone"
+      autocomplete="tel"
+      placeholder="912345678"
+      required
+    />
+    <.input
+      field={@form[:age]}
+      type="number"
+      label="Age"
+      placeholder="18+"
+      required
+    />
+    <.input
+      field={@form[:course]}
+      type="text"
+      label="Course"
+      placeholder="Engenharia Informática"
+      required
+    />
+    <.input
+      field={@form[:university]}
+      type="text"
+      label="University"
+      placeholder="Universidade do Minho"
+      required
+    />
+    <.input
+      field={@form[:notes]}
+      type="textarea"
+      label="Notes"
+      placeholder="If you have any special needs, requests or dietary restrictions, please let us know."
+    />
+
+    <.live_component
+      module={CVUploader}
+      id="cv-uploader"
+      uploaders={@uploads}
+      target={%JS{}}
+      is_optional
+    />
+
+    <p class="flex flex-row">
+      <.input
+        name="consent"
+        type="checkbox"
+        value={false}
+        label="I agree with the event regulations."
+        required
+      />
+    </p>
+
+    <.button
+      variant="primary"
+      phx-disable-with="Creating account..."
+      class="w-full mt-6"
+      text="Submit"
+    />
+  </.form>
+</div>

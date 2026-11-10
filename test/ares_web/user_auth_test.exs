@@ -282,6 +282,45 @@ defmodule AresWeb.UserAuthTest do
     end
   end
 
+  describe "on_mount :require_admin" do
+    setup do
+      %{
+        socket: %LiveView.Socket{
+          endpoint: AresWeb.Endpoint,
+          assigns: %{__changed__: %{}, flash: %{}}
+        }
+      }
+    end
+
+    test "allows admins", %{conn: conn, user: user, socket: socket} do
+      admin = user |> Ecto.Changeset.change(type: :admin) |> Ares.Repo.update!()
+
+      session =
+        conn
+        |> put_session(:user_token, Accounts.generate_user_session_token(admin))
+        |> get_session()
+
+      assert {:cont, _socket} = UserAuth.on_mount(:require_admin, %{}, session, socket)
+    end
+
+    test "redirects users that are not admins", %{conn: conn, user: user, socket: socket} do
+      session =
+        conn
+        |> put_session(:user_token, Accounts.generate_user_session_token(user))
+        |> get_session()
+
+      assert {:halt, updated_socket} = UserAuth.on_mount(:require_admin, %{}, session, socket)
+      assert {:redirect, %{to: "/app/profile"}} = updated_socket.redirected
+    end
+
+    test "redirects guests to log in", %{conn: conn, socket: socket} do
+      assert {:halt, updated_socket} =
+               UserAuth.on_mount(:require_admin, %{}, get_session(conn), socket)
+
+      assert {:redirect, %{to: "/log-in"}} = updated_socket.redirected
+    end
+  end
+
   describe "on_mount :require_sudo_mode" do
     test "allows users that have authenticated in the last 10 minutes", %{conn: conn, user: user} do
       user_token = Accounts.generate_user_session_token(user)

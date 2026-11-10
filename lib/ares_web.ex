@@ -48,13 +48,25 @@ defmodule AresWeb do
     end
   end
 
-  def live_view do
+  def live_view(opts \\ []) do
     quote do
-      use Phoenix.LiveView
+      use Phoenix.LiveView, unquote(opts)
 
       import AresWeb.Components.Navbar
 
       unquote(html_helpers())
+    end
+  end
+
+  def landing_view, do: live_view(layout: {AresWeb.Layouts, :landing})
+
+  def app_view, do: live_view(layout: {AresWeb.Layouts, :app})
+
+  def backoffice_view do
+    quote do
+      unquote(live_view(layout: {AresWeb.Layouts, :backoffice}))
+
+      on_mount {AresWeb.UserAuth, :require_admin}
     end
   end
 
