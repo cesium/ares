@@ -54,6 +54,7 @@ defmodule AresWeb.Router do
       live "/", LandingLive.Home, :index
       live "/faqs", LandingLive.Faqs, :index
       live "/gallery", LandingLive.Gallery, :index
+      live "/schedule", LandingLive.Schedule, :index
 
       live "/register", UserLive.Registration, :new
       live "/log-in", UserLive.Login, :new
