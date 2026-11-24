@@ -4,7 +4,10 @@
 </.header>
 
 <.backoffice_info>
-  <:info name="Registrations" class={if @registrations_open, do: "text-emerald-300", else: "text-red-300"}>
+  <:info
+    name="Registrations"
+    class={if @registrations_open, do: "text-emerald-300", else: "text-red-300"}
+  >
     {if @registrations_open, do: "Open", else: "Closed"}
   </:info>
   <:info name="Attendees limit">{@attendees_limit || "None"}</:info>
@@ -52,7 +55,14 @@
       phx-submit="save_limit"
       class="mt-4 flex flex-col"
     >
-      <.input variant="dark" field={@limit_form[:limit]} type="number" min="1" label="Limit" required />
+      <.input
+        variant="dark"
+        field={@limit_form[:limit]}
+        type="number"
+        min="1"
+        label="Limit"
+        required
+      />
       <.button class="self-end mt-2" text="Save limit" phx-disable-with="Saving..." />
     </.form>
   </section>

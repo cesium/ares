@@ -485,7 +485,10 @@ defmodule AresWeb.CoreComponents do
             </td>
           </tr>
           <tr :if={@rows == []}>
-            <td colspan={length(@col) + if(@action != [], do: 1, else: 0)} class="px-6 py-8 text-center text-subtle">
+            <td
+              colspan={length(@col) + if(@action != [], do: 1, else: 0)}
+              class="px-6 py-8 text-center text-subtle"
+            >
               {gettext("Nothing here yet.")}
             </td>
           </tr>

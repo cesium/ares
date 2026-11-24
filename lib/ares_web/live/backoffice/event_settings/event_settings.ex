@@ -54,8 +54,13 @@ defmodule AresWeb.BackofficeLive.EventSettings do
   defp limit_form(limit) do
     errors =
       case limit do
-        nil -> []
-        _ -> if parse_limit(limit) == :error, do: [limit: {"must be a positive whole number", []}], else: []
+        nil ->
+          []
+
+        _ ->
+          if parse_limit(limit) == :error,
+            do: [limit: {"must be a positive whole number", []}],
+            else: []
       end
 
     to_form(%{"limit" => limit}, errors: errors)

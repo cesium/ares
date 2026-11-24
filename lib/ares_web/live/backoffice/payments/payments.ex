@@ -14,7 +14,10 @@ defmodule AresWeb.BackofficeLive.Payments do
      |> assign(:payments, payments)
      |> assign(:completed, length(completed))
      |> assign(:pending, Enum.count(payments, &(&1.status == :pending)))
-     |> assign(:collected, completed |> Enum.map(& &1.amount) |> Enum.reduce(Decimal.new(0), &Decimal.add/2))}
+     |> assign(
+       :collected,
+       completed |> Enum.map(& &1.amount) |> Enum.reduce(Decimal.new(0), &Decimal.add/2)
+     )}
   end
 
   defp format_amount(amount), do: "#{amount |> Decimal.round(2) |> Decimal.to_string()} €"

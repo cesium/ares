@@ -1,55 +1,54 @@
 <.page title="Schedule">
-    <:subtitle>
+  <:subtitle>
     Everything happening at <span class="text-primary">BugsByte</span>, hour by hour.
-    </:subtitle>
+  </:subtitle>
 
-    <p :if={!@day} class="text-xl">The schedule will be announced soon.</p>
+  <p :if={!@day} class="text-xl">The schedule will be announced soon.</p>
 
-    <div :if={@day} class="w-full flex items-center justify-between mb-8">
-        <.link :if={@prev_day} patch={schedule_path(@prev_day, @filters)} aria-label="Previous day">
-            <.icon name="hero-chevron-left" class="size-10" />
-        </.link>
-        <span :if={!@prev_day} class="size-10"></span>
+  <div :if={@day} class="w-full flex items-center justify-between mb-8">
+    <.link :if={@prev_day} patch={schedule_path(@prev_day, @filters)} aria-label="Previous day">
+      <.icon name="hero-chevron-left" class="size-10" />
+    </.link>
+    <span :if={!@prev_day} class="size-10"></span>
 
-        <div class="text-center">
-            <p class="text-primary">{Calendar.strftime(@day, "%d %b")}</p>
-            <h2 class="text-4xl font-semibold">{Calendar.strftime(@day, "%A")}</h2>
+    <div class="text-center">
+      <p class="text-primary">{Calendar.strftime(@day, "%d %b")}</p>
+      <h2 class="text-4xl font-semibold">{Calendar.strftime(@day, "%A")}</h2>
+    </div>
+
+    <.link :if={@next_day} patch={schedule_path(@next_day, @filters)} aria-label="Next day">
+      <.icon name="hero-chevron-right" class="size-10" />
+    </.link>
+    <span :if={!@next_day} class="size-10"></span>
+  </div>
+
+  <div :if={@day} class="w-full flex flex-wrap gap-2 mb-8">
+    <.link
+      :for={type <- types()}
+      patch={schedule_path(@day, toggle(@filters, type))}
+      aria-pressed={to_string(type in @filters)}
+      class={[
+        "rounded-full border-2 px-6 py-1 capitalize transition-colors",
+        if(type in @filters, do: "border-primary text-primary", else: "hover:bg-base-content/10")
+      ]}
+    >
+      {type}
+    </.link>
+  </div>
+
+  <div class="w-full flex flex-col gap-4">
+    <div :for={activity <- @day_activities} class="flex h-48">
+      <div>
+        <p class="text-3xl">{Calendar.strftime(activity.time, "%H:%M")}</p>
+      </div>
+      <div class="w-full h-full flex flex-col mx-10 pb-10 border-b-1">
+        <div class="w-full h-full flex justify-between">
+          <h3 class="text-3xl font-semibold">{activity.title}</h3>
+          <p class="text-3xl">{activity.type}</p>
         </div>
 
-        <.link :if={@next_day} patch={schedule_path(@next_day, @filters)} aria-label="Next day">
-            <.icon name="hero-chevron-right" class="size-10" />
-        </.link>
-        <span :if={!@next_day} class="size-10"></span>
+        <p class="">{activity.description}</p>
+      </div>
     </div>
-
-    <div :if={@day} class="w-full flex flex-wrap gap-2 mb-8">
-        <.link
-            :for={type <- types()}
-            patch={schedule_path(@day, toggle(@filters, type))}
-            aria-pressed={to_string(type in @filters)}
-            class={[
-                "rounded-full border-2 px-6 py-1 capitalize transition-colors",
-                if(type in @filters, do: "border-primary text-primary", else: "hover:bg-base-content/10")
-            ]}
-        >
-            {type}
-        </.link>
-    </div>
-
-    <div class="w-full flex flex-col gap-4">
-        <div class="flex h-48" :for={activity <- @day_activities}>
-            <div>
-                <p class="text-3xl">{Calendar.strftime(activity.time, "%H:%M")}</p>
-            </div>
-            <div class="w-full h-full flex flex-col mx-10 pb-10 border-b-1">
-                <div class="w-full h-full flex justify-between">
-                    <h3 class="text-3xl font-semibold">{activity.title}</h3>
-                    <p class="text-3xl">{activity.type}</p>
-                </div>
-
-                <p class="">{activity.description}</p>
-            </div>
-        </div>
-    </div>
-  
+  </div>
 </.page>

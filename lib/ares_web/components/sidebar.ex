@@ -23,7 +23,9 @@ defmodule AresWeb.Components.Sidebar do
   """
   def on_mount(:current_path, _params, _session, socket) do
     {:cont,
-     Phoenix.LiveView.attach_hook(socket, :current_path, :handle_params, fn _params, url, socket ->
+     Phoenix.LiveView.attach_hook(socket, :current_path, :handle_params, fn _params,
+                                                                            url,
+                                                                            socket ->
        {:cont, assign(socket, :current_path, URI.parse(url).path)}
      end)}
   end
@@ -67,7 +69,10 @@ defmodule AresWeb.Components.Sidebar do
     </div>
 
     <div class="hidden lg:flex lg:shrink-0">
-      <div id="page-sidebar-desktop" class="flex flex-col w-64 pt-5 pb-4 bg-background border-r border-line">
+      <div
+        id="page-sidebar-desktop"
+        class="flex flex-col w-64 pt-5 pb-4 bg-background border-r border-line"
+      >
         <.sidebar_content pages={@pages} current_path={@current_path} user={@user} id="desktop" />
       </div>
     </div>

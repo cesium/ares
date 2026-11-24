@@ -44,7 +44,9 @@ defmodule AresWeb.BackofficeLive.EventSettingsTest do
     Event.change_attendees_limit(1)
     Ares.TeamsFixtures.team_fixture()
     team = Ares.Teams.list_teams() |> hd()
-    for _ <- 1..2, do: user_fixture() |> Ecto.Changeset.change(team_id: team.id) |> Ares.Repo.update!()
+
+    for _ <- 1..2,
+        do: user_fixture() |> Ecto.Changeset.change(team_id: team.id) |> Ares.Repo.update!()
 
     {:ok, _view, html} = live(conn, ~p"/backoffice/event_settings")
     assert html =~ "Enabled, but closed"

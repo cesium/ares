@@ -49,7 +49,7 @@ defmodule AresWeb.Components.Navbar do
                 </.link>
               </li>
               <li>
-                 <.link class="hover:text-primary transition-colors" navigate="/schedule">
+                <.link class="hover:text-primary transition-colors" navigate="/schedule">
                   Schedule
                 </.link>
               </li>
