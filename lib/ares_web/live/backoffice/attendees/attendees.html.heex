@@ -1,0 +1,31 @@
+<.header>
+  Attendees
+  <:subtitle>All registered participants.</:subtitle>
+</.header>
+
+<.backoffice_info>
+  <:info name="Attendees">{length(@attendees)}</:info>
+  <:info name="With team">{@with_team}</:info>
+  <:info name="Without team">{length(@attendees) - @with_team}</:info>
+</.backoffice_info>
+
+<.table id="attendees-table" rows={@attendees}>
+  <:col :let={attendee} label="Name">
+    <p class="font-semibold">{attendee.name}</p>
+    <p class="text-subtle">{attendee.email}</p>
+  </:col>
+  <:col :let={attendee} label="Phone">{attendee.phone || "-"}</:col>
+  <:col :let={attendee} label="University">{attendee.university || "-"}</:col>
+  <:col :let={attendee} label="Team">
+    <%= if attendee.team do %>
+      <p class="font-medium">{attendee.team.name}</p>
+      <p class="text-xs text-subtle uppercase tracking-widest">{attendee.team.code}</p>
+    <% else %>
+      <span class="text-subtle">No team</span>
+    <% end %>
+  </:col>
+  <:col :let={attendee} label="Payment">
+    <.payment_badge :if={attendee.team} status={attendee.team.payment_status} />
+    <span :if={!attendee.team} class="text-subtle">-</span>
+  </:col>
+</.table>

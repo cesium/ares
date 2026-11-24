@@ -256,6 +256,11 @@ defmodule AresWeb.CoreComponents do
   attr :class, :string, default: nil, doc: "the input class to use over defaults"
   attr :error_class, :string, default: nil, doc: "the input error class to use over defaults"
 
+  attr :variant, :string,
+    values: ~w(light dark),
+    default: "light",
+    doc: "light fields for light/landing surfaces, dark for dark surfaces like the backoffice"
+
   attr :rest, :global,
     include: ~w(accept autocomplete capture cols disabled form list max maxlength min minlength
                 multiple pattern placeholder readonly required rows size step)
@@ -309,7 +314,8 @@ defmodule AresWeb.CoreComponents do
           id={@id}
           name={@name}
           class={[
-            @class || "w-full select rounded-none h-1 border-2",
+            @class || "w-full select rounded-none h-14 border-2",
+            @variant == "dark" && "select-dark",
             @errors != [] && (@error_class || "select-error")
           ]}
           multiple={@multiple}
@@ -336,6 +342,7 @@ defmodule AresWeb.CoreComponents do
           name={@name}
           class={[
             @class || "w-full textarea rounded-none border-2",
+            @variant == "dark" && "textarea-dark",
             @errors != [] && (@error_class || "textarea-error")
           ]}
           {@rest}
@@ -361,6 +368,7 @@ defmodule AresWeb.CoreComponents do
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
             @class || "w-full input rounded-none h-14 border-2",
+            @variant == "dark" && "input-dark",
             @errors != [] && (@error_class || "input-error")
           ]}
           {@rest}
@@ -405,7 +413,7 @@ defmodule AresWeb.CoreComponents do
   end
 
   @doc """
-  Renders a table with generic styling.
+  Renders a table with the standard backoffice styling.
 
   ## Examples
 
@@ -436,34 +444,54 @@ defmodule AresWeb.CoreComponents do
       end
 
     ~H"""
-    <table class="table table-zebra">
-      <thead>
-        <tr>
-          <th :for={col <- @col}>{col[:label]}</th>
-          <th :if={@action != []}>
-            <span class="sr-only">{gettext("Actions")}</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody id={@id} phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}>
-        <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
-          <td
-            :for={col <- @col}
-            phx-click={@row_click && @row_click.(row)}
-            class={@row_click && "hover:cursor-pointer"}
+    <div class="relative overflow-x-auto rounded-lg border border-line bg-background">
+      <table id={@id} class="w-full text-sm text-left text-foreground font-inter">
+        <thead class="text-xs uppercase text-subtle border-b border-line">
+          <tr>
+            <th :for={col <- @col} scope="col" class="px-6 py-3 font-normal">{col[:label]}</th>
+            <th :if={@action != []} scope="col" class="px-6 py-3">
+              <span class="sr-only">{gettext("Actions")}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody
+          id={@id <> "-tbody"}
+          phx-update={is_struct(@rows, Phoenix.LiveView.LiveStream) && "stream"}
+        >
+          <tr
+            :for={row <- @rows}
+            id={@row_id && @row_id.(row)}
+            class={[
+              "border-b last:border-0 border-line",
+              @row_click && "hover:cursor-pointer hover:bg-surface transition-colors"
+            ]}
           >
-            {render_slot(col, @row_item.(row))}
-          </td>
-          <td :if={@action != []} class="w-0 font-semibold">
-            <div class="flex gap-4">
-              <%= for action <- @action do %>
-                {render_slot(action, @row_item.(row))}
-              <% end %>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <td
+              :for={col <- @col}
+              phx-click={@row_click && @row_click.(row)}
+              class="px-6 py-4 whitespace-nowrap"
+            >
+              {render_slot(col, @row_item.(row))}
+            </td>
+            <td :if={@action != []} class="px-6 py-4 w-14 whitespace-nowrap">
+              <div class="flex gap-4 justify-end">
+                <span
+                  :for={action <- @action}
+                  class="text-muted hover:text-foreground transition-colors"
+                >
+                  {render_slot(action, @row_item.(row))}
+                </span>
+              </div>
+            </td>
+          </tr>
+          <tr :if={@rows == []}>
+            <td colspan={length(@col) + if(@action != [], do: 1, else: 0)} class="px-6 py-8 text-center text-subtle">
+              {gettext("Nothing here yet.")}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     """
   end
 

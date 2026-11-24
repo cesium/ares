@@ -1,0 +1,20 @@
+<.header>
+  Teams
+  <:subtitle>Payment progress and membership.</:subtitle>
+</.header>
+
+<.backoffice_info>
+  <:info name="Teams">{length(@teams)}</:info>
+  <:info name="Paid" class="text-emerald-300">{@paid}</:info>
+  <:info name="Pending" class="text-amber-300">{length(@teams) - @paid}</:info>
+</.backoffice_info>
+
+<.table id="teams-table" rows={@teams}>
+  <:col :let={team} label="Team">
+    <p class="font-semibold">{team.name}</p>
+    <p class="text-xs text-subtle uppercase tracking-widest">{team.code}</p>
+  </:col>
+  <:col :let={team} label="Leader">{leader_name(team)}</:col>
+  <:col :let={team} label="Members">{length(team.members)}/5</:col>
+  <:col :let={team} label="Payment"><.payment_badge status={team.payment_status} /></:col>
+</.table>

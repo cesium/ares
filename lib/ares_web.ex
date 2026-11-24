@@ -67,6 +67,9 @@ defmodule AresWeb do
       unquote(live_view(layout: {AresWeb.Layouts, :backoffice}))
 
       on_mount {AresWeb.UserAuth, :require_admin}
+      on_mount {AresWeb.Components.Sidebar, :current_path}
+
+      import AresWeb.Components.{BackofficeInfo, PaymentBadge}
     end
   end
 

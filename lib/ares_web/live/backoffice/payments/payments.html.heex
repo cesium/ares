@@ -1,0 +1,23 @@
+<.header>
+  Payments
+  <:subtitle>Every payment attempt made by teams.</:subtitle>
+</.header>
+
+<.backoffice_info>
+  <:info name="Payments">{length(@payments)}</:info>
+  <:info name="Completed" class="text-emerald-300">{@completed}</:info>
+  <:info name="Pending" class="text-amber-300">{@pending}</:info>
+  <:info name="Collected">{format_amount(@collected)}</:info>
+</.backoffice_info>
+
+<.table id="payments-table" rows={@payments}>
+  <:col :let={payment} label="Order">
+    <span class="font-mono text-xs">{payment.order_id}</span>
+  </:col>
+  <:col :let={payment} label="Team">{payment.team && payment.team.name}</:col>
+  <:col :let={payment} label="Amount">{format_amount(payment.amount)}</:col>
+  <:col :let={payment} label="Status"><.payment_badge status={payment.status} /></:col>
+  <:col :let={payment} label="Date">
+    {Calendar.strftime(payment.inserted_at, "%d %b %Y, %H:%M")}
+  </:col>
+</.table>

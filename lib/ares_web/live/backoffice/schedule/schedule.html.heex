@@ -1,0 +1,46 @@
+<.header>
+  Schedule
+  <:subtitle>Activities shown on the public schedule page.</:subtitle>
+  <:actions>
+    <.button patch={~p"/backoffice/schedule/new"} text="New Activity" icon="hero-plus" />
+  </:actions>
+</.header>
+
+<.table id="activities-table" rows={@activities}>
+  <:col :let={{_id, activity}} label="Day">{Calendar.strftime(activity.date, "%a, %d %b")}</:col>
+  <:col :let={{_id, activity}} label="Time">{Calendar.strftime(activity.time, "%H:%M")}</:col>
+  <:col :let={{_id, activity}} label="Title">{activity.title}</:col>
+  <:col :let={{_id, activity}} label="Type">
+    {String.capitalize(to_string(activity.type))}
+  </:col>
+  <:action :let={{id, activity}}>
+    <div class="flex flex-row gap-2">
+      <.link patch={~p"/backoffice/schedule/#{activity.id}/edit"}>
+        <.icon name="hero-pencil" class="w-5 h-5" />
+      </.link>
+      <.link
+        phx-click={JS.push("delete", value: %{id: activity.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        <.icon name="hero-trash" class="w-5 h-5" />
+      </.link>
+    </div>
+  </:action>
+</.table>
+
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="activity-modal"
+  show
+  on_cancel={JS.patch(~p"/backoffice/schedule")}
+>
+  <.live_component
+    module={AresWeb.Backoffice.ScheduleFormComponent}
+    id={@activity.id || :new}
+    title={@page_title}
+    action={@live_action}
+    activity={@activity}
+    patch={~p"/backoffice/schedule"}
+  />
+</.modal>
