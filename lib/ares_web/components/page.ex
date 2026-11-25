@@ -17,7 +17,7 @@ defmodule AresWeb.Components.Page do
           {@title}
         </h1>
         <div :if={@subtitle != []} class="mb-6 sm:mb-8">
-          <p class="text-foreground text-xl lg:text-2xl xl:text-3xl uppercase">
+          <p class="text-foreground text-xl lg:text-2xl xl:text-3xl font-jersey10 uppercase">
             {render_slot(@subtitle)}
           </p>
         </div>
