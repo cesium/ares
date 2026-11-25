@@ -28,6 +28,13 @@
   </p>
 </.landing_section>
 
+<.gallery images={
+  Enum.map(
+    ~w(DSC07779 DSC07885 DSC08098 DSC08344 DSC08428 DSC08517 DSC08561),
+    &"/images/gallery/#{&1}.JPG"
+  )
+} />
+
 <.landing_section title="Where?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
     The fourth edition of BugsByte happens at the <a

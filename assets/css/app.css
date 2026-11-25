@@ -127,6 +127,31 @@
   @apply px-12 md:px-24;
 }
 
+/* Gallery marquee: the photo list is rendered twice, so sliding the track
+   left by half its width lands on an identical frame and the loop is seamless.
+   Pauses on hover; with reduced motion it is a plain row scrolled by hand. */
+.gallery-viewport {
+  overflow-x: auto;
+}
+
+@keyframes gallery-marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-viewport {
+    overflow: hidden;
+  }
+
+  .gallery-track {
+    animation: gallery-marquee 60s linear infinite;
+  }
+
+  .gallery-viewport:hover .gallery-track {
+    animation-play-state: paused;
+  }
+}
+
 ::selection {
   background-color: var(--color-primary);
   color: var(--color-background);

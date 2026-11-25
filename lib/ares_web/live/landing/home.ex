@@ -2,7 +2,7 @@ defmodule AresWeb.LandingLive.Home do
   use AresWeb, :landing_view
 
   alias Ares.Companies
-  import AresWeb.Components.{Companies, SquigglyEffect, LandingSection, VenueMap}
+  import AresWeb.Components.{Companies, Gallery, SquigglyEffect, LandingSection, VenueMap}
 
   @impl true
   def mount(_params, _session, socket) do
