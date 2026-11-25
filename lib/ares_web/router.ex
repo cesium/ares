@@ -54,6 +54,7 @@ defmodule AresWeb.Router do
       live "/", LandingLive.Home, :index
       live "/faqs", LandingLive.Faqs, :index
       live "/gallery", LandingLive.Gallery, :index
+      live "/schedule", LandingLive.Schedule, :index
 
       live "/register", UserLive.Registration, :new
       live "/log-in", UserLive.Login, :new
@@ -73,10 +74,15 @@ defmodule AresWeb.Router do
 
         scope "/backoffice", BackofficeLive do
           live "/event_settings", EventSettings, :index
-          live "/dashboard", Dashboard, :index
+          live "/attendees", Attendees, :index
+          live "/teams", Teams, :index
+          live "/payments", Payments, :index
           live "/companies", Companies, :index
           live "/companies/new", Companies, :new
           live "/companies/:id/edit", Companies, :edit
+          live "/schedule", Schedule, :index
+          live "/schedule/new", Schedule, :new
+          live "/schedule/:id/edit", Schedule, :edit
         end
       end
     end

@@ -1,21 +1,69 @@
-<div>
-  <div class="flex items-center gap-4">
-    <h2>Attendees Limit: {@attendees_limit || "Not set"}</h2>
-    <.button variant="secondary" phx-click="open_modal" icon="hero-pencil" />
-  </div>
-  <div class="flex items-center gap-4 mt-4">
-    <h2>Registrations: {(@registrations_open == "true" and "Open") || "Closed"}</h2>
-    <.button
-      variant="secondary"
-      phx-click="toggle_registrations"
-      icon={(@registrations_open == "true" and "hero-lock-open") || "hero-lock-closed"}
-    />
-  </div>
-  <.modal :if={@show_modal} id="attendees-limit-modal" show on_cancel={JS.push("close_modal")}>
-    <.live_component
-      module={AresWeb.BackofficeLive.EventSettingsFormComponent}
-      id="attendees-limit-form"
-      attendees_limit={@attendees_limit}
-    />
-  </.modal>
+<.header>
+  Event Settings
+  <:subtitle>Registrations and capacity for the event.</:subtitle>
+</.header>
+
+<.backoffice_info>
+  <:info
+    name="Registrations"
+    class={if @registrations_open, do: "text-emerald-300", else: "text-red-300"}
+  >
+    {if @registrations_open, do: "Open", else: "Closed"}
+  </:info>
+  <:info name="Attendees limit">{@attendees_limit || "None"}</:info>
+  <:info name="In a team">{@with_team}</:info>
+  <:info name="In a paid team">{@with_paid_team}</:info>
+</.backoffice_info>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 font-inter">
+  <section class="rounded-lg border border-line bg-background p-6">
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <h2 class="font-semibold">Registrations</h2>
+        <p class="text-sm text-subtle mt-1">
+          While enabled, new attendees can create an account.
+        </p>
+      </div>
+      <input
+        id="registrations-toggle"
+        type="checkbox"
+        class="toggle toggle-primary"
+        checked={@registrations_enabled}
+        phx-click="toggle_registrations"
+        aria-label="Registrations enabled"
+      />
+    </div>
+    <p
+      :if={@registrations_enabled and not @registrations_open}
+      class="mt-4 flex items-center gap-2 text-sm text-warning"
+    >
+      <.icon name="hero-exclamation-triangle" class="size-5 shrink-0" />
+      Enabled, but closed because more attendees are in a team than the limit allows.
+    </p>
+  </section>
+
+  <section class="rounded-lg border border-line bg-background p-6">
+    <h2 class="font-semibold">Attendees limit</h2>
+    <p class="text-sm text-subtle mt-1">
+      Registrations close once more attendees than this are in a team, and teams can't pay if
+      it would take paid attendees over it.
+    </p>
+    <.form
+      for={@limit_form}
+      id="limit-form"
+      phx-change="validate_limit"
+      phx-submit="save_limit"
+      class="mt-4 flex flex-col"
+    >
+      <.input
+        variant="dark"
+        field={@limit_form[:limit]}
+        type="number"
+        min="1"
+        label="Limit"
+        required
+      />
+      <.button class="self-end mt-2" text="Save limit" phx-disable-with="Saving..." />
+    </.form>
+  </section>
 </div>

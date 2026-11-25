@@ -49,12 +49,8 @@ defmodule AresWeb.Components.Navbar do
                 </.link>
               </li>
               <li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  navigate={@user && "/app/team-formation"}
-                  href="/app/team-formation"
-                >
-                  Teams
+                <.link class="hover:text-primary transition-colors" navigate="/schedule">
+                  Schedule
                 </.link>
               </li>
               <li>
@@ -97,7 +93,7 @@ defmodule AresWeb.Components.Navbar do
                     </.link>
                     <%= if User.admin?(@user) do %>
                       <.link
-                        navigate="/backoffice/dashboard"
+                        navigate="/backoffice/attendees"
                         class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
                       >
                         Backoffice
@@ -231,10 +227,10 @@ defmodule AresWeb.Components.Navbar do
             <%= if User.admin?(@user) do %>
               <li>
                 <.link
-                  navigate="/backoffice/dashboard"
+                  navigate="/backoffice/attendees"
                   class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
                 >
-                  Dashboard
+                  Backoffice
                 </.link>
               </li>
             <% end %>

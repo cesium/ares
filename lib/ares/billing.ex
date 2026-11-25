@@ -118,6 +118,22 @@ defmodule Ares.Billing do
   end
 
   @doc """
+  Returns all payments with their team, newest first.
+
+  ## Examples
+
+      iex> list_payments_with_team()
+      [%Payment{team: %Team{}}, ...]
+
+  """
+  def list_payments_with_team do
+    Payment
+    |> order_by(desc: :inserted_at)
+    |> preload(:team)
+    |> Repo.all()
+  end
+
+  @doc """
   Returns the list of payments for a specific team.
 
   ## Examples

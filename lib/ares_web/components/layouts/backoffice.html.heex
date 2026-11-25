@@ -1,7 +1,15 @@
-<div class="h-screen flex flex-col sm:flex-row">
-  <.sidebar user={if @current_scope, do: @current_scope.user} />
-  <div class="w-full p-12 sm:pl-60 h-fit">
-    <.flash_group flash={@flash} />
-    {@inner_content}
+<div class="relative h-dvh flex overflow-hidden">
+  <.sidebar
+    user={if @current_scope, do: @current_scope.user}
+    current_path={assigns[:current_path]}
+  />
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <.sidebar_toggle />
+    <main class="flex-1 relative overflow-y-auto focus:outline-none">
+      <div class="px-4 sm:px-6 lg:px-8 py-8">
+        <.flash_group flash={@flash} />
+        {@inner_content}
+      </div>
+    </main>
   </div>
 </div>

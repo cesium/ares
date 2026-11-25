@@ -32,9 +32,10 @@ defmodule AresWeb.Backoffice.CompaniesFormComponent do
       >
         <div>
           <div class="grid grid-cols-2 gap-5">
-            <.input field={@form[:name]} type="text" label="Name" required />
-            <.input field={@form[:url]} type="text" label="URL" />
+            <.input variant="dark" field={@form[:name]} type="text" label="Name" required />
+            <.input variant="dark" field={@form[:url]} type="text" label="URL" />
             <.input
+              variant="dark"
               field={@form[:type]}
               type="select"
               label="Type"

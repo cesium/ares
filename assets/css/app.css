@@ -250,16 +250,17 @@
   }
 }
 
-.input {
+/* Light fields: native date/time pickers and dropdowns must use the light
+   scheme, otherwise the dark theme draws their icons white on white. */
+.input, .textarea, .select {
   @apply bg-field text-field-content text-sm;
+  color-scheme: light;
 }
 
-.textarea {
-  @apply bg-field text-field-content text-sm;
-}
-
-.select {
-  @apply bg-field text-field-content text-sm;
+/* Dark fields, for dark surfaces such as the backoffice (<.input variant="dark">). */
+.input-dark, .textarea-dark, .select-dark {
+  @apply bg-background text-foreground border-line focus:border-primary focus-within:border-primary;
+  color-scheme: dark;
 }
 
 .label {
