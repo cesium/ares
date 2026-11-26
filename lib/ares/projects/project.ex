@@ -1,4 +1,7 @@
 defmodule Ares.Projects.Project do
+  @moduledoc """
+  Project schema.
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

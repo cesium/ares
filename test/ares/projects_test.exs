@@ -23,8 +23,16 @@ defmodule Ares.ProjectsTest do
     end
 
     test "create_project/1 with valid data creates a project" do
-      team = Ares.TeamFixtures.team_fixture()
-      valid_attrs = %{team_id: team.id, name: "some name", description: "some description", repo_url: "https://github.com", demo_url: "https://example.com", submitted_at: ~U[2026-11-21 17:45:00Z]}
+      team = Ares.TeamsFixtures.team_fixture()
+
+      valid_attrs = %{
+        team_id: team.id,
+        name: "some name",
+        description: "some description",
+        repo_url: "https://github.com",
+        demo_url: "https://example.com",
+        submitted_at: ~U[2026-11-21 17:45:00Z]
+      }
 
       assert {:ok, %Project{} = project} = Projects.create_project(valid_attrs)
       assert project.team_id == team.id
@@ -41,7 +49,14 @@ defmodule Ares.ProjectsTest do
 
     test "update_project/2 with valid data updates the project" do
       project = project_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description", repo_url: "https://github.com/updated", demo_url: "https://updated.example.com", submitted_at: ~U[2026-11-22 17:45:00Z]}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        repo_url: "https://github.com/updated",
+        demo_url: "https://updated.example.com",
+        submitted_at: ~U[2026-11-22 17:45:00Z]
+      }
 
       assert {:ok, %Project{} = project} = Projects.update_project(project, update_attrs)
       assert project.name == "some updated name"
@@ -70,14 +85,30 @@ defmodule Ares.ProjectsTest do
 
     test "create_project/1 with invalid urls returns error changeset" do
       team = Ares.TeamsFixtures.team_fixture()
+
       assert {:error, changeset} =
-        Projects.create_project(%{team_id: team.id, name: "some name", submitted_at: ~U[2026-11-21 17:45:00Z], repo_url: "not a url", demo_url: "ftp://example.com"})
-      assert %{repo_url: ["must be a valid URL"], demo_url: ["must be a valid URL"]} = errors_on(changeset)
+               Projects.create_project(%{
+                 team_id: team.id,
+                 name: "some name",
+                 submitted_at: ~U[2026-11-21 17:45:00Z],
+                 repo_url: "not a url",
+                 demo_url: "ftp://example.com"
+               })
+
+      assert %{repo_url: ["must be a valid URL"], demo_url: ["must be a valid URL"]} =
+               errors_on(changeset)
     end
 
     test "create_project/1 does not allow two projects for the same team" do
       project = project_fixture()
-      assert {:error, changeset} = Projects.create_project(%{team_id: project.team_id, name: "other", submitted_at: ~U[2026-11-21 17:45:00Z]})
+
+      assert {:error, changeset} =
+               Projects.create_project(%{
+                 team_id: project.team_id,
+                 name: "other",
+                 submitted_at: ~U[2026-11-21 17:45:00Z]
+               })
+
       assert %{team_id: ["has already been taken"]} = errors_on(changeset)
     end
 
@@ -92,15 +123,25 @@ defmodule Ares.ProjectsTest do
 
     test "upsert_project/2 creates a project when the team has none" do
       team = Ares.TeamsFixtures.team_fixture()
+
       assert {:ok, %Project{} = project} =
-        Projects.upsert_project(team.id, %{name: "Ares", submitted_at: ~U[2026-11-21 17:45:00Z]})
+               Projects.upsert_project(team.id, %{
+                 name: "Ares",
+                 submitted_at: ~U[2026-11-21 17:45:00Z]
+               })
+
       assert project.team_id == team.id
     end
 
     test "upsert_project/2 updates the existing project instead of creating another" do
       project = project_fixture()
+
       assert {:ok, updated} =
-        Projects.upsert_project(project.team_id, %{name: "new name", submitted_at: ~U[2026-11-22 17:45:00Z]})
+               Projects.upsert_project(project.team_id, %{
+                 name: "new name",
+                 submitted_at: ~U[2026-11-22 17:45:00Z]
+               })
+
       assert updated.id == project.id
       assert updated.name == "new name"
       assert length(Projects.list_projects()) == 1
