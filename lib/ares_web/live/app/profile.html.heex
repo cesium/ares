@@ -128,7 +128,7 @@
         <p class="text-sm text-muted">Current: {@user.cv.file_name}</p>
         <button
           type="button"
-          class="text-sm text-primary underline cursor-pointer"
+          class="text-sm link-inline cursor-pointer"
           phx-click="remove-cv"
           onclick="return confirm('Remove current CV?');"
         >
@@ -159,7 +159,7 @@
       />
 
       <%= if @cv_upload_error do %>
-        <p class="text-sm text-primary mt-2">
+        <p class="text-sm text-error mt-2">
           There was a problem with the uploaded CV. Please remove and re-upload or try a different file.
         </p>
       <% end %>

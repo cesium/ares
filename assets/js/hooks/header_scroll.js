@@ -1,27 +1,8 @@
-const SOLID_CLASSES = ['bg-glass', 'backdrop-blur-sm'];
-
 export const HeaderScroll = {
   mounted() {
-    const hero = document.getElementById('hero');
-    if (!hero) return;
-
-    this.el.classList.remove(...SOLID_CLASSES);
-
-    this.observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.el.classList.remove(...SOLID_CLASSES);
-        } else {
-          this.el.classList.add(...SOLID_CLASSES);
-        }
-      },
-      { threshold: 0 }
-    );
-
-    this.observer.observe(hero);
-  },
-
-  destroyed() {
-    this.observer?.disconnect();
+    // Mark the link to the current page; in the dock and the mobile menu, styled via `current:`.
+    for (const a of document.querySelectorAll('nav a')) {
+      if (a.origin === location.origin && a.pathname === location.pathname) a.setAttribute('aria-current', 'page');
+    }
   }
 };

@@ -24,7 +24,7 @@ defmodule AresWeb.Components.CVUploader do
           <div class="mt-3">
             <label
               for="file-upload"
-              class="cursor-pointer font-semibold text-primary hover:text-primary/80 transition-colors"
+              class="cursor-pointer font-semibold link-inline"
             >
               <a onclick={"document.getElementById('#{@uploaders.cv.ref}').click()"}>
                 <span>Upload CV</span>
@@ -36,7 +36,7 @@ defmodule AresWeb.Components.CVUploader do
             PDF, DOC, DOCX, TXT, MD, RTF (max 10MB)
           </p>
           <%= if @is_optional do %>
-            <p class="mt-1 text-xs text-primary">
+            <p class="mt-1 text-xs text-muted">
               * Uploading a CV is <span class="underline">optional</span>.
             </p>
           <% end %>

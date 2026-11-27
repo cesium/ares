@@ -32,8 +32,8 @@
   --color-base-content: oklch(97.807% 0.029 256.847);
   --color-primary: #66B22E;
   --color-primary-content: oklch(98% 0.003 247.858);
-  --color-secondary: #2C0640;
-  --color-secondary-content: oklch(94% 0.028 342.258);
+  --color-secondary: #F5B73E;
+  --color-secondary-content: oklch(0% 0 0);
   --color-accent: oklch(77% 0.152 181.912);
   --color-accent-content: oklch(38% 0.063 188.416);
   --color-neutral: oklch(14% 0.005 285.823);
@@ -63,6 +63,8 @@
 
 /* Use the data attribute for dark mode  */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant light (&:where([data-theme=light], [data-theme=light] *));
+@custom-variant current (&[aria-current="page"]);
 
 /* Make LiveView wrapper divs transparent for layout */
 [data-phx-session], [data-phx-teleported-src] { display: contents }
@@ -118,6 +120,74 @@
   --font-jersey10: "Jersey 10", monospace;
   --font-inter: "Inter", sans-serif;
   --font-google-sans-code: "Google Sans Code", sans-serif;
+
+  --container-8xl: 100rem;
+
+  /* Sized against its @container so it fills the width: "BUGSBYTE" in
+     Resegrg is ~8.4em wide. */
+  --text-hero: 11.8cqw;
+  --text-hero--line-height: 0.8;
+
+  --tracking-label: 0.3em;
+}
+
+/* Collapsible rows (FAQ answers): animating 0fr <-> 1fr slides the
+   content open to its natural height. */
+@utility grid-rows-collapsed {
+  grid-template-rows: 0fr;
+}
+@utility grid-rows-expanded {
+  grid-template-rows: 1fr;
+}
+
+/* BugsByte identity
+   - Shape: things you can press or that float (dock, buttons, menus) get
+     `pixel-corners`, stepped like pixel art. Nothing is rounded.
+   - Type: Jersey 10 is the voice (headings, navigation, buttons); Inter is
+     for long text and forms; Resegrg is only the BugsByte wordmark.
+   - Colour: black page, `surface` for floating objects, white text with
+     `muted` for secondary. Running text stays white: no coloured words.
+     Green = brand and anything interactive (buttons, link underlines,
+     focus, current page). The edition colour (`secondary`, yellow in
+     2026) = this year's insect and facts (bee, edition band, map venue),
+     never inside paragraphs. Errors use `error`.
+   - Current page: a green pixel in front of the link.
+   - Hover changes colour only; nothing scales. */
+@utility pixel-corners {
+  clip-path: polygon(
+    0 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0,
+    calc(100% - 6px) 0, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px,
+    100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%,
+    6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0 calc(100% - 6px)
+  );
+  /* the clip would hide an outside focus ring */
+  &:focus-visible {
+    outline-offset: -4px;
+  }
+}
+
+/* Links inside running text: white like the text around them, with a
+   green underline as the "clickable" signal; green text on hover. */
+@utility link-inline {
+  color: var(--color-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color 150ms;
+  &:hover {
+    color: var(--color-primary);
+  }
+}
+
+/* Keyboard focus: the brand green, everywhere. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  @apply bg-secondary text-secondary-content;
 }
 
 /* Canonical horizontal page padding. Every full-width page element
@@ -127,9 +197,100 @@
   @apply px-12 md:px-24;
 }
 
-::selection {
-  background-color: var(--color-primary);
-  color: var(--color-background);
+/* Marquee (gallery strip): the content is rendered twice, so
+   sliding the track left by half its width lands on an identical frame and
+   the loop is seamless. Each copy must be wider than the viewport. Speed is
+   set per use with --marquee-duration. Pauses on hover; with reduced motion
+   it is a plain row scrolled by hand. */
+.marquee {
+  overflow-x: auto;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marquee {
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+  }
+
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+/* Gallery lens: the photo layer sits over the ASCII layer and only shows
+   through a window in the middle: half the screen on phones, one photo
+   wide (h-80 at 3:2) from sm up. With
+   reduced motion the strip doesn't move, so the photos simply show. */
+.gallery-lens {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-lens {
+    clip-path: inset(0 25%);
+    @variant sm {
+      clip-path: inset(0 calc(50% - 15rem));
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-lens {
+    position: static;
+  }
+  .marquee:has(.gallery-lens) > .marquee-track {
+    display: none;
+  }
+}
+
+/* ASCII scenes (hero, gallery): stacked <pre> layers on one
+   character grid, scaled to cover the box like `object-fit: cover`.
+   Each scene sets --ascii-cols and --ascii-rows (see Ascii.scene_style/1);
+   a monospace character is ~0.6em wide. */
+.ascii-scene {
+  container-type: size;
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  & > pre {
+    grid-area: 1 / 1;
+    place-self: start;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: max(100cqw / (var(--ascii-cols) * 0.6), 100cqh / var(--ascii-rows));
+    line-height: 1;
+    white-space: pre;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+
+/* A hard on/off blink, like a terminal cursor (map venue marker). */
+@keyframes pixel-blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pixel-blink {
+    animation: pixel-blink 1s steps(1) infinite;
+  }
+}
+
+/* The hero scene builds itself in JS (see AsciiBee); hide the finished
+   art until the hook takes over, so it doesn't flash in first. */
+@media (prefers-reduced-motion: no-preference) {
+  .ascii-scene[data-build] > pre {
+    visibility: hidden;
+  }
 }
 
 /* --- glitch / TV-static treatment for the stat band panels --- */

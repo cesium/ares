@@ -1,7 +1,7 @@
 <.page title="Frequently asked questions">
   <:subtitle>
     Have a different question and can't find the answer you're looking for? Reach out to our support team by
-    <a href="mailto:geral@bugsbyte.org" class="text-primary hover:text-primary/80 underline">
+    <a href="mailto:geral@bugsbyte.org" class="link-inline">
       sending us an email
     </a>
     and we'll get back to you as soon as we can.
@@ -11,7 +11,7 @@
     <%= for faq <- @faqs do %>
       <div class="border-b border-line">
         <button
-          class="w-full text-left py-4 sm:py-5 md:py-6 flex items-center justify-between hover:text-primary transition-colors focus:outline-none cursor-pointer"
+          class="w-full text-left py-4 sm:py-5 md:py-6 flex items-center justify-between hover:text-primary transition-colors cursor-pointer"
           data-faq-id={faq.id}
           aria-expanded={if faq.expanded, do: "true", else: "false"}
           type="button"
@@ -38,7 +38,7 @@
         </button>
         <div
           id={"content-#{faq.id}"}
-          class={"grid transition-all duration-300 ease-in-out #{if faq.expanded, do: "grid-rows-[1fr] opacity-100", else: "grid-rows-[0fr] opacity-0"}"}
+          class={"grid transition-all duration-300 ease-in-out #{if faq.expanded, do: "grid-rows-expanded opacity-100", else: "grid-rows-collapsed opacity-0"}"}
         >
           <div class="overflow-hidden">
             <p class="text-muted text-md sm:text-base font-inter pb-4 sm:pb-5 md:pb-6">
