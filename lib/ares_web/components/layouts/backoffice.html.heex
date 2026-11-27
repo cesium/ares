@@ -1,0 +1,7 @@
+<div class="h-screen flex flex-col sm:flex-row">
+  <.sidebar user={if @current_scope, do: @current_scope.user} />
+  <div class="w-full p-12 sm:pl-60 h-fit">
+    <.flash_group flash={@flash} />
+    {@inner_content}
+  </div>
+</div>

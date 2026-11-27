@@ -1,0 +1,56 @@
+Vegetarian
+Vegan
+Lactose intolerant
+Gluten-free
+No pork
+No beef
+Halal only
+Kosher
+Allergic to nuts
+Peanut allergy
+Allergic to shellfish
+No seafood please
+Low-sugar diet
+Diabetic-friendly meals preferred
+Allergic to eggs
+Allergic to dairy
+Prefer plant-based meals
+Eating keto these days
+Pescatarian
+Avoid spicy food
+Need wheelchair-accessible seating
+I use crutches sometimes
+Might need extra breaks due to back pain
+Prefer a quiet workspace if possible
+I'm photosensitive—careful with flashing lights
+Need accessible restrooms nearby
+Hard of hearing—prefer front row
+Can't walk long distances
+Need a table near power outlets for medical device
+Asthma — please no strong fragrances nearby
+Arriving late on Friday
+Leaving early on Sunday
+Will join remotely for the kickoff
+Need parking info
+Taking a bus, should arrive around noon
+Flying in, might be delayed
+Staying off-site, need badge pickup instructions
+Will share a ride with teammates
+I'm bringing my own VR gear
+Will work mostly with hardware
+Need access to 3D printers if available
+Bringing a Raspberry Pi setup
+Planning to prototype with Arduino
+Interested in AI and ML challenges
+Prefer a quiet spot for coding
+Mostly working alone this time
+Happy to help beginners
+First hackathon—excited!
+Please send schedule updates by email
+I may need to step out during afternoons
+Let me know if volunteers are needed
+Bringing my own monitor
+Might join different workshops depending on availability
+Prefer text messages over calls
+Would love info on mentor hours
+I'm introverted, just need some space sometimes

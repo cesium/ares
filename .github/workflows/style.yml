@@ -1,38 +1,37 @@
-name: CI Style
+name: Code Quality
 
 on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
+    paths:
+      - "**/*.ex"
+      - "**/*.exs"
+      - "**/*.html.heex"
 
 jobs:
-  build:
+  style:
     runs-on: ubuntu-latest
+    name: Code Quality
 
     strategy:
       matrix:
-        node-version: [18.x]
+        otp: [27.x]
+        elixir: [1.15.x]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: ☁️ Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Setup node
-        uses: actions/setup-node@v3
+      - name: 💧 Setup Elixir ${{ matrix.elixir }} (OTP ${{matrix.otp}})
+        uses: ./.github/actions
         with:
-          node-version: ${{ matrix.node }}
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+          build-flags: --all-warnings --warnings-as-errors
 
-      - uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: 🎨 Check code formating
+        run: mix format --check-formatted
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Check code formatting
-        run: npm run test:format
-
-      - name: Lint the code
-        run: npm run test:lint
+      - name: 🔍 Lint the code
+        run: mix credo --all --strict
