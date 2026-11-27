@@ -11,10 +11,10 @@ defmodule AresWeb.Components.Footer do
     ~H"""
     <footer class="flex flex-col gap-6 bg-background page-px py-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-        <div class="flex flex-col">
-          <span class="uppercase font-jersey10 text-sm text-foreground">hackathon</span>
-          <span class="uppercase font-jersey10 tracking-wide leading-none text-3xl">bugsbyte</span>
-        </div>
+        <.link navigate="/" class="flex items-center gap-3">
+          <img src="/images/brand/gub-logo-white.png" alt="" class="h-10 w-auto" />
+          <span class="font-resegrg uppercase text-2xl leading-none">BugsByte</span>
+        </.link>
         <div class="flex items-center gap-4">
           <a
             href="https://www.instagram.com/bugs.byte/"

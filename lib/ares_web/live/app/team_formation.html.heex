@@ -80,7 +80,7 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-[auto_1fr] items-center gap-x-4">
+            <div class="flex items-start gap-x-4">
               <input type="hidden" name={@form[:public].name} value="false" />
               <input
                 type="checkbox"
@@ -88,17 +88,19 @@
                 name={@form[:public].name}
                 value="true"
                 checked={Phoenix.HTML.Form.normalize_value("checkbox", @form[:public].value)}
-                class="checkbox checkbox-sm"
+                class="checkbox checkbox-sm mt-1"
               />
-              <label
-                for={@form[:public].id}
-                class="text-foreground font-bold text-lg cursor-pointer"
-              >
-                Looking for team members?
-              </label>
-              <p class="col-start-2 text-sm text-muted mt-1">
-                Enable this if you want your team to be visible to other participants who are looking to join a team.
-              </p>
+              <div>
+                <label
+                  for={@form[:public].id}
+                  class="text-foreground font-bold text-lg cursor-pointer"
+                >
+                  Looking for team members?
+                </label>
+                <p class="text-sm text-muted mt-1">
+                  Enable this if you want your team to be visible to other participants who are looking to join a team.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -123,7 +125,7 @@
         <%= if Enum.empty?(@available_teams) do %>
           <p class="font-inter text-lg text-muted">
             No teams are looking for members right now.
-            <.link patch="?tab=create" class="text-primary underline hover:text-primary/80">
+            <.link patch="?tab=create" class="link-inline">
               Create your own team
             </.link>
             instead.
@@ -148,7 +150,7 @@
                     <dt class="text-subtle">Members</dt>
                     <dd>
                       {length(team.members)}/5
-                      <span class="text-primary">
+                      <span class="text-muted">
                         ({5 - length(team.members)} spot{if 5 - length(team.members) != 1,
                           do: "s"} left)
                       </span>
@@ -196,7 +198,7 @@
     <div class="space-y-2 text-center">
       <h2 class="text-2xl font-jersey10">Join Team?</h2>
       <p class="text-xl">
-        You are about to join <span class="text-primary font-bold">{@selected_team.name}</span>. Confirm that this is the team you want to participate with.
+        You are about to join <span class="font-bold">{@selected_team.name}</span>. Confirm that this is the team you want to participate with.
       </p>
     </div>
     <div class="flex flex-col gap-4 sm:flex-row w-full">

@@ -13,10 +13,7 @@ defmodule AresWeb.Components.VenueMap do
       href="https://maps.google.com/?q=Complexo Desportivo da Universidade do Minho, Braga"
       target="_blank"
       rel="noopener noreferrer"
-      class={[
-        "group relative overflow-hidden block h-96 bg-background border border-line hover:border-primary transition-colors",
-        @class
-      ]}
+      class={["group relative overflow-hidden block h-96 bg-background border border-line", @class]}
     >
       <img
         src="/images/landing/venue-map.svg"
@@ -25,19 +22,22 @@ defmodule AresWeb.Components.VenueMap do
         loading="lazy"
       />
 
-      <span class="absolute left-1/2 top-1/2 -translate-1/2 size-6 pointer-events-none">
-        <span class="absolute inset-0 rounded-full bg-primary animate-ping"></span>
-        <span class="absolute inset-1.5 rounded-full bg-foreground ring-4 ring-primary"></span>
+      <%!-- The venue: a white pixel with a cursor-like blink, and its name. --%>
+      <span class="absolute left-1/2 top-1/2 -translate-1/2 pointer-events-none">
+        <span class="block size-4 bg-foreground pixel-blink"></span>
+        <span class="absolute top-full left-1/2 -translate-x-1/2 mt-2 sm:top-1/2 sm:left-full sm:translate-x-0 sm:-translate-y-1/2 sm:mt-0 sm:ml-3 whitespace-nowrap font-jersey10 text-xl leading-none text-foreground">
+          <span class="hidden sm:inline">&lt;-</span> Sports Complex
+        </span>
       </span>
 
-      <span class="absolute top-4 left-4 font-jersey10 text-2xl text-primary leading-none">
+      <span class="absolute top-4 left-4 font-jersey10 text-2xl text-foreground leading-none">
         41.5617° N · 8.3950° W
       </span>
-      <span class="absolute bottom-4 left-4 uppercase text-sm text-muted">
+      <span class="absolute top-12 left-4 sm:top-auto sm:bottom-4 text-sm text-muted">
         © OpenStreetMap contributors
       </span>
-      <span class="absolute bottom-4 right-4 font-jersey10 text-2xl uppercase bg-primary text-background px-3 py-1 group-hover:bg-foreground transition-colors">
-        Open in maps ↗
+      <span class="absolute bottom-4 right-4 pixel-corners font-jersey10 text-2xl bg-foreground text-background px-4 py-1 group-hover:bg-muted transition-colors">
+        Open in maps
       </span>
     </a>
     """

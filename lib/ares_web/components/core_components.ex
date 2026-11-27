@@ -80,7 +80,7 @@ defmodule AresWeb.CoreComponents do
               phx-window-keydown={JS.exec("data-cancel", to: "##{@id}")}
               phx-key="escape"
               phx-click-away={JS.exec("data-cancel", to: "##{@id}")}
-              class="p-6 bg-surface border border-line text-foreground shadow-2xl shadow-primary/10 relative rounded-2xl transition"
+              class="p-6 bg-surface pixel-corners text-foreground relative transition"
             >
               <div class="absolute top-6 right-5">
                 <button
@@ -163,8 +163,13 @@ defmodule AresWeb.CoreComponents do
       <.button icon="hero-pencil" phx-click="edit" />
   """
   attr :rest, :global, include: ~w(href navigate patch method download name value disabled)
-  attr :class, :string, default: nil
-  attr :variant, :string, values: ~w(primary secondary), default: "primary"
+  attr :class, :any, default: nil
+
+  attr :variant, :string,
+    values: ~w(primary secondary neutral light),
+    default: "primary",
+    doc: "primary/secondary for actions, neutral on yellow, light on dark surfaces"
+
   attr :text, :string, default: nil
   attr :icon, :string, default: nil, doc: "a heroicon name, e.g. hero-arrow-right"
   attr :icon_position, :string, values: ~w(left right), default: "left"
@@ -172,12 +177,14 @@ defmodule AresWeb.CoreComponents do
   def button(%{rest: rest} = assigns) do
     variants = %{
       "primary" => "btn-primary",
-      "secondary" => "btn-primary btn-soft"
+      "secondary" => "btn-primary btn-soft",
+      "neutral" => "btn-neutral",
+      "light" => "bg-foreground text-background hover:bg-muted"
     }
 
     assigns =
       assign(assigns, :classes, [
-        "btn group rounded-none transition-all duration-200 hover:scale-105",
+        "btn group pixel-corners border-0 shadow-none font-jersey10 text-lg font-normal transition-colors",
         variants[assigns.variant],
         assigns.class
       ])

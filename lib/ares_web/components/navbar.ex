@@ -11,7 +11,7 @@ defmodule AresWeb.Components.Navbar do
   alias Phoenix.LiveView.JS
 
   @doc """
-  Renders the navigation header with mobile menu support.
+  Renders the navigation dock and the mobile menu.
   """
   attr :user, :map, default: nil
 
@@ -20,315 +20,183 @@ defmodule AresWeb.Components.Navbar do
     <header
       id="page-header"
       phx-hook="HeaderScroll"
-      class="z-60 flex w-full max-w-[1600px] h-24 items-center justify-between page-px py-3 sm:py-4 text-foreground font-inter fixed top-0 left-1/2 -translate-x-1/2 bg-glass backdrop-blur-sm transition-colors duration-300"
+      class="z-60 fixed top-4 inset-x-4 lg:inset-x-auto lg:left-1/2 lg:-translate-x-1/2 lg:w-max flex h-14 items-center justify-between gap-4 pixel-corners bg-surface px-2 text-foreground font-jersey10 text-xl"
     >
-      <.link class="flex items-center gap-2 sm:gap-4 hover:text-primary" navigate="/">
-        <img src="/images/brand/gub-logo-white.png" alt="BugsByte" class="h-14 w-auto" />
+      <.link
+        navigate="/"
+        class="flex size-10 shrink-0 items-center justify-center"
+        aria-label="BugsByte home"
+      >
+        <img src="/images/brand/gub-logo-white.png" alt="" class="h-7 w-auto" />
       </.link>
-      <div>
-        <div class="flex items-center gap-4 sm:gap-6">
-          <nav class="hidden sm:block">
-            <ul class="flex items-center gap-4 lg:gap-6">
-              <!--<li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  target="_blank"
-                  href="/docs/survival-guide.pdf"
-                >
-                  Survival Guide
-                </.link>
-              </li> -->
-              <li>
-                <.link class="hover:text-primary transition-colors" navigate="/faqs">
-                  FAQs
-                </.link>
-              </li>
-              <li>
-                <.link class="hover:text-primary transition-colors" navigate="/gallery">
-                  Gallery
-                </.link>
-              </li>
-              <li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  navigate={@user && "/app/team-formation"}
-                  href="/app/team-formation"
-                >
-                  Teams
-                </.link>
-              </li>
-              <li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  target="_blank"
-                  href="/docs/regulation.pdf"
-                >
-                  Regulation
-                </.link>
-              </li>
-              <li>
-                <.link
-                  class="hover:text-primary transition-colors"
-                  href="https://2025.bugsbyte.org/"
-                >
-                  Previous edition
-                </.link>
-              </li>
-              <li class="relative">
-                <%= if @user do %>
-                  <button
-                    onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
-                    class="w-10 h-10 cursor-pointer rounded-full bg-primary flex items-center justify-center text-foreground font-semibold hover:shadow-lg transition-all"
-                    title={@user.name}
-                  >
-                    {String.first(@user.name)}
-                  </button>
-                  <div
-                    id="profile-menu"
-                    class={[
-                      "hidden absolute right-0 w-48 bg-surface rounded-lg shadow-xl ring-1 ring-line z-50 profile-menu-dropdown"
-                    ]}
-                  >
-                    <.link
-                      navigate="/app/profile"
-                      class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
-                    >
-                      View Profile
-                    </.link>
-                    <%= if User.admin?(@user) do %>
-                      <.link
-                        navigate="/backoffice/dashboard"
-                        class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
-                      >
-                        Backoffice
-                      </.link>
-                    <% end %>
-                    <.link
-                      navigate="/users/settings"
-                      class="block px-4 py-2 text-foreground hover:bg-surface-hover rounded-t-lg transition-colors"
-                    >
-                      Settings
-                    </.link>
-                    <.link href="/users/log-out" method="delete" class="border-t border-line">
-                      <p class="w-full text-left px-4 py-2 text-foreground hover:bg-surface-hover rounded-b-lg transition-colors cursor-pointer">
-                        Log out
-                      </p>
-                    </.link>
-                  </div>
-                <% else %>
-                  <%= if not Event.registrations_open?() do %>
-                    <.button
-                      variant="primary"
-                      class="btn-sm"
-                      href="/log-in"
-                      text="Login"
-                      icon="hero-arrow-right"
-                      icon_position="right"
-                    />
-                  <% else %>
-                    <.button
-                      variant="primary"
-                      class="btn-sm"
-                      href="/register"
-                      text="Register"
-                      icon="hero-arrow-right"
-                      icon_position="right"
-                    />
-                  <% end %>
-                <% end %>
-              </li>
-            </ul>
-          </nav>
+
+      <nav class="hidden lg:block">
+        <ul class="flex items-center whitespace-nowrap">
+          <li :for={{label, attrs} <- nav_links(@user)}>
+            <.nav_link class="h-10 px-3" {attrs}>{label}</.nav_link>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="relative hidden lg:block">
+        <%= if @user do %>
           <button
-            id="open-nav-button"
-            type="button"
-            class="sm:hidden text-foreground p-2 rounded hover:bg-opacity-90"
-            aria-label="Navigation"
-            phx-click={show_mobile_menu()}
+            onclick="document.getElementById('profile-menu').classList.toggle('hidden')"
+            class="size-10 cursor-pointer pixel-corners bg-foreground text-background hover:bg-muted transition-colors"
+            title={@user.name}
           >
-            <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+            {String.first(@user.name)}
           </button>
-        </div>
+          <div
+            id="profile-menu"
+            class="hidden absolute right-0 top-full mt-3 w-48 py-2 pixel-corners bg-surface text-lg z-50"
+          >
+            <.link navigate="/app/profile" class="block px-4 py-1 text-muted hover:text-foreground">
+              View profile
+            </.link>
+            <.link
+              :if={User.admin?(@user)}
+              navigate="/backoffice/dashboard"
+              class="block px-4 py-1 text-muted hover:text-foreground"
+            >
+              Backoffice
+            </.link>
+            <.link navigate="/users/settings" class="block px-4 py-1 text-muted hover:text-foreground">
+              Settings
+            </.link>
+            <.link
+              href="/users/log-out"
+              method="delete"
+              class="block px-4 py-1 text-muted hover:text-foreground"
+            >
+              Log out
+            </.link>
+          </div>
+        <% else %>
+          <.account_button />
+        <% end %>
       </div>
+
+      <button
+        id="open-nav-button"
+        type="button"
+        class="lg:hidden flex size-10 items-center justify-center text-muted hover:text-foreground transition-colors"
+        aria-label="Open navigation"
+        phx-click={show_mobile_menu()}
+      >
+        <.icon name="hero-bars-3" class="size-6" />
+      </button>
     </header>
 
     <div
       id="mobile-menu-container"
-      class="fixed inset-0 z-100 flex flex-col sm:hidden"
+      class="fixed inset-0 z-100 lg:hidden"
       aria-modal="true"
       style="display: none;"
     >
       <div
-        id="menu-overlay"
-        class="fixed inset-0 h-full min-h-screen bg-overlay backdrop-blur-sm"
-        phx-click={hide_mobile_menu()}
-      >
-      </div>
-      <div
         id="mobile-menu"
-        class="relative w-full h-dvh flex flex-col page-px pt-10 pb-6 text-foreground font-inter bg-overlay backdrop-blur-md rounded-b-lg"
+        class="flex h-dvh flex-col gap-10 bg-background p-4 pb-8 text-foreground font-jersey10"
       >
-        <header class="flex items-center gap-3 pb-6">
-          <.link navigate="/" class="flex items-center">
-            <img src="/images/brand/cesium.svg" alt="CeSIUM" class="w-10 h-10" />
+        <div class="flex h-14 shrink-0 items-center justify-between pixel-corners bg-surface px-2">
+          <.link
+            navigate="/"
+            class="flex size-10 items-center justify-center"
+            aria-label="BugsByte home"
+          >
+            <img src="/images/brand/gub-logo-white.png" alt="" class="h-7 w-auto" />
           </.link>
-          <div class="flex flex-col leading-none">
-            <span class="uppercase font-jersey10 text-xs text-foreground">hackathon</span>
-            <span class="uppercase font-resegrg tracking-wide text-lg">bugsbyte</span>
-          </div>
-        </header>
-        <nav class="font-jersey10">
-          <ul class="flex flex-col">
-            <li>
-              <a
-                class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                target="_blank"
-                href="/docs/regulation.pdf"
-              >
-                Regulation
-              </a>
-            </li>
-            <li>
-              <a
-                class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                href="/faqs"
-              >
-                FAQs
-              </a>
-            </li>
-            <li>
-              <a
-                class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                href="/gallery"
-              >
-                Gallery
-              </a>
-            </li>
-            <li>
-              <.link
-                class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                href="https://2025.bugsbyte.org/"
-              >
-                Previous edition
-              </.link>
-            </li>
-            <li>
-              <.link
-                class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                navigate={@user && "/app/team-formation"}
-                href="/app/team-formation"
-              >
-                Team formation
-              </.link>
-            </li>
-            <%= if User.admin?(@user) do %>
-              <li>
-                <.link
-                  navigate="/backoffice/dashboard"
-                  class="block py-2 text-left text-3xl sm:text-4xl font-semibold hover:text-primary transition-colors"
-                >
-                  Dashboard
-                </.link>
-              </li>
-            <% end %>
-          </ul>
-        </nav>
-
-        <div class="flex-1"></div>
-
-        <div class="flex flex-col items-center gap-3 pb-6">
-          <%= if @user do %>
-            <.link
-              navigate="/app/profile"
-              class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
-              title={@user.name}
-            >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                />
-              </svg>
-              Profile
-            </.link>
-          <% else %>
-            <%= if not Event.registrations_open?() do %>
-              <.link
-                href="/log-in"
-                class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                  />
-                </svg>
-                Login
-              </.link>
-            <% else %>
-              <.link
-                href="/register"
-                class="flex items-center gap-2 text-muted hover:text-primary transition-colors"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                  />
-                </svg>
-                Register
-              </.link>
-            <% end %>
-          <% end %>
-          <%= if @user do %>
-            <div class="flex items-center gap-4 text-sm text-muted">
-              <.link navigate="/users/settings" class="hover:text-primary transition-colors">
-                Settings
-              </.link>
-              <.link
-                href="/users/log-out"
-                method="delete"
-                class="hover:text-primary transition-colors"
-              >
-                Log out
-              </.link>
-            </div>
-          <% end %>
-        </div>
-
-        <div class="flex justify-center pb-4">
           <button
             id="close-nav-button"
             type="button"
-            class="w-14 h-14 flex items-center justify-center rounded-none bg-primary text-foreground hover:bg-primary/80 transition-colors"
+            class="flex size-10 items-center justify-center text-muted hover:text-foreground transition-colors"
             aria-label="Close navigation"
             phx-click={hide_mobile_menu()}
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <.icon name="hero-x-mark" class="size-6" />
           </button>
+        </div>
+
+        <nav class="px-2">
+          <ul class="flex flex-col gap-1 text-4xl">
+            <li :for={{label, attrs} <- nav_links(@user)}>
+              <.nav_link class="py-1" {attrs}>{label}</.nav_link>
+            </li>
+            <li :if={User.admin?(@user)}>
+              <.nav_link class="py-1" navigate="/backoffice/dashboard">Backoffice</.nav_link>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="mt-auto flex flex-col gap-4 px-2 text-xl">
+          <%= if @user do %>
+            <.button navigate="/app/profile" variant="light" text="View profile" class="w-full" />
+            <div class="flex gap-6 text-muted">
+              <.link navigate="/users/settings" class="hover:text-foreground">Settings</.link>
+              <.link href="/users/log-out" method="delete" class="hover:text-foreground">
+                Log out
+              </.link>
+            </div>
+          <% else %>
+            <.account_button class="w-full" />
+          <% end %>
         </div>
       </div>
     </div>
+    """
+  end
+
+  # Same destinations in the dock and the mobile menu.
+  # Teams only makes sense once logged in.
+  defp nav_links(user) do
+    [
+      {"FAQs", [navigate: "/faqs"]},
+      {"Gallery", [navigate: "/gallery"]},
+      user && {"Teams", [navigate: "/app/team-formation"]},
+      {"Regulation", [href: "/docs/regulation.pdf", target: "_blank"]},
+      {"Previous edition", [href: "https://2025.bugsbyte.org/"]}
+    ]
+    |> Enum.filter(& &1)
+  end
+
+  attr :class, :any, default: nil
+  attr :rest, :global, include: ~w(href navigate target)
+  slot :inner_block, required: true
+
+  # The current page gets a green pixel in front, like a cursor.
+  defp nav_link(assigns) do
+    ~H"""
+    <.link
+      class={[
+        "flex items-center gap-2 text-muted hover:text-foreground current:text-foreground transition-colors",
+        "before:hidden before:size-1.5 before:bg-primary current:before:block",
+        @class
+      ]}
+      {@rest}
+    >
+      {render_slot(@inner_block)}
+    </.link>
+    """
+  end
+
+  attr :class, :any, default: nil
+
+  defp account_button(assigns) do
+    ~H"""
+    <.button
+      :if={!Event.registrations_open?()}
+      href="/log-in"
+      variant="light"
+      text="Log in"
+      class={["btn-sm", @class]}
+    />
+    <.button
+      :if={Event.registrations_open?()}
+      href="/register"
+      variant="light"
+      text="Register"
+      class={["btn-sm", @class]}
+    />
     """
   end
 

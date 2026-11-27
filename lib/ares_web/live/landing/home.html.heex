@@ -1,30 +1,44 @@
-<div id="hero" class="h-svh overflow-hidden bg-background z-10 -mt-24">
-  <.squiggly_effect />
-  <div class="relative z-10 flex flex-col items-center justify-center h-full page-px">
-    <h1 class="glitch-text-hero font-jersey10 tracking-wide leading-none text-6xl sm:text-9xl md:text-[10rem] uppercase text-center">
-      {gettext("BugsByte")}
-    </h1>
-    <p class="text-foreground uppercase text-xl sm:text-4xl md:text-2xl leading-tight">
-      13<span class="text-lg sm:text-xl md:text-2xl">th</span> to 15<span class="text-lg sm:text-xl md:text-2xl">th</span> February 2026
-    </p>
+<div id="hero" class="relative h-svh min-h-160 overflow-hidden bg-background -mt-24">
+  <.ascii_bee class="absolute inset-0" />
+
+  <div class="@container absolute inset-x-0 bottom-0 page-px pb-10">
+    <h1 class="font-resegrg uppercase text-hero text-foreground">BugsByte</h1>
   </div>
 </div>
 
+<section class="bg-secondary text-secondary-content page-px py-12 md:py-16 font-jersey10 uppercase">
+  <div class="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+    <ul class="flex flex-col gap-2 sm:flex-row sm:gap-12 text-5xl md:text-6xl leading-none">
+      <li>13–15 Feb 2026</li>
+      <li>48 hours</li>
+      <li>Braga</li>
+    </ul>
+    <.button
+      :if={@registrations_open}
+      variant="neutral"
+      navigate="/register"
+      text="Register"
+      icon="hero-arrow-right"
+      icon_position="right"
+      class="self-start lg:self-auto font-inter normal-case"
+    />
+    <.button
+      :if={!@registrations_open}
+      variant="neutral"
+      navigate="/app/team-formation"
+      text="Find a team"
+      icon="hero-arrow-right"
+      icon_position="right"
+      class="self-start lg:self-auto font-inter normal-case"
+    />
+  </div>
+</section>
+
 <.landing_section title="What is it?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
-    The BugsByte
-    <a
-      href="https://en.wikipedia.org/wiki/Hackathon"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-primary underline hover:text-primary/80"
-    >
-      Hackathon
-    </a>
-    is a non-stop competitive programming event where teams spend
-    <span class="text-primary">48 hours</span>
-    building a project — on a theme from a sponsoring company or one entirely
-    their own — and the best ones walk away with <span class="text-primary">monetary prizes</span>.
+    BugsByte is a 48-hour hackathon. Teams build a project non-stop, on a
+    challenge set by one of our sponsors or on an idea of their own, and the
+    best ones win cash prizes.
   </p>
 </.landing_section>
 
@@ -37,12 +51,8 @@
 
 <.landing_section title="Where?">
   <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed">
-    The fourth edition of BugsByte happens at the <a
-      href="https://maps.google.com/?q=Complexo Desportivo da Universidade do Minho, Braga"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-primary underline hover:text-primary/80"
-    >Sports Complex of the University of Minho</a>.
+    The fourth edition takes place at the University of Minho Sports Complex,
+    in Gualtar, Braga.
   </p>
 
   <.venue_map class="mt-8" />
@@ -50,27 +60,27 @@
 
 <%!-- <.landing_section title="Prizes">
   <:intro>
-    THE TOP 3 TEAMS WILL RECEIVE <span class="text-primary">CASH PRIZES</span>.
+    THE TOP 3 TEAMS WILL RECEIVE <span class="text-secondary">CASH PRIZES</span>.
     THE PRIZE POOL WILL BE DISTRIBUTED AS FOLLOWS:
   </:intro>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-16 mb-12 sm:mb-16 uppercase">
     <div class="text-center">
-      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+      <p class="text-secondary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
         1st place
       </p>
       <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">800€</p>
     </div>
 
     <div class="text-center">
-      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+      <p class="text-secondary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
         2nd place
       </p>
       <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">600€</p>
     </div>
 
     <div class="text-center">
-      <p class="text-primary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+      <p class="text-secondary text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
         3rd place
       </p>
       <p class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl">400€</p>
@@ -78,20 +88,20 @@
   </div>
 
   <div class="text-center mt-12 sm:mt-16 md:mt-20">
-    <h3 class="text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 uppercase">
+    <h3 class="text-secondary text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12 uppercase">
       Theme prizes
     </h3>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 max-w-4xl mx-auto">
       <div class="text-center">
-        <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
+        <p class="text-secondary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
           BYTE
         </p>
         <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">250€</p>
       </div>
 
       <div class="text-center">
-        <p class="text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
+        <p class="text-secondary text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 uppercase">
           BIT
         </p>
         <p class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">150€</p>
@@ -101,16 +111,19 @@
 </.landing_section> --%>
 
 <.landing_section :if={@sponsors != []} title="Sponsors">
-  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
-    Take a look at the <span class="text-primary">sponsors</span> who made this event possible.
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 md:mb-12">
+    The companies that make BugsByte possible. Want yours here? Write to <a
+      href="mailto:geral@bugsbyte.org"
+      class="link-inline normal-case"
+    >geral@bugsbyte.org</a>.
   </p>
 
   <.companies id="sponsors-listing" companies={@sponsors} />
 </.landing_section>
 
 <.landing_section :if={@partners != []} title="Partners">
-  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 sm:mb-12 md:mb-16">
-    Take a look at the <span class="text-primary">partners</span> who made this event possible.
+  <p class="uppercase text-lg md:text-xl lg:text-2xl leading-relaxed mb-8 md:mb-12">
+    The organisations that help us run BugsByte.
   </p>
 
   <.companies id="partners-listing" companies={@partners} />

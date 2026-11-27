@@ -1,22 +1,25 @@
 defmodule AresWeb.LandingLive.Home do
   use AresWeb, :landing_view
 
-  alias Ares.Companies
-  import AresWeb.Components.{Companies, Gallery, SquigglyEffect, LandingSection, VenueMap}
+  alias Ares.{Companies, Event}
+
+  import AresWeb.Components.{
+    AsciiBee,
+    Companies,
+    Gallery,
+    LandingSection,
+    VenueMap
+  }
 
   @impl true
   def mount(_params, _session, socket) do
     companies = Companies.list_companies()
-    sponsors = Enum.filter(companies, fn c -> c.type == :sponsor end)
-    partners = Enum.filter(companies, fn c -> c.type == :partner end)
 
-    socket =
-      socket
-      |> assign(:sponsors, sponsors)
-      |> assign(:partners, partners)
-      |> assign(:supporters, [])
-      |> assign(:user, nil)
-
-    {:ok, socket}
+    {:ok,
+     assign(socket,
+       sponsors: Enum.filter(companies, &(&1.type == :sponsor)),
+       partners: Enum.filter(companies, &(&1.type == :partner)),
+       registrations_open: Event.registrations_open?()
+     )}
   end
 end
